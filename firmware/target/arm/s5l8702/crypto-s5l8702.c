@@ -40,7 +40,18 @@ void hwkeyaes(enum hwkeyaes_direction direction, uint32_t keyidx, void* data, ui
     AESTYPE = keyidx;
     AESTYPE2 = ~AESTYPE;
     AESUNKREG2 = 0;
+#if CONFIG_CPU == S5L8720
+    /* A mode word, not only a key length: the S5L8720 bootROM's AES routine
+     * writes 6, sets bit 0, puts the key-size code in bits 5:4 (0 = 128-bit)
+     * and sets bit 3, i.e. 0xf for its own IMG1 work, so bits 2:1 are
+     * always set on this SoC. 0xe decrypted IMG1 bodies correctly on the
+     * nano 4G (checked against known plaintext) and 0xf makes signatures
+     * the ROM accepts; the S5L8702 driver's 8 / 9 lack the two mode bits
+     * and produce random bytes here (an image launched with them hung). */
+    AESKEYLEN = direction == HWKEYAES_ENCRYPT ? 0xf : 0xe;
+#else
     AESKEYLEN = direction == HWKEYAES_ENCRYPT ? 9 : 8;
+#endif
     AESOUTSIZE = size;
     AESOUTADDR = data;
     AESINSIZE = size;

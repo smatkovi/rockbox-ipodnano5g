@@ -452,6 +452,30 @@ void lcd_update_rect(int x, int y, int width, int height)
     mutex_unlock(&lcd_mutex);
 }
 
+#if defined(BOOTLOADER) && defined(IPOD_NANO4G)
+/* nano 4G bootloader only: push the whole framebuffer to the panel by
+ * programmed I/O: no DMA, no mutex, no scheduler. Used for the last screen
+ * update before handing over to an Apple image, with interrupts off and the
+ * hardware being prepared for the hand-off. Same command sequence as
+ * lcd_update_rect(0, 0, LCD_WIDTH, LCD_HEIGHT), pixels written one by one
+ * through the controller's write-data register. */
+void lcd_update_pio(void)
+{
+    const fb_data *p = FBADDR(0, 0);
+    int n = LCD_WIDTH * LCD_HEIGHT;
+    if (!lcd_ispowered)
+        return;
+    displaylcd_setup(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    s5l_lcd_set_frame_mode();
+    while (n--)
+    {
+        while (LCD_STATUS & 0x10)
+            ;
+        LCD_WDATA = *p++;
+    }
+}
+#endif
+
 /* Line write helper function for lcd_yuv_blit. Writes two lines of yuv420. */
 extern void lcd_write_yuv420_lines(unsigned char const * const src[3],
                                    uint16_t* outbuf,

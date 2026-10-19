@@ -343,6 +343,14 @@ int pmu_wr(int address, unsigned char val)
 
 void pmu_preinit(void)
 {
+#ifndef BOOTLOADER
+    /* Regulator / charger setup carried over from the nano 3G port (values
+     * marked TBC below). The bootloader skips it: it runs behind the
+     * first-stage loader, whose PMU state already powers the
+     * LCD, NAND and USB, and Apple's firmware images started from the
+     * bootloader expect that state (the USB PHY stayed dead with these
+     * writes applied: no device on the host). Only the backlight and the
+     * interrupt housekeeping below are needed here. */
     pmu_wr(0x14, 0x13);
     pmu_wr(0x15, 0x0d);
     pmu_wr(0xb, 0x22);
@@ -367,6 +375,8 @@ void pmu_preinit(void)
     pmu_wr(0x34, (pmu_rd(0x34) & 0x80) | 0x54);     // XXX: see DA9030 page 110 charge_control REG 0x28
     pmu_wr(0x22, 0);
 
+#endif
+
     /* configure and clear interrupts */
     pmu_wr_multiple(D1759_REG_IRQMASKA, 3, "\x50\xFE\x2B");
     pmu_wr_multiple(D1759_REG_EVENTA, 3, "\xFF\xFF\xFF");
@@ -375,8 +385,10 @@ void pmu_preinit(void)
     pmu_wr(D1759_REG_LEDCTL,
             pmu_rd(D1759_REG_LEDCTL) | D1759_LEDCTL_ENABLE); /* backlight on */
 
+#ifndef BOOTLOADER /* see above */
     pmu_wr(0xa, 0x70);
     pmu_wr(0x13, 0x02);
+#endif
 }
 
 #ifdef BOOTLOADER
