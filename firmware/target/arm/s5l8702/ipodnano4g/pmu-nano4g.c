@@ -130,10 +130,62 @@ void pmu_write_rtc(unsigned char* buffer)
 }
 #endif
 
-void pmu_set_usblimit(bool fast_charge)
+/* USB input: charger off (no external power), or charger on with a
+ * 100 mA or 500 mA input limit. Clears the input-off bit first and writes
+ * the charge settings after the limit, the order of the original firmware. */
+static void pmu_apply_usb_input(int ma)
 {
-    // TODO
-    (void) fast_charge;
+    unsigned char system;
+    if (pmu_read_multiple(D1759_REG_SYSCTRLA, 1, &system) == 0 &&
+        (system & D1759_SYSCTRLA_INPUTOFF))
+        pmu_write(D1759_REG_SYSCTRLA, system & ~D1759_SYSCTRLA_INPUTOFF);
+
+    if (ma <= 0)
+    {
+        pmu_write(D1759_REG_CHGCTL, 0x00);
+        pmu_write(D1759_REG_CHGSET, 0x00);
+    }
+    else
+    {
+        pmu_write(D1759_REG_CHGCTL, ma >= 500 ? 0x52 : 0x50);
+        pmu_write(D1759_REG_CHGSET, 0x04);
+    }
+}
+
+static struct mutex pmu_usb_mutex;
+static bool pmu_input_usb;
+static bool pmu_inputs_valid;
+
+/* Called by the USB stack with the budget the host granted. Ignored while
+ * no USB power is present: removal turns the charger off and must win
+ * against a late request from the USB thread. */
+void pmu_set_usblimit(int ma)
+{
+    mutex_lock(&pmu_usb_mutex);
+    if (pmu_input_usb)
+        pmu_apply_usb_input(ma);
+    mutex_unlock(&pmu_usb_mutex);
+}
+
+int pmu_charging_state(void)
+{
+    unsigned char control, system, status[3];
+
+    if (pmu_read_multiple(D1759_REG_CHGCTL, 1, &control) != 0 ||
+        pmu_read_multiple(D1759_REG_SYSCTRLA, 1, &system) != 0 ||
+        pmu_read_multiple(D1759_REG_STATUSA, 3, status) != 0)
+        return -1;
+
+    /* USB input usable (the raw VBUS bit while the input is switched off),
+     * charger enabled and input not switched off: the charger is busy
+     * while status B bits 1..2 are set; with both clear it has stopped,
+     * which the original firmware shows as a charged battery */
+    bool external = (system & D1759_SYSCTRLA_INPUTOFF) ?
+                    (status[0] & D1759_STATUSA_VBUSRAW) :
+                    (status[0] & D1759_STATUSA_VBUS);
+    if (!external || !(control & 0xfc) || (system & D1759_SYSCTRLA_INPUTOFF))
+        return PMU_CHARGER_OFF;
+    return (status[1] & 0x06) ? PMU_CHARGER_CHARGING : PMU_CHARGER_CHARGED;
 }
 
 /*
@@ -166,10 +218,10 @@ unsigned short pmu_read_adc(const struct pmu_adc_channel *ch)
  * eINT
  */
 #define Q_EINT  0
+#define PMU_POLL_INTERVAL   (HZ/2)
 
 static long pmu_thread_stack[DEFAULT_STACK_SIZE/2/sizeof(long)];
 static struct event_queue pmu_queue;
-static unsigned char ints_msk[3];
 
 static void pmu_eint_isr(struct eic_handler*);
 
@@ -182,7 +234,6 @@ static struct eic_handler pmu_eint =
 };
 
 static int pmu_input_holdswitch;
-static bool pmu_input_usb;
 
 bool pmu_usb_present(void)
 {
@@ -245,28 +296,38 @@ void usb_remove_int(void)
 
 static void pmu_read_inputs(void)
 {
-#if CONFIG_CHARGING
-    unsigned char status[3];
-#else
-    unsigned char status[2];
-#endif
+    unsigned char status[3], system;
 
-    if (pmu_read_multiple(D1759_REG_STATUSA, sizeof(status), status) != 0)
+    if (pmu_read_multiple(D1759_REG_SYSCTRLA, 1, &system) != 0 ||
+        pmu_read_multiple(D1759_REG_STATUSA, sizeof(status), status) != 0)
         return;
 
-    pmu_input_usb = !!(status[0] & D1759_STATUSA_VBUS);
+    bool usb_present = (system & D1759_SYSCTRLA_INPUTOFF) ?
+                       !!(status[0] & D1759_STATUSA_VBUSRAW) :
+                       !!(status[0] & D1759_STATUSA_VBUS);
+    if (usb_present != pmu_input_usb || !pmu_inputs_valid)
+    {
+        /* charger on at 100 mA until a host grants more, off on removal */
+        mutex_lock(&pmu_usb_mutex);
+        pmu_input_usb = usb_present;
+        pmu_apply_usb_input(usb_present ? 100 : 0);
+        mutex_unlock(&pmu_usb_mutex);
 
-    if (pmu_input_usb)
-        usb_insert_int();
-    else
-        usb_remove_int();
+        /* report changes only: every USB event restarts the idle
+           poweroff timer */
+        if (pmu_input_usb)
+            usb_insert_int();
+        else
+            usb_remove_int();
+    }
+    pmu_inputs_valid = true;
 
 #ifdef IPOD_ACCESSORY_PROTOCOL
     pmu_input_accessory = !!(status[0] & D1759_STATUSA_INPUT1);
 #endif
     pmu_input_holdswitch = !(status[1] & D1759_STATUSB_INPUT2);
 #if CONFIG_CHARGING
-    pmu_input_firewire = !!(status[2] & D1759_STATUSC_VADAPTOR);
+    pmu_input_firewire = !!(status[2] & D1759_STATUSC_INPUT2);
 #endif
 }
 
@@ -282,25 +343,30 @@ static void NORETURN_ATTR pmu_thread(void)
 
     while (true)
     {
-        queue_wait_w_tmo(&pmu_queue, &ev, TIMEOUT_BLOCK);
+        queue_wait_w_tmo(&pmu_queue, &ev, PMU_POLL_INTERVAL);
         switch (ev.id)
         {
             case Q_EINT:
-                /* clear all PMU interrupts, this will also raise
-                   (disable) the PMU IRQ pin */
-#if CONFIG_CHARGING
-                pmu_write_multiple(D1759_REG_EVENTA, 3, "\xFF\xFF\xFF");
-#else
-                pmu_write_multiple(D1759_REG_EVENTA, 2, "\xFF\xFF");
-#endif
+            {
+                /* acknowledge the events that were read, this raises
+                   (releases) the PMU IRQ pin unless a new one arrived */
+                unsigned char events[3];
+                if (pmu_read_multiple(D1759_REG_EVENTA, 3, events) == 0)
+                    pmu_write_multiple(D1759_REG_EVENTA, 3, events);
+                else
+                    pmu_write_multiple(D1759_REG_EVENTA, 3, "\xFF\xFF\xFF");
 
                 /* get actual values */
                 pmu_read_inputs();
 
                 eint_register(&pmu_eint);
                 break;
+            }
 
             case SYS_TIMEOUT:
+                /* the interrupt is level triggered and should not be
+                   missed; re-reading the status is a cheap safety net */
+                pmu_read_inputs();
                 break;
         }
     }
@@ -310,27 +376,21 @@ static void NORETURN_ATTR pmu_thread(void)
 void pmu_init(void)
 {
     mutex_init(&pmu_adc_mutex);
+    mutex_init(&pmu_usb_mutex);
     queue_init(&pmu_queue, false);
 
     create_thread(pmu_thread,
             pmu_thread_stack, sizeof(pmu_thread_stack), 0,
             "PMU" IF_PRIO(, PRIORITY_SYSTEM) IF_COP(, CPU));
 
-    /* configure PMU interrutps */
-    ints_msk[0] = 0xff;
-    ints_msk[1] = 0xff;
-    ints_msk[2] = 0xff;
-
-    ints_msk[0] &= ~D1759_IRQMASKA_VBUS;      /* USB */
-#ifdef IPOD_ACCESSORY_PROTOCOL
-    ints_msk[0] &= ~D1759_IRQMASKA_INPUT1;    /* Accessory */
-#endif
-    ints_msk[1] &= ~D1759_IRQMASKB_INPUT2;    /* Holdswitch */
-#if CONFIG_CHARGING
-    ints_msk[2] &= ~D1759_IRQMASKC_VADAPTOR;  /* FireWire */
-#endif
-
-    pmu_write_multiple(D1759_REG_IRQMASKA, 3, ints_msk);
+    /* running-state configuration of the original firmware: interrupt
+     * masks (1 = masked) leave USB/power in (A b3, b6), the second power
+     * input (A b1), the accessory (A b5), battery low (A b7), the hold
+     * switch (B b0) and power out (C b2, b4) unmasked */
+    pmu_write(0x0c, 0x05);
+    pmu_write(0x0e, 0xd0);
+    pmu_write(0x22, 0x05);
+    pmu_write_multiple(D1759_REG_IRQMASKA, 3, "\x10\xFE\x2B");
 
     /* clear all interrupts */
     pmu_write_multiple(D1759_REG_EVENTA, 3, "\xFF\xFF\xFF");

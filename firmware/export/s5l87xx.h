@@ -1782,6 +1782,10 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define OPHYUNK3    (*((REG32_PTR_T)(PHYBASE + 0x18)))
 #define OPHYUNK1    (*((REG32_PTR_T)(PHYBASE + 0x1c)))
 #define OPHYUNK2    (*((REG32_PTR_T)(PHYBASE + 0x44)))
+#if CONFIG_CPU==S5L8720 /* used by the S5L8720 PHY sequence */
+#define OPHYTUNE    (*((REG32_PTR_T)(PHYBASE + 0x40)))
+#define OPHYCTRL    (*((REG32_PTR_T)(PHYBASE + 0x100)))
+#endif
 #endif
 
 #if CONFIG_CPU==S5L8701
@@ -2058,11 +2062,27 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
  *
  * EIC_GROUP0..6 are connected to EINT6..0 of the VIC.
  */
+#if CONFIG_CPU == S5L8720
+/*
+ * The s5l8720 EIC has 5 groups of up to 32 interrupts, in a different layout:
+ *  - GPIO 0..7 (port 0) are group 0, bits 2..9
+ *  - GPIO n >= 8 are group 1 + (n-8)/32, bit (n-8)%32, in ascending
+ *    order (ports 1..4 = group 1, 5..8 = group 2, 9..12 = group 3,
+ *    13..14 = group 4)
+ * Groups 0..4 raise VIC sources 33, 32, 31, 3 and 2 (EINT6..EINT2).
+ */
+#define EIC_N_GROUPS    5
+#define EIC_GROUP(n)    ((n) < 8 ? 0 : 1 + (((n) - 8) >> 5))
+#define EIC_INDEX(n)    ((n) < 8 ? (n) + 2 : ((n) - 8) & 0x1f)
+/* VIC source of an EIC group */
+#define EIC_IRQ(g)      ((g) < 3 ? IRQ_EXT6 - (g) : IRQ_EXT3 + 3 - (g))
+#else
 #define EIC_N_GROUPS    7
 
 /* get EIC group and bit for a given GPIO port */
 #define EIC_GROUP(n)    (6 - ((n) >> 5))
 #define EIC_INDEX(n)    ((0x18 - ((n) & 0x18)) | ((n) & 0x7))
+#endif
 
 /* SoC EINTs uses these 'gpio' numbers */
 #define GPIO_EINT_USB       0xd8

@@ -50,12 +50,15 @@ static void adc_convert_battery(void)
                 if (pmu_read_multiple(0x41, 2, result) == 0)
                 {
                     unsigned int raw = (result[1] << 2) | (result[0] & 3);
-                    battery_millivolts = 2500 + raw * 2000 / 1024;
+                    battery_millivolts = 2500 + raw * 2000 / 1023;
                 }
                 break;
             }
             udelay(100);
         }
+        /* back to the idle input, as the original firmware does after
+         * every conversion; the charger shares this converter */
+        pmu_write(0x40, 0x40);
     }
 }
 

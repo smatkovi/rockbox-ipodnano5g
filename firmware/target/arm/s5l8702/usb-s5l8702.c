@@ -53,6 +53,24 @@ void usb_dw_target_enable_clocks()
     clockgate_enable(CLOCKGATE_USBOTG, true);
     clockgate_enable(CLOCKGATE_USBPHY, true);
 
+#if CONFIG_CPU == S5L8720 /* own PHY sequence and registers */
+    OPHYPWR = 0;  /* PHY: Power up */
+    /* PHY reference clock: follows the oscillator strap */
+    OPHYCLK = 0x10 | soc_get_sec_epoch();
+    udelay(10);
+    OPHYUNK1 = 4;
+    DWC_DCTL = SDIS; /* Keep the device disconnected during PHY reset */
+    ORSTCON = 9;  /* PHY: Assert Software Reset */
+    udelay(10);
+    /* tuning; keep the bits not set here */
+    OPHYTUNE = (OPHYTUNE & ~0x7ff) | 0x347;
+    OPHYUNK2 = (OPHYUNK2 & ~0xfff) | 0xe3f;
+    OPHYCTRL |= 1;
+    udelay(10);
+    ORSTCON = 0;  /* PHY: Deassert Software Reset */
+    udelay(815);
+    OPHYUNK1 = 6;
+#else
     OPHYPWR = 0;  /* PHY: Power up */
     udelay(10);
     OPHYUNK1 = 1;
@@ -64,6 +82,7 @@ void usb_dw_target_enable_clocks()
     OPHYUNK3 = 0x600;
     OPHYCLK = USB_DW_CLOCK;
     udelay(400);
+#endif
 }
 
 void usb_dw_target_disable_clocks()
@@ -74,7 +93,9 @@ void usb_dw_target_disable_clocks()
     ORSTCON = 7;  /* PHY: Assert Software Reset */
     udelay(10);
 #elif (CONFIG_CPU == S5L8720)
+    OPHYUNK1 = 4;
     OPHYPWR = 0x1f;  /* PHY: Power down */
+    udelay(10);
     ORSTCON = 1;  /* PHY: Assert Software Reset */
     udelay(1000);
 #endif

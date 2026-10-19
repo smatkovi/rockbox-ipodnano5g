@@ -187,12 +187,12 @@
 #define CURRENT_BACKLIGHT  23  /* maximum brightness */
 
 /* define this if the unit can be powered or charged via USB */
-/* Bring-up: no USB in the main binary yet (USB_NONE below) */
-#ifdef BOOTLOADER
 #define HAVE_USB_POWER
 
 #define HAVE_USB_CHARGING_ENABLE
-#endif
+/* A computer must grant the higher input-current budget: 500 mA only
+ * after SET_CONFIGURATION (raising the PMU limit earlier is not safe) */
+#define USB_CHARGING_REQUIRES_ENUMERATION
 
 /* define this if the hardware can be powered off while charging */
 #define HAVE_POWEROFF_WHILE_CHARGING
@@ -252,15 +252,10 @@
 #define USB_DW_TURNAROUND 5
 /* logf() over USB serial (http://www.rockbox.org/wiki/PortalPlayerUsb) */
 //#define USB_ENABLE_SERIAL
-/* Bring-up: the USB controller / PHY sequence of the main binary has not
- * run on this hardware yet; the main binary boots without USB until it does
- * (the Apple disk mode started from the bootloader serves the disk). */
-#ifdef BOOTLOADER
 #define HAVE_USBSTACK
 #define HAVE_USB_HID_MOUSE
-#else
-#define USB_NONE
-#endif
+/* The PMU interrupt reports USB power changes */
+#define USB_STATUS_BY_EVENT
 #define USB_VENDOR_ID 0x05AC
 #define USB_PRODUCT_ID 0x1263
 #define USB_DEVBSS_ATTR __attribute__((aligned(32)))

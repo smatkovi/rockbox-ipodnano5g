@@ -41,6 +41,8 @@ enum d1759_regs {
 //     D1759_REG_SYSCTRLB      = 0x0b,
     D1759_REG_LEDOUT        = 0x30,
     D1759_REG_LEDCTL        = 0x31,
+    D1759_REG_CHGCTL        = 0x33,     /* USB input limit, charger on */
+    D1759_REG_CHGSET        = 0x34,
 };
 
 #if 1
@@ -60,6 +62,7 @@ enum d1759_reg_eventc {
 enum d1759_reg_statusa {
     D1759_STATUSA_VBUS      = 0x08,
     D1759_STATUSA_INPUT1    = 0x20,
+    D1759_STATUSA_VBUSRAW   = 0x40,     /* VBUS, also while the input is off */
 };
 enum d1759_reg_statusb {
     D1759_STATUSB_INPUT2    = 0x01,
@@ -67,6 +70,7 @@ enum d1759_reg_statusb {
 };
 enum d1759_reg_statusc {
     D1759_STATUSC_VADAPTOR  = 0x08,
+    D1759_STATUSC_INPUT2    = 0x01,     /* second power input (dock) */
 };
 
 enum d1759_reg_irqmaska {
@@ -98,6 +102,7 @@ enum d1759_reg_ledctl {
 
 enum d1759_reg_sysctrla {
     D1759_SYSCTRLA_POWEROFF = 0x01,
+    D1759_SYSCTRLA_INPUTOFF = 0x08,     /* USB input switched off */
 };
 
 
@@ -147,7 +152,15 @@ void pmu_set_cpu_voltage(bool high);
 void pmu_read_rtc(unsigned char* buffer);
 void pmu_write_rtc(unsigned char* buffer);
 #endif
-void pmu_set_usblimit(bool fast_charge);
+/* USB input budget granted by the host, in mA (applies only while USB
+ * power is present) */
+void pmu_set_usblimit(int ma);
+enum pmu_charger_state {
+    PMU_CHARGER_OFF = 0,        /* no external power or charger disabled */
+    PMU_CHARGER_CHARGING = 1,
+    PMU_CHARGER_CHARGED = 2,    /* enabled on external power, stopped */
+};
+int pmu_charging_state(void);    /* enum pmu_charger_state, -1 on I2C error */
 
 unsigned short pmu_read_adc(const struct pmu_adc_channel *ch);
 unsigned short pmu_adc_raw2mv(

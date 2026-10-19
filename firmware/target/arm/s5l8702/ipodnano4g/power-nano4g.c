@@ -29,7 +29,6 @@
 void power_init(void)
 {
     pmu_init();
-    pmu_set_usblimit(false);  /* limit to 100mA */
 }
 
 void power_off(void)
@@ -47,7 +46,7 @@ void usb_charging_maxcurrent_change(int maxcurrent)
 {
 //     bool suspend_charging = (maxcurrent < 100);
     bool fast_charging = (maxcurrent >= 500);
-    pmu_set_usblimit(fast_charging);
+    pmu_set_usblimit(fast_charging ? 500 : 100);
 }
 #endif
 
@@ -64,7 +63,6 @@ unsigned int power_input_status(void)
 
 bool charging_state(void)
 {
-    // TODO
-    return false;
+    return pmu_charging_state() == PMU_CHARGER_CHARGING;
 }
 #endif /* CONFIG_CHARGING */

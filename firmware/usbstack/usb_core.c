@@ -1449,6 +1449,11 @@ int usb_charging_maxcurrent(void)
 {
     if (!initialized || usb_charging_mode == USB_CHARGING_DISABLE)
         return 100;
+#ifdef USB_CHARGING_REQUIRES_ENUMERATION
+    /* no 500 mA without SET_CONFIGURATION, also not in USB_CHARGING_FORCE */
+    if (usb_state != CONFIGURED)
+        return 100;
+#endif
     if (usb_state == CONFIGURED)
         return usb_charging_current_requested;
     if (usb_charging_mode == USB_CHARGING_FORCE && usb_no_host)
