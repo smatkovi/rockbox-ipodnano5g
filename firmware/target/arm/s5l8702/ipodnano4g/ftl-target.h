@@ -41,6 +41,13 @@ int ftl_init(void);
  * controller timed out. */
 int ftl_read(uint32_t sector, uint32_t count, void *buffer);
 
+#ifndef BOOTLOADER
+/* Write pages or publish a checkpoint. A failed mutation blocks further
+ * writes and checkpoints until remount. The caller holds nand_mutex. */
+int ftl_write(uint32_t sector, uint32_t count, const void *buffer);
+int ftl_flush(void);
+#endif
+
 /* Number of logical pages, 0 if the FTL is not mounted */
 uint32_t ftl_num_sectors(void);
 

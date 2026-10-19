@@ -44,6 +44,7 @@
 #define NAND_ERR_NOCHIP         (-4)    /* no or unknown flash chips */
 #define NAND_ERR_UNSUPPORTED    (-5)    /* chips known, layout not driven */
 #define NAND_ERR_FTL            (-6)    /* FTL could not be mounted */
+#define NAND_ERR_WRITE          (-7)    /* NAND program or erase failed */
 
 /* Vendor classes stored in the FTL context. */
 #define NAND_VENDOR_TOSHIBA     1
@@ -132,6 +133,14 @@ int nand_read_page(unsigned int bank, uint32_t page, void *data, void *meta);
  * nand_read_page() per page. */
 int nand_read_pages(unsigned int n, const uint8_t *bank, const uint32_t *page,
                     void *data, void *meta);
+
+#ifndef BOOTLOADER
+/* Program an erased page or erase a block. The caller serialises these
+ * operations with reads. A failed mutation is not retried in place. */
+int nand_device_program(unsigned int bank, uint32_t page,
+                        const void *data, const void *meta);
+int nand_device_erase(unsigned int bank, uint32_t block);
+#endif
 
 /* First FTL page of the data area, which is storage sector 0: the end of
  * the firmware partition, or 0 if the flash MBR has none */

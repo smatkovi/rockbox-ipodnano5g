@@ -145,6 +145,10 @@ static struct ftl_log ftl_logs[FTL_RESTORE_SLOTS];  /* 17 logs + 1 scratch slot 
 static uint16_t ftl_offsets[FTL_RESTORE_SLOTS][FTL_PAGES_PER_VB];
 /* Recovered unwritten ranges must not expose stale blocks assigned to them. */
 static bool ftl_blank[FTL_MAX_BLOCKS];
+#ifndef BOOTLOADER
+static int ftl_write_mount(void);
+#endif
+
 static uint8_t ftl_cxt[VFL_CXT_SIZE];  /* FTL context (first 0x800 bytes) */
 static struct vb_state ftl_vb[FTL_MAX_BLOCKS];     /* rebuild only */
 
@@ -164,6 +168,20 @@ static uint32_t get32(const uint8_t *p)
     return p[0] | (p[1] << 8) | (p[2] << 16) | ((uint32_t)p[3] << 24);
 }
 
+#ifndef BOOTLOADER
+static void put16(uint8_t *p, uint16_t value)
+{
+    p[0] = value;
+    p[1] = value >> 8;
+}
+
+static void put32(uint8_t *p, uint32_t value)
+{
+    put16(p, value);
+    put16(p + 2, value >> 16);
+}
+#endif
+
 /*
  * VFL
  */
@@ -172,6 +190,7 @@ static uint32_t get32(const uint8_t *p)
  * must be 0x00/0x80. */
 /* One copy of a context page: any of the 8 copies at page..page+7 that
  * reads cleanly and carries the context mark */
+
 static bool vfl_read_cxt_page(unsigned int bank, unsigned int block,
                               unsigned int page)
 {
@@ -395,6 +414,10 @@ static int vfl_read(uint32_t vpn, void *data, uint8_t *meta)
     return nand_read_page(bank, page, data, meta);
 }
 
+#ifndef BOOTLOADER
+#include "ftl-vfl-write.h"
+#endif
+
 /*
  * FTL: mount from the stored context
  */
@@ -403,6 +426,7 @@ static int vfl_read(uint32_t vpn, void *data, uint8_t *meta)
  * read cleanly. dst may be NULL to only check readability. */
 /* list = offset in ftl_cxt of a u32 vpn list, npages = pages to read, size
  * = bytes of the table (the last page is copied partially). */
+
 static bool ftl_read_table(unsigned int list, unsigned int npages, void *dst,
                            uint32_t size)
 {
@@ -868,6 +892,13 @@ int ftl_init(void)
             return NAND_ERR_FTL;
     }
     ftl_pages = ftl_vbs * FTL_PAGES_PER_VB;
+#ifndef BOOTLOADER
+    rc = vfl_write_init();
+    if (!rc)
+        rc = ftl_write_mount();
+    if (rc)
+        return rc;
+#endif
     ftl_mounted = true;
     return 0;
 }
@@ -928,9 +959,14 @@ static int ftl_read_current(uint32_t lpn, void *data)
     return 0;
 }
 
+#ifndef BOOTLOADER
+#include "ftl-write.h"
+#endif
+
 /* Read 4096-byte logical pages in runs of at most 16 within one logical
  * block. Fall back to single-page reads for unmapped pages, unaligned buffers
  * or failed runs. Unwritten pages return 0xff. */
+
 int ftl_read(uint32_t sector, uint32_t count, void *buffer)
 {
     uint8_t *buf = buffer;
@@ -984,6 +1020,9 @@ int ftl_read(uint32_t sector, uint32_t count, void *buffer)
                 ret = -2;
         }
 
+#ifndef BOOTLOADER
+        ftl_count_reads(sector, n);
+#endif
         buf += n * NAND_PAGE_SIZE;
         sector += n;
         count -= n;

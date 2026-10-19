@@ -117,6 +117,9 @@
 /* ==== Driver state and DMA buffers ==== */
 static struct nand_geometry nand_geom;
 static uint32_t nand_timing;            /* FMC_CTRL0 timing fields */
+#ifndef BOOTLOADER
+static uint32_t nand_program_timing;
+#endif
 static uint32_t nand_ecc_mode, nand_ecc_cfg, nand_ecc_hdrlen, nand_ecc_parlen;  /* P_ECCMODE..P_PARLEN values */
 static uint32_t nand_pages_read;  /* diagnostics: pages handed to the sequencer */
 static bool nand_phys_ready;  /* nand_phys_init() succeeded */
@@ -395,6 +398,11 @@ int nand_phys_init(void)
     commit_dcache_range(fmss_prog_readid, sizeof(fmss_prog_readid));
     commit_dcache_range(fmss_prog_read, sizeof(fmss_prog_read));
 
+#ifndef BOOTLOADER
+    commit_dcache_range(fmss_prog_program, sizeof(fmss_prog_program));
+    commit_dcache_range(fmss_prog_erase, sizeof(fmss_prog_erase));
+#endif
+
     if (fmss_reset() || nand_reset_and_read_ids())
         return NAND_ERR_TIMEOUT;
 
@@ -445,6 +453,11 @@ int nand_phys_init(void)
     nand_geom.vendor = part->vendor;
     nand_geom.layout = pop->layout;
     nand_timing = nand_calc_timing(pop->t_read[0], pop->t_read[1], pop->t_read[2]);
+
+#ifndef BOOTLOADER
+    nand_program_timing = nand_calc_timing(pop->t_write[0], pop->t_write[1],
+                                           pop->t_write[2]);
+#endif
 
     /* BCH16 uses 218 spare bytes (10 metadata + 8 * 26 parity); BCH8 uses
  * 114 (10 + 8 * 13). ECC_CTRL bit 2 selects BCH16; 0xa00 includes
@@ -652,12 +665,75 @@ int nand_read_pages(unsigned int n, const uint8_t *bank, const uint32_t *page,
     return rc;
 }
 
-/*
- * Storage API (firmware/export/nand.h)
- */
+#ifndef BOOTLOADER
 
-/* Read-only storage interface; one sector is a 4096-byte FTL page. */
-static struct mutex nand_mutex;  /* serialises every reader of the driver */
+static int nand_finish_mutation(void)
+{
+    int rc = fmss_start();
+    if (!rc)
+        rc = fmss_wait();
+    if (rc || (FMSS_RD(FMSS_RESULT) & (1u << 27)))
+    {
+        nand_reset_chips();
+        return NAND_ERR_TIMEOUT;
+    }
+    if (FMSS_RD(FMSS_RESULT) & 1)
+    {
+        nand_reset_chips();
+        return NAND_ERR_WRITE;
+    }
+    return NAND_OK;
+}
+
+int nand_device_program(unsigned int bank, uint32_t page,
+                        const void *data, const void *meta)
+{
+    const void *source = data;
+
+    if (!nand_phys_ready || bank >= nand_geom.banks)
+        return NAND_ERR_NOCHIP;
+    if (!data || !meta || page >= nand_geom.blocks * nand_geom.pages_per_block)
+        return NAND_ERR_UNSUPPORTED;
+    if ((uintptr_t)data & (CACHEALIGN_SIZE - 1))
+    {
+        memcpy(nand_bounce, data, NAND_PAGE_SIZE);
+        source = nand_bounce;
+    }
+    memcpy(nand_meta, meta, NAND_META_SIZE);
+
+    commit_dcache_range(source, NAND_PAGE_SIZE);
+    commit_dcache_range(nand_meta, NAND_META_SIZE);
+
+    FMSS_WR(P_ROWS, page);
+    FMSS_WR(P_CEMASKS, 1u << nand_geom.ce[bank]);
+    FMSS_WR(P_META, NAND_DMA_ADDR(nand_meta));
+    FMSS_WR(P_DMALIST, NAND_DMA_ADDR(source));
+    FMSS_WR(P_TIMING, nand_program_timing);
+
+    FMSS_WR(P_ECCMODE, (nand_ecc_mode & ~1u) | 2);
+    FMSS_WR(P_ECCCFG, (nand_ecc_cfg & ~1u) | 2);
+    FMSS_WR(P_HDRLEN, nand_ecc_hdrlen);
+    FMSS_WR(P_PARLEN, nand_ecc_parlen);
+    FMSS_WR(FMSS_PROG, NAND_DMA_ADDR(fmss_prog_program));
+    return nand_finish_mutation();
+}
+
+int nand_device_erase(unsigned int bank, uint32_t block)
+{
+    if (!nand_phys_ready || bank >= nand_geom.banks)
+        return NAND_ERR_NOCHIP;
+    if (block >= nand_geom.blocks)
+        return NAND_ERR_UNSUPPORTED;
+    FMSS_WR(P_ROWS, block * nand_geom.pages_per_block);
+    FMSS_WR(P_CEMASKS, 1u << nand_geom.ce[bank]);
+    FMSS_WR(P_TIMING, nand_program_timing);
+    FMSS_WR(FMSS_PROG, NAND_DMA_ADDR(fmss_prog_erase));
+    return nand_finish_mutation();
+}
+#endif
+
+/* Storage API: one sector is a 4096-byte logical page. */
+static struct mutex nand_mutex;  /* serialises reads, writes and flushes */
 static long nand_last_activity_value = -1;
 static bool nand_ready;  /* physical layer and FTL mounted */
 static int nand_init_rc = 1;    /* 1 = not tried yet */
@@ -758,7 +834,17 @@ void nand_sleepnow(void)
 #ifdef HAVE_STORAGE_FLUSH
 int nand_flush(void)
 {
+#ifdef BOOTLOADER
     return 0;   /* nothing is ever written */
+#else
+    int rc;
+    if (!nand_ready)
+        return -1;
+    mutex_lock(&nand_mutex);
+    rc = ftl_flush();
+    mutex_unlock(&nand_mutex);
+    return rc;
+#endif
 }
 #endif
 
@@ -766,7 +852,11 @@ int nand_flush(void)
 bool nand_readonly(IF_MD_NONVOID(int drive))
 {
     IF_MD((void)drive);
+#ifdef BOOTLOADER
     return true;
+#else
+    return false;
+#endif
 }
 #endif
 
@@ -795,15 +885,30 @@ int nand_read_sectors(IF_MD(int drive,) sector_t start, int incount,
     return rc ? -3 : 0;
 }
 
-/* Read-only FTL: never acknowledge writes which have not reached flash.
- * HAVE_STORAGE_READONLY lets the filesystem and USB report write protection. */
+/* Firmware writes reach NAND before returning; bootloader writes fail. */
 int nand_write_sectors(IF_MD(int drive,) sector_t start, int count,
                        const void* outbuf)
 {
     IF_MD((void)drive);
-    (void)start;
+    if (!nand_ready)
+        return -1;
+    if (count < 0 || start > nand_num_sectors()
+        || (sector_t)count > nand_num_sectors() - start)
+        return -2;
+    if (!count)
+        return 0;
+#ifdef BOOTLOADER
     (void)outbuf;
-    return count == 0 ? 0 : -1;
+    return -3;
+#else
+    int rc;
+    mutex_lock(&nand_mutex);
+    rc = ftl_write((uint32_t)(nand_data_start + start), (uint32_t)count,
+                   outbuf);
+    nand_last_activity_value = current_tick;
+    mutex_unlock(&nand_mutex);
+    return rc;
+#endif
 }
 
 int nand_event(long id, intptr_t data)

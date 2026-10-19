@@ -94,8 +94,7 @@
    needs to do cleanup on shutdown */
 #define HAVE_STORAGE_FLUSH
 
-/* Writing is not implemented yet: USB hosts are told the disk is
- * read-only */
+/* Expose write protection: bootloader read-only, main firmware writable. */
 #define HAVE_STORAGE_READONLY
 
 /* One sector is one page of Apple's FTL, 4096 bytes; the partition table
