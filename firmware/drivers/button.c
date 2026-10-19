@@ -315,7 +315,11 @@ static void button_tick(void)
 
                             /* Safety net for players without hardware
                                poweroff */
-#if (CONFIG_PLATFORM & PLATFORM_NATIVE)
+                            /* Not on the nano 4G: its power_off() takes the
+                               I2C mutex, which this tick interrupt must not
+                               block on; the power thread's shutdown timeout
+                               is the fallback there */
+#if (CONFIG_PLATFORM & PLATFORM_NATIVE) && !defined(IPOD_NANO4G)
                             if(repeat_count > POWEROFF_COUNT * 10)
                                 power_off();
 #endif

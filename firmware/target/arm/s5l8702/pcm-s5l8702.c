@@ -196,6 +196,14 @@ static void sink_set_freq(uint16_t freq)
     }
 #endif
 
+#ifdef IPOD_NANO4G_AUDIO_HW_PENDING
+    /* nano 4G: the I2S / MCLK path from the nano 3G port has not been
+     * validated on this hardware yet; leave the audio clocks alone */
+    (void)clkcon3l;
+    (void)last_clkcon3l;
+    (void)freq;
+    return;
+#endif
     /* configure MCLK */
     /* TODO: maybe all CLKCON management should be moved to
        cscodec-ipod6g.c and system-s5l8702.c */
@@ -214,12 +222,16 @@ static void sink_set_freq(uint16_t freq)
 
 static void sink_dma_init(void)
 {
+#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
     PWRCON(1) &= ~(1 << 7);
+#endif
 
     dmac_ch_init(&dma_play_ch, &dma_play_ch_cfg);
 
+#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
     I2STXCON = I2STXCON_SETUP;
     I2SCLKCON = 1;
+#endif
 
     audiohw_preinit();
     sink_set_freq(HW_FREQ_DEFAULT);
@@ -410,7 +422,9 @@ void pcm_rec_dma_init(void)
     if (pcm_rec_initialized)
         return;
 
+#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
     PWRCON(1) &= ~(1 << 7);
+#endif
 
     dmac_ch_init(&dma_rec_ch, &dma_rec_ch_cfg);
 

@@ -37,7 +37,7 @@ enum d1759_regs {
     D1759_REG_IRQMASKA      = 0x07,
     D1759_REG_IRQMASKB      = 0x08,
     D1759_REG_IRQMASKC      = 0x09,
-//     D1759_REG_SYSCTRLA      = 0x0a,
+    D1759_REG_SYSCTRLA      = 0x0a,
 //     D1759_REG_SYSCTRLB      = 0x0b,
     D1759_REG_LEDOUT        = 0x30,
     D1759_REG_LEDCTL        = 0x31,
@@ -96,6 +96,10 @@ enum d1759_reg_ledctl {
     D1759_LEDCTL_ENABLE     = 0x01,
 };
 
+enum d1759_reg_sysctrla {
+    D1759_SYSCTRLA_POWEROFF = 0x01,
+};
+
 
 /* GPIO for external PMU interrupt */
 // #define GPIO_EINT_PMU   0x7b                // TODO: I think it is not this one, or it does not work well, also this GPIO does not exist in s5l8720
@@ -150,6 +154,7 @@ unsigned short pmu_adc_raw2mv(
         const struct pmu_adc_channel *ch, unsigned short raw);
 
 int pmu_holdswitch_locked(void);
+bool pmu_usb_present(void);
 #if CONFIG_CHARGING
 int pmu_firewire_present(void);
 #endif

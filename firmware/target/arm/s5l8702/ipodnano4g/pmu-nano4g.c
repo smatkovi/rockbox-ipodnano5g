@@ -99,7 +99,13 @@ void pmu_set_wake_condition(unsigned char condition)
 
 void pmu_enter_standby(void)
 {
-    // TODO
+    /* D1759 shutdown as the original firmware performs it.
+     * The core has already stopped playback and flushed storage. Turn off
+     * the backlight, then request PMU power-off with an exact register write
+     * (not an OR with the running-state USB/suspend control bits).
+     * Keep the scheduler available for the normal I2C bus mutex here. */
+    pmu_write(D1759_REG_LEDCTL, 0x02);
+    pmu_write(D1759_REG_SYSCTRLA, D1759_SYSCTRLA_POWEROFF);
 }
 
 #ifdef HAVE_ADJUSTABLE_CPU_FREQ
@@ -176,6 +182,12 @@ static struct eic_handler pmu_eint =
 };
 
 static int pmu_input_holdswitch;
+static bool pmu_input_usb;
+
+bool pmu_usb_present(void)
+{
+    return pmu_input_usb;
+}
 
 int pmu_holdswitch_locked(void)
 {
@@ -218,6 +230,17 @@ void usb_remove_int(void)
 {
     usb_status = USB_EXTRACTED;
 }
+#elif defined(USB_NONE)
+/* bring-up: the main binary has no USB yet (usb.c provides usb_detect);
+ * the PMU's VBUS events are read but go nowhere */
+#include "usb.h"
+void usb_insert_int(void)
+{
+}
+
+void usb_remove_int(void)
+{
+}
 #endif
 
 static void pmu_read_inputs(void)
@@ -228,9 +251,12 @@ static void pmu_read_inputs(void)
     unsigned char status[2];
 #endif
 
-    pmu_read_multiple(D1759_REG_STATUSA, sizeof(status), status);
+    if (pmu_read_multiple(D1759_REG_STATUSA, sizeof(status), status) != 0)
+        return;
 
-    if (status[0] & D1759_STATUSA_VBUS)
+    pmu_input_usb = !!(status[0] & D1759_STATUSA_VBUS);
+
+    if (pmu_input_usb)
         usb_insert_int();
     else
         usb_remove_int();

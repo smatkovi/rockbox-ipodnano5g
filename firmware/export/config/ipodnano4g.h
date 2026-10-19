@@ -152,6 +152,10 @@
 // TODO
 /* Define the type of audio codec */
 #define HAVE_CS42L55    /* CS42L58 */
+/* Bring-up: the I2S / MCLK / codec hardware path is carried over from the
+ * nano 3G port and has not run on this hardware; the main binary boots
+ * without touching it (pcm-s5l8702.c, cscodec-nano4g.c). */
+#define IPOD_NANO4G_AUDIO_HW_PENDING
 
 #define HAVE_PCM_DMA_ADDRESS
 
@@ -184,9 +188,12 @@
 #define CURRENT_BACKLIGHT  23  /* maximum brightness */
 
 /* define this if the unit can be powered or charged via USB */
+/* Bring-up: no USB in the main binary yet (USB_NONE below) */
+#ifdef BOOTLOADER
 #define HAVE_USB_POWER
 
 #define HAVE_USB_CHARGING_ENABLE
+#endif
 
 /* define this if the hardware can be powered off while charging */
 #define HAVE_POWEROFF_WHILE_CHARGING
@@ -246,8 +253,15 @@
 #define USB_DW_TURNAROUND 5
 /* logf() over USB serial (http://www.rockbox.org/wiki/PortalPlayerUsb) */
 //#define USB_ENABLE_SERIAL
+/* Bring-up: the USB controller / PHY sequence of the main binary has not
+ * run on this hardware yet; the main binary boots without USB until it does
+ * (the Apple disk mode started from the bootloader serves the disk). */
+#ifdef BOOTLOADER
 #define HAVE_USBSTACK
 #define HAVE_USB_HID_MOUSE
+#else
+#define USB_NONE
+#endif
 #define USB_VENDOR_ID 0x05AC
 #define USB_PRODUCT_ID 0x1263
 #define USB_DEVBSS_ATTR __attribute__((aligned(32)))
@@ -267,10 +281,14 @@
 #define LOGF_SERIAL
 #endif
 #else /* !BOOTLOADER */
+/* Bring-up: the UART / accessory-protocol path has not run on this
+ * hardware yet; enable it once the main binary boots to the menu. */
+#if 0
 #define HAVE_SERIAL
 /* Disable iAP when LOGF_SERIAL is enabled to avoid conflicts */
 #ifndef LOGF_SERIAL
 #define IPOD_ACCESSORY_PROTOCOL
+#endif
 #endif
 #endif
 

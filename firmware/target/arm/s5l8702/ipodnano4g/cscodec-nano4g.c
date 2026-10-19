@@ -36,15 +36,24 @@ void audiohw_init(void)
 unsigned char cscodec_read(int reg)
 {
     // TODO: not tested
+#ifdef IPOD_NANO4G_AUDIO_HW_PENDING /* codec I2C path unverified: no access */
+    (void)reg;
+    return 0;
+#else
     unsigned char data;
     i2c_read(0, 0x94, reg, 1, &data);
     return data;
+#endif
 }
 
 void cscodec_write(int reg, unsigned char data)
 {
     // TODO: not tested
+#ifdef IPOD_NANO4G_AUDIO_HW_PENDING /* codec I2C path unverified: no access */
+    (void)reg; (void)data;
+#else
     i2c_write(0, 0x94, reg, 1, &data);
+#endif
 }
 
 void cscodec_power(bool state)
@@ -63,6 +72,10 @@ void cscodec_reset(bool state)
 void cscodec_clock(bool state)
 {
     // TODO: not tested
+#ifdef IPOD_NANO4G_AUDIO_HW_PENDING /* CLKCON3 differs on the S5L8720 */
+    (void)state;
+#else
     if (state) CLKCON3 &= ~0xffff;
     else CLKCON3 |= 0x8000;
+#endif
 }

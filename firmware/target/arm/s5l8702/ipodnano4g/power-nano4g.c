@@ -54,7 +54,8 @@ void usb_charging_maxcurrent_change(int maxcurrent)
 unsigned int power_input_status(void)
 {
     unsigned int status = POWER_INPUT_NONE;
-    if (usb_detect() == USB_INSERTED)
+    /* External power is a PMU input even when the USB stack is disabled. */
+    if (pmu_usb_present())
         status |= POWER_INPUT_USB_CHARGER;
     if (pmu_firewire_present())
         status |= POWER_INPUT_MAIN_CHARGER;
