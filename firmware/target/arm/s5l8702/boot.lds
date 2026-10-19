@@ -23,6 +23,12 @@ MEMORY
     /* s5l8702/s5l8720 maps address 0 to ROM, IRAM or DRAM */
     VECT_AREA : ORIGIN = 0, LENGTH = 1K
 
+#ifdef IPOD_NANO4G
+    /* The SRAM startup initializes SDRAM before crt0 relocates here. */
+    MOVE_AREA : ORIGIN = DRAM_ORIG + 16M, LENGTH = 1M
+    BSS_AREA : ORIGIN = DRAM_ORIG + 17M,
+               LENGTH = DRAM_SIZE - 17M - TTB_SIZE
+#else
     /* IRAM region where loaded IM3 body will be moved and executed,
        preserving the loaded IM3 header (0x600 or 0x800 bytes) at IRAM1_ORIG */
     MOVE_AREA : ORIGIN = IRAM1_ORIG + IM3HDR_SZ,
@@ -31,6 +37,7 @@ MEMORY
     /* DRAM region for BSS */
     BSS_AREA  : ORIGIN = DRAM_ORIG + MAX_LOADSIZE,
                 LENGTH = DRAM_SIZE - MAX_LOADSIZE - TTB_SIZE
+#endif
 }
 #define LOAD_AREA   MOVE_AREA
 #else

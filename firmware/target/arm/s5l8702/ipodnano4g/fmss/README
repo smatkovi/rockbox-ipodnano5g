@@ -1,0 +1,53 @@
+iPod nano 4G flash sequencer (FMSS) programs
+============================================
+
+reset.s, readid.s and read.s are the sequencer programs the NAND driver
+(../nand-nano4g.c) runs. They are assembled during the build by the host tool
+tools/fmssasm (firmware.make includes fmss.make when the target's toolset
+lists fmssasm) into $(BUILDDIR)/fmss-nano4g.h, which defines the arrays
+fmss_prog_reset, fmss_prog_readid and fmss_prog_read (static, 32-byte
+aligned) for nand-nano4g.c. Edit read.s directly.
+
+Programs for the S5L8720 flash sequencer (FMSS). Each instruction is two
+words: word0 = arg | reg << 16 | opcode << 24, word1 = immediate.
+The instruction set is described below. The sequencer
+fetches the program from memory by bus address (FMSS_PROG), so the arrays
+must be cache-line aligned and cleaned from the D-cache before use.
+
+Instruction set. Registers r0..r7; r6 is visible to the CPU as
+FMSS_SEQ_RESULT (+0xc30) when the program ends. [REG] = MMIO register
+0x38a00000 + arg; mem32[rX] = system memory.
+  op 00 END   stop, raise CS_IRQ bit 0 (done)
+  op 01 WR    [arg] = imm          op 02 ST    [arg] = rR
+  op 03 LDI   rR = mem32[r(arg)]   op 04 LD    rR = [arg] & imm
+  op 05 MOVI  rR = imm             op 06 MOV   rR = r(arg)
+  op 07 WAIT  wait for event R: 0 command sent, 1 address sent, 2 DMA done,
+              3 data transferred, 4 ECC done, 12 NAND status match
+              (arg = value, mask); a timeout jumps to the fault vector
+              (FMSS_C4C, +0xc4c)
+  op 0a/0b/0c/0d AND/OR/ADD/SUB, op 13/14 SHL/SHR: imm != 0: rR = r(arg)
+              op imm; imm == 0: rR = rR op r(arg)
+  op 0e BNZ / op 17 BZ   branch to byte offset imm if rR != 0 / == 0
+  op 11 STI   mem32[r(arg)] = rR
+Every WAIT is followed by a write of the event's bit to FMC_STATUS
+(+0x048, write 1 to clear): bit 1 command, 2 address, 3 data, 20 DMA.
+
+NAND commands issued: 0xFF RESET; 0x90 + 1 address cycle (0x00) + 5 data
+bytes = READ ID; 0x00 + 5 address cycles (column 0, 3 row bytes) + 0x30 =
+READ PAGE; 0x70 READ STATUS (bit 6 = ready), then 0x00 to return to data
+output. ECC: the controller's BCH decoder (ECC_CTRL +0x804: 1 = BCH8,
+5 = BCH16, | 0xa00 = sector 0's codeword includes the 10 meta bytes).
+
+Results: RESET and READ ID end with r6 = 0; their
+fault handler sets r6 = 0x08000000 | mask of the selected chip enables,
+deselects and acknowledges at FMSS_C50 (+0xc50). READ ends with r6 = the
+page summary: bit 30 some sector uncorrectable, bit 29 some sector erased,
+bit n (0..15) some sector had n bits corrected; its fault handler sets
+r6 = summary | 0x08000000. READ also stores, per page, 12 meta bytes
+(10 corrected bytes, last word | 0xffff0000), optionally one status byte
+per sector (0xff uncorrectable, 0xfe erased, else corrected bits; four
+per u32, the first sector in the most significant byte) and an optional
+u32[18] histogram (entry n = sectors with n corrections, 17 = uncorrectable).
+
+Sizes: RESET 24 instructions (48 words), READ ID 46 (92 words), READ 552
+(1104 words).

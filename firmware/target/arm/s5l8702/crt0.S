@@ -78,6 +78,23 @@ _rtpc:
     cmp     r1, r2
     blt     2b
 
+#ifdef IPOD_NANO4G
+    /* nano 4G only: the bootloader runs from SDRAM (see boot.lds).
+     * The native SRAM stage enters with MMU/caches off. Older loaders may
+     * enter with a flat map and caches on: clean the relocated copy and
+     * discard stale instructions before start_loc disables MMU/caches. */
+    mov     r0, #0
+    mcr     p15, 0, r0, c7, c14, 0  /* clean & invalidate dcache */
+    mcr     p15, 0, r0, c7, c10, 4  /* drain write buffer */
+    /* ARM1176 erratum 411920; IRQ/FIQ remain masked from entry. */
+    .rept   4
+    mcr     p15, 0, r0, c7, c5, 0   /* invalidate icache and BTB */
+    .endr
+    .rept   11
+    nop
+    .endr
+    mcr     p15, 0, r0, c7, c5, 4   /* flush prefetch buffer */
+#endif
     ldr     pc, =start_loc    /* jump to the relocated start_loc: */
 
     .section .init.text,"ax",%progbits
@@ -107,7 +124,18 @@ start_loc:
     mov     r0, #0
     mcr     p15, 0, r0, c7, c14, 0  /* clean & invalidate dcache */
     mcr     p15, 0, r0, c7, c10, 4  /* drain write buffer */
+#if CONFIG_CPU == S5L8720
+    /* ARM1176 (S5L8720 only) erratum 411920: a single icache invalidate
+     * may leave stale lines; IRQ/FIQ remain masked from entry. */
+    .rept   4
+    mcr     p15, 0, r0, c7, c5, 0   /* invalidate icache and BTB */
+    .endr
+    .rept   11
+    nop
+    .endr
+#else
     mcr     p15, 0, r0, c7, c5, 0   /* invalidate icache */
+#endif
     mcr     p15, 0, r0, c7, c5, 4   /* flush prefetch buffer */
 
     mcr     p15, 0, r0, c8, c7, 0   /* invalidate all unlocked entries in TLB */

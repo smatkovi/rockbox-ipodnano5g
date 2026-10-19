@@ -870,7 +870,7 @@
 #define FMC_BASE 0x3C200000
 #elif CONFIG_CPU==S5L8701
 #define FMC_BASE 0x39400000
-#elif CONFIG_CPU==S5L8702
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
 /* The first of two controllers; the BootROM addresses the second at +0x400 */
 #define FMC_BASE 0x38a00000
 #endif

@@ -80,6 +80,12 @@
 
 #define CONFIG_STORAGE STORAGE_NAND
 
+/* The flash controller DMAs into the caller's buffer; buffers must be
+ * cache-line aligned (the driver bounces anything else, the FAT code
+ * bounces unaligned transfers before that) */
+#define STORAGE_WANTS_ALIGN
+#define STORAGE_NEEDS_BOUNCE_BUFFER
+
 // TODO
 //#define CONFIG_NAND NAND_SAMSUNG
 #define CONFIG_NAND 0
@@ -88,8 +94,13 @@
    needs to do cleanup on shutdown */
 #define HAVE_STORAGE_FLUSH
 
-/* The NAND flash has 2048-byte sectors, and is our only storage */
-#define SECTOR_SIZE 2048
+/* Writing is not implemented yet: USB hosts are told the disk is
+ * read-only */
+#define HAVE_STORAGE_READONLY
+
+/* One sector is one page of Apple's FTL, 4096 bytes; the partition table
+ * on the NAND counts in these units too */
+#define SECTOR_SIZE 4096
 
 /* LCD dimensions */
 #define LCD_WIDTH  240

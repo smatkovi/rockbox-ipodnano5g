@@ -219,13 +219,15 @@ void system_init(void)
      * Bootloader seems to give a blank screen when IRAM1 is disabled
      * - FW 10/13/19
      */
-#ifndef BOOTLOADER
+    /* nano 4G: runs on the SoC state left by its first-stage loader, so the
+     * IRAM1 gate and the nano 3G GPIO/I2C/PMU pre-init are not applied */
+#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G)
     /* disable IRAM1 (not used because it is slower than DRAM) */
     clockgate_enable(CLOCKGATE_SM1, false);
 #endif
 
     clocking_init(clk_modes, 0);
-#ifndef BOOTLOADER
+#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G)
     gpio_preinit();
     i2c_preinit(0);
     pmu_preinit();
@@ -315,6 +317,8 @@ void memory_init(void)
 #ifdef BOOTLOADER
 #include <stdbool.h>
 
+/* nano 4G: the SRAM startup configures clocks and SDRAM, see below */
+#ifndef IPOD_NANO4G
 static void syscon_preinit(void)
 {
     /* after ROM boot, CG16_SYS is using PLL0 @108 MHz
@@ -554,6 +558,8 @@ static void miu_preinit(bool selfrefreshing)
 #endif
 }
 
+#endif /* !IPOD_NANO4G */
+
 /* Preliminary HW initialization */
 void system_preinit(void)
 {
@@ -571,7 +577,12 @@ void system_preinit(void)
     boot_config = PDAT3 >> 2;
 #endif
 
+#ifndef IPOD_NANO4G
     syscon_preinit();
+#else
+    /* The SRAM startup configured clocks and SDRAM. Reinitializing them
+     * here would remove the memory from which this loader executes. */
+#endif
     gpio_preinit();
     i2c_preinit(0);
 
@@ -583,7 +594,11 @@ void system_preinit(void)
 
     pmu_preinit();
 
+#ifndef IPOD_NANO4G
     miu_preinit(hibernated);
+#else
+    (void)hibernated;
+#endif
 }
 
 #endif /* BOOTLOADER */
