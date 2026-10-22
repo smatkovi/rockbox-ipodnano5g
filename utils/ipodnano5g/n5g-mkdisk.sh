@@ -1,7 +1,7 @@
 #!/bin/bash
 # n5g-mkdisk.sh <rockbox.zip> <disk.img> [music files...]
 #
-# Build the nano 5G RAM disk image: a 12 MiB FAT16 "superfloppy" with a
+# Build the nano 5G RAM disk image: an 8 MiB FAT16 "superfloppy" with a
 # trimmed .rockbox (DFU uploads run at ~55 KB/s, so it is kept small) and
 # optional music in /Music. Needs root for the loop mount.
 set -eu
@@ -29,7 +29,7 @@ for d in starfield plasma mosaique fire bounce; do
     cp "$T/rocks.all/demos/$d.rock" "$R/rocks/demos/" 2>/dev/null || true
 done
 for v in bmp.ovl gif.ovl imageviewer.rock jpeg.ovl jpegp.ovl png.ovl ppm.ovl text_viewer.rock \
-         view_text.rock properties.rock open_plugins.rock shortcuts_view.rock shortcuts_append.rock \
+         view_text.rock mpegplayer.rock properties.rock open_plugins.rock shortcuts_view.rock shortcuts_append.rock \
          credits.rock search.rock sort.rock file_picker.rock cue_playlist.rock db_folder_select.rock \
          rockbox-fonts.config wavview.rock pitch_screen.rock chip8.rock; do
     cp -r "$T/rocks.all/viewers/$v" "$R/rocks/viewers/" 2>/dev/null || true
@@ -41,8 +41,8 @@ if [ $# -gt 0 ]; then
 fi
 
 rm -f "$IMG"
-truncate -s 12M "$IMG"
-mkfs.vfat -F 16 -S 512 -n NANO5G "$IMG" >/dev/null
+truncate -s 8M "$IMG"   # RAMDISK_SECTORS; the dev loop keeps images above
+mkfs.vfat -F 16 -S 512 -s 2 -n NANO5G "$IMG" >/dev/null
 $SUDO mount -o loop,uid="$(id -u)" "$IMG" "$T/mnt"
 cp -r "$T/root/." "$T/mnt/"
 sync
