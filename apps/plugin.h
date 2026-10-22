@@ -93,6 +93,7 @@ int plugin_open(const char *plugin, const char *parameter);
 #endif
 #include "misc.h"
 #include "pathfuncs.h"
+#include "accel.h"
 #include "pcm_mixer.h"
 #include "pcm_sink.h"
 #include "dsp-util.h"
@@ -180,7 +181,7 @@ int plugin_open(const char *plugin, const char *parameter);
  * when this happens please take the opportunity to sort in
  * any new functions "waiting" at the end of the list.
  */
-#define PLUGIN_API_VERSION 285
+#define PLUGIN_API_VERSION 286
 
 /* 239 Marks the removal of ARCHOS HWCODEC and CHARCELL */
 
@@ -1054,6 +1055,9 @@ struct plugin_api {
 
     /* new stuff at the end, sort into place next time
        the API gets incompatible */
+#ifdef HAVE_ACCELEROMETER
+    int (*accel_read)(int *x, int *y, int *z);
+#endif
 };
 
 /* plugin header */

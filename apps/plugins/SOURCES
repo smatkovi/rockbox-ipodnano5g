@@ -115,6 +115,10 @@ pictureflow.c
 
 metronome.c
 
+#ifdef HAVE_ACCELEROMETER
+pedometer.c
+#endif
+
 2048.c
 
 /* Lua needs at least 160 KB to work in */

@@ -63,6 +63,8 @@
  * 4096-byte FAT sectors on a drive of 512-byte sectors (the FTL page is
  * 8192 bytes), as on the iPod 6G hard disk. */
 #ifndef BOOTLOADER
+/* LIS331DLF, for the pedometer plugin */
+#define HAVE_ACCELEROMETER
 #define CONFIG_STORAGE (STORAGE_RAMDISK | STORAGE_NAND)
 #define NUM_DRIVES 2
 #define STORAGE_RAMDISK_FIRST

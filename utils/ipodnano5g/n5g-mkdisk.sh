@@ -22,7 +22,7 @@ mkdir -p "$R/rocks/games" "$R/rocks/apps" "$R/rocks/demos" "$R/rocks/viewers"
 for g in 2048 brickmania bubbles jewels minesweeper pong rockblox snake sudoku wormlet spacerocks solitaire; do
     cp "$T/rocks.all/games/$g.rock" "$R/rocks/games/" 2>/dev/null || true
 done
-for a in calculator calendar stopwatch rockpaint text_editor; do
+for a in calculator calendar stopwatch rockpaint text_editor pedometer; do
     cp "$T/rocks.all/apps/$a.rock" "$R/rocks/apps/" 2>/dev/null || true
 done
 for d in starfield plasma mosaique fire bounce; do

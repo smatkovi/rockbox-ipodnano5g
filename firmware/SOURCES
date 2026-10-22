@@ -1697,6 +1697,7 @@ target/arm/s5l8702/ipodnano5g/nandtest-nano5g.c
 #ifndef BOOTLOADER
 target/arm/s5l8702/ipodnano5g/cscodec-nano5g.c
 target/arm/s5l8702/ipodnano5g/audiotest-nano5g.c
+target/arm/s5l8702/ipodnano5g/accel-nano5g.c
 #endif
 #endif /* IPOD_NANO5G */
 
