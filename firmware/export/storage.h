@@ -322,6 +322,9 @@ bool storage_removable(int drive);
 bool storage_present(int drive);
 #endif
 int storage_driver_type(int drive);
+#ifdef HAVE_STORAGE_READONLY
+bool storage_readonly(int drive);
+#endif
 
 #endif /* NOT CONFIG_STORAGE_MULTI and NOT SIMULATOR*/
 

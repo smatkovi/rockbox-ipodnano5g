@@ -36,6 +36,7 @@
 #include "dir.h"
 #include "rb-loader.h"
 #include "rbpaths.h"
+#include "usb.h"
 
 int clickwheel_raw_buttons(void);
 
@@ -420,7 +421,11 @@ static void NORETURN_ATTR devloop_thread(void)
             /* the eject ends USB mode; once the disk is mounted again,
              * start the boot file on trial (GOOD if it does not load) */
             devloop_usb_ejected = false;
-            sleep(3 * HZ);
+            /* every drive must be ejected and the disks mounted again */
+            for (int i = 0; i < 40 && (usb_exclusive_storage()
+                     || !file_exists(BOOTDIR "/" BOOTFILE)); i++)
+                sleep(HZ / 4);
+            sleep(HZ / 2);
             logf("devloop: host ejected, starting %s", BOOTFILE);
             if (image_load(IMAGE_NEW))
             {

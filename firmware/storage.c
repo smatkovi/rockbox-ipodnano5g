@@ -335,6 +335,18 @@ int storage_init(void)
     }
 #endif
 
+#if (CONFIG_STORAGE & STORAGE_RAMDISK) && defined(STORAGE_RAMDISK_FIRST)
+    /* the RAM disk holds the root volume */
+    if ((rc=ramdisk_init())) return rc;
+
+    int ramdisk_drives = ramdisk_num_drives(num_drives);
+    for (i=0; i<ramdisk_drives; i++)
+    {
+        storage_drivers[num_drives++] =
+            (STORAGE_RAMDISK<<DRIVER_OFFSET) | (i << DRIVE_OFFSET);
+    }
+#endif
+
 #if (CONFIG_STORAGE & STORAGE_NAND)
     if ((rc=nand_init())) return rc;
 
@@ -346,7 +358,7 @@ int storage_init(void)
     }
 #endif
 
-#if (CONFIG_STORAGE & STORAGE_RAMDISK)
+#if (CONFIG_STORAGE & STORAGE_RAMDISK) && !defined(STORAGE_RAMDISK_FIRST)
     if ((rc=ramdisk_init())) return rc;
 
     int ramdisk_drives = ramdisk_num_drives(num_drives);
@@ -475,6 +487,28 @@ int storage_driver_type(int drive)
     unsigned int bit = (storage_drivers[drive] & DRIVER_MASK)>>DRIVER_OFFSET;
     return bit ? find_first_set_bit(bit) : -1;
 }
+
+#ifdef HAVE_STORAGE_READONLY
+bool storage_readonly(int drive)
+{
+    if ((unsigned int)drive >= num_drives)
+        return true;
+
+    int driver=(storage_drivers[drive] & DRIVER_MASK)>>DRIVER_OFFSET;
+    int ldrive=(storage_drivers[drive] & DRIVE_MASK)>>DRIVE_OFFSET;
+    (void)ldrive;
+
+    switch (driver)
+    {
+#if (CONFIG_STORAGE & STORAGE_NAND)
+    case STORAGE_NAND:
+        return nand_readonly(IF_MD(ldrive));
+#endif
+    default:
+        return false;
+    }
+}
+#endif /* HAVE_STORAGE_READONLY */
 
 void storage_enable(bool on)
 {

@@ -40,5 +40,13 @@ if [ -n "$NEW" ]; then
 fi
 sync
 $SUDO umount "$M"
-$SUDO eject "/dev/$dev"
-echo "ejected"
+# every LUN of the device (the read-only NAND too): Rockbox leaves USB mode
+# only when all of its drives are ejected
+usbdev=$(readlink -f "/sys/block/$dev/device" | sed 's|/host[0-9]*/.*||')
+for b in /sys/block/sd*; do
+    case "$(readlink -f "$b/device")" in
+        "$usbdev"/*) n=$(basename "$b")
+                     for p in /dev/"$n"?*; do $SUDO umount "$p" 2>/dev/null || true; done
+                     $SUDO eject "/dev/$n" && echo "ejected $n" ;;
+    esac
+done

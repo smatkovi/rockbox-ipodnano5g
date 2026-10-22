@@ -35,6 +35,7 @@ char ftl_debug_text[160];
 #define vfl_debug(...) do {} while (0)
 #endif
 #include "system.h"
+#include "kernel.h"
 #include "nand-target.h"
 #include "ftl-target.h"
 #include <string.h>
@@ -472,6 +473,11 @@ static int vfl_read(uint32_t vpn, void *data, uint8_t *meta)
 
     if (!vfl_locate(vpn, &bank, &page))
         return NAND_ERR_ECC;
+#ifdef IPOD_NANO5G
+    /* the mount's rebuild reads for seconds: let the USB thread answer
+     * the host meanwhile */
+    yield();
+#endif
     return nand_read_page(bank, page, data, meta);
 }
 

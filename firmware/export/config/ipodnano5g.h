@@ -55,9 +55,22 @@
 /* the wheel controller speaks the nano 3G/4G protocol (measured) */
 #define CONFIG_KEYPAD IPOD_4G_PAD
 
+#define CONFIG_NAND 0   /* the S5L87xx NAND driver, not a generic one */
+
 /* Bring-up: a RAM disk at RAMDISK_ADDR, loaded with a FAT image before
- * Rockbox starts, stands in for the NAND */
+ * Rockbox starts, holds .rockbox and is the first drive (the root volume).
+ * The NAND, read-only, is the second: Apple's data partition with its
+ * 4096-byte FAT sectors on a drive of 512-byte sectors (the FTL page is
+ * 8192 bytes), as on the iPod 6G hard disk. */
+#ifndef BOOTLOADER
+#define CONFIG_STORAGE (STORAGE_RAMDISK | STORAGE_NAND)
+#define NUM_DRIVES 2
+#define STORAGE_RAMDISK_FIRST
+#define HAVE_STORAGE_READONLY
+#define MAX_VIRT_SECTOR_SIZE 4096
+#else
 #define CONFIG_STORAGE STORAGE_RAMDISK
+#endif
 #define RAMDISK_ADDR    0x0a000000
 #define RAMDISK_SECTORS 16384   /* 8 MiB; the dev loop keeps images above */
 /* the RAM disk image is small enough to be FAT16 */
