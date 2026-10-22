@@ -38,9 +38,16 @@ echo "Waiting for the U-Boot DFU device (05ac:2137)..."
 wait_usb 05ac:2137 60 || { echo "U-Boot did not come up"; exit 1; }
 sleep 1
 
-$SUDO dfu-util -d 05ac:2137 -a rockbox -D "$RB" 2>&1 | grep -E "Download|done|rror" | tail -2
+$SUDO dfu-util -d 05ac:2137 -a rockbox -D "$RB" 2>&1 | grep -E "done|rror" | tail -2
 if [ -n "$DISK" ]; then
-    $SUDO dfu-util -d 05ac:2137 -a disk -D "$DISK" 2>&1 | grep -E "Download|done|rror" | tail -2
+    # U-Boot zeroes the RAM disk first, so only the used part of the image is
+    # sent: trailing zero bytes are cut off
+    TRIM=$(mktemp)
+    python3 -I -c 'import sys; d=open(sys.argv[1],"rb").read().rstrip(b"\0"); open(sys.argv[2],"wb").write(d+b"\0"*(-len(d)%4096))' "$DISK" "$TRIM"
+    T0=$(date +%s)
+    $SUDO timeout 300 dfu-util -d 05ac:2137 -a disk -D "$TRIM" 2>&1 | grep -E "done|rror|MANIFEST" | tail -2
+    echo "disk image: $(stat -c %s "$TRIM") bytes in $(( $(date +%s) - T0 )) s"
+    rm -f "$TRIM"
 fi
 echo "Starting Rockbox..."
 $SUDO dfu-util -d 05ac:2137 -a rockbox -e >/dev/null 2>&1

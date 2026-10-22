@@ -101,7 +101,7 @@ bool dbg_hw_info(void)
             _DEBUG_PRINTF(" APB: %d.%d",  p_clk / MHZ, (p_clk % MHZ) / TMHZ);
 #endif
         }
-#ifndef IPOD_NANO5G /* no PMU driver yet */
+#ifndef IPOD_NANO5G
         else if(state==1)
         {
             _DEBUG_PRINTF("PMU:");
@@ -156,7 +156,26 @@ bool dbg_hw_info(void)
             _DEBUG_PRINTF("USB D-: %d mV", adc_read_usbdata_voltage(false));
             line++;
         }
-#endif /* !IPOD_NANO5G */
+#else /* IPOD_NANO5G */
+        else if(state==1)
+        {
+            /* bring-up: raw D1759 registers, to check the nano 4G layout */
+            unsigned char regs[0x80];
+            int rc = pmu_read_multiple(0, sizeof(regs), regs);
+            _DEBUG_PRINTF("D1759 @%02x rc=%d", D1759_I2C_ADDR, rc);
+            for (i = 0; i < (int)sizeof(regs); i += 8)
+                _DEBUG_PRINTF("%02x: %02x %02x %02x %02x %02x %02x %02x %02x", i,
+                    regs[i], regs[i+1], regs[i+2], regs[i+3],
+                    regs[i+4], regs[i+5], regs[i+6], regs[i+7]);
+            line++;
+            _DEBUG_PRINTF("battery: %d mV", pmu_read_battery_mv());
+            _DEBUG_PRINTF("statusB: %02x  ledout %02x ledctl %02x",
+                regs[D1759_REG_STATUSB], regs[D1759_REG_LEDOUT],
+                regs[D1759_REG_LEDCTL]);
+            _DEBUG_PRINTF("sysctrlA: %02x  swif init: %d",
+                regs[D1759_REG_SYSCTRLA], pmu_swif_status);
+        }
+#endif /* IPOD_NANO5G */
 #ifdef UC87XX_DEBUG
         else if(state==(max_states-1))
         {

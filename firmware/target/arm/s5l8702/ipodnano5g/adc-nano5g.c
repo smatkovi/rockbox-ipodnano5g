@@ -21,14 +21,15 @@
 #include "config.h"
 #include "adc.h"
 #include "adc-target.h"
+#include "pmu-target.h"
+#include "kernel.h"
 
-/* Bring-up: the battery ADC sits behind the PMU, which is not driven yet.
- * Report a mid-range voltage so power management does not shut down. */
-
-#define FAKE_BATTERY_MV 3900
+static struct mutex adc_mutex;
+static int battery_millivolts = -1;
 
 void adc_init(void)
 {
+    mutex_init(&adc_mutex);
 }
 
 unsigned short adc_read(int channel)
@@ -37,14 +38,28 @@ unsigned short adc_read(int channel)
     return 0;
 }
 
-unsigned short adc_read_millivolts(int channel)
-{
-    return (channel == ADC_BATTERY) ? FAKE_BATTERY_MV : 0;
-}
-
+/* Returns battery voltage [millivolts]. A failed conversion keeps the last
+ * valid reading, so one I2C error cannot look like an empty battery. */
 unsigned int adc_read_battery_voltage(void)
 {
-    return FAKE_BATTERY_MV;
+    mutex_lock(&adc_mutex);
+    for (int attempt = 0; attempt < 10; attempt++)
+    {
+        int mv = pmu_read_battery_mv();
+        if (mv > 0)
+        {
+            battery_millivolts = mv;
+            break;
+        }
+    }
+    int millivolts = battery_millivolts;
+    mutex_unlock(&adc_mutex);
+    return millivolts;
+}
+
+unsigned short adc_read_millivolts(int channel)
+{
+    return (channel == ADC_BATTERY) ? adc_read_battery_voltage() : 0;
 }
 
 unsigned int adc_read_usbdata_voltage(bool dp)

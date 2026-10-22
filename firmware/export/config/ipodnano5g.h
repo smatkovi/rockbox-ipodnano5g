@@ -3,8 +3,8 @@
  *
  * Bring-up state: the S5L8730 runs on the clocks and SDRAM set up by
  * Apple's WTF stage (started tethered with wInd3x). Storage is a RAM disk
- * preloaded with a FAT image; NAND, audio, USB, PMU and RTC are not driven
- * yet.
+ * preloaded with a FAT image. The PMU (D1759) drives the backlight and the
+ * battery ADC; NAND, audio, USB, charging and RTC are not driven yet.
  */
 
 #define IPOD_ARCH 1
@@ -103,6 +103,13 @@
 
 /* Define this for LCD backlight available */
 #define HAVE_BACKLIGHT
+#define HAVE_BACKLIGHT_BRIGHTNESS
+
+/* Main LCD backlight brightness range and defaults (D1759 LEDOUT >> 2;
+ * Apple leaves 0x28) */
+#define MIN_BRIGHTNESS_SETTING      1
+#define MAX_BRIGHTNESS_SETTING      0x3f
+#define DEFAULT_BRIGHTNESS_SETTING  0x28
 
 /* Define this if you have a software controlled poweroff */
 #define HAVE_SW_POWEROFF

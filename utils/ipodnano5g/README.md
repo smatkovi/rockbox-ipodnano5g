@@ -12,9 +12,9 @@ back to Apple's firmware.
 | LCD | panel `38b3`, 240×376, controller as on the S5L8702; frames by PIO |
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
 | Storage | RAM disk at `0x0a000000` (12 MiB FAT16 image), no NAND yet |
-| PMU, backlight, battery, hold switch | stubs (backlight stays on, battery faked) |
-| Audio, USB, RTC | not driven |
-| Known bug | System → Rockbox Info hangs |
+| PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
+| Audio, USB, RTC, charging | not driven |
+| Known bug | System → Rockbox Info hangs (probably waits on the audio thread) |
 
 This branch is based on Viktor Krapivin's nano 4G series on the Rockbox
 Gerrit (changes 8189–8195), which brings the S5L8720/ARM1176 support the
@@ -49,7 +49,7 @@ RAM disk image (FAT16 without partition table; Rockbox mounts it as a
 "superfloppy"):
 
 ```sh
-unzip rockbox.zip -d disk-root      # trim .rockbox/rocks to fit 12 MiB
+unzip rockbox.zip -d disk-root      # trim it: DFU runs at ~55 KB/s
 truncate -s 12M disk.img
 mkfs.vfat -F 16 -S 512 -n NANO5G disk.img
 # loop-mount disk.img and copy disk-root/.rockbox into it
@@ -83,11 +83,22 @@ Apple logo until the screen stays black.
   LCD 1, USB-OTG 2, NAND 5, ECC 9, DMAC0/1 11/12, wheel 33, SPI0 34,
   USB-PHY 35, I2C0 36, timer 37, I2C1 38, UART0 41, GPIO 44.
 - Watchdog reset as on the S5L8702: write `0x100000` to `0x3c800000`.
+- PMU: Dialog D1759 (Apple diags module `DxeD1759Diagnostic`) on I2C bus 0
+  at 0xe6, register layout as on the nano 4G: battery = ADC channel 4
+  (`0x40 = 0x54`, result in `0x41/0x42`, 2500..4500 mV), hold switch =
+  status B (`0x05`) bit 0, clear when locked. I2C writes to LEDOUT (`0x30`)
+  are ignored; the brightness goes over SWIF.
+- SWIF (single-wire link to the PMU) at `0x3de00000`, clock gates 66 and
+  149: reset `+0x04 = 1` until clear, `+0x00 = 0x1703`; channel 0 control
+  `+0x14`, data `+0x18`; write = control 2, data
+  `(reg & 0x7f) << 8 | 0x80 | value`, then set control bit 0 and wait for it
+  to clear. Apple's diags enable it with SYSCTRLA (`0x0a`) bits 4..5 and SWIF
+  register 8 = 0x80; SWIF register 9 then sets LEDOUT (0..255).
 - The clickwheel is a Cypress or Synaptics controller (Apple diags carry
   updaters for both); NAND seen: Toshiba `98 d7 94 32`.
 
 ## Next steps
 
-PMU (backlight, battery, hold switch), audio codec (Cirrus Logic CLI1480A),
+Charging (D1759, as on the nano 4G), audio codec (Cirrus Logic CLI1480A),
 USB, and the NAND/FMSS driver with Apple's VSVFL/FTL — the nano 4G series is
 the closest reference. An untethered boot path is open.

@@ -21,28 +21,43 @@
 #include "config.h"
 #include "backlight.h"
 #include "backlight-target.h"
+#include "pmu-target.h"
 
-/* Bring-up: the backlight is driven by the PMU, which is not identified
- * yet. Apple's WTF stage leaves it on, and it stays on. */
+/* D1759 LED driver. Apple leaves LEDCTL = 0x01, LEDOUT = 0xa0. LEDOUT
+ * (0..255) is written over the SWIF link, as Apple's diags do on this model
+ * (I2C writes to it are ignored); off is level 0, like the diags' "-f". */
+
+static int backlight_level = DEFAULT_BRIGHTNESS_SETTING << 2;
+static bool backlight_is_on = true;
 
 void backlight_hw_brightness(int brightness)
 {
-    (void)brightness;
+    backlight_level = brightness << 2;
+    if (backlight_is_on)
+        pmu_swif_write(D1759_SWIF_LEDOUT, backlight_level);
 }
 
 void backlight_hw_on(void)
 {
+    backlight_is_on = true;
+    pmu_swif_write(D1759_SWIF_LEDOUT, backlight_level);
 }
 
 void backlight_hw_off(void)
 {
+    backlight_is_on = false;
+    pmu_swif_write(D1759_SWIF_LEDOUT, 0);
 }
 
 bool backlight_hw_init(void)
 {
+    backlight_hw_brightness(DEFAULT_BRIGHTNESS_SETTING);
+    backlight_hw_on();
     return true;
 }
 
+/* Kill the backlight, instantly. */
 void backlight_hw_kill(void)
 {
+    backlight_hw_off();
 }
