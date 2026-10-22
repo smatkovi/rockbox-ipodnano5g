@@ -153,3 +153,24 @@
 
 /* Define this if a programmable hotkey is mapped */
 #define HAVE_HOTKEY
+
+/* USB: Synopsys DesignWare OTG as on the S5L8720, PHY as in freemyipod's
+ * nano 5G U-Boot and Linux; cable presence from the D1759 (status A) */
+#define CONFIG_USBOTG USBOTG_DESIGNWARE
+#define USB_DW_CLOCK 0
+#define USB_DW_TURNAROUND 5
+#define HAVE_USBSTACK
+#define USB_STATUS_BY_EVENT
+#define USB_VENDOR_ID 0x05AC
+#define USB_PRODUCT_ID 0x1265
+#define USB_DEVBSS_ATTR __attribute__((aligned(32)))
+#define USB_READ_BUFFER_SIZE (1024*24)
+
+/* Bring-up conveniences for working on the device over USB alone:
+ * logf over USB serial (on by default), leave USB mode when the host ejects
+ * the disk, and restart a changed rockbox.ipod without asking */
+#define ROCKBOX_HAS_LOGF
+#define USB_ENABLE_SERIAL
+#define USB_SERIAL_DEFAULT_ON
+#define USB_EJECT_LEAVES_USB_MODE
+#define BOOTFILE_CHANGED_ROLO_WITHOUT_ASKING

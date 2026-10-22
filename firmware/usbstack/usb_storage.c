@@ -22,7 +22,12 @@
 #include "usb_core.h"
 #include "usb_drv.h"
 #include "usb_class_driver.h"
-/*#define LOGF_ENABLE*/
+#ifdef IPOD_NANO5G /* bring-up */
+#define LOGF_ENABLE
+#endif
+#ifdef IPOD_NANO5G
+#include "devloop-nano5g.h"
+#endif
 #include "logf.h"
 #include "storage.h"
 #include "disk.h"
@@ -1073,6 +1078,15 @@ static void handle_scsi_ready(struct command_block_wrapper* cbw)
                     {
                         logf("scsi eject");
                         ejected[lun]=true;
+#ifdef USB_EJECT_LEAVES_USB_MODE
+                        /* bring-up target that stays plugged in: the host
+                         * ejecting every drive ends USB mode */
+                        bool all = true;
+                        for(int i = 0; i < storage_num_drives(); i++)
+                            all = all && ejected[i];
+                        if(all)
+                            usb_status_event(USB_EXTRACTED);
+#endif
                     }
                 }
             }
@@ -1466,6 +1480,9 @@ static void handle_scsi_ready(struct command_block_wrapper* cbw)
  * OUT endpoint is not rearmed until this CBW has received its CSW. */
 static void handle_scsi(struct command_block_wrapper* cbw)
 {
+#ifdef IPOD_NANO5G
+    devloop_usb_cbw_count++;    /* bring-up: USB storage works */
+#endif
     if(!usb_exclusive_storage()) {
         state = WAITING_FOR_STORAGE;
         return;

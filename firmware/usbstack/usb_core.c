@@ -22,7 +22,9 @@
 #include "kernel.h"
 #include "string.h"
 #include "panic.h"
-/*#define LOGF_ENABLE*/
+#ifdef IPOD_NANO5G /* bring-up */
+#define LOGF_ENABLE
+#endif
 #include "logf.h"
 
 #include "usb.h"

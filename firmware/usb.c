@@ -38,6 +38,9 @@
 #ifdef HAVE_USBSTACK
 #include "usb_core.h"
 #endif
+#ifdef IPOD_NANO5G /* bring-up */
+#define LOGF_ENABLE
+#endif
 #include "logf.h"
 #include "screendump.h"
 #include "powermgmt.h"
@@ -118,7 +121,11 @@ static struct event_queue usb_queue SHAREDBSS_ATTR;
 static bool usb_hid = true;
 #endif
 #ifdef USB_ENABLE_SERIAL
+#ifdef USB_SERIAL_DEFAULT_ON
+static bool usb_serial = true;
+#else
 static bool usb_serial = false;
+#endif
 #endif
 #ifdef USB_ENABLE_AUDIO
 static int usb_audio = 0;
@@ -506,10 +513,13 @@ static void NORETURN_ATTR usb_thread(void)
             }
             if(--usb_num_acks_to_expect > 0) {
                 DEBUGF("usb: got ack, %d to go...\n", usb_num_acks_to_expect);
+                logf("usb: ack, %d to go", usb_num_acks_to_expect);
                 break;
             }
 
             DEBUGF("usb: all threads have acknowledged the connect.\n");
+            logf("usb: all acks, host %d excl req %d", usb_host_present,
+                 exclusive_storage_requested);
             if(usb_host_present && exclusive_storage_requested) {
                 usb_slave_mode(true);
                 exclusive_storage_enabled = true;
@@ -880,6 +890,7 @@ void usb_request_exclusive_storage(void)
     exclusive_storage_requested = true;
     usb_broadcast_seqnum += 1;
     usb_num_acks_to_expect = queue_broadcast(SYS_USB_CONNECTED, usb_broadcast_seqnum) - 1;
+    logf("usb: connect broadcast, %d acks to come", usb_num_acks_to_expect);
     DEBUGF("usb: waiting for %d acks...\n", usb_num_acks_to_expect);
     if(usb_num_acks_to_expect == 0 && usb_host_present) {
         usb_slave_mode(true);

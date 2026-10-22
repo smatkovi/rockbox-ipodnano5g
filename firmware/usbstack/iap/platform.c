@@ -461,12 +461,14 @@ uint8_t _iap_convert_battery_level(int rb_battery_level) {
 
 uint8_t _iap_convert_charge_status(enum charge_state_type rb_charge_state) {
     switch(rb_charge_state) {
+#if CONFIG_CHARGING
     case CHARGING:
         return IAPIPodStatePowerState_ExternalCharging;
     case TOPOFF:
     case TRICKLE:
         return IAPIPodStatePowerState_ExternalCharged;
         break;
+#endif
     default:
         return IAPIPodStatePowerState_Internal;
     }

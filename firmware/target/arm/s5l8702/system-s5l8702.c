@@ -22,6 +22,9 @@
 #include "system.h"
 #include "panic.h"
 #include "system-target.h"
+#ifdef IPOD_NANO5G
+#include "devloop-nano5g.h"
+#endif
 #include "i2c-s5l8702.h"
 #include "pmu-target.h"
 #include "uart-target.h"
@@ -252,6 +255,10 @@ void system_init(void)
 
 void system_reboot(void)
 {
+#ifdef IPOD_NANO5G
+    /* bring-up: back to the U-Boot shell that loaded us, if it is there */
+    devloop_return_to_uboot(DEVLOOP_REBOOT);
+#endif
     /* Reset the SoC */
     asm volatile("msr CPSR_c, #0xd3   \n"
                  "mov r0, #0x100000   \n");
@@ -267,6 +274,13 @@ void system_reboot(void)
 void system_exception_wait(void)
 {
 //    post_mortem_stub();
+#ifdef IPOD_NANO5G
+    /* bring-up: show the panic for a few seconds, then go back to the
+     * U-Boot shell (system_reboot) with a report */
+    unsigned long start = USEC_TIMER;
+    while (USEC_TIMER - start < 5000000);
+    devloop_return_to_uboot(DEVLOOP_EXCEPTION);
+#endif
     while(1);
 }
 

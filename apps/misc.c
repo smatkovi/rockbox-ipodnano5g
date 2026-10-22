@@ -865,7 +865,14 @@ void check_bootfile(bool do_rolo)
                                                    ID2P(LANG_REBOOT_NOW) };
                     static const struct text_message message={ lines, 2 };
                     button_clear_queue(); /* Empty the keyboard buffer */
-                    if(gui_syncyesno_run(&message, NULL, NULL) == YESNO_YES)
+#ifdef BOOTFILE_CHANGED_ROLO_WITHOUT_ASKING
+                    (void)message;
+#endif
+                    if(
+#ifdef BOOTFILE_CHANGED_ROLO_WITHOUT_ASKING
+                       true ||
+#endif
+                       gui_syncyesno_run(&message, NULL, NULL) == YESNO_YES)
                     {
                         audio_hard_stop();
                         rolo_load(BOOTDIR "/" BOOTFILE);

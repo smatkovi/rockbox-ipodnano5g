@@ -22,10 +22,12 @@
 #include "system.h"
 #include "power.h"
 #include "pmu-target.h"
+#include "devloop-nano5g.h"
 
 void power_init(void)
 {
     pmu_init();
+    devloop_init();
 }
 
 /* Bring-up: without a PMU driver there is no standby; restart instead, which

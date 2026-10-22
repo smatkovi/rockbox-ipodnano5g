@@ -53,7 +53,18 @@ void usb_dw_target_enable_clocks()
     clockgate_enable(CLOCKGATE_USBOTG, true);
     clockgate_enable(CLOCKGATE_USBPHY, true);
 
-#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730 /* own PHY sequence and registers */
+#if CONFIG_CPU == S5L8730
+    /* freemyipod's nano 5G U-Boot and Linux PHY power-up */
+    OPHYPWR = 0;  /* PHY: Power up */
+    udelay(10000);
+    ORSTCON = 1;  /* PHY: Assert Software Reset */
+    udelay(10000);
+    ORSTCON = 0;  /* PHY: Deassert Software Reset */
+    udelay(10000);
+    OPHYUNK1 = 6;
+    OPHYCLK = 1;
+    udelay(400000);
+#elif CONFIG_CPU == S5L8720 /* own PHY sequence and registers */
     OPHYPWR = 0;  /* PHY: Power up */
     /* PHY reference clock: follows the oscillator strap */
     OPHYCLK = 0x10 | soc_get_sec_epoch();
@@ -92,7 +103,14 @@ void usb_dw_target_disable_clocks()
     udelay(10);
     ORSTCON = 7;  /* PHY: Assert Software Reset */
     udelay(10);
-#elif (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730)
+#elif CONFIG_CPU == S5L8730
+    /* freemyipod's nano 5G PHY power-down */
+    OPHYPWR = 0xff;
+    udelay(10000);
+    ORSTCON = 0xff;
+    udelay(10000);
+    OPHYUNK1 = 4;
+#elif CONFIG_CPU == S5L8720
     OPHYUNK1 = 4;
     OPHYPWR = 0x1f;  /* PHY: Power down */
     udelay(10);

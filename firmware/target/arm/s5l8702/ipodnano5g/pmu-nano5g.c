@@ -23,6 +23,7 @@
 #include "kernel.h"
 #include "thread.h"
 #include "i2c-s5l8702.h"
+#include "usb.h"
 #include "s5l87xx.h"
 #include "clocking-s5l8702.h"
 #include "pmu-target.h"
@@ -138,12 +139,31 @@ int pmu_swif_status;
 
 static long pmu_thread_stack[DEFAULT_STACK_SIZE/2/sizeof(long)];
 static volatile bool pmu_hold_locked;
+static bool pmu_usb_valid, pmu_usb;
 
 static void pmu_read_inputs(void)
 {
-    unsigned char statusb;
-    if (pmu_read_multiple(D1759_REG_STATUSB, 1, &statusb) == 0)
-        pmu_hold_locked = !(statusb & D1759_STATUSB_INPUT2);
+    unsigned char status[2], sysctrla;
+    if (pmu_read_multiple(D1759_REG_STATUSA, 2, status) != 0 ||
+        pmu_read_multiple(D1759_REG_SYSCTRLA, 1, &sysctrla) != 0)
+        return;
+
+    pmu_hold_locked = !(status[1] & D1759_STATUSB_INPUT2);
+
+    /* USB cable: VBUS in status A, the raw bit while the USB input is
+     * switched off (nano 4G layout). Only changes are reported. */
+    bool usb = (sysctrla & D1759_SYSCTRLA_INPUTOFF) ?
+               !!(status[0] & D1759_STATUSA_VBUSRAW) :
+               !!(status[0] & D1759_STATUSA_VBUS);
+    if (usb != pmu_usb || !pmu_usb_valid)
+    {
+        pmu_usb = usb;
+        pmu_usb_valid = true;
+        if (usb)
+            usb_insert_int();
+        else
+            usb_remove_int();
+    }
 }
 
 static void NORETURN_ATTR pmu_thread(void)
@@ -158,6 +178,11 @@ static void NORETURN_ATTR pmu_thread(void)
 bool pmu_holdswitch_locked(void)
 {
     return pmu_hold_locked;
+}
+
+bool pmu_usb_present(void)
+{
+    return pmu_usb;
 }
 
 void pmu_init(void)

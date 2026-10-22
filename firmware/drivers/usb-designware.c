@@ -1308,6 +1308,19 @@ static void usb_dw_init(void)
     DWC_DAINTMSK = 0xffffffff;
     usb_endpoints = DWC_DAINTMSK;
 
+    /* On some cores (S5L8730) every DAINTMSK bit is writable, so also honour
+     * the endpoint directions in GHWCFG1: two bits per endpoint, 0 = both,
+     * 1 = IN only, 2 = OUT only. */
+    uint32_t ghwcfg1 = DWC_GHWCFG1;
+    for (int ep = 1; ep < 16; ep++)
+    {
+        uint32_t dir = (ghwcfg1 >> (2 * ep)) & 3;
+        if (dir == 1)
+            usb_endpoints &= ~(1 << (ep + 16));     /* no OUT */
+        else if (dir == 2)
+            usb_endpoints &= ~(1 << ep);            /* no IN */
+    }
+
     uint32_t gintmsk = USBRST|ENUMDNE|IEPINT|OEPINT;
 #ifdef USB_DW_ARCH_SLAVE
     gintmsk |= RXFLVL;

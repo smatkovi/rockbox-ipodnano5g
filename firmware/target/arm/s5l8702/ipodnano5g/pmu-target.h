@@ -43,6 +43,9 @@
 #define D1759_REG_ADCRES        0x41
 
 #define D1759_STATUSB_INPUT2    0x01    /* hold switch: 0 -> locked (nano 4G) */
+#define D1759_STATUSA_VBUS      0x08    /* USB power */
+#define D1759_STATUSA_VBUSRAW   0x40    /* USB power, also with the input off */
+#define D1759_SYSCTRLA_INPUTOFF 0x08    /* USB input switched off */
 
 unsigned char pmu_read(int address);
 int pmu_read_multiple(int address, int count, unsigned char* buffer);
@@ -62,5 +65,6 @@ int pmu_read_battery_mv(void);
 
 void pmu_init(void);
 bool pmu_holdswitch_locked(void);
+bool pmu_usb_present(void);
 
 #endif /* __PMU_TARGET_H__ */

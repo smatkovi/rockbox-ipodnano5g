@@ -632,8 +632,13 @@ static void usb_iap_notify_event(intptr_t data) {
             return;
         }
 
-        if(last_charge_state < 0 || last_charge_state != charge_state || last_battery_level != battery_level()) {
-            last_charge_state  = charge_state;
+#if CONFIG_CHARGING
+        enum charge_state_type cur_charge_state = charge_state;
+#else
+        enum charge_state_type cur_charge_state = DISCHARGING;
+#endif
+        if(last_charge_state < 0 || last_charge_state != cur_charge_state || last_battery_level != battery_level()) {
+            last_charge_state  = cur_charge_state;
             last_battery_level = battery_level();
             iap_notify_power_state(ctx, _iap_convert_charge_status(last_charge_state), _iap_convert_battery_level(last_battery_level));
         }

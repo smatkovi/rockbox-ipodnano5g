@@ -37,7 +37,7 @@
 #include "backtrace.h"
 #endif
 
-#if (defined(CPU_MIPS) && (CONFIG_PLATFORM & PLATFORM_NATIVE))
+#if (defined(CPU_MIPS) && (CONFIG_PLATFORM & PLATFORM_NATIVE)) || defined(IPOD_NANO5G)
 /* TODO: see comment above exception_dump in system-mips.c */
 char panic_buf[128];
 #else
