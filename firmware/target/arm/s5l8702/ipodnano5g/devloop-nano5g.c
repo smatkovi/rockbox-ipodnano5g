@@ -263,6 +263,11 @@ static void uboot_enter(bool go)
 {
     uint8_t *ub = (uint8_t *)DEVLOOP_UBOOT_ADDR;
 
+    /* U-Boot's USB console (its preboot, before bootcmd) only comes up
+     * with the cable in: wait for it */
+    while (!pmu_usb_present() && !pmu_usb_present_now())
+        udelay(100000);
+
     if (image_valid(UBOOT_SAVE))
         memcpy(ub, IMAGE_DATA(UBOOT_SAVE), UBOOT_SAVE->len);
     else if ((*(volatile uint32_t *)DEVLOOP_UBOOT_ADDR >> 24) != 0xea)
@@ -331,9 +336,6 @@ void devloop_return_to_uboot(int reason)
     if (image_valid(IMAGE_GOOD))
         image_start(IMAGE_GOOD);
 
-    /* U-Boot's USB console only comes up with the cable in: wait for it */
-    while (!pmu_usb_present() && !pmu_usb_present_now())
-        udelay(100000);
     uboot_enter(false);
     enable_irq();
 }
