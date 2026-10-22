@@ -30,12 +30,20 @@
 #define DEVLOOP_MAILBOX_ADDR    0x0af00000
 #define DEVLOOP_MAILBOX_MAGIC   0x4e35474d      /* "MG5N" */
 #define DEVLOOP_USB_TIMEOUT     40
+/* images to restart from (devloop-nano5g.c), above Rockbox's 32 MiB */
+/* (below U-Boot's heap, which it clears: about 0x0afa5000..0x0bfa7000) */
+#define DEVLOOP_GOOD_ADDR       0x0a800000
+#define DEVLOOP_NEW_ADDR        0x0aa00000
+#define DEVLOOP_SLOT_SIZE       0x00200000
+#define DEVLOOP_TRAMP_ADDR      0x0ac00000
+#define DEVLOOP_UBOOT_SAVE_ADDR 0x0ac10000
 
 enum devloop_reason {
     DEVLOOP_REBOOT = 1,
     DEVLOOP_EXCEPTION,
     DEVLOOP_USB_STORAGE_SILENT,
     DEVLOOP_HOST_EJECT,
+    DEVLOOP_HANG_DUMP,              /* MENU+PLAY held in a hang */
 };
 
 void devloop_init(void);
@@ -43,7 +51,10 @@ void devloop_init(void);
 extern volatile unsigned int devloop_usb_cbw_count;
 /* set by usb_storage when the host ejects a drive: back to the shell */
 extern volatile bool devloop_usb_ejected;
-/* back to the U-Boot shell if its copy is there; returns otherwise */
+/* restart the GOOD image with a report, or else back to the U-Boot shell
+ * if its copy is there; returns otherwise */
 void devloop_return_to_uboot(int reason);
+/* init(): the disk is mounted */
+void devloop_boot(void);
 
 #endif /* __DEVLOOP_NANO5G_H__ */

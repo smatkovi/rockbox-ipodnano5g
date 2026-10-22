@@ -175,6 +175,18 @@ static void NORETURN_ATTR pmu_thread(void)
     }
 }
 
+/* VBUS read from the PMU now, without the PMU thread: for the devloop,
+ * which may run with interrupts off */
+bool pmu_usb_present_now(void)
+{
+    unsigned char status, sysctrla;
+    if (pmu_read_multiple(D1759_REG_STATUSA, 1, &status) != 0 ||
+        pmu_read_multiple(D1759_REG_SYSCTRLA, 1, &sysctrla) != 0)
+        return true;    /* unknown: don't wait for it */
+    return (sysctrla & D1759_SYSCTRLA_INPUTOFF) ?
+           !!(status & D1759_STATUSA_VBUSRAW) : !!(status & D1759_STATUSA_VBUS);
+}
+
 bool pmu_holdswitch_locked(void)
 {
     return pmu_hold_locked;

@@ -59,7 +59,7 @@
  * Rockbox starts, stands in for the NAND */
 #define CONFIG_STORAGE STORAGE_RAMDISK
 #define RAMDISK_ADDR    0x0a000000
-#define RAMDISK_SECTORS 24576   /* 12 MiB */
+#define RAMDISK_SECTORS 16384   /* 8 MiB; the dev loop keeps images above */
 /* the RAM disk image is small enough to be FAT16 */
 #define HAVE_FAT16SUPPORT
 
@@ -173,4 +173,5 @@
 #define USB_ENABLE_SERIAL
 #define USB_SERIAL_DEFAULT_ON
 #define USB_EJECT_LEAVES_USB_MODE
-#define BOOTFILE_CHANGED_ROLO_WITHOUT_ASKING
+/* no BOOTFILE_CHANGED_ROLO_WITHOUT_ASKING: after an eject the devloop starts
+ * the new boot file itself (devloop-nano5g.c) */

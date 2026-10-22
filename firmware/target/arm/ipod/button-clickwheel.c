@@ -441,6 +441,14 @@ bool headphones_inserted(void)
 }
 #endif
 
+#ifdef IPOD_NANO5G
+/* bring-up: the devloop tick task watches for its dump combination */
+int clickwheel_raw_buttons(void)
+{
+    return int_btn;
+}
+#endif
+
 /*
  * Get button pressed from hardware
  */

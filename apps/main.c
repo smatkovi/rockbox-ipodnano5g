@@ -477,6 +477,9 @@ static void init(void)
 #else /* ! (CONFIG_PLATFORM & PLATFORM_HOSTED) */
 
 #include "errno.h"
+#ifdef IPOD_NANO5G
+#include "devloop-nano5g.h"
+#endif
 
 static void init(void) INIT_ATTR;
 static void init(void)
@@ -706,6 +709,10 @@ static void init(void)
 #endif
         }
     }
+
+#ifdef IPOD_NANO5G
+    devloop_boot();     /* bring-up: report of the last run to /devloop */
+#endif
 
     pcm_init();
     dsp_init();

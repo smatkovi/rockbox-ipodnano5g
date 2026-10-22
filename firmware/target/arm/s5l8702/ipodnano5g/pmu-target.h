@@ -66,5 +66,6 @@ int pmu_read_battery_mv(void);
 void pmu_init(void);
 bool pmu_holdswitch_locked(void);
 bool pmu_usb_present(void);
+bool pmu_usb_present_now(void);
 
 #endif /* __PMU_TARGET_H__ */
