@@ -93,11 +93,9 @@
 
 #define CONFIG_LCD LCD_IPOD6GNANO3G4G
 
-/* Define the type of audio codec. The nano 5G has a Cirrus Logic CLI1480A,
- * not driven yet: the main binary boots without touching the I2S path
- * (pcm-s5l8702.c, cscodec-nano5g.c). */
+/* Define the type of audio codec: a Cirrus Logic CS42L58 (Apple's diags),
+ * driven like the CS42L55, on I2S2 (pcm-s5l8702.c, cscodec-nano5g.c) */
 #define HAVE_CS42L55
-#define IPOD_NANO5G_AUDIO_HW_PENDING
 
 #define HAVE_PCM_DMA_ADDRESS
 

@@ -13,8 +13,9 @@ back to Apple's firmware.
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
 | Storage | RAM disk at `0x0a000000` (12 MiB FAT16 image), no NAND yet |
 | PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
-| Audio, USB, RTC, charging | not driven |
-| Known bug | System → Rockbox Info hangs (probably waits on the audio thread) |
+| Audio | works: CS42L58 (driven like the CS42L55) on I2S2, DMAC0 request 0, codec as clock master |
+| USB, RTC, charging | not driven |
+| Known bug | System → Rockbox Info hangs |
 
 This branch is based on Viktor Krapivin's nano 4G series on the Rockbox
 Gerrit (changes 8189–8195), which brings the S5L8720/ARM1176 support the
@@ -94,6 +95,17 @@ Apple logo until the screen stays black.
   `(reg & 0x7f) << 8 | 0x80 | value`, then set control bit 0 and wait for it
   to clear. Apple's diags enable it with SYSCTRLA (`0x0a`) bits 4..5 and SWIF
   register 8 = 0x80; SWIF register 9 then sets LEDOUT (0..255).
+- Audio (Apple's DxeCS42L58, I2s, DevicePowerManagement, DxeD1759 modules,
+  then measured): codec Cirrus Logic CS42L58 on I2C bus 0 at 0x94, its init
+  sequence the CS42L55 one byte for byte. Supply: D1759 regulator 19 =
+  register 0x21 ((mV - 1200) / 100, 1800 mV) and enable 0x11 bit 2. Reset:
+  GPIO 14.4 (low, 10 us, high). Data: I2S2 at 0x3d400000 (clock gate 48),
+  codec as clock master with Apple's TXCON 0x03100099; its clock pins
+  12.1/12.2 are in function 3 by default. TX DMA: DMAC0 request 0, IRQ 16.
+  MCLK 12 MHz = oscillator / 2 on CG16_AUD0..2.
+- GPIO commands as in Apple's Gpio driver: pin id (port << 16) | pin, write
+  (port << 16) | (pin << 8) | function to 0x3cf00240; functions 0xe/0xf =
+  output low/high.
 - The clickwheel is a Cypress or Synaptics controller (Apple diags carry
   updaters for both); NAND seen: Toshiba `98 d7 94 32`.
 

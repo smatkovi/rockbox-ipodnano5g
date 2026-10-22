@@ -30,6 +30,7 @@
 #include "pcm_sampr.h"
 #include "pcm-target.h"
 #include "dma-s5l8702.h"
+#include "clocking-s5l8702.h"
 #include "pcm_sink.h"
 
 /* DMA configuration */
@@ -58,9 +59,21 @@ static struct dmac_ch dma_play_ch = {
     .llibuf_bus = DMAC_MASTER_AHB1,
 };
 
+#ifdef IPOD_NANO5G
+/* nano 5G: the codec is on I2S2 (I2S_BASE), whose TX request is DMAC0 line
+ * 0 as on the S5L8702 (both measured) */
+#define PCM_DMAC0_PERI_TX   S5L8702_DMAC0_PERI_IIS2_TX
+#define PCM_DADDR_PERI_TX   (I2S_BASE + 0x10)
+#define PCM_I2S_CLOCKGATE   48
+#else
+#define PCM_DMAC0_PERI_TX   S5L8702_DMAC0_PERI_IIS0_TX
+#define PCM_DADDR_PERI_TX   S5L8702_DADDR_PERI_IIS0_TX
+#define PCM_I2S_CLOCKGATE   39
+#endif
+
 static struct dmac_ch_cfg dma_play_ch_cfg = {
     .srcperi = S5L8702_DMAC0_PERI_MEM,
-    .dstperi = S5L8702_DMAC0_PERI_IIS0_TX,
+    .dstperi = PCM_DMAC0_PERI_TX,
     .sbsize  = DMACCxCONTROL_BSIZE_8,
     .dbsize  = DMACCxCONTROL_BSIZE_4,
     .swidth  = DMACCxCONTROL_WIDTH_16,
@@ -87,6 +100,10 @@ static struct dmac_ch_cfg dma_play_ch_cfg = {
 #ifdef IPOD_NANO3G
 #define I2STXCON_SETUP  0x0b100001
 #define I2STXCOM_START  0x6
+#elif defined(IPOD_NANO5G)
+/* Apple's I2s driver, mode with the codec as clock master (measured) */
+#define I2STXCON_SETUP  0x03100099
+#define I2STXCOM_START  0xe
 #else
 #define I2STXCON_SETUP  0xb100019
 #define I2STXCOM_START  0xe
@@ -115,7 +132,7 @@ static inline void play_queue_dma(void *addr, size_t size, void *cb_data)
 {
     commit_dcache_range(addr, size);
     dmac_ch_queue(&dma_play_ch, addr,
-                (void*)S5L8702_DADDR_PERI_IIS0_TX, size, cb_data);
+                (void*)PCM_DADDR_PERI_TX, size, cb_data);
 }
 
 static void dma_play_callback(void *cb_data)
@@ -204,6 +221,19 @@ static void sink_set_freq(uint16_t freq)
     (void)freq;
     return;
 #endif
+#ifdef IPOD_NANO5G
+    /* MCLK 12 MHz: oscillator (24 MHz) / 2 on CG16_AUD0..2 (Apple's I2S
+     * divider table is 12 MHz / fs); the S5L8730 has no CLKCON3L */
+    (void)clkcon3l;
+    (void)last_clkcon3l;
+    {
+        uint16_t val = CG16_UNK14_BIT | (1 << CG16_DIV1_POS);  /* OSC/2/1 */
+        volatile uint32_t *r0c = (volatile uint32_t *)&CG16_AUD0;
+        volatile uint32_t *r10 = (volatile uint32_t *)&CG16_AUD2;
+        *r0c = (uint32_t)val | ((uint32_t)val << 16);          /* AUD0, AUD1 */
+        *r10 = (*r10 & 0xffff0000) | val;                       /* AUD2 */
+    }
+#else
     /* configure MCLK */
     /* TODO: maybe all CLKCON management should be moved to
        cscodec-ipod6g.c and system-s5l8702.c */
@@ -213,6 +243,7 @@ static void sink_set_freq(uint16_t freq)
         CLKCON3 &= ~0x8000;  /* CLKCON3L on */
         last_clkcon3l = clkcon3l;
     }
+#endif
 
     /* configure I2S clock ratio */
     I2SCLKDIV = MCLK_FREQ / hw_freq_sampr[freq];
@@ -223,7 +254,7 @@ static void sink_set_freq(uint16_t freq)
 static void sink_dma_init(void)
 {
 #if !defined(IPOD_NANO4G_AUDIO_HW_PENDING) && !defined(IPOD_NANO5G_AUDIO_HW_PENDING) /* nano 4G/5G: I2S not validated yet */
-    PWRCON(1) &= ~(1 << 7);
+    clockgate_enable(PCM_I2S_CLOCKGATE, true);
 #endif
 
     dmac_ch_init(&dma_play_ch, &dma_play_ch_cfg);

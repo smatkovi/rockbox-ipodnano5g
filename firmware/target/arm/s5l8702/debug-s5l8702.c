@@ -30,6 +30,11 @@
 #include "power.h"
 #include "adc.h"
 #include "pmu-target.h"
+#ifdef IPOD_NANO5G
+#include "i2c-s5l8702.h"
+#include "cscodec.h"
+#include "audiotest-nano5g.h"
+#endif
 #include "pcm-target.h"
 #ifdef HAVE_SERIAL
 #include "uart-target.h"
@@ -50,6 +55,10 @@
 extern int lcd_type;
 extern int rec_hw_ver;
 
+#ifdef IPOD_NANO5G
+static bool audio_test_requested;
+#endif
+
 bool dbg_hw_info(void)
 {
     int line;
@@ -57,6 +66,8 @@ bool dbg_hw_info(void)
     unsigned int state = 0;
 #ifdef UC87XX_DEBUG
     const unsigned int max_states=3;
+#elif defined(IPOD_NANO5G)
+    const unsigned int max_states=3;    /* + I2C scan / codec page */
 #else
     const unsigned int max_states=2;
 #endif
@@ -76,6 +87,18 @@ bool dbg_hw_info(void)
             get_system_freqs(&cpu_hz, NULL, NULL);
             _DEBUG_PRINTF("CPU:");
             _DEBUG_PRINTF("speed: %d MHz", cpu_hz / 1000000);
+#ifdef IPOD_NANO5G
+            {
+                /* measured: ARM1176 cycle counter over 20 ms */
+                uint32_t c0, c1, pmnc;
+                asm volatile("mrc p15, 0, %0, c15, c12, 0" : "=r"(pmnc));
+                asm volatile("mcr p15, 0, %0, c15, c12, 0" :: "r"(pmnc | 1));
+                asm volatile("mrc p15, 0, %0, c15, c12, 1" : "=r"(c0));
+                udelay(20000);
+                asm volatile("mrc p15, 0, %0, c15, c12, 1" : "=r"(c1));
+                _DEBUG_PRINTF("measured: %lu MHz", (unsigned long)(c1 - c0) / 20000);
+            }
+#endif
             _DEBUG_PRINTF("current_tick: %d", (unsigned int)current_tick);
             line++;
             _DEBUG_PRINTF("LCD type: %d", lcd_type);
@@ -175,6 +198,60 @@ bool dbg_hw_info(void)
             _DEBUG_PRINTF("sysctrlA: %02x  swif init: %d",
                 regs[D1759_REG_SYSCTRLA], pmu_swif_status);
         }
+        else if(state==2)
+        {
+            /* bring-up: who answers on the I2C buses, and the registers at
+             * 0x94, where the iPod classic has its CS42L55 */
+            unsigned char b, regs[0x30];
+            char found[64];
+            static bool codec_released = false;
+            if (!codec_released)
+            {
+                /* release the codec reset (GPIO 14.4) as Apple's driver
+                 * does: low, 10 us, high */
+                cscodec_reset(true);
+                udelay(10);
+                cscodec_reset(false);
+                udelay(1000);
+                codec_released = true;
+            }
+            for (int bus = 0; bus < 2; bus++)
+            {
+                int n = 0;
+                found[0] = 0;
+                for (int a = 0x10; a < 0xf0 && n < 56; a += 2)
+                    if (i2c_read(bus, a, 0, 1, &b) == 0)
+                        n += snprintf(found + n, sizeof(found) - n, "%02x ", a);
+                _DEBUG_PRINTF("i2c%d: %s", bus, found);
+            }
+            line++;
+            int rc = i2c_read(0, 0x94, 0x01 | 0x80, sizeof(regs), regs);
+            _DEBUG_PRINTF("0x94 regs 01.. rc=%d pcon14=%08lx", rc,
+                (unsigned long)PCON(14));
+            for (i = 0; i < (int)sizeof(regs); i += 8)
+                _DEBUG_PRINTF("%02x: %02x %02x %02x %02x %02x %02x %02x %02x", i + 1,
+                    regs[i], regs[i+1], regs[i+2], regs[i+3],
+                    regs[i+4], regs[i+5], regs[i+6], regs[i+7]);
+            line++;
+            static uint32_t irq[6];
+            static bool probe_done = false;
+            _DEBUG_PRINTF("SELECT: DMA interrupt probe");
+            if (probe_done)
+            {
+                _DEBUG_PRINTF("tc %02lx left %lu", (unsigned long)irq[0],
+                    (unsigned long)irq[5]);
+                _DEBUG_PRINTF("raw0 %08lx raw1 %08lx", (unsigned long)irq[1],
+                    (unsigned long)irq[2]);
+                _DEBUG_PRINTF("en0  %08lx en1  %08lx", (unsigned long)irq[3],
+                    (unsigned long)irq[4]);
+            }
+            if (audio_test_requested)
+            {
+                audio_test_requested = false;
+                audiotest_dma_irq(irq);
+                probe_done = true;
+            }
+        }
 #endif /* IPOD_NANO5G */
 #ifdef UC87XX_DEBUG
         else if(state==(max_states-1))
@@ -230,6 +307,13 @@ bool dbg_hw_info(void)
                     state++;
                 }
                 break;
+
+#ifdef IPOD_NANO5G
+            case BUTTON_SELECT:
+                if (state == 2)
+                    audio_test_requested = true;
+                break;
+#endif
 
             case DEBUG_CANCEL:
             case BUTTON_REL:

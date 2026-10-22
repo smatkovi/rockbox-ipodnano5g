@@ -35,7 +35,18 @@ $SUDO env HOME="$HOME" XDG_DATA_HOME="$HOME/.local/share" \
     timeout 150 "$WIND3X" cfw run "$UBOOT" 2>&1 | grep -v "Error when sending" | tail -3
 
 echo "Waiting for the U-Boot DFU device (05ac:2137)..."
-wait_usb 05ac:2137 60 || { echo "U-Boot did not come up"; exit 1; }
+if ! wait_usb 05ac:2137 20; then
+    # WTF can take longer to come up than wInd3x waits; if it is there,
+    # hand it U-Boot ourselves
+    if lsusb -d 05ac:1246 >/dev/null 2>&1; then
+        echo "WTF is up, sending U-Boot to it directly..."
+        IMG=$(mktemp)
+        "$WIND3X" makedfu -k n5g "$UBOOT" "$IMG" >/dev/null 2>&1
+        $SUDO dfu-util -d 05ac:1246 -D "$IMG" 2>&1 | grep -E "done|rror" | tail -1
+        rm -f "$IMG"
+    fi
+    wait_usb 05ac:2137 40 || { echo "U-Boot did not come up"; exit 1; }
+fi
 sleep 1
 
 $SUDO dfu-util -d 05ac:2137 -a rockbox -D "$RB" 2>&1 | grep -E "done|rror" | tail -2

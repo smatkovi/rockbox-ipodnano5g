@@ -1198,7 +1198,12 @@
 #define ECCCTRL_STARTDECNOSYND (1 << 2)
 
 /* 17. IIS Tx/Rx INTERFACE */
+#ifdef IPOD_NANO5G
+/* the nano 5G's codec is on interface 2 (I2S_BASE + I2S_INTERFACE2_OFFSET) */
+#define I2S_BASE              0x3D400000
+#else
 #define I2S_BASE              0x3CA00000
+#endif
 #define I2S_INTERFACE1_OFFSET   0x300000
 #define I2S_INTERFACE2_OFFSET   0xA00000
 

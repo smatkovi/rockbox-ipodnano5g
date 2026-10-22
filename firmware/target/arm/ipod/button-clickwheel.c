@@ -383,7 +383,13 @@ static void s5l_clickwheel_init(void)
     PDAT10 &= ~2;
 #elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
     clockgate_enable(CLOCKGATE_CWHEEL, true);
+#ifdef IPOD_NANO5G
+    /* GPIO 14.4 is the audio codec reset on the nano 5G (Apple's CS42L58
+     * driver drives it): leave it alone */
+    PCON14 = (PCON14 & ~0x00f0ff00) | 0x00202200;
+#else
     PCON14 = (PCON14 & ~0x00ffff00) | 0x00222200;
+#endif
     WHEEL00 = 0; /* stop s5l8702 controller */
     WHEELINT = 7;
     WHEEL10 = 1;
@@ -465,7 +471,11 @@ int button_read_device(void)
             PWRCONEXT |= 1;
 #elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
             WHEEL00 = 0;
+#ifdef IPOD_NANO5G
+            PCON14 = (PCON14 & ~0x00f0ff00) | 0x00000e00;  /* not 14.4 */
+#else
             PCON14 = (PCON14 & ~0x00ffff00) | 0x000e0e00;
+#endif
             clockgate_enable(CLOCKGATE_CWHEEL, false);
 #endif
         }
