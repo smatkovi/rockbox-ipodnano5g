@@ -35,6 +35,8 @@
 #include "../ipodnano4g/ftl-target.h"
 #include "nandtest-nano5g.h"
 
+extern char ftl_debug_text[];
+
 char nandtest_text[NANDTEST_TEXT_SIZE];
 static int nandtest_len;
 static uint8_t nandtest_page[NAND_PAGE_SIZE] CACHEALIGN_ATTR;
@@ -117,11 +119,34 @@ void nandtest_run(void)
     rc = ftl_init();
     out("ftl_init %d%s, %lu pages", rc, ftl_was_restored() ? " (restored)" : "",
         (unsigned long)ftl_num_sectors());
+    for (char *l = ftl_debug_text, *e; *l; l = e + 1)
+    {
+        if (!(e = strchr(l, '\n')))
+            break;
+        out("vfl %.*s", (int)(e - l), l);
+    }
     if (rc)
         return;
     rc = ftl_read(0, 1, nandtest_page);
     out("ftl page 0: %d", rc);
-    if (!rc)
-        show_mbr("fw");
+    if (rc)
+        return;
+    show_mbr("fw");
+    /* the data partition's boot sector, if the MBR counts in FTL pages */
+    if (nandtest_page[510] == 0x55 && nandtest_page[511] == 0xaa)
+        for (int i = 0; i < 4; i++)
+        {
+            const uint8_t *e = nandtest_page + 0x1be + 16 * i;
+            uint32_t start = e[8] | (e[9] << 8) | (e[10] << 16)
+                             | ((uint32_t)e[11] << 24);
+            if (e[4] != 0x0b && e[4] != 0x0c)
+                continue;
+            /* the MBR counts 4096-byte sectors, half an FTL page */
+            const uint8_t *b = nandtest_page + (start & 1) * 4096;
+            rc = ftl_read(start / 2, 1, nandtest_page);
+            out("p%d boot: %d %.8s %.5s %02x%02x", i, rc, b + 3, b + 0x52,
+                b[510], b[511]);
+            break;
+        }
     out("reads %lu", (unsigned long)nand_get_read_count());
 }

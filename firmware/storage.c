@@ -63,7 +63,12 @@ static unsigned int num_drives;
 #endif
 #if (CONFIG_STORAGE & STORAGE_RAMDISK)
  #ifndef RAMDISK_THREAD_STACK_SIZE
-  #define RAMDISK_THREAD_STACK_SIZE (0) /* not used on its own */
+  #if CONFIG_STORAGE == STORAGE_RAMDISK
+   /* the only driver: the storage thread runs on this stack alone */
+   #define RAMDISK_THREAD_STACK_SIZE (DEFAULT_STACK_SIZE*2)
+  #else
+   #define RAMDISK_THREAD_STACK_SIZE (0) /* not used on its own */
+  #endif
  #endif
 #endif
 

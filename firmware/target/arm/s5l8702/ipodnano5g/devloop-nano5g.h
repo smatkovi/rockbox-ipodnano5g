@@ -35,11 +35,14 @@ enum devloop_reason {
     DEVLOOP_REBOOT = 1,
     DEVLOOP_EXCEPTION,
     DEVLOOP_USB_STORAGE_SILENT,
+    DEVLOOP_HOST_EJECT,
 };
 
 void devloop_init(void);
 /* usb_storage counts the CBWs it receives here */
 extern volatile unsigned int devloop_usb_cbw_count;
+/* set by usb_storage when the host ejects a drive: back to the shell */
+extern volatile bool devloop_usb_ejected;
 /* back to the U-Boot shell if its copy is there; returns otherwise */
 void devloop_return_to_uboot(int reason);
 

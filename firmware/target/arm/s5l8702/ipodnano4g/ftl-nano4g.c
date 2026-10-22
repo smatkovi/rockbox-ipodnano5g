@@ -23,6 +23,17 @@
  * committed context or rebuilds the mapping from page metadata. */
 
 #include "config.h"
+#include "logf.h"
+#ifdef IPOD_NANO5G
+#include <stdio.h>
+/* bring-up: what vfl_open found, for the NAND test report */
+char ftl_debug_text[160];
+#define vfl_debug(...) \
+    snprintf(ftl_debug_text + strlen(ftl_debug_text), \
+             sizeof(ftl_debug_text) - strlen(ftl_debug_text), __VA_ARGS__)
+#else
+#define vfl_debug(...) do {} while (0)
+#endif
 #include "system.h"
 #include "nand-target.h"
 #include "ftl-target.h"
@@ -32,16 +43,30 @@
 /* Layout the code below assumes; nand_phys_init() only accepts such chips */
 #define FTL_BANKS           4
 #define FTL_PAGES_PER_BLOCK 128
-#define FTL_PAGES_PER_VB    (FTL_BANKS * FTL_PAGES_PER_BLOCK)   /* 512 */
 #define FTL_MAX_BLOCKS      8192
+/* VSVFL address layout ("vendor type" in the VFL context). The nano 4G
+ * chips use 0x10001: one virtual bank per chip. The nano 5G's 8 KiB-page
+ * Toshiba chips use 0x150011: two virtual banks per chip, bank b < 4 on
+ * the even blocks of chip b and bank b >= 4 on the odd blocks of chip b - 4
+ * (the 5G bootloader's NAND driver, which picks this by vendor type). */
+#ifdef IPOD_NANO5G
+#define VFL_VENDOR_TYPE     0x150011
+#define VFL_BANKS_PER_CHIP  2
+#else
+#define VFL_VENDOR_TYPE     0x10001
+#define VFL_BANKS_PER_CHIP  1
+#endif
+#define VFL_VBANKS          (FTL_BANKS * VFL_BANKS_PER_CHIP)
+#define FTL_PAGES_PER_VB    (VFL_VBANKS * FTL_PAGES_PER_BLOCK)  /* 512, 5G: 1024 */
 
 /* VSVFL context page (little endian; one 2048-byte context
  * per chip, at the start of a 4096-byte page whose meta is the VFL mark):
  *
  *   0x000 u32  usn_inc       newest context of the volume = largest value
  *   0x008 u32  ftl_type      2 = YAFTL
- *   0x026 u16  remap[820]    entry i: block replaced by reserve block
- *                            pool_start + i; 0xfff0 unused, 0xffff bad reserve
+ *   0x026 u16  remap[820]    entry i: block replaced by reserve block i
+ *                            (vfl_reserve_block); 0xfff0 unused, 0xffff bad
+ *                            reserve
  *   0x68e u16  cxt_blocks[4] blocks this chip's context rotates through
  *   0x696 u16  usable        virtual blocks given to the FTL (+ 23 extra)
  *   0x698 u16  pool_start    first reserve block
@@ -247,6 +272,8 @@ static bool vfl_check_signature(void)
     if (!vfl_find_special(0, name, sig, sizeof(sig)))
         return false;
     w = get32(sig);
+    vfl_debug("sign %08lx %08lx\n", (unsigned long)w,
+         (unsigned long)get32(sig + 4));
     if ((w >> 24) != 'C' || ((w >> 8) & 0xff) != '1')
         return false;
     if (((w >> 16) & 0xff) != '0' && ((w >> 16) & 0xff) != '1')
@@ -313,6 +340,22 @@ static bool vfl_load_cxt(unsigned int bank)
     return true;
 }
 
+/* Reserve blocks per chip: each of its virtual banks has its blocks from
+ * pool_start on in reserve */
+static unsigned int vfl_reserve_blocks(void)
+{
+    return vfl_blocks - VFL_BANKS_PER_CHIP * vfl_pool_start;
+}
+
+/* Chip block of reserve block i: the chip's virtual banks share the remap
+ * table, the first bank's reserve blocks first */
+static unsigned int vfl_reserve_block(unsigned int i)
+{
+    unsigned int per_bank = vfl_blocks / VFL_BANKS_PER_CHIP - vfl_pool_start;
+
+    return (vfl_pool_start + i % per_bank) * VFL_BANKS_PER_CHIP + i / per_bank;
+}
+
 /* Load per-chip contexts and bad-block maps. Volume-wide fields come from
  * the context with the largest usn_inc. Reject unsupported address layouts
  * and values exceeding the static tables. */
@@ -326,11 +369,17 @@ static int vfl_open(void)
     /* Require a volume signature and factory bad-block table on every chip.
  * The remap tables in the VFL contexts supply the current bad-block list. */
     if (!vfl_check_signature())
+    {
+        vfl_debug("no signature\n");
         return NAND_ERR_FTL;
+    }
     for (bank = 0; bank < FTL_BANKS; bank++)
     {
         if (!vfl_find_special(bank, bbt_name, NULL, 0) || !vfl_load_cxt(bank))
+        {
+            vfl_debug("bank %u: no BBT/context\n", bank);
             return NAND_ERR_FTL;
+        }
         if (get32(vfl_cxt[bank] + VFL_CXT_USN) >= newest_usn)
         {
             newest_usn = get32(vfl_cxt[bank] + VFL_CXT_USN);
@@ -343,20 +392,30 @@ static int vfl_open(void)
     vfl_pool_start = get16(newest + VFL_CXT_POOL_START);
     for (i = 0; i < 3; i++)
         vfl_ftl_ctrl[i] = get16(newest + VFL_CXT_FTL_CTRL + 2 * i);
+    vfl_debug("usn %lx ftl %lx vendor %lx\nusable %u pool %u ctrl %u\n",
+         (unsigned long)newest_usn,
+         (unsigned long)get32(newest + VFL_CXT_FTL_TYPE),
+         (unsigned long)get32(newest + VFL_CXT_VENDOR), vfl_usable,
+         vfl_pool_start, vfl_ftl_ctrl[0]);
     if (get32(newest + VFL_CXT_FTL_TYPE) == 2)
         return NAND_ERR_UNSUPPORTED;
-    /* Address layout: 0 = the chip's default, 0x00010001 for every chip we
-     * accept. Only one way per chip (identity block mapping) is handled. */
+    /* Address layout: 0 = the chip's default; otherwise only the one
+     * VFL_VENDOR_TYPE is handled */
     vendor = get32(newest + VFL_CXT_VENDOR);
+#ifdef IPOD_NANO5G
+    if (vendor != VFL_VENDOR_TYPE)
+#else
     if (vendor != 0 && (vendor & 0xffff) != 1)
+#endif
         return NAND_ERR_UNSUPPORTED;
-    if (vfl_pool_start > vfl_blocks || vfl_blocks - vfl_pool_start > VFL_MAX_REMAP
+    if (vfl_pool_start > vfl_blocks / VFL_BANKS_PER_CHIP
+        || vfl_reserve_blocks() > VFL_MAX_REMAP
         || vfl_usable <= FTL_EXTRA_VBS || vfl_usable > vfl_pool_start)
         return NAND_ERR_FTL;
 
     /* Bad-block bitmap: a block is bad if a reserve block replaces it, and
      * a bad reserve block is bad too */
-    entries = vfl_blocks - vfl_pool_start;
+    entries = vfl_reserve_blocks();
     memset(vfl_bad, 0, sizeof(vfl_bad));
     for (bank = 0; bank < FTL_BANKS; bank++)
         for (i = 0; i < entries; i++)
@@ -366,7 +425,7 @@ static int vfl_open(void)
             if (e == VFL_REMAP_UNUSED)
                 continue;
             if (e == VFL_REMAP_BAD)  /* the reserve block itself is bad */
-                e = vfl_pool_start + i;
+                e = vfl_reserve_block(i);
             if (e < vfl_blocks)
                 vfl_bad[bank][e >> 3] |= 1 << (e & 7);
         }
@@ -374,7 +433,7 @@ static int vfl_open(void)
 }
 
 /* Physical block of a virtual block on one chip, 0xffff if lost */
-/* A bad block maps to pool_start + i where remap[i] equals its block number. */
+/* A bad block maps to reserve block i where remap[i] equals its block number. */
 static unsigned int vfl_remap_block(unsigned int bank, unsigned int block)
 {
     unsigned int i;
@@ -383,22 +442,24 @@ static unsigned int vfl_remap_block(unsigned int bank, unsigned int block)
         return 0xffff;
     if (!(vfl_bad[bank][block >> 3] & (1 << (block & 7))))
         return block;
-    for (i = 0; i < vfl_blocks - vfl_pool_start; i++)
+    for (i = 0; i < vfl_reserve_blocks(); i++)
         if (vfl_remap[bank][i] == block)
-            return vfl_pool_start + i;
+            return vfl_reserve_block(i);
     return 0xffff;
 }
 
-/* Virtual pages stripe across four chips. Fail if a bad block has no reserve. */
+/* Virtual pages stripe across the virtual banks. Fail if a bad block has no
+ * reserve. */
 static bool vfl_locate(uint32_t vpn, uint8_t *bank, uint32_t *page)
 {
-    unsigned int block;
+    unsigned int vbank = vpn % VFL_VBANKS, block;
 
-    *bank = vpn % FTL_BANKS;
-    block = vfl_remap_block(*bank, vpn / FTL_PAGES_PER_VB);
+    *bank = vbank % FTL_BANKS;
+    block = vfl_remap_block(*bank, vpn / FTL_PAGES_PER_VB * VFL_BANKS_PER_CHIP
+                                   + vbank / FTL_BANKS);
     if (block == 0xffff)
         return false;
-    *page = block * FTL_PAGES_PER_BLOCK + (vpn % FTL_PAGES_PER_VB) / FTL_BANKS;
+    *page = block * FTL_PAGES_PER_BLOCK + (vpn % FTL_PAGES_PER_VB) / VFL_VBANKS;
     return true;
 }
 
@@ -467,7 +528,10 @@ static bool ftl_load(void)
         }
     }
     if (best == 0xffff)
+    {
+        vfl_debug("load: no ctrl block\n");
         return false;
+    }
 
     /* Its last written page must be an FTL context; anything else (an
      * "invalid" mark, a table page) means the context is stale */
@@ -487,25 +551,38 @@ static bool ftl_load(void)
             break;
     }
     if (!ok)
+    {
+        vfl_debug("load: ctrl %u page %u rc %d type %02x\n", best, page, rc,
+                  ftl_meta[9]);
         return false;
+    }
 
     /* Require readable block-map, log-offset, counter and statistics pages. */
     if (!ftl_read_table(FTL_CXT_MAP_PAGES,
                         (ftl_vbs * 2 + NAND_PAGE_SIZE - 1) / NAND_PAGE_SIZE,
                         ftl_map, ftl_vbs * 2))
+    {
+        vfl_debug("load: map\n");
         return false;
+    }
     if (!ftl_read_table(FTL_CXT_OFF_PAGES,
                         (FTL_LOG_SLOTS * FTL_PAGES_PER_VB * 2 + NAND_PAGE_SIZE - 1)
                             / NAND_PAGE_SIZE,
                         ftl_offsets, FTL_LOG_SLOTS * FTL_PAGES_PER_VB * 2))
+    {
+        vfl_debug("load: offsets\n");
         return false;
+    }
     if (!ftl_read_table(FTL_CXT_EC_PAGES,
                         (total * 2 + NAND_PAGE_SIZE - 1) / NAND_PAGE_SIZE,
                         NULL, total * 2)
         || !ftl_read_table(FTL_CXT_RC_PAGES,
                            (total * 2 + NAND_PAGE_SIZE - 1) / NAND_PAGE_SIZE,
                            NULL, total * 2))
+    {
+        vfl_debug("load: counters\n");
         return false;
+    }
     /* Check the statistics page only when its virtual block is below ftl_vbs. */
     if (get32(ftl_cxt + FTL_CXT_STATS_FLAG) == 0xffffffff)
     {
@@ -513,7 +590,10 @@ static bool ftl_load(void)
         uint16_t vb = (uint16_t)(vpn / FTL_PAGES_PER_VB);
         if ((vb == 0 || vb < ftl_vbs)
             && vfl_read(vpn, ftl_buf, ftl_meta) != NAND_OK)
+        {
+            vfl_debug("load: stats\n");
             return false;
+        }
     }
 
     /* Load all 18 log slots; slot 17 is scratch, normally vbn 0xffff. */
@@ -903,7 +983,7 @@ int ftl_init(void)
     return 0;
 }
 
-/* Logical pages (4096 bytes each) = ftl_vbs * 512 */
+/* Logical pages (NAND_PAGE_SIZE bytes each) = ftl_vbs * FTL_PAGES_PER_VB */
 uint32_t ftl_num_sectors(void)
 {
     return ftl_mounted ? ftl_pages : 0;

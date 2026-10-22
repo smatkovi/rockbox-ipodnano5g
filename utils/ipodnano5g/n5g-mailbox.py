@@ -9,7 +9,7 @@ the logf log.
 import argparse, os, re, select, struct, termios, time
 
 BASE = 0x0af00000
-REASONS = {1: "reboot", 2: "exception/panic", 3: "USB storage silent"}
+REASONS = {1: "reboot", 2: "exception/panic", 3: "USB storage silent", 4: "host ejected the drive"}
 
 
 def shell(fd, cmd, timeout=30):
@@ -71,6 +71,10 @@ def main():
     off += 1024
     print("threads:")
     print(threads)
+    nand = read_mem(fd, BASE + off, 768).split(b"\0")[0].decode(errors="replace")
+    off += 768
+    print("nandtest:")
+    print(nand)
     idx, wrap = struct.unpack("<II", read_mem(fd, BASE + off, 8))
     off += 8
     n = 16384 if wrap else min(idx, 16384)

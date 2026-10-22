@@ -1078,6 +1078,9 @@ static void handle_scsi_ready(struct command_block_wrapper* cbw)
                     {
                         logf("scsi eject");
                         ejected[lun]=true;
+#ifdef IPOD_NANO5G
+                        devloop_usb_ejected = true;
+#endif
 #ifdef USB_EJECT_LEAVES_USB_MODE
                         /* bring-up target that stays plugged in: the host
                          * ejecting every drive ends USB mode */

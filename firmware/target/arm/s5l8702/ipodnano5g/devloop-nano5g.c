@@ -31,6 +31,7 @@
 #include "nandtest-nano5g.h"
 
 volatile unsigned int devloop_usb_cbw_count;
+volatile bool devloop_usb_ejected;
 extern char panic_buf[128];
 
 struct devloop_mailbox {
@@ -45,6 +46,7 @@ struct devloop_mailbox {
     uint32_t dwc_outep[6][8];       /* 0x38400b00.. */
     char panic[128];
     char threads[1024];             /* "id status prio name" lines */
+    char nandtest[NANDTEST_TEXT_SIZE];
     uint32_t logfindex, logfwrap;
     char logf[MAX_LOGF_SIZE];
 };
@@ -83,6 +85,7 @@ static void fill_mailbox(int reason)
                               "%2u %s %2d %s\n", id, ti.statusstr,
                               ti.current_priority, ti.name);
     }
+    memcpy(mb->nandtest, nandtest_text, sizeof(mb->nandtest));
     mb->logfindex = logfindex;
     mb->logfwrap = logfwrap;
     memcpy(mb->logf, logfbuffer, sizeof(mb->logf));
@@ -127,6 +130,13 @@ static void NORETURN_ATTR devloop_thread(void)
     while (true)
     {
         sleep(HZ);
+        if (devloop_usb_ejected)
+        {
+            sleep(HZ/2);    /* let the CSW go out first */
+            logf("devloop: host ejected the drive");
+            devloop_return_to_uboot(DEVLOOP_HOST_EJECT);
+            devloop_usb_ejected = false;
+        }
         if (pmu_usb_present() && devloop_usb_cbw_count == 0)
         {
             if (++usb_seconds >= DEVLOOP_USB_TIMEOUT)
