@@ -37,6 +37,7 @@
 #include "rb-loader.h"
 #include "rbpaths.h"
 #include "usb.h"
+#include "i2c-s5l8702.h"
 
 int clickwheel_raw_buttons(void);
 
@@ -464,6 +465,27 @@ static void NORETURN_ATTR devloop_thread(void)
     }
 }
 
+/* Which I2C devices answer (an address-only write, no data), and the
+ * accelerometer's WHO_AM_I: for the radio and pedometer bring-up */
+static void i2c_scan(void)
+{
+    for (int bus = 0; bus < 2; bus++)
+    {
+        char line[96];
+        int n = snprintf(line, sizeof(line), "i2c%d:", bus);
+        for (int a = 0x08; a < 0x78 && n < (int)sizeof(line) - 6; a++)
+            if (i2c_write(bus, a << 1, -1, 0, NULL) == 0)
+                n += snprintf(line + n, sizeof(line) - n, " %02x", a);
+        logf("devloop: %s", line);
+        for (int a = 0x18; a <= 0x19; a++)
+        {
+            unsigned char who = 0;
+            if (i2c_read(bus, a << 1, 0x0f, 1, &who) == 0)
+                logf("devloop: i2c%d %02x WHO_AM_I %02x", bus, a, who);
+        }
+    }
+}
+
 /* Called by init() once the disk is mounted, before USB can take it:
  * save the last report to /devloop, and keep the boot file as GOOD when
  * there is none yet (the first start, from U-Boot) */
@@ -479,6 +501,7 @@ void devloop_boot(void)
         if (image_load(IMAGE_GOOD))
             IMAGE_GOOD->running = 1;
     }
+    i2c_scan();
     logf("devloop: boot, running %s, good %d new %d",
          IMAGE_GOOD->running == 2 ? "NEW" : "GOOD",
          image_valid(IMAGE_GOOD), image_valid(IMAGE_NEW));
