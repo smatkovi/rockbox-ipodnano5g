@@ -1726,7 +1726,7 @@ cat <<EOF
                            29) Classic/6G        55) Sansa Clip
  ==Olympus=                80) Nano 3G (WIP)     56) Sansa e200v2
  70) M:Robe 500            81) Nano 4G (WIP)     57) Sansa m200v4
- 71) M:Robe 100                                  58) Sansa Fuze
+ 71) M:Robe 100            82) Nano 5G (WIP)     58) Sansa Fuze
                            ==Creative==          59) Sansa c200v2
  ==Philips==               89) Zen X-Fi Style    60) Sansa Clipv2
  100) GoGear SA9200        93) Zen X-Fi2         62) Sansa Clip+
@@ -2703,6 +2703,28 @@ fi
     t_cpu="arm"
     t_manufacturer="s5l8702"
     t_model="ipodnano4g"
+    ;;
+
+   82|ipodnano5g)
+    target_id=128
+    modelname="ipodnano5g"
+    target="IPOD_NANO5G"
+    memory=32 # of 64 MiB; the rest holds the RAM disk image
+    arm1176jzscc
+    tool="$rootdir/tools/scramble -add=nn5g"
+    bmp2rb_mono="$rootdir/tools/bmp2rb -f 0"
+    bmp2rb_native="$rootdir/tools/bmp2rb -f 4"
+    output="rockbox.ipod"
+    appextra=""
+    plugins="yes"
+    bootoutput="bootloader-$modelname.ipod"
+    # toolset is the tools within the tools directory that we build for
+    # this particular target.
+    toolset=$ipodbitmaptools
+    # architecture, manufacturer and model for the target-tree build
+    t_cpu="arm"
+    t_manufacturer="s5l8702"
+    t_model="ipodnano5g"
     ;;
 
    89|creativezenxfistyle)

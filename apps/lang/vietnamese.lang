@@ -9139,15 +9139,15 @@
   user: core
   <source>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Bass Cutoff"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Bass Cutoff"
   </source>
   <dest>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm trầm"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm trầm"
   </dest>
   <voice>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm trầm"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm trầm"
   </voice>
 </phrase>
 <phrase>
@@ -9156,15 +9156,15 @@
   user: core
   <source>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Treble Cutoff"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Treble Cutoff"
   </source>
   <dest>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm cao"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm cao"
   </dest>
   <voice>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm cao"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Khoảng cắt âm cao"
   </voice>
 </phrase>
 <phrase>

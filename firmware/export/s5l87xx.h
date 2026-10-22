@@ -33,12 +33,12 @@
 #if CONFIG_CPU==S5L8700 || CONFIG_CPU==S5L8701
 #define CACHEALIGN_BITS (4)  /* 2^4 = 16 bytes */
 #define CACHEALIGN_SIZE (16)
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define CACHEALIGN_BITS (5)  /* 2^5 = 32 bytes */
 #define CACHEALIGN_SIZE (32)
 #endif
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define DRAM_ORIG 0x08000000
 #define IRAM_ORIG 0x22000000
 
@@ -48,7 +48,7 @@
 
 #if CONFIG_CPU==S5L8702
 #define IRAM1_SIZE  0x20000
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define IRAM1_SIZE  0x10000
 #endif
 
@@ -164,7 +164,7 @@
 #define DSPCLKMD                (*(REG32_PTR_T)(CLK_BASE + 0x38))     /* DSP clock mode register */
 #define CLKCON2                 (*(REG32_PTR_T)(CLK_BASE + 0x3C))     /* Clock control register 2 */
 #define PWRCONEXT               (*(REG32_PTR_T)(CLK_BASE + 0x40))     /* Clock power control register 2 */
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define CLKCON0      (*((REG32_PTR_T)(CLK_BASE)))
 #define CLKCON1      (*((REG32_PTR_T)(CLK_BASE + 0x04)))
 #define CLKCON2      (*((REG32_PTR_T)(CLK_BASE + 0x08)))
@@ -173,7 +173,7 @@
 #define CLKCON5      (*((REG32_PTR_T)(CLK_BASE + 0x14)))
 
 #define CLKCON0_SDR_DISABLE_BIT (1 << 31)
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define CLKCON0_UNK30_BIT       (1 << 30)
 #endif
 
@@ -224,7 +224,7 @@
 #define PLL0LCNT     PLLCNT(0)
 #define PLL1LCNT     PLLCNT(1)
 #define PLL2LCNT     PLLCNT(2)
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define PLLUNK3C     (*((REG32_PTR_T)(CLK_BASE + 0x3C)))
 #endif
 #define PLLLOCK      (*((REG32_PTR_T)(CLK_BASE + 0x40)))
@@ -294,11 +294,11 @@
    0 -> DMOSC_STD, 1 -> DMOSC_ALT */
 #define PLLMOD2_DMOSC_BIT(n)    (1 << (4 + (n)))
 
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define PLLUNK64    (*((REG32_PTR_T)(CLK_BASE + 0x64))) // used by efi_ClockAndReset
 #define CLKCON6     (*((REG32_PTR_T)(CLK_BASE + 0x70)))
-#endif /* CONFIG_CPU==S5L8720 */
-#endif /* CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 */
+#endif /* CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730 */
+#endif /* CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730 */
 
 
 
@@ -338,7 +338,7 @@
 #define CLOCKGATE_CHIPID    46
 #define CLOCKGATE_I2S2      47
 #define CLOCKGATE_SPI2      48
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* PWRCON0 - 18 gates (0..17) */
 #define CLOCKGATE_SHA       0
 #define CLOCKGATE_LCD       1       // TBC
@@ -445,7 +445,7 @@
 #define CLOCKGATE_TIMERD_2  151
 #endif
 
-#if CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 /* CG16_x: for readability and debug, these gates are defined as
  * 16-bit registers, on HW they are really halves of 32-bit registers.
  * Some functionallity is not available on all CG16 gates (when so,
@@ -477,7 +477,7 @@
 #define CG16_SYS        (*((REG16_PTR_T)(CLK_BASE)))
 #if CONFIG_CPU == S5L8702
 #define CG16_2L         (*((REG16_PTR_T)(CLK_BASE + 0x08)))
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define CG16_LCD        (*((REG16_PTR_T)(CLK_BASE + 0x08)))
 #endif
 #define CG16_SVID       (*((REG16_PTR_T)(CLK_BASE + 0x0A)))
@@ -486,7 +486,7 @@
 #define CG16_AUD2       (*((REG16_PTR_T)(CLK_BASE + 0x10)))
 #define CG16_RTIME      (*((REG16_PTR_T)(CLK_BASE + 0x12)))
 #define CG16_5L         (*((REG16_PTR_T)(CLK_BASE + 0x14)))
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define CG16_6L         (*((REG16_PTR_T)(CLK_BASE + 0x70)))
 #endif
 
@@ -582,7 +582,7 @@
 #define MIU_BASE 0x38200000
 #elif CONFIG_CPU==S5L8702
 #define MIU_BASE 0x38100000
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define MIU_BASE 0x3d700000
 #endif
 
@@ -595,7 +595,7 @@
 #define MIUAREF                 (*(REG32_PTR_T)(MIU_BASE + 0x08))     /* Auto-refresh control register */
 #define MIUMRS                  (*(REG32_PTR_T)(MIU_BASE + 0x0C))     /* SDRAM Mode Register Set Value Register */
 #define MIUSDPARA               (*(REG32_PTR_T)(MIU_BASE + 0x10))     /* SDRAM parameter register */
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define MIUCOM                  (*(REG32_PTR_T)(MIU_BASE + 0x104))    /* Command and status register */
 #define MIUMRS                  (*(REG32_PTR_T)(MIU_BASE + 0x110))    /* SDRAM Mode Register Set Value Register */
 
@@ -626,13 +626,13 @@
 /* 08. IODMA CONTROLLER */
 #define DMA_BASE 0x38400000
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define DMA0_BASE 0x38200000
 #endif
 
 #if CONFIG_CPU==S5L8702
 #define DMA1_BASE 0x39900000
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define DMA1_BASE 0x38700000
 #endif
 
@@ -792,7 +792,7 @@
 
 #define FIVE_USEC_TIMER         (((uint64_t)TICNTH << 32) | TICNTL)
 #define USEC_TIMER              (FIVE_USEC_TIMER * 5)
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /*
  * 16/32-bit timers:
  *
@@ -870,7 +870,7 @@
 #define FMC_BASE 0x3C200000
 #elif CONFIG_CPU==S5L8701
 #define FMC_BASE 0x39400000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* The first of two controllers; the BootROM addresses the second at +0x400 */
 #define FMC_BASE 0x38a00000
 #endif
@@ -963,7 +963,7 @@
 /* 13. SECURE DIGITAL CARD INTERFACE (SDCI) */
 #if CONFIG_CPU==S5L8700 || CONFIG_CPU==S5L8701
 #define SDCI_BASE 0x3C300000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define SDCI_BASE 0x38b00000
 #endif
 
@@ -984,7 +984,7 @@
 #define SDCI_IRQ                (*(REG32_PTR_T)(SDCI_BASE + 0x38))     /* Interrupt Source Register */
 #define SDCI_IRQ_MASK           (*(REG32_PTR_T)(SDCI_BASE + 0x3c))
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define SDCI_DATA               (*(REG32_PTR_T)(SDCI_BASE + 0x40))
 #define SDCI_DMAADDR         (*(VOID_PTR_PTR_T)(SDCI_BASE + 0x44))
 #define SDCI_DMASIZE            (*(REG32_PTR_T)(SDCI_BASE + 0x48))
@@ -1211,7 +1211,7 @@
 #define I2SRXDB                 (*(REG32_PTR_T)(I2S_BASE + 0x38))     /* Rx data buffer */
 #define I2SSTATUS               (*(REG32_PTR_T)(I2S_BASE + 0x3C))     /* status register */
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define I2SCLKDIV               (*(REG32_PTR_T)(I2S_BASE + 0x40))
 
 #define I2SCLKGATE(i)   ((i) == 2 ? CLOCKGATE_I2S2 : \
@@ -1227,7 +1227,7 @@
 #define IICSTAT                 (*(REG32_PTR_T)(IIC_BASE + 0x04))     /* Control/Status Register */
 #define IICADD                  (*(REG32_PTR_T)(IIC_BASE + 0x08))     /* Bus Address Register */
 #define IICDS                   (*(REG32_PTR_T)(IIC_BASE + 0x0C))
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /*
  *  s5l8702 I2C controller is similar to s5l8700, known differences are:
  *
@@ -1257,7 +1257,7 @@
                                     CLOCKGATE_I2C0)
 #endif
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define I2CCLKGATE_2(i) ((i) == 1 ? CLOCKGATE_I2C1_2 : \
                                     CLOCKGATE_I2C0_2)
 #endif
@@ -1273,7 +1273,7 @@
 #define SPTDAT                  (*(REG32_PTR_T)(SPI_BASE + 0x10))     /* Tx Data Register */
 #define SPRDAT                  (*(REG32_PTR_T)(SPI_BASE + 0x14))     /* Rx Data Register */
 #define SPPRE                   (*(REG32_PTR_T)(SPI_BASE + 0x18))     /* Baud Rate Prescaler Register */
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU == S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define SPIBASE(i)      ((i) == 2 ? 0x3d200000 : \
                          (i) == 1 ? 0x3ce00000 : \
                                     0x3c300000)
@@ -1294,7 +1294,7 @@
 #define SPIDD(i)      (*((REG32_PTR_T)(SPIBASE(i) + 0x38)))  /* TBC */
 #endif
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define SPIUNK3C(i)   (*((REG32_PTR_T)(SPIBASE(i) + 0x3c)))
 #define SPIUNK40(i)   (*((REG32_PTR_T)(SPIBASE(i) + 0x40)))
 #define SPIUNK4C(i)   (*((REG32_PTR_T)(SPIBASE(i) + 0x4c)))
@@ -1390,7 +1390,7 @@
 
 #if CONFIG_CPU==S5L8700 || CONFIG_CPU==S5L8701
 #define GPIO_OFFSET_BITS 4
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define GPIO_OFFSET_BITS 5
 #endif
 
@@ -1399,7 +1399,7 @@
 #define PUNA(i)       (*((REG32_PTR_T)(GPIO_BASE + 0x08 + ((i) << GPIO_OFFSET_BITS))))
 #define PUNB(i)       (*((REG32_PTR_T)(GPIO_BASE + 0x0c + ((i) << GPIO_OFFSET_BITS))))
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define PUNC(i)       (*((REG32_PTR_T)(GPIO_BASE + 0x10 + ((i) << GPIO_OFFSET_BITS))))
 #endif
 
@@ -1444,7 +1444,7 @@
 #define GPIO_N_GROUPS 16
 #define GPIOCMD       (*((REG32_PTR_T)(GPIO_BASE + 0x200)))
 #define GPIOUNK380    (*((REG32_PTR_T)(GPIO_BASE + 0x380)))
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define GPIO_N_GROUPS 15
 #define GPIOCMD       (*((REG32_PTR_T)(GPIO_BASE + 0x1e0)))
 #define GPIOUNK388    (*((REG32_PTR_T)(GPIO_BASE + 0x388)))
@@ -1472,12 +1472,12 @@
 #define UARTC2_BASE_ADDR        0x3CC0C000
 #define UARTC2_N_PORTS          1
 #define UARTC2_PORT_OFFSET      0x0
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* s5l8702/s5l8720 UC87XX HW: 1 UARTC, 4 ports */
 #define UARTC_BASE_ADDR     0x3CC00000
 #define UARTC_N_PORTS       4
 #define UARTC_PORT_OFFSET   0x4000
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define UARTC_DMA_BASE_ADDR   0x3DB00000
 #define UARTC_DMA_PORT_OFFSET 0x100000
 #endif
@@ -1488,7 +1488,7 @@
 #define LCD_BASE 0x3C100000
 #elif CONFIG_CPU==S5L8701
 #define LCD_BASE 0x38600000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define LCD_BASE 0x38300000
 #endif
 
@@ -1610,7 +1610,7 @@
 /* 28. ATA CONTROLLER */
 #if CONFIG_CPU==S5L8700 || CONFIG_CPU==S5L8701
 #define ATA_BASE 0x38E00000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define ATA_BASE 0x38700000
 #endif
 
@@ -1653,7 +1653,7 @@
 #define CHIPID_REG_ONE (*(REG32_PTR_T)(CHIPID_BASE))        /* Receive the first 32 bits from a fuse box */
 #define CHIPID_REG_TWO (*(REG32_PTR_T)(CHIPID_BASE + 0x04)) /* Receive the other 8 bits from a fuse box */
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define CHIPID_INFO    (*(REG32_PTR_T)(CHIPID_BASE + 0x08))
 #endif
 
@@ -1687,11 +1687,11 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 /* Hardware AES crypto unit - S5L8701+ */
 #if CONFIG_CPU==S5L8701
 #define AES_BASE 0x39800000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define AES_BASE 0x38c00000
 #endif
 
-#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define AESCONTROL             (*((REG32_PTR_T)(AES_BASE)))
 #define AESGO                  (*((REG32_PTR_T)(AES_BASE + 0x04)))
 #define AESUNKREG0             (*((REG32_PTR_T)(AES_BASE + 0x08)))
@@ -1709,7 +1709,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define AESOUTADDR             (*((REG32_PTR_T)(AES_BASE + 0x20)))
 #define AESINADDR              (*((REG32_PTR_T)(AES_BASE + 0x28)))
 #define AESAUXADDR             (*((REG32_PTR_T)(AES_BASE + 0x30)))
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define AESOUTADDR          (*((VOID_PTR_PTR_T)(AES_BASE + 0x20)))
 #define AESINADDR           (*((VOID_PTR_PTR_T)(AES_BASE + 0x28)))
 #define AESAUXADDR          (*((VOID_PTR_PTR_T)(AES_BASE + 0x30)))
@@ -1722,7 +1722,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 /* SHA-1 unit - S5L8701+ */
 #if CONFIG_CPU==S5L8701
 #define SHA1_BASE 0x3C600000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU == S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define SHA1_BASE 0x38000000
 #endif
 
@@ -1752,7 +1752,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define SHA1_CONFIG_CONT   REG_BIT(3)
 
 /* Clickwheel controller - S5L8701+ */
-#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define WHEEL_BASE 0x3C200000
 
 #define WHEEL00      (*((REG32_PTR_T)(WHEEL_BASE)))
@@ -1768,11 +1768,11 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 /* Synopsys OTG - S5L8701 only */
 #if CONFIG_CPU==S5L8701
 #define OTGBASE 0x38800000
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define OTGBASE 0x38400000
 #endif
 
-#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 #define PHYBASE 0x3C400000
 
 /* OTG PHY control registers */
@@ -1782,7 +1782,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define OPHYUNK3    (*((REG32_PTR_T)(PHYBASE + 0x18)))
 #define OPHYUNK1    (*((REG32_PTR_T)(PHYBASE + 0x1c)))
 #define OPHYUNK2    (*((REG32_PTR_T)(PHYBASE + 0x44)))
-#if CONFIG_CPU==S5L8720 /* used by the S5L8720 PHY sequence */
+#if CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730 /* used by the S5L8720 PHY sequence */
 #define OPHYTUNE    (*((REG32_PTR_T)(PHYBASE + 0x40)))
 #define OPHYCTRL    (*((REG32_PTR_T)(PHYBASE + 0x100)))
 #endif
@@ -1791,7 +1791,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #if CONFIG_CPU==S5L8701
 /* 7 available EPs (0b00000000011101010000000001101011), 6 used */
 #define USB_NUM_ENDPOINTS 6
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* 9 available EPs (0b00000001111101010000000111101011), 6 used */
 #define USB_NUM_ENDPOINTS 6
 #endif
@@ -1802,13 +1802,13 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define USB_DW_SHARED_FIFO
 #endif
 
-#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8701 || CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* Define this if the DWC implemented on this SoC does not support
    DMA or you want to disable it. */
 // #define USB_DW_ARCH_SLAVE
 #endif
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /////INTERRUPT CONTROLLERS/////
 #define VIC_BASE   0x38E00000
 #define VIC_OFFSET 0x1000
@@ -2046,7 +2046,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 #define ATA_UNKNOWN (*((REG32_PTR_T)(ATA_UNKNOWN_BASE)))
 #endif
 
-#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#if CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /*
  * s5l8702 External (GPIO) Interrupt Controller
  *
@@ -2062,7 +2062,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
  *
  * EIC_GROUP0..6 are connected to EINT6..0 of the VIC.
  */
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 /*
  * The s5l8720 EIC has 5 groups of up to 32 interrupts, in a different layout:
  *  - GPIO 0..7 (port 0) are group 0, bits 2..9
@@ -2091,7 +2091,7 @@ Information for them was gathered solely by reverse-engineering Apple's firmware
 /* probably a part of the system controller */
 #if CONFIG_CPU == S5L8702
 #define EIC_BASE 0x39a00000
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define EIC_BASE 0x39700000
 #endif
 

@@ -40,7 +40,7 @@ void hwkeyaes(enum hwkeyaes_direction direction, uint32_t keyidx, void* data, ui
     AESTYPE = keyidx;
     AESTYPE2 = ~AESTYPE;
     AESUNKREG2 = 0;
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     /* A mode word, not only a key length: the S5L8720 bootROM's AES routine
      * writes 6, sets bit 0, puts the key-size code in bits 5:4 (0 = 128-bit)
      * and sets bit 3, i.e. 0xf for its own IMG1 work, so bits 2:1 are
@@ -78,7 +78,7 @@ void sha1(void* data, uint32_t size, void* hash)
     while (SHA1_CONFIG & SHA1_CONFIG_BUSY);
     SHA1_SWRESET = 0;
     SHA1_CONFIG = 0;
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     SHA1_ENDIAN = 0; // little endian
     SHA1_MASTER_MODE = 0; // slave mode
 #endif    

@@ -115,7 +115,7 @@ start_loc:
     mcr     p15, 0, r0, c7, c10, 4  /* drain write buffer */
     mcr     p15, 0, r0, c7, c5, 0   /* invalidate icache */
 
-#elif defined(IPOD_NANO4G)
+#elif defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
     mrc     p15, 0, r0, c1, c0, 0
     bic     r0, r0, #0x1000
     bic     r0, r0, #0x5
@@ -124,7 +124,7 @@ start_loc:
     mov     r0, #0
     mcr     p15, 0, r0, c7, c14, 0  /* clean & invalidate dcache */
     mcr     p15, 0, r0, c7, c10, 4  /* drain write buffer */
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     /* ARM1176 (S5L8720 only) erratum 411920: a single icache invalidate
      * may leave stale lines; IRQ/FIQ remain masked from entry. */
     .rept   4

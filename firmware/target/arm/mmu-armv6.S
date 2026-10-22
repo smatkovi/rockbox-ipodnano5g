@@ -20,7 +20,7 @@
 #include "config.h"
 #include "cpu.h"
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define USE_MMU
 #endif
 

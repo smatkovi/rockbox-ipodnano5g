@@ -71,10 +71,10 @@
 #elif CONFIG_CPU == S5L8701
 # define USB_DW_PHYSADDR(x)     x
 # define NO_UNCACHED_ADDR       /* Not known how to form uncached addresses */
-#elif CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 # define USB_DW_PHYSADDR(x)     S5L8702_PHYSICAL_ADDR(x)
 # define USB_DW_UNCACHEDADDR(x) S5L8702_UNCACHED_ADDR(x)
-# if CONFIG_CPU == S5L8720
+# if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #  define POST_DMA_FLUSH        /* ARM1176 may fetch cache lines speculatively */
 # endif
 #elif CONFIG_CPU == STM32H743

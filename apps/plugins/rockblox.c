@@ -649,7 +649,7 @@
 #define LEVEL_Y 70
 #define LINES_Y 105
 
-#elif (LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 400))
+#elif (LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 376) || (LCD_HEIGHT == 400))
 
 #define BLOCK_WIDTH 15
 #define BLOCK_HEIGHT 15

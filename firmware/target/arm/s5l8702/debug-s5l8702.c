@@ -101,6 +101,7 @@ bool dbg_hw_info(void)
             _DEBUG_PRINTF(" APB: %d.%d",  p_clk / MHZ, (p_clk % MHZ) / TMHZ);
 #endif
         }
+#ifndef IPOD_NANO5G /* no PMU driver yet */
         else if(state==1)
         {
             _DEBUG_PRINTF("PMU:");
@@ -155,6 +156,7 @@ bool dbg_hw_info(void)
             _DEBUG_PRINTF("USB D-: %d mV", adc_read_usbdata_voltage(false));
             line++;
         }
+#endif /* !IPOD_NANO5G */
 #ifdef UC87XX_DEBUG
         else if(state==(max_states-1))
         {

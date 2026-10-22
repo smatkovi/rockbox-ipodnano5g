@@ -54,7 +54,7 @@ static void i2c_on(int bus)
 {
     /* enable I2C clock */
     clockgate_enable(I2CCLKGATE(bus), true);
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     /* this clockgate is needed when ECLK is used as source clock */
     clockgate_enable(I2CCLKGATE_2(bus), true);
     udelay(5);
@@ -69,7 +69,7 @@ static void i2c_off(int bus)
     /* disable I2C clock */
     wait_rdy(bus);
     clockgate_enable(I2CCLKGATE(bus), false);
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     clockgate_enable(I2CCLKGATE_2(bus), false);
 #endif
 }
@@ -94,7 +94,7 @@ static int i2c_start(int bus, unsigned char slave, bool rd)
                   (0 << 6) | /* CLKSEL = SRCCLK/32 (TBC) */
 #if CONFIG_CPU == S5L8702
                   (0 << 0);  /* CK_REG */
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
                   (1 << 0);  /* CK_REG */
 #endif
 
@@ -235,7 +235,7 @@ void i2c_preinit(int bus)
     else if (bus == 1)
         PCON6 = (PCON6 & ~0x0ff00000) | 0x02200000;
 #endif
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     if (bus == 0) {
         PCON2 = (PCON2 & ~0xf0000000) | 0x20000000;
         PCON3 = (PCON3 & ~0x0000000f) | 0x00000002;

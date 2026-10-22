@@ -256,7 +256,7 @@ void clocking_init(const struct clocking_mode *modes, int init_level);
 void set_clocking_level(int level);
 unsigned get_system_freqs(unsigned *cclk, unsigned *hclk, unsigned *pclk);
 void clockgate_enable(int gate, bool enable);
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 int soc_get_sec_epoch(void);
 #endif
 
@@ -276,7 +276,7 @@ void soc_set_hsdiv(int hsdiv);
 #if CONFIG_CPU == S5L8702
 void cg16_config(volatile uint16_t* cg16,
                     bool onoff, int clksel, int div1, int div2);
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 void cg16_config(volatile uint16_t* cg16,
                     bool onoff, int clksel, int div1, int div2, int flags);
 #endif

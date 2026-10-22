@@ -659,7 +659,7 @@ static void make_chain(unsigned char *buf, unsigned long bytes,
 #define NOW()       (*(volatile unsigned long *)0xcf001110)
 #define PER_SEC     1000000ll
 #define TIMER_NAME  "PP5002 usec timer"
-#elif CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define NOW()       (*(volatile unsigned long *)0x3C7000B4)   /* TECNT */
 #define PER_SEC     1000000ll
 #define TIMER_NAME  "S5L8702/8720 usec timer"

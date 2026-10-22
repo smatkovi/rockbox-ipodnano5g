@@ -7392,15 +7392,15 @@
   user: core
   <source>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Bass Cutoff"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Bass Cutoff"
   </source>
   <dest>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Graves"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Graves"
   </dest>
   <voice>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Graves"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Graves"
   </voice>
 </phrase>
 <phrase>
@@ -8934,15 +8934,15 @@
   user: core
   <source>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Treble Cutoff"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Treble Cutoff"
   </source>
   <dest>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Agudos"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Agudos"
   </dest>
   <voice>
     *: none
-    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Agudos"
+    gigabeatfx,ipod6g,ipodnano3g,ipodnano4g,ipodnano5g,ipodvideo,mpiohd200,mpiohd300,mrobe100,samsungypcp3: "Corte de Agudos"
   </voice>
 </phrase>
 <phrase>

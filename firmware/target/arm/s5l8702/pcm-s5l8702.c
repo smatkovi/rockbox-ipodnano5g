@@ -196,8 +196,8 @@ static void sink_set_freq(uint16_t freq)
     }
 #endif
 
-#ifdef IPOD_NANO4G_AUDIO_HW_PENDING
-    /* nano 4G: the I2S / MCLK path from the nano 3G port has not been
+#if defined(IPOD_NANO4G_AUDIO_HW_PENDING) || defined(IPOD_NANO5G_AUDIO_HW_PENDING)
+    /* nano 4G/5G: the I2S / MCLK path from the nano 3G port has not been
      * validated on this hardware yet; leave the audio clocks alone */
     (void)clkcon3l;
     (void)last_clkcon3l;
@@ -222,13 +222,13 @@ static void sink_set_freq(uint16_t freq)
 
 static void sink_dma_init(void)
 {
-#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
+#if !defined(IPOD_NANO4G_AUDIO_HW_PENDING) && !defined(IPOD_NANO5G_AUDIO_HW_PENDING) /* nano 4G/5G: I2S not validated yet */
     PWRCON(1) &= ~(1 << 7);
 #endif
 
     dmac_ch_init(&dma_play_ch, &dma_play_ch_cfg);
 
-#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
+#if !defined(IPOD_NANO4G_AUDIO_HW_PENDING) && !defined(IPOD_NANO5G_AUDIO_HW_PENDING) /* nano 4G/5G: I2S not validated yet */
     I2STXCON = I2STXCON_SETUP;
     I2SCLKCON = 1;
 #endif
@@ -422,7 +422,7 @@ void pcm_rec_dma_init(void)
     if (pcm_rec_initialized)
         return;
 
-#ifndef IPOD_NANO4G_AUDIO_HW_PENDING /* nano 4G: I2S not validated yet */
+#if !defined(IPOD_NANO4G_AUDIO_HW_PENDING) && !defined(IPOD_NANO5G_AUDIO_HW_PENDING) /* nano 4G/5G: I2S not validated yet */
     PWRCON(1) &= ~(1 << 7);
 #endif
 

@@ -25,9 +25,15 @@
 #include "fs_defines.h"
 #include "storage.h"
 
+#ifdef RAMDISK_ADDR
+/* the target loads a disk image at a fixed address before Rockbox starts */
+#define NUM_SECTORS RAMDISK_SECTORS
+#define ramdisk ((unsigned char *)RAMDISK_ADDR)
+#else
 #define NUM_SECTORS 16384
 
 static unsigned char ramdisk[SECTOR_SIZE * NUM_SECTORS];
+#endif
 
 static long last_disk_activity = -1;
 

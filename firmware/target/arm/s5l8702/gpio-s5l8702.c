@@ -142,7 +142,7 @@ void INIT_ATTR eint_init(void)
     }        
 }
 
-#if CONFIG_CPU == S5L8720 /* VIC source per EIC group, see EIC_IRQ() */
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730 /* VIC source per EIC group, see EIC_IRQ() */
 static void eint_vic_enable(int group, bool on)
 {
     int irq = EIC_IRQ(group);
@@ -163,7 +163,7 @@ void eint_register(struct eic_handler *h)
             int group = EIC_GROUP(h->gpio_n);
             int index = EIC_INDEX(h->gpio_n);
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
             /* S5L8720: other EIC to VIC mapping; a handler registered
              * again may change type and level */
             uint32_t bit = 1 << index;
@@ -209,7 +209,7 @@ void eint_unregister(struct eic_handler *h)
 
             /* XXX: valid only for gpio_n = 0..127 (IRQ_EXT0..IRQ_EXT3) */
             if (EIC_INTEN(group) == 0)
-#if CONFIG_CPU == S5L8720 /* other EIC to VIC mapping */
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730 /* other EIC to VIC mapping */
                 eint_vic_enable(group, false);
 #else
                 VIC0INTENCLEAR = 1 << (IRQ_EXT0 + (h->gpio_n >> 5));
@@ -240,7 +240,7 @@ static void ICODE_ATTR eint_handler(int group)
         uint32_t bit = 1 << EIC_INDEX(h->gpio_n);
 
         if (ints & bit) {
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
             /* Acknowledge the latch. A level interrupt latches again
                while its source still holds the line active, so the
                handler must clear or mask the source */
@@ -281,7 +281,7 @@ void ICODE_ATTR INT_EXT3(void)
     eint_handler(3);
 }
 
-#if CONFIG_CPU == S5L8720 /* groups 1 and 2 are used there */
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730 /* groups 1 and 2 are used there */
 void ICODE_ATTR INT_EXT4(void)
 {
     eint_handler(2);

@@ -661,7 +661,7 @@ CONFIG_KEYPAD == MROBE500_PAD
 #define MAX_Y 18
 
 
-#elif (LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 400))
+#elif (LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 376) || (LCD_HEIGHT == 400))
 
 /* Gigabeat: 240x320x16
  * ======================

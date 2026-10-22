@@ -33,7 +33,7 @@
 #define IM3_IDENT       "8702"
 #define IM3_VERSION     "1.0"
 #define IM3HDR_SZ       0x800
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 #define IM3_IDENT       "8720"
 #define IM3_VERSION     "2.0"
 #define IM3HDR_SZ       0x600

@@ -99,7 +99,7 @@ OUTPUT_FORMAT(elf32-littlemips)
 #define IRAMORIG (0x00000000 + (48*1024))
 #define IRAMSIZE (80*1024)
 
-#elif CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 /* S5L8720 have 192KB of IRAM */
 /* TODO: check if IRAM1 is also slow as in S5L8702 above */
 #define DRAMORIG 0x08000000

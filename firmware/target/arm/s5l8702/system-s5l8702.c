@@ -219,15 +219,16 @@ void system_init(void)
      * Bootloader seems to give a blank screen when IRAM1 is disabled
      * - FW 10/13/19
      */
-    /* nano 4G: runs on the SoC state left by its first-stage loader, so the
-     * IRAM1 gate and the nano 3G GPIO/I2C/PMU pre-init are not applied */
-#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G)
+    /* nano 4G/5G: run on the SoC state left by their first-stage loader
+     * (nano 5G: Apple's WTF stage), so the IRAM1 gate and the nano 3G
+     * GPIO/I2C/PMU pre-init are not applied */
+#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G) && !defined(IPOD_NANO5G)
     /* disable IRAM1 (not used because it is slower than DRAM) */
     clockgate_enable(CLOCKGATE_SM1, false);
 #endif
 
     clocking_init(clk_modes, 0);
-#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G)
+#if !defined(BOOTLOADER) && !defined(IPOD_NANO4G) && !defined(IPOD_NANO5G)
     gpio_preinit();
     i2c_preinit(0);
     pmu_preinit();
@@ -295,7 +296,7 @@ static void set_page_tables(void)
     /* map RAM to itself and enable caching for it */
     map_section(0, 0, 0x380, CACHE_ALL);
 
-#ifdef IPOD_NANO4G
+#if defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
     /* map system vector addresses to IRAM0 */
     map_section(IRAM0_ORIG, 0, 1, CACHE_ALL);
 #endif
@@ -326,7 +327,7 @@ static void syscon_preinit(void)
 
 #if CONFIG_CPU == S5L8702
     CLKCON0 &= ~CLKCON0_SDR_DISABLE_BIT;
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     int sec_epoch = soc_get_sec_epoch();
 
     PWRCON(0) = 0x327e5;
@@ -346,7 +347,7 @@ static void syscon_preinit(void)
 #if CONFIG_CPU == S5L8702
     cg16_config(&CG16_SYS, true, CG16_SEL_OSC, 1, 1);
     soc_set_system_divs(1, 1, 1);
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     cg16_config(&CG16_SYS, true, CG16_SEL_OSC, 1, 1, 0x0);
     // soc_set_system_divs(1, 1, 1);
 
@@ -362,7 +363,7 @@ static void syscon_preinit(void)
     pll_config(2, PLLOP_DM, 1, 36, 1, 32400);
     pll_onoff(2, true);
     soc_set_system_divs(1, 2, 2 /*hprat*/);
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     PLLUNK3C = 0;
 
     pll_config(0, PLLOP_DM, sec_epoch ? 6 : 3, 133, 1, 39900);
@@ -387,7 +388,7 @@ static void syscon_preinit(void)
     cg16_config(&CG16_AUD2,  false, CG16_SEL_OSC,  1, 1);
     cg16_config(&CG16_RTIME, true,  CG16_SEL_OSC,  1, 1);
     cg16_config(&CG16_5L,    false, CG16_SEL_OSC,  1, 1);
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     cg16_config(&CG16_SYS,   true,  CG16_SEL_PLL0, 1, 1, 0x0);
     cg16_config(&CG16_LCD,   false, CG16_SEL_OSC,  1, 1, 0x0);
     cg16_config(&CG16_SVID,  false, CG16_SEL_OSC,  1, 1, 0x0);
@@ -486,7 +487,7 @@ static void miu_preinit(bool selfrefreshing)
     }
 
     MIUAREF |= 0x61000;   /* Auto-refresh enabled */
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     // TODO: There are things wrong, copying from spireader
     GPIOUNK384 = 0;
 
@@ -564,7 +565,7 @@ static void miu_preinit(bool selfrefreshing)
 void system_preinit(void)
 {
     bool hibernated;        // TODO: hibernated -> resuming, or perhaps better warmboot
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     uint32_t boot_config;
 
     /* Read boot configuration on PDAT3:
@@ -586,7 +587,7 @@ void system_preinit(void)
     gpio_preinit();
     i2c_preinit(0);
 
-#if CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     /* TBC: store boot config into a PMU memory register */
     pmu_wr(0x7f, boot_config);
 #endif

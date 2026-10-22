@@ -248,7 +248,7 @@ int soc_get_sec_epoch(void)
     GPIOCMD = 0x30500;  /* configure GPIO3.5 as input */
     return !!(PDAT3 & 0x20);
 #endif
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     // TBC: sec_epoch == 0 -> OSC0 = 24MHz (TBC) -> or it is equal to 12
     //                        internal SDRAM (TBC) -> or maybe it is a multiplier of the SDRAM?
     //                   1 -> OSC0 = 48MHz (TBC) -> or it is equal to 24
@@ -306,7 +306,7 @@ int pll_config(int pll, int op_mode, int p, int m, int s, int lock_time)
     PLLMOD2 = (PLLMOD2 & ~PLLMOD2_ALTOSC_BIT(pll)) |
                 ((op_mode == PLLOP_ALT0) ? 0 : PLLMOD2_ALTOSC_BIT(pll));
 
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     // In the 8702, PLL0,1 do not behave the same as in 8702, it seems that they could behave in a similar way
     // to PLL2 in 8702 (TODO: check, possibly they could not have MM mode),
     // see the ALTOSC topic, maybe PLLUNK3C does a similar function in 8720 to PLLMOD2 in 8702
@@ -350,7 +350,7 @@ int pll_onoff(int pll, bool onoff)
 #if (CONFIG_CPU == S5L8702)
 void cg16_config(volatile uint16_t* cg16,
                     bool onoff, int clksel, int div1, int div2)
-#elif (CONFIG_CPU == S5L8720)
+#elif (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730)
 void cg16_config(volatile uint16_t* cg16,
                     bool onoff, int clksel, int div1, int div2, int flags)
 #endif
@@ -358,7 +358,7 @@ void cg16_config(volatile uint16_t* cg16,
     uint16_t val16 = ((clksel & CG16_SEL_MSK) << CG16_SEL_POS)
                    | (((div1 - 1) & CG16_DIV1_MSK) << CG16_DIV1_POS)
                    | (((div2 - 1) & CG16_DIV2_MSK) << CG16_DIV2_POS)
-#if (CONFIG_CPU == S5L8720)
+#if (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730)
                    | flags
 #endif
                    | (onoff ? 0 : CG16_DISABLE_BIT);
@@ -389,7 +389,7 @@ void usec_timer_init(void)
 
     /* unmask timer controller clock gate */
     clockgate_enable(CLOCKGATE_TIMER, true);
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     cg16_config(&CG16_RTIME, true, CG16_SEL_OSC, 1, 1, 0x0);
 
     /* unmask timer controller clock gates */

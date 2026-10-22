@@ -418,6 +418,8 @@ Lyre prototype 1 */
 #include "config/ipodnano3g.h"
 #elif defined(IPOD_NANO4G)
 #include "config/ipodnano4g.h"
+#elif defined(IPOD_NANO5G)
+#include "config/ipodnano5g.h"
 #elif defined(IPOD_6G)
 #include "config/ipod6g.h"
 #elif defined(GIGABEAT_F)
@@ -691,7 +693,7 @@ Lyre prototype 1 */
 
 /* define for all cpus from S5L87XX family */
 #if (CONFIG_CPU == S5L8700) || (CONFIG_CPU == S5L8701) \
-    || (CONFIG_CPU == S5L8702) || (CONFIG_CPU == S5L8720) \
+    || (CONFIG_CPU == S5L8702) || (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730) \
     || (CONFIG_CPU == S5L8723) || (CONFIG_CPU == S5L8730) \
     || (CONFIG_CPU == S5L8740)
 #define CPU_S5L87XX
@@ -1010,7 +1012,7 @@ Lyre prototype 1 */
 /* Priority in bootloader is wanted */
 #define HAVE_PRIORITY_SCHEDULING
 
-#if (CONFIG_CPU == S5L8702) || (CONFIG_CPU == S5L8720)
+#if (CONFIG_CPU == S5L8702) || (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730)
 #define USB_DRIVER_CLOSE
 #else
 #define USB_STATUS_BY_EVENT

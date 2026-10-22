@@ -814,7 +814,7 @@ target/arm/as3525/pcm-as3525.c
 #endif /* BOOTLOADER */
 #endif /* CONFIG_CPU == AS3525 */
 
-#if CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720
+#if CONFIG_CPU == S5L8702 || CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 target/arm/ipod/button-clickwheel.c
 target/arm/s5l8702/kernel-s5l8702.c
 target/arm/s5l8702/system-s5l8702.c
@@ -841,7 +841,7 @@ target/arm/s5l8702/crypto-s5l8702.c
 #if CONFIG_CPU == S5L8702
 target/arm/s5l8702/spi-s5l8702.c
 target/arm/s5l8702/norboot-s5l8702.c
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
 /* target/arm/s5l8702/nandboot-s5l8702.c */
 #endif
 #endif /* S5L8702 || S5L8720 */
@@ -895,7 +895,7 @@ target/arm/tcc780x/crt0.S
 target/arm/imx31/crt0.S
 #elif CONFIG_CPU==S5L8700 || CONFIG_CPU==S5L8701
 target/arm/s5l8700/crt0.S
-#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720
+#elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
 target/arm/s5l8702/crt0.S
 #elif CONFIG_CPU==IMX233
 target/arm/imx233/crt0.S
@@ -1682,6 +1682,18 @@ target/arm/s5l8702/ipodnano4g/audio-nano4g.c
 target/arm/s5l8702/ipodnano4g/cscodec-nano4g.c
 #endif
 #endif /* IPOD_NANO4G */
+
+#ifdef IPOD_NANO5G
+target/arm/s5l8702/ipodnano5g/lcd-nano5g.c
+target/arm/s5l8702/ipodnano5g/backlight-nano5g.c
+target/arm/s5l8702/ipodnano5g/adc-nano5g.c
+target/arm/s5l8702/ipodnano5g/powermgmt-nano5g.c
+target/arm/s5l8702/ipodnano5g/power-nano5g.c
+target/arm/s5l8702/ipodnano5g/pmu-nano5g.c
+#ifndef BOOTLOADER
+target/arm/s5l8702/ipodnano5g/cscodec-nano5g.c
+#endif
+#endif /* IPOD_NANO5G */
 
 #ifdef IPOD_6G
 target/arm/s5l8702/ipod6g/lcd-6g.c

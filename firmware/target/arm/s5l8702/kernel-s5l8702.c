@@ -50,7 +50,7 @@ void tick_start(unsigned int interval_in_ms)
             (0 << 4);   /* TB_MODE_SEL = interval mode */
     TBDATA0 = cycles;   /* set interval period */
     TBCMD = (1 << 0);   /* TB_EN */
-#elif CONFIG_CPU == S5L8720
+#elif CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     /* configure timer for 10 kHz (24 MHz / 16 / 150) */
     TBCMD = (1 << 1);   /* TB_CLR */    
     TBPRE = 150 - 1;    /* prescaler */

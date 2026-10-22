@@ -392,17 +392,30 @@ static void displaylcd_dma(int pixels) ICODE_ATTR;
 static void displaylcd_dma(int pixels)
 {
     s5l_lcd_set_frame_mode();
+#ifdef S5L_LCD_PIO
+    /* programmed I/O through the write-data register */
+    const uint16_t *p = lcd_dblbuf[0];
+    while (pixels--)
+    {
+        while (LCD_STATUS & 0x10)
+            ;
+        LCD_WDATA = *p++;
+    }
+#else
     commit_dcache();
     dmac_ch_queue(&lcd_dma_ch, lcd_dblbuf,
             (void*)S5L8702_DADDR_PERI_LCD_WR, pixels*2, NULL);
+#endif
 }
 
 // TODO: wait if there is a DMA transfer in progress
 static void displaylcd_wait_dma(void) ICODE_ATTR;
 static void displaylcd_wait_dma(void)
 {
+#ifndef S5L_LCD_PIO
     while (dmac_ch_running(&lcd_dma_ch))
         yield();
+#endif
 }
 
 /* Update a fraction of the display. */
@@ -687,10 +700,12 @@ void lcd_init_device(void)
 
     s5l_lcd_set_command_mode();
 
+#ifndef S5L_LCD_PIO
     /* Configure DMA channel */                             // TODO: this right after mutex_init()
     dmac_ch_init(&lcd_dma_ch, &lcd_dma_ch_cfg);
+#endif
 
-#ifdef BOOTLOADER
+#if defined(BOOTLOADER) || defined(S5L_LCD_RUN_INIT_SEQ)
     lcd_run_seq(lcd_info->seq_init);
 #endif
 

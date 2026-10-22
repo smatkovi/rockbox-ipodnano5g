@@ -53,7 +53,7 @@ void usb_dw_target_enable_clocks()
     clockgate_enable(CLOCKGATE_USBOTG, true);
     clockgate_enable(CLOCKGATE_USBPHY, true);
 
-#if CONFIG_CPU == S5L8720 /* own PHY sequence and registers */
+#if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730 /* own PHY sequence and registers */
     OPHYPWR = 0;  /* PHY: Power up */
     /* PHY reference clock: follows the oscillator strap */
     OPHYCLK = 0x10 | soc_get_sec_epoch();
@@ -92,7 +92,7 @@ void usb_dw_target_disable_clocks()
     udelay(10);
     ORSTCON = 7;  /* PHY: Assert Software Reset */
     udelay(10);
-#elif (CONFIG_CPU == S5L8720)
+#elif (CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730)
     OPHYUNK1 = 4;
     OPHYPWR = 0x1f;  /* PHY: Power down */
     udelay(10);
@@ -154,10 +154,12 @@ void usb_remove_int(void)
 
 void usb_init_device(void)
 {
+#ifdef HAVE_USBSTACK
     /* Power up the core clocks to allow writing
        to some registers needed to power it down */
     usb_dw_target_disable_irq();
     usb_dw_target_enable_clocks();
 
     usb_drv_exit();
+#endif
 }

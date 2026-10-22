@@ -534,7 +534,7 @@ CONFIG_KEYPAD == MROBE500_PAD
 #define MAX_WORM_SEGMENTS 512
 #elif ((LCD_WIDTH == 240) && (LCD_HEIGHT == 240)) || \
     (((LCD_WIDTH == 320) || (LCD_WIDTH == 400)) && (LCD_HEIGHT == 240)) || \
-    ((LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 400))) || \
+    ((LCD_WIDTH == 240) && ((LCD_HEIGHT == 320) || (LCD_HEIGHT == 376) || (LCD_HEIGHT == 400))) || \
     ((LCD_WIDTH == 360) && ((LCD_HEIGHT == 400) || (LCD_HEIGHT == 640))) || \
     ((LCD_WIDTH == 480) && (LCD_HEIGHT == 272))
 #define FOOD_SIZE 7
