@@ -28,6 +28,7 @@
 #include "logf.h"
 #include "pmu-target.h"
 #include "devloop-nano5g.h"
+#include "nandtest-nano5g.h"
 
 volatile unsigned int devloop_usb_cbw_count;
 extern char panic_buf[128];
@@ -118,6 +119,10 @@ static long devloop_stack[DEFAULT_STACK_SIZE/sizeof(long)];
 static void NORETURN_ATTR devloop_thread(void)
 {
     int usb_seconds = 0;
+
+    /* NAND bring-up: read-only, the result ends up in the mailbox's logf */
+    sleep(2 * HZ);
+    nandtest_run();
 
     while (true)
     {

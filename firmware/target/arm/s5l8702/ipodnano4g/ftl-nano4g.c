@@ -145,7 +145,7 @@ static struct ftl_log ftl_logs[FTL_RESTORE_SLOTS];  /* 17 logs + 1 scratch slot 
 static uint16_t ftl_offsets[FTL_RESTORE_SLOTS][FTL_PAGES_PER_VB];
 /* Recovered unwritten ranges must not expose stale blocks assigned to them. */
 static bool ftl_blank[FTL_MAX_BLOCKS];
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 static int ftl_write_mount(void);
 #endif
 
@@ -168,7 +168,7 @@ static uint32_t get32(const uint8_t *p)
     return p[0] | (p[1] << 8) | (p[2] << 16) | ((uint32_t)p[3] << 24);
 }
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 static void put16(uint8_t *p, uint16_t value)
 {
     p[0] = value;
@@ -414,7 +414,7 @@ static int vfl_read(uint32_t vpn, void *data, uint8_t *meta)
     return nand_read_page(bank, page, data, meta);
 }
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 #include "ftl-vfl-write.h"
 #endif
 
@@ -892,7 +892,7 @@ int ftl_init(void)
             return NAND_ERR_FTL;
     }
     ftl_pages = ftl_vbs * FTL_PAGES_PER_VB;
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
     rc = vfl_write_init();
     if (!rc)
         rc = ftl_write_mount();
@@ -959,7 +959,7 @@ static int ftl_read_current(uint32_t lpn, void *data)
     return 0;
 }
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 #include "ftl-write.h"
 #endif
 
@@ -1020,7 +1020,7 @@ int ftl_read(uint32_t sector, uint32_t count, void *buffer)
                 ret = -2;
         }
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
         ftl_count_reads(sector, n);
 #endif
         buf += n * NAND_PAGE_SIZE;

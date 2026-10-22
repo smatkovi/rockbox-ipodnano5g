@@ -24,6 +24,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "nand-target.h"
 
 /* Mount the FTL. nand_phys_init() must have succeeded. Loads the block map
  * from the newest FTL context, or rebuilds it by scanning the flash if that
@@ -41,7 +42,7 @@ int ftl_init(void);
  * controller timed out. */
 int ftl_read(uint32_t sector, uint32_t count, void *buffer);
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 /* Write pages or publish a checkpoint. A failed mutation blocks further
  * writes and checkpoints until remount. The caller holds nand_mutex. */
 int ftl_write(uint32_t sector, uint32_t count, const void *buffer);

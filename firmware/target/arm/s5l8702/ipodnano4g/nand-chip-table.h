@@ -29,15 +29,16 @@
 /* Match READ ID responses from all eight chip enables against the population
  * table. Geometry comes from the part table; decoded ID fields are diagnostic. */
 
-/* Match the first four READ ID bytes. Parts use 4096-byte pages and
- * 128-page blocks; init checks these against the static request layout. */
+/* Match the first four READ ID bytes. Parts use 4096-byte (nano 4G) or
+ * 8192-byte (nano 5G) pages and 128-page blocks; init checks these against
+ * the static request layout. */
 struct nand_part
 {
     uint32_t id;                /* READ ID bytes 0..3 little endian (byte 0 = maker) */
     uint16_t blocks;            /* per chip enable */
     uint16_t pages_per_block;
     uint16_t page_size;         /* data bytes */
-    uint16_t spare;             /* spare bytes per page: 218 -> BCH16, 128 -> BCH8 */
+    uint16_t spare;             /* spare bytes per page: BCH16 if it fits, else BCH8 */
     uint8_t  vendor;            /* NAND_VENDOR_* class (the FTL's "vendor type") */
 };
 
@@ -54,6 +55,10 @@ static const struct nand_part nand_parts[] =
     { 0x3e94d52c, 4096, 128, 4096, 218, NAND_VENDOR_MICRON },   /* 2c d5 94 3e */
     { 0x3ed5d72c, 8192, 128, 4096, 218, NAND_VENDOR_MICRON },   /* 2c d7 d5 3e */
     { 0x3e94d72c, 8192, 128, 4096, 218, NAND_VENDOR_MICRON_2 }, /* 2c d7 94 3e */
+    /* 8 KiB pages (nano 5G; Apple's 5G bootloader table) */
+    { 0x3294d798, 4148, 128, 8192, 376, NAND_VENDOR_TOSHIBA },  /* 98 d7 94 32 */
+    { 0x3295de98, 8296, 128, 8192, 376, NAND_VENDOR_TOSHIBA },  /* 98 de 95 32 */
+    { 0x3294e798, 4100, 128, 8192, 448, NAND_VENDOR_TOSHIBA },  /* 98 e7 94 32 */
 };
 
 /* Each group of four chip enables has the same part and chip count; unused
@@ -94,6 +99,15 @@ static const struct nand_population nand_populations[] =
     { 2, 2, 0x3ed5d72c, { 50, 20, 30 }, { 50, 20, 30 }, 0 },
     { 1, 4, 0x3ed5d72c, { 20, 10, 7 }, { 25, 12, 10 }, NAND_LAYOUT_1WAY },
     { 1, 2, 0x3e94d72c, { 20, 10, 7 }, { 20, 10, 7 }, NAND_LAYOUT_2WAY_12_14 },
+    /* nano 5G. Apple reads these at 25/12/10 with EDO timing (read data
+     * valid 20 ns after RE falls), which the FMC setup here does not do:
+     * read at the slower two-group timing, whose pulse covers the 20 ns. */
+    { 1, 2, 0x3294d798, { 25, 12, 10 }, { 50, 24, 20 }, 0 },
+    { 1, 4, 0x3294d798, { 25, 12, 10 }, { 50, 24, 20 }, NAND_LAYOUT_1WAY },
+    { 2, 2, 0x3294d798, { 50, 24, 20 }, { 50, 24, 20 }, 0 },
+    { 1, 4, 0x3295de98, { 25, 12, 10 }, { 50, 24, 20 }, NAND_LAYOUT_1WAY },
+    { 1, 2, 0x3294e798, { 25, 12, 10 }, { 50, 24, 20 }, 0 },
+    { 1, 4, 0x3294e798, { 25, 12, 10 }, { 50, 24, 20 }, NAND_LAYOUT_1WAY },
 };
 
 /* An absent chip enable reads all 0x00 or all 0xff */

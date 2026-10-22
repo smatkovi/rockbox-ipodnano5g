@@ -86,10 +86,10 @@
 #define P_DMALIST           0xd20  /* READ: u32 bus address per 2 KiB chunk */
 #define P_STATS             0xd24  /* READ: u32[18] ECC histogram, 0 = none */
 #define P_CHUNKS            0xd28  /* DMA chunks per page (sectors / 4) */
-#define P_ECCMODE           0xd2c  /* ECC_CTRL value for sectors 1..7 */
+#define P_ECCMODE           0xd2c  /* ECC_CTRL value for sectors 1.. */
 #define P_ECCCFG            0xd30  /* ECC_CTRL value for sector 0 (+ meta) */
 #define P_HDRLEN            0xd34  /* meta + parity bytes of sector 0, - 1 */
-#define P_PARLEN            0xd38  /* parity bytes of sectors 1..7, - 1 */
+#define P_PARLEN            0xd38  /* parity bytes of sectors 1.., - 1 */
 #define P_TIMING            0xd4c  /* FMC_CTRL0 timing fields (nand_calc_timing) */
 
 /* FMC and ECC clock gates: PWRCON0 bits 5 and 9. */
@@ -106,9 +106,16 @@
  * 0x404040; measured on the device) and Rockbox never
  * changes the HCLK divider on the S5L8720. A slower real clock only makes the
  * timings longer. */
+#ifdef IPOD_NANO5G
+/* Not measured on the nano 5G yet (Rockbox keeps the clocks the loader
+ * set): assume a fast bus so that a slower real one only lengthens them */
+#define NAND_BUS_MHZ        200
+#else
 #define NAND_BUS_MHZ        133
+#endif
 
-/* Eight 512-byte ECC sectors per page; one DMA entry per 2048 bytes. */
+/* 512-byte ECC sectors (8 per 4 KiB page, 16 per 8 KiB); one DMA entry
+ * per 2048 bytes. */
 #define SECTORS_PER_PAGE    (NAND_PAGE_SIZE / 512)
 #define CHUNKS_PER_PAGE     (NAND_PAGE_SIZE / 2048)  /* DMA list entries */
 
@@ -117,7 +124,7 @@
 /* ==== Driver state and DMA buffers ==== */
 static struct nand_geometry nand_geom;
 static uint32_t nand_timing;            /* FMC_CTRL0 timing fields */
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 static uint32_t nand_program_timing;
 #endif
 static uint32_t nand_ecc_mode, nand_ecc_cfg, nand_ecc_hdrlen, nand_ecc_parlen;  /* P_ECCMODE..P_PARLEN values */
@@ -398,7 +405,7 @@ int nand_phys_init(void)
     commit_dcache_range(fmss_prog_readid, sizeof(fmss_prog_readid));
     commit_dcache_range(fmss_prog_read, sizeof(fmss_prog_read));
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
     commit_dcache_range(fmss_prog_program, sizeof(fmss_prog_program));
     commit_dcache_range(fmss_prog_erase, sizeof(fmss_prog_erase));
 #endif
@@ -454,15 +461,17 @@ int nand_phys_init(void)
     nand_geom.layout = pop->layout;
     nand_timing = nand_calc_timing(pop->t_read[0], pop->t_read[1], pop->t_read[2]);
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
     nand_program_timing = nand_calc_timing(pop->t_write[0], pop->t_write[1],
                                            pop->t_write[2]);
 #endif
 
-    /* BCH16 uses 218 spare bytes (10 metadata + 8 * 26 parity); BCH8 uses
- * 114 (10 + 8 * 13). ECC_CTRL bit 2 selects BCH16; 0xa00 includes
- * metadata in sector 0. Length fields store byte count minus one. */
-    if (part->page_size / 512 == 8 && part->spare == 218)
+    /* BCH16 whenever the spare area holds it (10 metadata + 26 parity bytes
+     * per sector: 218 on a 4 KiB page, 426 on an 8 KiB one), else BCH8
+     * (10 + 13 per sector), as Apple's table and FTL choose. ECC_CTRL bit 2
+     * selects BCH16; 0xa00 includes metadata in sector 0. Length fields
+     * store byte count minus one. */
+    if (10 + SECTORS_PER_PAGE * 26 <= part->spare)
     {
         nand_geom.ecc_bits = 16;
         nand_ecc_mode = 0x5;  /* BCH16 decode */
@@ -584,7 +593,7 @@ static int fmss_read(unsigned int n, void *data, uint8_t *secstat)
 }
 
 /* Request list entry i: page `page` (row in the chip) on CE `bank`, data to
- * data + i * 4096 as two 2 KiB DMA chunks (as m2fmssReadScatteredPages) */
+ * data + i * NAND_PAGE_SIZE as 2 KiB DMA chunks (as m2fmssReadScatteredPages) */
 static void nand_set_request(unsigned int i, unsigned int bank, uint32_t page,
                              uint8_t *data)
 {
@@ -665,7 +674,7 @@ int nand_read_pages(unsigned int n, const uint8_t *bank, const uint32_t *page,
     return rc;
 }
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 
 static int nand_finish_mutation(void)
 {
@@ -732,7 +741,9 @@ int nand_device_erase(unsigned int bank, uint32_t block)
 }
 #endif
 
-/* Storage API: one sector is a 4096-byte logical page. */
+/* Storage API: one sector is a 4096-byte logical page. (The nano 5G port
+ * still runs from a RAM disk and uses only the layers above.) */
+#if (CONFIG_STORAGE & STORAGE_NAND)
 static struct mutex nand_mutex;  /* serialises reads, writes and flushes */
 static long nand_last_activity_value = -1;
 static bool nand_ready;  /* physical layer and FTL mounted */
@@ -834,7 +845,7 @@ void nand_sleepnow(void)
 #ifdef HAVE_STORAGE_FLUSH
 int nand_flush(void)
 {
-#ifdef BOOTLOADER
+#ifndef NAND_WRITABLE
     return 0;   /* nothing is ever written */
 #else
     int rc;
@@ -852,7 +863,7 @@ int nand_flush(void)
 bool nand_readonly(IF_MD_NONVOID(int drive))
 {
     IF_MD((void)drive);
-#ifdef BOOTLOADER
+#ifndef NAND_WRITABLE
     return true;
 #else
     return false;
@@ -897,7 +908,7 @@ int nand_write_sectors(IF_MD(int drive,) sector_t start, int count,
         return -2;
     if (!count)
         return 0;
-#ifdef BOOTLOADER
+#ifndef NAND_WRITABLE
     (void)outbuf;
     return -3;
 #else
@@ -934,3 +945,4 @@ long nand_last_disk_activity(void)
 {
     return nand_last_activity_value;
 }
+#endif /* CONFIG_STORAGE & STORAGE_NAND */

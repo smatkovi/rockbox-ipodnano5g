@@ -81,7 +81,7 @@ static const struct name_value regs[] =
     { "P_ECCBUF", 0xd14 }, { "P_COUNT", 0xd18 }, { "P_META", 0xd1c },
     { "P_DMALIST", 0xd20 }, { "P_STATS", 0xd24 }, { "P_CHUNKS", 0xd28 },
     { "P_ECCMODE", 0xd2c }, { "P_ECCCFG", 0xd30 }, { "P_SPARELEN", 0xd34 },
-    { "P_HDRLEN", 0xd34 }, { "P_PARLEN", 0xd38 }, { "V_D3C", 0xd3c },
+    { "P_HDRLEN", 0xd34 }, { "P_PARLEN", 0xd38 }, { "V_D3C", 0xd3c }, { "V_D40", 0xd40 },
     { "P_TIMING", 0xd4c },
 };
 

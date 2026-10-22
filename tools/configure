@@ -2720,7 +2720,7 @@ fi
     bootoutput="bootloader-$modelname.ipod"
     # toolset is the tools within the tools directory that we build for
     # this particular target.
-    toolset=$ipodbitmaptools
+    toolset="$ipodbitmaptools fmssasm"
     # architecture, manufacturer and model for the target-tree build
     t_cpu="arm"
     t_manufacturer="s5l8702"

@@ -1691,6 +1691,9 @@ target/arm/s5l8702/ipodnano5g/powermgmt-nano5g.c
 target/arm/s5l8702/ipodnano5g/power-nano5g.c
 target/arm/s5l8702/ipodnano5g/pmu-nano5g.c
 target/arm/s5l8702/ipodnano5g/devloop-nano5g.c
+target/arm/s5l8702/ipodnano4g/nand-nano4g.c
+target/arm/s5l8702/ipodnano4g/ftl-nano4g.c
+target/arm/s5l8702/ipodnano5g/nandtest-nano5g.c
 #ifndef BOOTLOADER
 target/arm/s5l8702/ipodnano5g/cscodec-nano5g.c
 target/arm/s5l8702/ipodnano5g/audiotest-nano5g.c

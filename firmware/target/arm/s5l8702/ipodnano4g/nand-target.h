@@ -19,18 +19,30 @@
  ****************************************************************************/
 
 /* bank indexes populated chip enables; page is the page index within that chip.
- * Each page has 4096 data bytes and 12 metadata bytes: 10 protected bytes
- * followed by two 0xff bytes. */
+ * Each page has 4096 data bytes (8192 on the nano 5G) and 12 metadata bytes:
+ * 10 protected bytes followed by two 0xff bytes. */
 #ifndef __NAND_TARGET_H__
 #define __NAND_TARGET_H__
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "config.h"
+
+/* Writing needs PROGRAM and ERASE sequencer programs for the page size; the
+ * nano 5G's 8 KiB pages have none yet, so it is read-only like the
+ * bootloader */
+#if !defined(BOOTLOADER) && !defined(IPOD_NANO5G)
+#define NAND_WRITABLE
+#endif
 
 /* Largest configuration we drive: up to 8 chip enables (the count READ ID
  * scans), 8192 blocks per CE, 128 pages per block, 4096-byte pages */
 #define NAND_MAX_BANKS          8
+#ifdef IPOD_NANO5G
+#define NAND_PAGE_SIZE          8192
+#else
 #define NAND_PAGE_SIZE          4096
+#endif
 #define NAND_META_SIZE          12      /* 10 ECC-protected bytes + 0xff 0xff */
 
 /* Pages one sequencer run may read (bounded by the static request lists) */
@@ -134,7 +146,7 @@ int nand_read_page(unsigned int bank, uint32_t page, void *data, void *meta);
 int nand_read_pages(unsigned int n, const uint8_t *bank, const uint32_t *page,
                     void *data, void *meta);
 
-#ifndef BOOTLOADER
+#ifdef NAND_WRITABLE
 /* Program an erased page or erase a block. The caller serialises these
  * operations with reads. A failed mutation is not retried in place. */
 int nand_device_program(unsigned int bank, uint32_t page,
