@@ -367,21 +367,10 @@ static void devloop_tick(void)
     devloop_hang_dump();
 }
 
-/* The clickwheel interrupt as FIQ, which most of Rockbox leaves enabled
- * when it disables IRQs: MENU+PLAY takes the dump at once, even when a hang
- * has IRQs off and the tick task no longer runs */
-void INT_WHEEL(void);
-void fiq_handler(void) __attribute__((interrupt ("FIQ")));
-void fiq_handler(void)
-{
-    INT_WHEEL();
-    if ((clickwheel_raw_buttons() & (BUTTON_MENU | BUTTON_PLAY))
-        == (BUTTON_MENU | BUTTON_PLAY))
-        devloop_hang_dump();
-}
-
 /* Record the interrupted mode's registers, then back to the shell. Runs in
- * the tick IRQ or the wheel FIQ. */
+ * the tick IRQ. (Routing the wheel interrupt to the FIQ for a dump with IRQs
+ * off was tried and is undone: the wheel was never confirmed to work that
+ * way.) */
 static void devloop_hang_dump(void)
 {
     uint32_t cpsr, mode;
@@ -449,27 +438,39 @@ static void i2c_scan(void)
 {
     /* the logf buffer wraps under the chatty USB storage logging, so this
      * also goes to a file that survives until the next cycle reads it */
-    char text[512];
+    char text[1024];
     int tn = 0;
+    int found[0x70], nfound;
 
     for (int bus = 0; bus < 2; bus++)
     {
         char line[96];
         int n = snprintf(line, sizeof(line), "i2c%d:", bus);
+        nfound = 0;
         for (int a = 0x08; a < 0x78 && n < (int)sizeof(line) - 6; a++)
             if (i2c_write(bus, a << 1, -1, 0, NULL) == 0)
+            {
                 n += snprintf(line + n, sizeof(line) - n, " %02x", a);
+                found[nfound++] = a;
+            }
         logf("devloop: %s", line);
         tn += snprintf(text + tn, sizeof(text) - tn, "%s\n", line);
-        for (int a = 0x18; a <= 0x19; a++)
+
+        /* every found address: registers 0x00 and 0x0f (WHO_AM_I on many
+         * ST/accel-style parts), and a bare current-address read, in case
+         * that identifies something (the Si47xx and some others don't use
+         * register-addressed reads at all) */
+        for (int i = 0; i < nfound && tn < (int)sizeof(text) - 64; i++)
         {
-            unsigned char who = 0;
-            if (i2c_read(bus, a << 1, 0x0f, 1, &who) == 0)
-            {
-                logf("devloop: i2c%d %02x WHO_AM_I %02x", bus, a, who);
-                tn += snprintf(text + tn, sizeof(text) - tn,
-                              "i2c%d %02x WHO_AM_I %02x\n", bus, a, who);
-            }
+            int a = found[i];
+            unsigned char v0 = 0, v0f = 0, raw[2] = {0, 0};
+            int r0 = i2c_read(bus, a << 1, 0x00, 1, &v0);
+            int r0f = i2c_read(bus, a << 1, 0x0f, 1, &v0f);
+            int rraw = i2c_read(bus, a << 1, -1, 2, raw);
+            tn += snprintf(text + tn, sizeof(text) - tn,
+                          "i2c%d %02x reg0 %d:%02x reg0f %d:%02x"
+                          " raw %d:%02x%02x\n",
+                          bus, a, r0, v0, r0f, v0f, rraw, raw[0], raw[1]);
         }
     }
     int fd = creat("/i2cscan.txt", 0666);
@@ -516,7 +517,6 @@ void devloop_boot(void)
 void devloop_init(void)
 {
     tick_add_task(devloop_tick);
-    VIC0INTSELECT |= 1 << IRQ_WHEEL;   /* the wheel interrupt as FIQ */
     create_thread(devloop_thread, devloop_stack, sizeof(devloop_stack), 0,
                   "devloop" IF_PRIO(, PRIORITY_SYSTEM) IF_COP(, CPU));
 }
