@@ -20,6 +20,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#ifdef IPOD_NANO5G
+#include <stdio.h>
+#endif
 
 #include "config.h"
 
@@ -27,6 +30,9 @@
 #include "system.h"
 #include "cpu.h"
 #include "lcd.h"
+#ifdef IPOD_NANO5G
+#include "file.h"
+#endif
 #ifdef IPOD_6G
 #include "pmu-target.h"
 #endif
@@ -505,6 +511,28 @@ void lcd_blit_yuv(unsigned char * const src[3],
 {
     unsigned int z;
     unsigned char const * yuv_src[3];
+
+#ifdef IPOD_NANO5G
+    /* bring-up: a diagonal tear was seen on video; dump the first call's
+     * parameters once, for comparison against LCD_WIDTH/LCD_HEIGHT */
+    static bool dumped = false;
+    if (!dumped)
+    {
+        dumped = true;
+        char line[160];
+        int n = snprintf(line, sizeof(line),
+                         "src_x %d src_y %d stride %d x %d y %d width %d"
+                         " height %d LCD %dx%d\n",
+                         src_x, src_y, stride, x, y, width, height,
+                         LCD_WIDTH, LCD_HEIGHT);
+        int fd = open("/lcdyuv.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+        if (fd >= 0)
+        {
+            write(fd, line, n);
+            close(fd);
+        }
+    }
+#endif
 
     width = (width + 1) & ~1;       /* ensure width is even */
 
