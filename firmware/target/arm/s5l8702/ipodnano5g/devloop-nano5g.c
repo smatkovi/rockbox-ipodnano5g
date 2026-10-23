@@ -332,11 +332,11 @@ void devloop_return_to_uboot(int reason)
 {
     disable_irq();
     fill_mailbox(reason);
-
-    /* restart the known good image, with the report in the mailbox */
-    if (image_valid(IMAGE_GOOD))
-        image_start(IMAGE_GOOD);
-
+    /* Always the U-Boot console: a first live test of the restart-via-
+     * trampoline path (image_start(), above) hung and needed a physical
+     * reset, so it is not attempted automatically here any more. The host
+     * side (n5g-cycle.sh) reloads Rockbox over the console instead, which
+     * has been reliable all night. */
     uboot_enter(false);
     enable_irq();
 }
@@ -421,35 +421,13 @@ static void NORETURN_ATTR devloop_thread(void)
             fslock_since = current_tick;
         if (devloop_usb_ejected)
         {
-            /* the eject ends USB mode; once the disk is mounted again,
-             * start the boot file on trial (GOOD if it does not load) */
+            /* restart-via-trampoline (image_start()) hung on its first
+             * live test and needed a physical reset, so an eject just
+             * reports and returns to the U-Boot console now; the host
+             * side (n5g-cycle.sh) reloads Rockbox from there instead. */
             devloop_usb_ejected = false;
-            /* every drive must be ejected and the disks mounted again */
-            for (int i = 0; i < 40 && (usb_exclusive_storage()
-                     || !file_exists(BOOTDIR "/" BOOTFILE)); i++)
-                sleep(HZ / 4);
-            sleep(HZ / 2);
-            logf("devloop: host ejected, starting %s", BOOTFILE);
-            if (image_load(IMAGE_NEW))
-            {
-                IMAGE_NEW->trial = 1;
-                disable_irq();
-                fill_mailbox(DEVLOOP_HOST_EJECT);
-                image_start(IMAGE_NEW);
-            }
+            logf("devloop: host ejected");
             devloop_return_to_uboot(DEVLOOP_HOST_EJECT);
-        }
-        /* a NEW image that got USB storage working becomes GOOD */
-        if (devloop_usb_cbw_count && IMAGE_GOOD->running == 2
-            && IMAGE_NEW->trial && image_valid(IMAGE_NEW))
-        {
-            uint32_t reports = IMAGE_GOOD->reports;
-            memcpy(IMAGE_GOOD, IMAGE_NEW, 0x100 + IMAGE_NEW->len);
-            IMAGE_GOOD->trial = 0;
-            IMAGE_GOOD->running = 1;
-            IMAGE_GOOD->reports = reports;
-            IMAGE_NEW->trial = 0;
-            logf("devloop: new image is good now");
         }
         if (pmu_usb_present() && devloop_usb_cbw_count == 0)
         {
