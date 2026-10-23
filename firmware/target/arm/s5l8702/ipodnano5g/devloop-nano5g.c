@@ -447,6 +447,11 @@ static void NORETURN_ATTR devloop_thread(void)
  * accelerometer's WHO_AM_I: for the radio and pedometer bring-up */
 static void i2c_scan(void)
 {
+    /* the logf buffer wraps under the chatty USB storage logging, so this
+     * also goes to a file that survives until the next cycle reads it */
+    char text[512];
+    int tn = 0;
+
     for (int bus = 0; bus < 2; bus++)
     {
         char line[96];
@@ -455,12 +460,23 @@ static void i2c_scan(void)
             if (i2c_write(bus, a << 1, -1, 0, NULL) == 0)
                 n += snprintf(line + n, sizeof(line) - n, " %02x", a);
         logf("devloop: %s", line);
+        tn += snprintf(text + tn, sizeof(text) - tn, "%s\n", line);
         for (int a = 0x18; a <= 0x19; a++)
         {
             unsigned char who = 0;
             if (i2c_read(bus, a << 1, 0x0f, 1, &who) == 0)
+            {
                 logf("devloop: i2c%d %02x WHO_AM_I %02x", bus, a, who);
+                tn += snprintf(text + tn, sizeof(text) - tn,
+                              "i2c%d %02x WHO_AM_I %02x\n", bus, a, who);
+            }
         }
+    }
+    int fd = creat("/i2cscan.txt", 0666);
+    if (fd >= 0)
+    {
+        write(fd, text, tn);
+        close(fd);
     }
 }
 

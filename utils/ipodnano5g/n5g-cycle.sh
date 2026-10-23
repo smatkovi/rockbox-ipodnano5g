@@ -37,6 +37,10 @@ for f in "$M"/devloop/report*.bin; do
     $SUDO rm "$f"
     echo "report: $out.txt ($(head -1 "$out.txt"))"
 done
+if [ -e "$M/i2cscan.txt" ]; then
+    cp "$M/i2cscan.txt" "$OUT/$stamp-i2cscan.txt"
+    echo "i2c scan: $OUT/$stamp-i2cscan.txt"
+fi
 if [ -n "$NEW" ]; then
     $SUDO cp "$NEW" "$M/.rockbox/rockbox.ipod"
     echo "new boot file: $NEW"
