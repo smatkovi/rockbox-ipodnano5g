@@ -421,6 +421,12 @@ void main(void)
     if (disk_mount_all() <= 0)
     {
         printf("No FAT partition found");
+#ifdef IPOD_NANO5G
+        /* A damaged, absent, or unsupported data volume must not prevent the
+         * original signed OS from starting. The firmware partition is
+         * independent of the FAT mount and can still supply OSOS. */
+        launch_apple(APPLE_IMG_OSOS);
+#endif
         boot_error();
     }
     printf("Loading Rockbox...");

@@ -106,6 +106,27 @@ FSInfo fields. The FSInfo and backup boot sectors were erased-looking, and
 the first FAT sector began with `0x00068401`, not the reserved FAT32 entries.
 This matches the earlier Rockbox FAT-mount failure. No repair was attempted.
 
+## Apple OS fallback verified from RAM
+
+The Apple firmware partition starts at MBR LBA 64 in 4096-byte units, while
+Rockbox exposes NAND reads in 512-byte sectors. `applefw.c` now scales that
+partition start by eight on Nano 5G; Nano 4G keeps its 512-byte MBR units. A
+read-only capture of the 192-MiB firmware partition (SHA-256
+`86a5aec173f8f9a00161ad50bdea237c73bd079800cada8786362fa908e59342`) contains
+the expected STOP marker and an `osos` IMG1 entry. Its format-3 image has body
+length `0x6f2624` and data length `0x6f3293`.
+
+A RAM-only probe on the device returned `nand_init() == 0` and
+`applefw_load("osos") == 0`; the decrypted body begins with a valid ARM branch.
+The normal bootloader was then loaded at `0x09000000` from U-Boot, with the RAM
+disk's first sector cleared so it could not load a Rockbox boot file. The
+device re-enumerated as Apple `05ac:1265` with Apple mass-storage, audio, and
+HID interfaces; Linux saw the 14.9-GiB `SEBIPOD` volume. This verifies the
+Apple OS hand-off from the RAM bootloader. The test did not record whether the
+hold-switch branch or the missing-FAT fallback selected OSOS. No NAND/NOR
+write, erase, or flash operation occurred. It does not establish an untethered
+Rockbox entry point.
+
 ## Hardware notes (measured on this unit)
 
 - LCD controller at `0x38300000`, same registers as the S5L8702. Panel id

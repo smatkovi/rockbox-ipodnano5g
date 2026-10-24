@@ -40,8 +40,17 @@
 
 #define APPLE_PAGE_SIZE  4096u          /* IMG1 and directory data are page based */
 #define APPLE_SECTORS_PER_PAGE (APPLE_PAGE_SIZE / SECTOR_SIZE)
+#ifdef IPOD_NANO5G
+#define APPLE_MBR_SECTOR_SIZE 4096u     /* Apple FTL partition LBAs use 4-KiB units */
+#else
+#define APPLE_MBR_SECTOR_SIZE SECTOR_SIZE /* nano 4G MBR LBAs use storage sectors */
+#endif
+#define APPLE_MBR_TO_STORAGE_SECTORS (APPLE_MBR_SECTOR_SIZE / SECTOR_SIZE)
 #if (APPLE_PAGE_SIZE % SECTOR_SIZE) != 0
 #error "Apple firmware page must be an integer number of storage sectors"
+#endif
+#if (APPLE_MBR_SECTOR_SIZE % SECTOR_SIZE) != 0
+#error "Apple MBR LBAs must be convertible to storage sectors"
 #endif
 #define LOAD_BASE       DRAM_ORIG       /* 0x08000000, the body's link address */
 #define LOAD_LIMIT      (DRAM_ORIG + 16 * 1024 * 1024)  /* bootloader link area */
@@ -56,7 +65,8 @@ static uint32_t rd32(const uint8_t *p)
     return p[0] | (p[1] << 8) | (p[2] << 16) | ((uint32_t)p[3] << 24);
 }
 
-/* MBR LBAs are 512-byte units; read one 4096-byte Apple firmware page. */
+/* The Apple flash MBR uses 4096-byte LBAs. Rockbox exposes N5G storage as
+ * 512-byte sectors, so convert the partition start before reading it. */
 static int read_page(uint32_t sector, void *buf)
 {
     return nand_read_flash_sectors(sector, APPLE_SECTORS_PER_PAGE, buf) == 0
@@ -84,6 +94,10 @@ static int find_partition(uint32_t *start)
     {
         const uint8_t *e = applefw_page + MBR_PART0 + i * 16;
         lba[i] = rd32(e + 8);
+        if (lba[i] > UINT32_MAX / APPLE_MBR_TO_STORAGE_SECTORS)
+            lba[i] = 0;
+        else
+            lba[i] *= APPLE_MBR_TO_STORAGE_SECTORS;
         type[i] = e[4];
     }
     for (int pass = 0; pass < 2; pass++)

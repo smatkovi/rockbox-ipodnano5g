@@ -78,8 +78,8 @@
 #define CONFIG_STORAGE STORAGE_NAND
 #define HAVE_STORAGE_READONLY
 #define MAX_VIRT_SECTOR_SIZE 4096
-/* MBR LBAs and FAT BPBs use 512-byte sectors. Apple IMG1 pages are handled
- * separately in applefw.c as groups of eight NAND storage sectors. */
+/* The NAND API exposes 512-byte sectors. The Apple FTL MBR and FAT BPB use
+ * 4096-byte units; applefw.c scales partition starts before reading them. */
 #define SECTOR_SIZE 512
 #define STORAGE_WANTS_ALIGN
 #define STORAGE_NEEDS_BOUNCE_BUFFER
