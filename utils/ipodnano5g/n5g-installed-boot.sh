@@ -15,7 +15,7 @@ ROOT=$(cd "$D/../.." && pwd)
 WIND3X=${WIND3X:-$ROOT/../ref/wInd3x-upstream/wInd3x}
 UBOOT_SHELL=${UBOOT_SHELL:-$ROOT/../ref/build-uboot-n5gwip/u-boot.bin}
 BOOTLOADER=${BOOTLOADER:-$ROOT/build-n5g-blramdisk/bootloader.bin}
-TTY=${TTY:-/dev/ttyACM0}
+TTY=${TTY:-/dev/serial/by-id/usb-freemyipod_U-Boot_firmware_dbg-if00}
 if [ "$(id -u)" = 0 ]; then SUDO=(); else SUDO=(sudo -n); fi
 
 for f in "$WIND3X" "$UBOOT_SHELL" "$BOOTLOADER"; do
