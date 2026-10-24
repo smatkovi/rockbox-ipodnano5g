@@ -1,9 +1,9 @@
 # Rockbox on the iPod nano 5G (S5L8730) — experimental
 
-Status (2026-10-22): the Rockbox main firmware boots **tethered from RAM** on
-an iPod nano 5G (16 GB, Apple firmware 1.0.2) and the menus can be navigated
-with the clickwheel. Nothing is installed on the iPod; after a restart it is
-back to Apple's firmware.
+Status (2026-10-24): the Rockbox main firmware boots **tethered from RAM** on
+an iPod nano 5G (16 GB, Apple firmware 1.0.2). The Rockbox USB runtime was
+verified from the host, but no persistent installation is available; a cold
+restart returns to Apple's firmware.
 
 | Part | State |
 |---|---|
@@ -11,10 +11,11 @@ back to Apple's firmware.
 | CPU / SoC | S5L8730 shares the S5L8720 (nano 4G) code paths; clock gates verified identical |
 | LCD | panel `38b3`, 240×376, controller as on the S5L8702; frames by PIO |
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
-| Storage | RAM disk at `0x0a000000`; NAND user-data drive is read-only; a third drive exposes the full logical FTL range for backup (new, not verified on hardware) |
+| Storage | Host observed an 8-MiB RAM disk and a 15.1-GiB iPod LUN (`RO=1`); the extra full-FTL view is implemented but was not enumerated in this run |
 | PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
 | Audio | works: CS42L58 (driven like the CS42L55) on I2S2, DMAC0 request 0, codec as clock master |
-| USB, RTC, charging | not driven |
+| USB | mass-storage and CDC-ACM enumerate in the RAM boot; CDC is log-only, and the iPod LUN is host-read-only |
+| RTC, charging | not driven |
 | Known bug | System → Rockbox Info hangs |
 
 This branch is based on Viktor Krapivin's nano 4G series on the Rockbox
@@ -67,6 +68,19 @@ utils/ipodnano5g/n5g-boot.sh build-n5g/rockbox-raw.bin build-n5g/disk.img
 
 Then put the iPod in DFU mode: connected by USB, hold MENU+SELECT through the
 Apple logo until the screen stays black.
+
+For a RAM test that can return to the U-Boot shell, start the shell-enabled
+U-Boot through wInd3x, wait for its USB-ACM console (`05ac:2137`), then run:
+
+```sh
+UBOOT_SHELL=/path/to/u-boot.bin \
+  utils/ipodnano5g/n5g-shellboot.sh build-n5g/rockbox-raw.bin build-n5g/disk.img
+```
+
+This variant copies U-Boot to SDRAM before starting Rockbox. On the tested
+unit, ejecting only the 8-MiB RAM disk (`eject /dev/sda`) returned to a
+responsive U-Boot shell with the `DEVLOOP_HOST_EJECT` reason in its mailbox.
+Both methods are tethered RAM boots; neither installs firmware in NAND or NOR.
 
 `ubsh.py` talks to the U-Boot USB-ACM shell variant, for poking at hardware
 (`md`, `mw`, `loads` + `go` for small test payloads).
