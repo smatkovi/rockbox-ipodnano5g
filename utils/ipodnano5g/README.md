@@ -203,4 +203,47 @@ that the device accepts is still required.
 
 Charging (D1759, as on the nano 4G), audio codec (Cirrus Logic CLI1480A),
 USB, and the NAND/FMSS driver with Apple's VSVFL/FTL — the nano 4G series is
-the closest reference. An untethered boot path is open.
+the closest reference. An untethered boot path remains unproven.
+
+## RAM-disk root staging (2026-10-24)
+
+Rockbox panicked when it tried to write sector 2,983,370 with error `-3`.
+The N5G `nand_write_sectors()` path deliberately returns `-3` before calling
+`ftl_write()` because `NAND_WRITABLE` is undefined for this target; the
+current port has no validated NAND program/erase implementation. This is a
+driver guard, not a Linux permission or FAT mount error.
+
+The normal Rockbox build uses `STORAGE_RAMDISK_FIRST`, so a writable FAT root
+can live in an 8 MiB RAM disk loaded by the N5G bootloader from
+`/.rockbox/n5g-ramdisk.img`. `load_n5g_ramdisk()` checks its exact size and
+FAT16 geometry before starting Rockbox, and falls back to Apple OSOS if the
+file is missing or invalid. The normal main image and the RAM disk are
+installed on the user FAT volume with SHA-256 values
+`65276d4bf5b88af3c2ff5701a21fa6cd6654e24b4f147d7e7c31395a7023ec16` and
+`6fb9df06b8083f8d27d18fdc2bfd70be383c5306b4691d767ef5c9e43c3a0cf5`.
+Before replacement, the previous `.rockbox` directory was copied to
+`/home/sebastian/ipod-re/device-backup-20261024/.rockbox`.
+
+The write was through Apple's ordinary USB mass-storage FAT volume. It was
+not a raw NAND page program/erase or firmware flash. The bootloader RAM test
+loaded at `0x09000000`, then entered Apple's OSOS because the RAM-disk image
+was not yet present. That hand-off ends the U-Boot session; there is no
+known host command that takes Apple OS back to BootROM DFU, so one physical
+DFU key sequence is required to resume.
+
+For the next test, `n5g-installed-boot.sh` waits for DFU, starts the
+shell-enabled U-Boot with wInd3x, stores a return copy at `0x0ae00000`, and
+loads the installed-file bootloader into SDRAM. With Hold unlocked, the
+normal Rockbox build retains its devloop, allowing a USB eject or panic to
+return to U-Boot. The script passed `bash -n` but has not yet been run on the
+device. The iPod is currently in Apple USB mode (`05ac:1265`), with the FAT
+volume unmounted after the verified copy.
+
+A separate `N5G_COLD_BOOT` build also completed after guarding its remaining
+USB-storage devloop references. Its main image hash is
+`1316fb438435014865def9c5bfe758196412a675db1c5189d35febdd1ac88ccc`; its
+8 MiB RAM disk hash is
+`956844ef3b63b31e7b74245a6f95fecc0cb6d7c91319ceeed3d4af698ab17131`.
+This variant was not installed or hardware-tested. Neither build supplies a
+persistent BootROM-to-Rockbox entry point: the verified start still depends
+on wInd3x/DFU and a RAM-loaded U-Boot.

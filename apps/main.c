@@ -477,7 +477,7 @@ static void init(void)
 #else /* ! (CONFIG_PLATFORM & PLATFORM_HOSTED) */
 
 #include "errno.h"
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
 #include "devloop-nano5g.h"
 #endif
 
@@ -710,7 +710,7 @@ static void init(void)
         }
     }
 
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
     devloop_boot();     /* bring-up: report of the last run to /devloop */
 #endif
 

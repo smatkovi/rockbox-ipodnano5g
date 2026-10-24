@@ -57,11 +57,10 @@
 
 #define CONFIG_NAND 0   /* the S5L87xx NAND driver, not a generic one */
 
-/* Bring-up: a RAM disk at RAMDISK_ADDR, loaded with a FAT image before
- * Rockbox starts, holds .rockbox and is the first drive (the root volume).
- * The NAND is read-only: the second drive is Apple's data partition; the
- * third exposes the full logical FTL page range for backup (not physical
- * NAND blocks/OOB). FTL pages are 8192 bytes, exported as 512-byte sectors. */
+/* Rockbox uses a RAM disk at RAMDISK_ADDR as its writable root volume. The
+ * bootloader loads a prepared FAT image from the read-only NAND data area.
+ * NAND also exposes the data partition and full logical FTL view for backup.
+ * FTL pages are 8192 bytes, exported as 512-byte sectors. */
 #ifndef BOOTLOADER
 /* LIS331DLF, for the pedometer plugin */
 #define HAVE_ACCELEROMETER

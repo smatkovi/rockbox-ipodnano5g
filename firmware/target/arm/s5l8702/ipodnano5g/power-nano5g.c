@@ -28,7 +28,9 @@ void power_init(void)
 {
     pmu_init();
 #ifndef BOOTLOADER
+#ifndef N5G_COLD_BOOT
     devloop_init();
+#endif
 #endif
 }
 

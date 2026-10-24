@@ -25,7 +25,7 @@
 #ifdef IPOD_NANO5G /* bring-up */
 #define LOGF_ENABLE
 #endif
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
 #include "devloop-nano5g.h"
 #endif
 #include "logf.h"
@@ -1078,7 +1078,7 @@ static void handle_scsi_ready(struct command_block_wrapper* cbw)
                     {
                         logf("scsi eject");
                         ejected[lun]=true;
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
                         devloop_usb_ejected = true;
 #endif
 #ifdef USB_EJECT_LEAVES_USB_MODE
@@ -1483,7 +1483,7 @@ static void handle_scsi_ready(struct command_block_wrapper* cbw)
  * OUT endpoint is not rearmed until this CBW has received its CSW. */
 static void handle_scsi(struct command_block_wrapper* cbw)
 {
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
     devloop_usb_cbw_count++;    /* bring-up: USB storage works */
 #endif
     if(!usb_exclusive_storage()) {

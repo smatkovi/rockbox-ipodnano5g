@@ -22,7 +22,7 @@
 #include "system.h"
 #include "panic.h"
 #include "system-target.h"
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(N5G_COLD_BOOT)
 #include "devloop-nano5g.h"
 #endif
 #include "i2c-s5l8702.h"
@@ -261,7 +261,7 @@ void system_init(void)
 
 void system_reboot(void)
 {
-#if defined(IPOD_NANO5G) && !defined(BOOTLOADER)
+#if defined(IPOD_NANO5G) && !defined(BOOTLOADER) && !defined(N5G_COLD_BOOT)
     /* bring-up: back to the U-Boot shell that loaded us, if it is there */
     devloop_return_to_uboot(DEVLOOP_REBOOT);
 #endif
@@ -280,7 +280,7 @@ void system_reboot(void)
 void system_exception_wait(void)
 {
 //    post_mortem_stub();
-#if defined(IPOD_NANO5G) && !defined(BOOTLOADER)
+#if defined(IPOD_NANO5G) && !defined(BOOTLOADER) && !defined(N5G_COLD_BOOT)
     /* bring-up: show the panic for a few seconds, then go back to the
      * U-Boot shell (system_reboot) with a report */
     unsigned long start = USEC_TIMER;

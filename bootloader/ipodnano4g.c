@@ -28,6 +28,7 @@
 #include "system.h"
 #include "lcd.h"
 #include "../kernel-internal.h"
+#include "file.h"
 #include "file_internal.h"
 #include "storage.h"
 #include "disk.h"
@@ -329,6 +330,41 @@ static int kernel_launch_combo(int btn)
     return launch_apple(name);
 }
 
+#ifdef IPOD_NANO5G
+#define N5G_RAMDISK_FILE   BOOTDIR "/n5g-ramdisk.img"
+#define N5G_RAMDISK_BYTES  (RAMDISK_SECTORS * SECTOR_SIZE)
+
+/* The main firmware's first volume is a writable RAM disk. Load the FAT16
+ * image from NAND before jumping so settings and directory-cache updates stay
+ * in SDRAM. The NAND FTL remains read-only. */
+static bool load_n5g_ramdisk(void)
+{
+    int fd = open(N5G_RAMDISK_FILE, O_RDONLY);
+    if (fd < 0)
+        return false;
+
+    off_t len = ffilesize(fd);
+    if (len != N5G_RAMDISK_BYTES)
+    {
+        close(fd);
+        return false;
+    }
+
+    unsigned char *image = (unsigned char *)RAMDISK_ADDR;
+    int rc = read(fd, image, N5G_RAMDISK_BYTES);
+    close(fd);
+    if (rc != N5G_RAMDISK_BYTES)
+        return false;
+
+    /* Reject files that are the right size but not the expected FAT image. */
+    return image[510] == 0x55 && image[511] == 0xaa
+        && image[11] == 0x00 && image[12] == 0x02
+        && image[13] == 2 && image[16] == 2
+        && image[19] == (RAMDISK_SECTORS & 0xff)
+        && image[20] == (RAMDISK_SECTORS >> 8);
+}
+#endif
+
 /* Remain available for disk-mode selection after a filesystem/load error. */
 static void NORETURN_ATTR boot_error(void)
 {
@@ -442,6 +478,14 @@ void main(void)
 #endif
         boot_error();
     }
+#ifdef IPOD_NANO5G
+    if (!load_n5g_ramdisk())
+    {
+        printf("Cannot load " N5G_RAMDISK_FILE);
+        launch_apple(APPLE_IMG_OSOS);
+        boot_error();
+    }
+#endif
     disable_irq();
     commit_discard_idcache();
     ((void (*)(void))loadbuffer)();

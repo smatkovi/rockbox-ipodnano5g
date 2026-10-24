@@ -1690,7 +1690,7 @@ target/arm/s5l8702/ipodnano5g/adc-nano5g.c
 target/arm/s5l8702/ipodnano5g/powermgmt-nano5g.c
 target/arm/s5l8702/ipodnano5g/power-nano5g.c
 target/arm/s5l8702/ipodnano5g/pmu-nano5g.c
-#ifndef BOOTLOADER
+#if !defined(BOOTLOADER) && !defined(N5G_COLD_BOOT)
 target/arm/s5l8702/ipodnano5g/devloop-nano5g.c
 #endif
 target/arm/s5l8702/ipodnano4g/nand-nano4g.c
