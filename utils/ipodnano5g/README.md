@@ -11,7 +11,7 @@ restart returns to Apple's firmware.
 | CPU / SoC | S5L8730 shares the S5L8720 (nano 4G) code paths; clock gates verified identical |
 | LCD | panel `38b3`, 240×376, controller as on the S5L8702; frames by PIO |
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
-| Storage | Host observed an 8-MiB RAM disk and a 15.1-GiB iPod LUN (`RO=1`); the extra full-FTL view is implemented but was not enumerated in this run |
+| Storage | Host observed an 8-MiB RAM disk and a 15.1-GiB read-only iPod LUN exposing the full logical FTL; a separate data-only LUN was not enumerated |
 | PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
 | Audio | works: CS42L58 (driven like the CS42L55) on I2S2, DMAC0 request 0, codec as clock master |
 | USB | mass-storage and CDC-ACM enumerate in the RAM boot; CDC is log-only, and the iPod LUN is host-read-only |
@@ -87,18 +87,24 @@ Both methods are tethered RAM boots; neither installs firmware in NAND or NOR.
 
 ## Read-only FTL backup view
 
-The current Nano 5G Rockbox configuration exposes three storage drives: drive
-0 is the RAM disk, drive 1 is Apple's user-data area, and drive 2 is a
-read-only view of logical FTL pages starting at LPN 0. By default these map
-to USB LUNs 0, 1, and 2; the Rockbox setting “USB skip first drive” shifts
-the NAND LUNs down by one. The full FTL view includes
-the logical MBR/firmware area and data area and maps each 8192-byte FTL page
-to sixteen 512-byte sectors. It uses the Rockbox FTL reader and is not a raw
-physical NAND image: it omits per-page spare/OOB bytes and physical block and
-bad-block layout. `NAND_WRITABLE` remains undefined for Nano 5G, and storage
-write requests are rejected. This new drive builds successfully but still
-needs a device-side enumeration/read check before it can serve as a verified
-backup or recovery source.
+The target configuration declares three storage drives: a RAM disk, the
+NAND data area, and a read-only view of logical FTL pages starting at LPN 0.
+The generic USB code intends to map these to LUNs 0, 1, and 2; its “USB skip
+first drive” option shifts the NAND LUNs down by one. The full FTL view
+includes the logical MBR, firmware area, and data area; each 8192-byte FTL
+page maps to sixteen 512-byte sectors. It uses the Rockbox FTL reader and is
+not a raw physical NAND image: spare/OOB bytes and physical block/bad-block
+layout are omitted. `NAND_WRITABLE` remains undefined for Nano 5G, and storage
+write requests are rejected. Host reads confirmed the MBR and FAT-region
+sectors, but this is not a verified full backup or restore source.
+
+In the 2026-10-24 host session Linux enumerated the RAM disk and one
+15.1-GiB iPod LUN (`RO=1`). The MBR on that LUN listed the FAT partition at
+start 49216 with 3901376 sectors; the 4096-byte BPB appeared at 512-byte LBA
+393728 (8× the MBR start). That BPB had zero FAT size, root cluster, and
+FSInfo fields. The FSInfo and backup boot sectors were erased-looking, and
+the first FAT sector began with `0x00068401`, not the reserved FAT32 entries.
+This matches the earlier Rockbox FAT-mount failure. No repair was attempted.
 
 ## Hardware notes (measured on this unit)
 
