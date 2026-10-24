@@ -1,9 +1,9 @@
 # Rockbox on the iPod nano 5G (S5L8730) — experimental
 
 Status (2026-10-24): the Rockbox main firmware boots **tethered from RAM** on
-an iPod nano 5G (16 GB, Apple firmware 1.0.2). The Rockbox USB runtime was
-verified from the host, but no persistent installation is available; a cold
-restart returns to Apple's firmware.
+an iPod nano 5G (16 GB, Apple firmware 1.0.2). The current Rockbox files are
+installed on the internal FAT volume, but there is still no persistent
+cold-start entry point; a cold restart returns to Apple's firmware.
 
 | Part | State |
 |---|---|
@@ -11,7 +11,7 @@ restart returns to Apple's firmware.
 | CPU / SoC | S5L8730 shares the S5L8720 (nano 4G) code paths; clock gates verified identical |
 | LCD | panel `38b3`, 240×376, controller as on the S5L8702; frames by PIO |
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
-| Storage | Host observed an 8-MiB RAM disk and a 15.1-GiB read-only iPod LUN exposing the full logical FTL; a separate data-only LUN was not enumerated |
+| Storage | Host observed an 8-MiB RAM disk and a 15.1-GiB read-only iPod LUN exposing the full logical FTL; the N5G bootloader now maps the nested Apple data-disk/FAT layout and a live mount probe passed |
 | PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
 | Audio | works: CS42L58 (driven like the CS42L55) on I2S2, DMAC0 request 0, codec as clock master |
 | USB | mass-storage and CDC-ACM enumerate in the RAM boot; CDC is log-only, and the iPod LUN is host-read-only |
@@ -105,6 +105,34 @@ start 49216 with 3901376 sectors; the 4096-byte BPB appeared at 512-byte LBA
 FSInfo fields. The FSInfo and backup boot sectors were erased-looking, and
 the first FAT sector began with `0x00068401`, not the reserved FAT32 entries.
 This matches the earlier Rockbox FAT-mount failure. No repair was attempted.
+
+## N5G FAT data-disk mapping and Rockbox files
+
+The flash FTL's outer MBR has a type `0x0c` entry starting at Apple LBA 49216
+with 3901376 sectors, where these MBR units are 4096 bytes. This entry is an
+Apple data-disk container, not the FAT boot sector. Its first LPN is
+`49216 / 2 = 24608` because each 8192-byte FTL page contains two 4096-byte
+Apple LBAs. The container has its own MBR: its FAT32 partition is type `0x0b`
+at LBA 63. The bootloader exposes the container as 512-byte sectors, so the
+inner partition begins at sector 504 (`63 * 8`).
+
+A RAM-only probe of the revised `nand_find_data_start()` returned
+`nand_get_data_start() = 0x6020` (24608), one NAND drive with 512-byte sectors
+and 31,211,008 sectors, then `disk_mount_all() = 1`. It found the inner type
+`0x0b` partition at sector 504 with 31,210,496 sectors. The probe returned to
+U-Boot. This confirms the previous `No FAT partition found` error came from
+treating the outer container as the FAT volume. The test did not write NAND or
+NOR.
+
+The Apple-exported FAT volume had no `/.rockbox/rockbox.ipod`. The current
+Rockbox package was built with `make -j16 zip` and copied to the otherwise
+absent `/.rockbox` directory while the volume was mounted on the host. The
+installed boot file SHA-256 is
+`455ffdf189de446a47d2cd92805ea43eacc98c4fdecd2c21a729e3a9df966210`, matching
+`build-n5g/rockbox.ipod`; the package contains 380 files. No existing files
+were replaced. The normal RAM bootloader has not yet been retested with Hold
+unlocked after this file installation, so a Rockbox start from internal FAT
+is not yet confirmed.
 
 ## Apple OS fallback verified from RAM
 

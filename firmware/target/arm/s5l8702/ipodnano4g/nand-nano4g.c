@@ -776,10 +776,21 @@ static uint32_t nand_find_data_start(void)
         uint32_t size = e[12] | (e[13] << 8) | (e[14] << 16)
                         | ((uint32_t)e[15] << 24);
 #if NAND_SECTORS_PER_PAGE > 1
-        /* nano 5G: the flash MBR lists the FAT partition itself, so the
-         * whole FTL is the disk */
+        /* nano 5G: the flash MBR's 0x0b/0x0c entry is the Apple data-disk
+         * container. Expose that disk from its first 4096-byte LBA; it has
+         * its own MBR, whose FAT32 partition normally starts at LBA 63.
+         * Two 4096-byte LBAs make one 8192-byte FTL page. */
         if (e[4] == 0x0b || e[4] == 0x0c)
+        {
+            if (!(start & 1) && !(size & 1))
+            {
+                uint32_t first = start / 2;
+                uint32_t count = size / 2;
+                if (first < total && count <= total - first)
+                    return first;
+            }
             return 0;
+        }
 #endif
         if ((e[4] == 0x3f || e[4] == 0x00) && size && start < total
             && size < total - start)
