@@ -124,15 +124,12 @@ U-Boot. This confirms the previous `No FAT partition found` error came from
 treating the outer container as the FAT volume. The test did not write NAND or
 NOR.
 
-The Apple-exported FAT volume had no `/.rockbox/rockbox.ipod`. The current
+The Apple-exported FAT volume initially had no `/.rockbox/rockbox.ipod`. The
 Rockbox package was built with `make -j16 zip` and copied to the otherwise
-absent `/.rockbox` directory while the volume was mounted on the host. The
-installed boot file SHA-256 is
-`455ffdf189de446a47d2cd92805ea43eacc98c4fdecd2c21a729e3a9df966210`, matching
-`build-n5g/rockbox.ipod`; the package contains 380 files. No existing files
-were replaced. The normal RAM bootloader has not yet been retested with Hold
-unlocked after this file installation, so a Rockbox start from internal FAT
-is not yet confirmed.
+absent `/.rockbox` directory; no existing files were replaced. A later build
+and 8-MiB RAM-disk image were also installed there. The current device files
+and hashes are recorded under “RAM-disk root staging” below. The installed
+file-start path from internal FAT has since been confirmed on the device.
 
 ## Apple OS fallback verified from RAM
 
@@ -231,13 +228,30 @@ was not yet present. That hand-off ends the U-Boot session; there is no
 known host command that takes Apple OS back to BootROM DFU, so one physical
 DFU key sequence is required to resume.
 
-For the next test, `n5g-installed-boot.sh` waits for DFU, starts the
-shell-enabled U-Boot with wInd3x, stores a return copy at `0x0ae00000`, and
-loads the installed-file bootloader into SDRAM. With Hold unlocked, the
-normal Rockbox build retains its devloop, allowing a USB eject or panic to
-return to U-Boot. The script passed `bash -n` but has not yet been run on the
-device. The iPod is currently in Apple USB mode (`05ac:1265`), with the FAT
-volume unmounted after the verified copy.
+Successful installed-file boot, 2026-10-24 21:08 CEST: from the already
+enumerated U-Boot console, YMODEM loaded a padded U-Boot return copy to
+`0x0ae00000` and `build-n5g-blramdisk/bootloader.bin` to `0x09000000`; `go`
+started the loader. USB then enumerated as `05ac:1265`, with product string
+“Rockbox media player”. The user confirmed Rockbox multimedia mode. The host
+saw the 8-MiB `NANO5G` RAM disk and the 14.9-GiB `SEBIPOD` partition with
+`RO=1`. A read-only mount verified `/.rockbox/rockbox.ipod` (1,079,128 bytes,
+SHA-256 `65276d4bf5b88af3c2ff5701a21fa6cd6654e24b4f147d7e7c31395a7023ec16`)
+and `/.rockbox/n5g-ramdisk.img` (8,388,608 bytes, SHA-256
+`6fb9df06b8083f8d27d18fdc2bfd70be383c5306b4691d767ef5c9e43c3a0cf5`). The
+mount was removed afterward. This confirms Rockbox boots from its installed
+FAT files when the custom loader is first run from RAM; it is still tethered.
+
+The user reports that Hold was unlocked during all these runs, so the previous
+boot records do not establish a locked-Hold→Apple-OS test. No Hold-locked test
+was performed. The `n5g-installed-boot.sh` DFU-to-U-Boot wrapper itself was
+not run end-to-end in this step; its serial selection now defaults to the
+stable `/dev/serial/by-id/usb-freemyipod_U-Boot_firmware_dbg-if00` path rather
+than ambiguous `/dev/ttyACM0`. The same `TTY` override is available in
+`n5g-shellboot.sh`.
+
+At the end of this test the iPod is in Rockbox USB/multimedia mode, not Apple
+OS mode. All YMODEM transfers targeted SDRAM. No NAND/NOR raw write, erase, or
+firmware flash occurred.
 
 A separate `N5G_COLD_BOOT` build also completed after guarding its remaining
 USB-storage devloop references. Its main image hash is
