@@ -1,13 +1,11 @@
 #!/bin/bash
 # n5g-cycle.sh [rockbox.ipod [build dir]]
 #
-# One turn of the dev loop with Rockbox running (devloop-nano5g.c): wait for
-# its RAM disk on USB, fetch the reports in /devloop (to ~/ipod-re/reports,
-# decoded with n5g-mailbox.py), copy a new boot file if given, then eject.
-# Rockbox starts the boot file on trial after the eject and falls back to
-# the last good image on a panic, a hang dump or silent USB storage. With
-# a build dir, the plugins and codecs on the RAM disk are refreshed from it
-# too (needed whenever the plugin or codec API changes).
+# One report/update pass with Rockbox running: fetch /devloop reports, update
+# files on its USB RAM disk, then eject. The current devloop returns to the
+# U-Boot ACM shell on eject; it does not start the copied boot file itself.
+# Run n5g-shellboot.sh with the desired raw image to start the next test.
+# With a build dir, plugins and codecs on the RAM disk are refreshed too.
 set -euo pipefail
 NEW=${1:-}
 BUILD=${2:-}

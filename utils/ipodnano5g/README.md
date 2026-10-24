@@ -11,7 +11,7 @@ back to Apple's firmware.
 | CPU / SoC | S5L8730 shares the S5L8720 (nano 4G) code paths; clock gates verified identical |
 | LCD | panel `38b3`, 240×376, controller as on the S5L8702; frames by PIO |
 | Clickwheel | works with the existing `button-clickwheel.c` (protocol measured) |
-| Storage | RAM disk at `0x0a000000` (12 MiB FAT16 image), no NAND yet |
+| Storage | RAM disk at `0x0a000000`; NAND user-data drive is read-only; a third drive exposes the full logical FTL range for backup (new, not verified on hardware) |
 | PMU (Dialog D1759, as on the nano 4G) | battery ADC and hold switch over I2C; backlight brightness over the SWIF single-wire link |
 | Audio | works: CS42L58 (driven like the CS42L55) on I2S2, DMAC0 request 0, codec as clock master |
 | USB, RTC, charging | not driven |
@@ -70,6 +70,21 @@ Apple logo until the screen stays black.
 
 `ubsh.py` talks to the U-Boot USB-ACM shell variant, for poking at hardware
 (`md`, `mw`, `loads` + `go` for small test payloads).
+
+## Read-only FTL backup view
+
+The current Nano 5G Rockbox configuration exposes three storage drives: drive
+0 is the RAM disk, drive 1 is Apple's user-data area, and drive 2 is a
+read-only view of logical FTL pages starting at LPN 0. By default these map
+to USB LUNs 0, 1, and 2; the Rockbox setting “USB skip first drive” shifts
+the NAND LUNs down by one. The full FTL view includes
+the logical MBR/firmware area and data area and maps each 8192-byte FTL page
+to sixteen 512-byte sectors. It uses the Rockbox FTL reader and is not a raw
+physical NAND image: it omits per-page spare/OOB bytes and physical block and
+bad-block layout. `NAND_WRITABLE` remains undefined for Nano 5G, and storage
+write requests are rejected. This new drive builds successfully but still
+needs a device-side enumeration/read check before it can serve as a verified
+backup or recovery source.
 
 ## Hardware notes (measured on this unit)
 

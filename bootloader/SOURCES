@@ -6,7 +6,7 @@ snprintf.c
 
 #if defined(IPOD_NANO2G)
 ipodnano2g.c
-#elif defined(IPOD_NANO4G)
+#elif defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
 ipodnano4g.c
 #elif defined(IPOD_6G) || defined(IPOD_NANO3G)
 ipod-s5l87xx.c

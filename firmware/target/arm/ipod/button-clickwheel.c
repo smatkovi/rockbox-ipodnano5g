@@ -33,6 +33,10 @@
 #include "cpu.h"
 #include "system.h"
 #include "button.h"
+#if defined(IPOD_NANO5G)
+#include "clocking-s5l8702.h"
+#include "pmu-target.h"
+#endif
 #include "kernel.h"
 #include "backlight.h"
 #include "serial.h"
@@ -407,7 +411,12 @@ void button_init_device(void)
     INTMSK |= (1<<26);
 #endif
     s5l_clickwheel_init();
+#if defined(BOOTLOADER) && defined(IPOD_NANO5G)
+    /* The bootloader reads the current button state synchronously after
+     * initialization. Do not block here waiting for a first wheel IRQ. */
+#else
     semaphore_wait(&button_init_wakeup, HZ / 10);
+#endif
 #ifdef HAVE_MIKEY_REMOTE
     mikey_init();    /* start inline earphone remote polling */
 #endif
@@ -422,7 +431,21 @@ bool button_hold(void)
     else PCON15 = (PCON15 & ~0xffff0000) | 0x22220000;
     return value;
 #elif CONFIG_CPU==S5L8702 || CONFIG_CPU==S5L8720 || CONFIG_CPU==S5L8730
+#if defined(BOOTLOADER) && defined(IPOD_NANO5G)
+    /* button_tick() runs from Timer B's IRQ. The PMU hold read takes the
+     * I2C mutex, which requires thread context; refresh the cache only from
+     * the bootloader's main/SYS context and let the IRQ use that sample. */
+    static volatile bool hold_button_cache_valid;
+    static volatile bool hold_button_cached;
+    if (is_thread_context())
+    {
+        hold_button_cached = pmu_holdswitch_locked();
+        hold_button_cache_valid = true;
+    }
+    return !hold_button_cache_valid || hold_button_cached;
+#else
     return pmu_holdswitch_locked();
+#endif
 #endif
 }
 

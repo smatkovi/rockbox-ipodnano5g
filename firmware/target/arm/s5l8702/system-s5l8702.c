@@ -246,7 +246,13 @@ void system_init(void)
 
     VIC0INTENABLE = 1 << IRQ_WHEEL;
     VIC0INTENABLE = 1 << IRQ_TIMER;
+#if !defined(IPOD_NANO5G)
     VIC0INTENABLE = 1 << IRQ_TIMER32;
+#else
+    /* Timer E is polled for USEC_TIMER on nano 5G. Do not enable the shared
+     * Timer32 IRQ: WTF/U-Boot can leave Timer F pending, and its weak handler
+     * panics before the bootloader reaches button initialization. */
+#endif
 #if defined(IPOD_6G)
     VIC0INTENABLE = 1 << IRQ_ATA;
     VIC1INTENABLE = 1 << (IRQ_MMC - 32);
@@ -255,7 +261,7 @@ void system_init(void)
 
 void system_reboot(void)
 {
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(BOOTLOADER)
     /* bring-up: back to the U-Boot shell that loaded us, if it is there */
     devloop_return_to_uboot(DEVLOOP_REBOOT);
 #endif
@@ -274,7 +280,7 @@ void system_reboot(void)
 void system_exception_wait(void)
 {
 //    post_mortem_stub();
-#ifdef IPOD_NANO5G
+#if defined(IPOD_NANO5G) && !defined(BOOTLOADER)
     /* bring-up: show the panic for a few seconds, then go back to the
      * U-Boot shell (system_reboot) with a report */
     unsigned long start = USEC_TIMER;
@@ -578,6 +584,12 @@ static void miu_preinit(bool selfrefreshing)
 /* Preliminary HW initialization */
 void system_preinit(void)
 {
+#ifdef IPOD_NANO5G
+    /* The N5G first-stage loader (WTF/U-Boot) already initialized SDRAM,
+     * clocks, GPIO and the D1759. The N4G PMU/MIU pre-init sequence is not
+     * validated on this SoC and must not be replayed here. */
+    return;
+#else
     bool hibernated;        // TODO: hibernated -> resuming, or perhaps better warmboot
 #if CONFIG_CPU == S5L8720 || CONFIG_CPU == S5L8730
     uint32_t boot_config;
@@ -614,6 +626,7 @@ void system_preinit(void)
 #else
     (void)hibernated;
 #endif
+#endif /* !IPOD_NANO5G */
 }
 
 #endif /* BOOTLOADER */

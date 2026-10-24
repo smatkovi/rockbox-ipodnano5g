@@ -158,10 +158,15 @@ int nand_device_erase(unsigned int bank, uint32_t block);
  * the firmware partition, or 0 if the flash MBR has none */
 uint32_t nand_get_data_start(void);
 
-/* Raw FTL pages (flash MBR, firmware partition, system configuration), not
- * offset by the data area. Returns 0, -1 not mounted, -2 out of range,
- * -3 read error. */
-int nand_read_flash_sectors(uint32_t lpn, int count, void *buf);
+/* Raw logical FTL pages (including the MBR, firmware and SystemConfig).
+ * The buffer receives count * NAND_PAGE_SIZE bytes. Returns 0, -1 not
+ * mounted, -2 out of range, -3 read error. */
+int nand_read_flash_pages(uint32_t lpn, int count, void *buf);
+
+/* Raw logical storage sectors from the start of the FTL namespace. Sector
+ * size is SECTOR_SIZE. The nano 5G exposes 512-byte LBAs even though its FTL
+ * pages are 8192 bytes; nand_read_split() handles the page/sector mapping. */
+int nand_read_flash_sectors(uint32_t sector, int count, void *buf);
 
 /* Pages read since boot (diagnostics) */
 uint32_t nand_get_read_count(void);

@@ -14,7 +14,7 @@ STARTUP(target/arm/s5l8702/crt0.o)
 
 #define MAX_LOADSIZE 8M  /* reserved for loading Rockbox binary */
 
-#if defined(IPOD_6G) || defined(IPOD_NANO3G) || defined(IPOD_NANO4G)
+#if defined(IPOD_6G) || defined(IPOD_NANO3G) || defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
 MEMORY
 {
     DRAM  : ORIGIN = DRAM_ORIG, LENGTH = DRAM_SIZE
@@ -23,7 +23,7 @@ MEMORY
     /* s5l8702/s5l8720 maps address 0 to ROM, IRAM or DRAM */
     VECT_AREA : ORIGIN = 0, LENGTH = 1K
 
-#ifdef IPOD_NANO4G
+#if defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
     /* The SRAM startup initializes SDRAM before crt0 relocates here. */
     MOVE_AREA : ORIGIN = DRAM_ORIG + 16M, LENGTH = 1M
     BSS_AREA : ORIGIN = DRAM_ORIG + 17M,

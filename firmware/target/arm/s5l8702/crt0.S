@@ -78,8 +78,8 @@ _rtpc:
     cmp     r1, r2
     blt     2b
 
-#ifdef IPOD_NANO4G
-    /* nano 4G only: the bootloader runs from SDRAM (see boot.lds).
+#if defined(IPOD_NANO4G) || defined(IPOD_NANO5G)
+    /* nano 4G/5G: the bootloader runs from SDRAM (see boot.lds).
      * The native SRAM stage enters with MMU/caches off. Older loaders may
      * enter with a flat map and caches on: clean the relocated copy and
      * discard stale instructions before start_loc disables MMU/caches. */

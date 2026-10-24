@@ -817,7 +817,12 @@ int nand_init(void)
 int nand_num_drives(int first_drive)
 {
     (void)first_drive;
+#ifdef IPOD_NANO5G
+    /* Data partition plus a read-only view of the complete logical FTL. */
+    return 2;
+#else
     return 1;
+#endif
 }
 #endif
 
@@ -826,30 +831,27 @@ uint32_t nand_get_data_start(void)
     return nand_data_start;
 }
 
-int nand_read_flash_sectors(uint32_t lpn, int count, void *buf)
+/* Base FTL page for the selected NAND drive. Nano 5G drive 1 is a
+ * read-only view from logical page zero, including the MBR and firmware
+ * partition; drive 0 remains Apple's user data area. */
+static uint32_t nand_first_lpn(int drive)
 {
-    int rc;
-
-    if (!nand_ready)
-        return -1;
-    if (count <= 0)
+#ifdef IPOD_NANO5G
+    if (drive == 1)
         return 0;
-    if (lpn >= ftl_num_sectors()
-        || (uint32_t)count > ftl_num_sectors() - lpn)
-        return -2;
-
-    mutex_lock(&nand_mutex);
-    rc = ftl_read(lpn, (uint32_t)count, buf);
-    nand_last_activity_value = current_tick;
-    mutex_unlock(&nand_mutex);
-    return rc ? -3 : 0;
+#else
+    (void)drive;
+#endif
+    return nand_data_start;
 }
 
-/* Sectors of the data area */
-static sector_t nand_num_sectors(void)
+static sector_t nand_num_sectors(int drive)
 {
-    return (sector_t)(ftl_num_sectors() - nand_data_start)
-           * NAND_SECTORS_PER_PAGE;
+    uint32_t first_lpn = nand_first_lpn(drive);
+    uint32_t total_lpn = ftl_num_sectors();
+    if (first_lpn > total_lpn)
+        return 0;
+    return (sector_t)(total_lpn - first_lpn) * NAND_SECTORS_PER_PAGE;
 }
 
 #if NAND_SECTORS_PER_PAGE > 1
@@ -857,11 +859,12 @@ static uint8_t nand_bounce[NAND_PAGE_SIZE] CACHEALIGN_ATTR;
 
 /* Sectors smaller than the FTL page: whole aligned pages straight into the
  * buffer, the rest through a page buffer */
-static int nand_read_split(sector_t start, int count, uint8_t *buf)
+static int nand_read_split(sector_t start, int count, uint8_t *buf,
+                           uint32_t first_lpn)
 {
     while (count > 0)
     {
-        uint32_t page = nand_data_start + start / NAND_SECTORS_PER_PAGE;
+        uint32_t page = first_lpn + start / NAND_SECTORS_PER_PAGE;
         unsigned int off = start % NAND_SECTORS_PER_PAGE, n;
 
         if (!off && count >= NAND_SECTORS_PER_PAGE
@@ -886,6 +889,52 @@ static int nand_read_split(sector_t start, int count, uint8_t *buf)
     return 0;
 }
 #endif
+
+/* Read raw logical FTL pages, including the MBR, firmware and SystemConfig.
+ * These are 4096 bytes on the nano 4G and 8192 bytes on the nano 5G. */
+int nand_read_flash_pages(uint32_t lpn, int count, void *buf)
+{
+    int rc;
+
+    if (!nand_ready)
+        return -1;
+    if (count <= 0)
+        return 0;
+    if (lpn >= ftl_num_sectors()
+        || (uint32_t)count > ftl_num_sectors() - lpn)
+        return -2;
+
+    mutex_lock(&nand_mutex);
+    rc = ftl_read(lpn, (uint32_t)count, buf);
+    nand_last_activity_value = current_tick;
+    mutex_unlock(&nand_mutex);
+    return rc ? -3 : 0;
+}
+
+/* Read raw logical storage sectors, starting at the MBR and including the
+ * firmware partition. A nano 5G FTL page contains multiple sectors. */
+int nand_read_flash_sectors(uint32_t sector, int count, void *buf)
+{
+    uint32_t total = ftl_num_sectors() * NAND_SECTORS_PER_PAGE;
+    int rc;
+
+    if (!nand_ready)
+        return -1;
+    if (count <= 0)
+        return 0;
+    if (sector >= total || (uint32_t)count > total - sector)
+        return -2;
+
+    mutex_lock(&nand_mutex);
+#if NAND_SECTORS_PER_PAGE > 1
+    rc = nand_read_split(sector, count, buf, 0);
+#else
+    rc = ftl_read(sector, (uint32_t)count, buf);
+#endif
+    nand_last_activity_value = current_tick;
+    mutex_unlock(&nand_mutex);
+    return rc ? -3 : 0;
+}
 
 void nand_spindown(int seconds)
 {
@@ -949,21 +998,22 @@ int nand_read_sectors(IF_MD(int drive,) sector_t start, int incount,
                       void* inbuf)
 {
     int rc;
+    int ldrive = IF_MD_DRV(drive);
 
-    IF_MD((void)drive);
     if (!nand_ready)
         return -1;
     if (incount <= 0)
         return 0;
-    if (start >= nand_num_sectors()
-        || (sector_t)incount > nand_num_sectors() - start)
+    if (start >= nand_num_sectors(ldrive)
+        || (sector_t)incount > nand_num_sectors(ldrive) - start)
         return -2;
 
     mutex_lock(&nand_mutex);
 #if NAND_SECTORS_PER_PAGE > 1
-    rc = nand_read_split(start, incount, inbuf);
+    rc = nand_read_split(start, incount, inbuf, nand_first_lpn(ldrive));
 #else
-    rc = ftl_read((uint32_t)(nand_data_start + start), (uint32_t)incount,
+    rc = ftl_read(nand_first_lpn(ldrive) + (uint32_t)start,
+                  (uint32_t)incount,
                   inbuf);
 #endif
     nand_last_activity_value = current_tick;
@@ -975,11 +1025,11 @@ int nand_read_sectors(IF_MD(int drive,) sector_t start, int incount,
 int nand_write_sectors(IF_MD(int drive,) sector_t start, int count,
                        const void* outbuf)
 {
-    IF_MD((void)drive);
+    int ldrive = IF_MD_DRV(drive);
     if (!nand_ready)
         return -1;
-    if (count < 0 || start > nand_num_sectors()
-        || (sector_t)count > nand_num_sectors() - start)
+    if (count < 0 || start > nand_num_sectors(ldrive)
+        || (sector_t)count > nand_num_sectors(ldrive) - start)
         return -2;
     if (!count)
         return 0;
@@ -989,7 +1039,8 @@ int nand_write_sectors(IF_MD(int drive,) sector_t start, int count,
 #else
     int rc;
     mutex_lock(&nand_mutex);
-    rc = ftl_write((uint32_t)(nand_data_start + start), (uint32_t)count,
+    rc = ftl_write(nand_first_lpn(ldrive) + (uint32_t)start,
+                   (uint32_t)count,
                    outbuf);
     nand_last_activity_value = current_tick;
     mutex_unlock(&nand_mutex);
@@ -1007,12 +1058,12 @@ int nand_event(long id, intptr_t data)
 #ifdef STORAGE_GET_INFO
 void nand_get_info(IF_MD(int drive,) struct storage_info *info)
 {
-    IF_MD((void)drive);
+    int ldrive = IF_MD_DRV(drive);
     info->sector_size = SECTOR_SIZE;  /* 4096: one FTL page; 5G 512 */
-    info->num_sectors = nand_ready ? nand_num_sectors() : 0;  /* data area */
+    info->num_sectors = nand_ready ? nand_num_sectors(ldrive) : 0;
     info->vendor = "Apple";
 #ifdef IPOD_NANO5G
-    info->product = "iPod Nano 5G";
+    info->product = ldrive == 1 ? "iPod Nano 5G FTL backup" : "iPod Nano 5G";
 #else
     info->product = "iPod Nano 4G";
 #endif

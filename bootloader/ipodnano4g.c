@@ -69,12 +69,20 @@ static uint32_t sm1div_at_entry;
 #define SYSCFG_TAG_SRNM_W   0x53724e6du    /* 'SrNm' */
 #define SYSCFG_TAG_MODN_W   0x4d6f6423u     /* 'Mod#' */
 #define SYSCFG_TAG_REGN_W   0x5265676eu     /* 'Regn' */
+#ifdef IPOD_NANO5G
+#define APPLE_MODEL_NAME    "iPod N33"
+#define APPLE_BOARD_DEFAULT 0x1d000bu
+#define APPLE_BOARD_FAMILY  0x1du
+#else
+#define APPLE_MODEL_NAME    "iPod N58"
 #define APPLE_BOARD_DEFAULT 0x17000bu
+#define APPLE_BOARD_FAMILY  0x17u
+#endif
 #define SYSCFG_FIRST_LPN    1               /* private partition: lpn 1..4 */
 #define SYSCFG_LPNS         4
 
 static uint8_t apple_cfg_build[0x120] __attribute__((aligned(32)));
-static uint8_t apple_cfg_page[4096] __attribute__((aligned(32)));
+static uint8_t apple_cfg_page[NAND_PAGE_SIZE] __attribute__((aligned(32)));
 
 static void put_le32(uint8_t *p, uint32_t v)
 {
@@ -97,7 +105,7 @@ static uint32_t apple_cfg_construct(void)
     memset(b, 0, sizeof(apple_cfg_build));
     put_le32(b + 0x00, APPLE_CFG_MAGIC);
     put_le32(b + 0x04, 4);
-    strcpy((char *)b + 0x08, "iPod N58");
+    strcpy((char *)b + 0x08, APPLE_MODEL_NAME);
     b[0x88] = 'N'; b[0x89] = 'A'; b[0x8a] = 0;
     put_le32(b + 0xe0, (uint32_t)MEMORYSIZE * 0x100000u);
     put_le32(b + 0xe4, 0x08000000u);
@@ -111,7 +119,7 @@ static uint32_t apple_cfg_construct(void)
     for (lpn = SYSCFG_FIRST_LPN; lpn < SYSCFG_FIRST_LPN + SYSCFG_LPNS; lpn++)
     {
         uint32_t n, i;
-        if (nand_read_flash_sectors(lpn, 1, apple_cfg_page) != 0)
+        if (nand_read_flash_pages(lpn, 1, apple_cfg_page) != 0)
             continue;
         if (get_le32(apple_cfg_page) != SYSCFG_MAGIC_WORD)
             continue;
@@ -135,7 +143,7 @@ static uint32_t apple_cfg_construct(void)
         }
         break;
     }
-    if ((board >> 16) != 0x17)
+    if ((board >> 16) != APPLE_BOARD_FAMILY)
         board = APPLE_BOARD_DEFAULT;
     put_le32(b + 0x84, board);
     return board;
@@ -368,15 +376,41 @@ void main(void)
     printf("Version: %s", rbversion);
     backlight_init();
 
+#ifdef IPOD_NANO5G
+    /* If Hold is locked, the Apple OS needs NAND only. Do not make this
+     * fallback depend on the RAM disk or filesystem initialization. */
+    if (pmu_holdswitch_locked())
+    {
+        rc = nand_init();
+        if (rc != 0)
+            printf("NAND init for Apple OS failed: %d", rc);
+        else
+            launch_apple(APPLE_IMG_OSOS);
+        boot_error();
+    }
+#endif
+
     rc = storage_init();
     if (rc != 0)
     {
         printf("Storage error: %d", rc);
+#ifdef IPOD_NANO5G
+        /* If RAM-disk initialization failed before storage_init reached
+         * NAND, still try the signed Apple OS when Hold requests it. */
+        if (pmu_holdswitch_locked())
+        {
+            rc = nand_init();
+            if (rc != 0)
+                printf("NAND init for Apple OS failed: %d", rc);
+            else
+                launch_apple(APPLE_IMG_OSOS);
+        }
+#endif
         boot_error();
     }
     if (!apple_combo)
         apple_combo = read_apple_boot_combo(400000);
-    if (button_hold() && !apple_combo)
+    if (pmu_holdswitch_locked())
         apple_combo = BUTTON_MENU;
     if (apple_combo)
     {
@@ -395,6 +429,11 @@ void main(void)
     if (rc <= EFILE_EMPTY)
     {
         printf("Cannot load " BOOTFILE ": %s", loader_strerror(rc));
+#ifdef IPOD_NANO5G
+        /* Until Rockbox is installed, or if its boot file is missing, return
+         * to the signed Apple OS instead of stopping at the boot screen. */
+        launch_apple(APPLE_IMG_OSOS);
+#endif
         boot_error();
     }
     disable_irq();

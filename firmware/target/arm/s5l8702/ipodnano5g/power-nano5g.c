@@ -27,7 +27,9 @@
 void power_init(void)
 {
     pmu_init();
+#ifndef BOOTLOADER
     devloop_init();
+#endif
 }
 
 /* Bring-up: without a PMU driver there is no standby; restart instead, which

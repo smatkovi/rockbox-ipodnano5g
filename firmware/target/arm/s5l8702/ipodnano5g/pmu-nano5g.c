@@ -20,10 +20,12 @@
 #include <stdbool.h>
 #include "config.h"
 #include "system.h"
+#ifndef BOOTLOADER
 #include "kernel.h"
 #include "thread.h"
-#include "i2c-s5l8702.h"
 #include "usb.h"
+#endif
+#include "i2c-s5l8702.h"
 #include "s5l87xx.h"
 #include "clocking-s5l8702.h"
 #include "pmu-target.h"
@@ -135,6 +137,7 @@ int pmu_swif_status;
  * mutex, so a thread polls it and the last value is returned. The PMU
  * interrupt line of the nano 4G (GPIO 5.6) is not confirmed on this unit,
  * hence polling. */
+#ifndef BOOTLOADER
 #define PMU_POLL_INTERVAL   (HZ/10)
 
 static long pmu_thread_stack[DEFAULT_STACK_SIZE/2/sizeof(long)];
@@ -205,3 +208,18 @@ void pmu_init(void)
             pmu_thread_stack, sizeof(pmu_thread_stack), 0,
             "PMU" IF_PRIO(, PRIORITY_SYSTEM) IF_COP(, CPU));
 }
+#else
+/* The bootloader has no scheduler yet. Read the switch synchronously after
+ * i2c_init() instead of starting the firmware's PMU polling thread. */
+bool pmu_holdswitch_locked(void)
+{
+    unsigned char status;
+    if (pmu_read_multiple(D1759_REG_STATUSB, 1, &status) != 0)
+        return true; /* unknown hold state: fall back to the signed Apple OS */
+    return !(status & D1759_STATUSB_INPUT2);
+}
+
+void pmu_init(void)
+{
+}
+#endif /* BOOTLOADER */

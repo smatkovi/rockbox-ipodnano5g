@@ -471,8 +471,8 @@ void lcd_update_rect(int x, int y, int width, int height)
     mutex_unlock(&lcd_mutex);
 }
 
-#if defined(BOOTLOADER) && defined(IPOD_NANO4G)
-/* nano 4G bootloader only: push the whole framebuffer to the panel by
+#if defined(BOOTLOADER) && (defined(IPOD_NANO4G) || defined(IPOD_NANO5G))
+/* nano 4G/5G bootloader: push the whole framebuffer to the panel by
  * programmed I/O: no DMA, no mutex, no scheduler. Used for the last screen
  * update before handing over to an Apple image, with interrupts off and the
  * hardware being prepared for the hand-off. Same command sequence as

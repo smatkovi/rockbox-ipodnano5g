@@ -59,19 +59,30 @@
 
 /* Bring-up: a RAM disk at RAMDISK_ADDR, loaded with a FAT image before
  * Rockbox starts, holds .rockbox and is the first drive (the root volume).
- * The NAND, read-only, is the second: Apple's data partition with its
- * 4096-byte FAT sectors on a drive of 512-byte sectors (the FTL page is
- * 8192 bytes), as on the iPod 6G hard disk. */
+ * The NAND is read-only: the second drive is Apple's data partition; the
+ * third exposes the full logical FTL page range for backup (not physical
+ * NAND blocks/OOB). FTL pages are 8192 bytes, exported as 512-byte sectors. */
 #ifndef BOOTLOADER
 /* LIS331DLF, for the pedometer plugin */
 #define HAVE_ACCELEROMETER
 #define CONFIG_STORAGE (STORAGE_RAMDISK | STORAGE_NAND)
-#define NUM_DRIVES 2
+#define NUM_DRIVES 3
 #define STORAGE_RAMDISK_FIRST
 #define HAVE_STORAGE_READONLY
 #define MAX_VIRT_SECTOR_SIZE 4096
 #else
-#define CONFIG_STORAGE STORAGE_RAMDISK
+/* The cold-start bootloader reads the existing FAT and Apple firmware
+ * partitions from NAND. The S5L8730 program/erase path is not implemented,
+ * so the storage interface stays read-only. */
+#define HAVE_FLASH_STORAGE
+#define CONFIG_STORAGE STORAGE_NAND
+#define HAVE_STORAGE_READONLY
+#define MAX_VIRT_SECTOR_SIZE 4096
+/* MBR LBAs and FAT BPBs use 512-byte sectors. Apple IMG1 pages are handled
+ * separately in applefw.c as groups of eight NAND storage sectors. */
+#define SECTOR_SIZE 512
+#define STORAGE_WANTS_ALIGN
+#define STORAGE_NEEDS_BOUNCE_BUFFER
 #endif
 #define RAMDISK_ADDR    0x0a000000
 #define RAMDISK_SECTORS 16384   /* 8 MiB; the dev loop keeps images above */

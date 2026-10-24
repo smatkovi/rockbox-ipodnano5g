@@ -4914,6 +4914,11 @@ fi
 
 if test -n "$t_cpu"; then
   TARGET_INC="-I\$(FIRMDIR)/target/$t_cpu/$t_manufacturer/$t_model"
+  # The nano 5G currently reuses the nano 4G NAND and Apple firmware
+  # readers; keep the 5G target directory first for its PMU headers.
+  if [ "$t_model" = "ipodnano5g" ]; then
+    TARGET_INC="$TARGET_INC -I\$(FIRMDIR)/target/arm/s5l8702/ipodnano4g"
+  fi
 
   if [ "$simulator" = "yes" ]; then # a few more includes for the sim target tree
     TARGET_INC="$TARGET_INC -I\$(FIRMDIR)/target/hosted/sdl"
