@@ -127,6 +127,12 @@ hold-switch branch or the missing-FAT fallback selected OSOS. No NAND/NOR
 write, erase, or flash operation occurred. It does not establish an untethered
 Rockbox entry point.
 
+The existing Rockbox installers do not provide a Nano 5G persistent install:
+`mks5lboot`'s dual-boot installer table contains Classic 6G and Nano 3G only;
+Nano 5G appears in its USB DFU/WTF identification table, not its installer
+table. `ipodpatcher` likewise has no N33/Nano 5G target. A cold-start loader
+that the device accepts is still required.
+
 ## Hardware notes (measured on this unit)
 
 - LCD controller at `0x38300000`, same registers as the S5L8702. Panel id
