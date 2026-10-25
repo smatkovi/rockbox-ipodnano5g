@@ -32,15 +32,16 @@ Pseudocode allokiert `0x104` Byte und ruft `FUN_08020fa8` auf; dies ist die
 Runtime-Adresse des zuvor untersuchten Controllers `FUN_0804f224`.
 
 Damit ist die Startregistrierung der ID samt Callback-Zeiger belegt. Der
-Callback selbst wird dadurch noch nicht beim Start ausgeführt.
+Callback selbst wird durch diesen Konstruktor noch nicht ausgeführt. Ein
+weiterer früher MainApp-Pfad führt ihn jedoch aus; siehe den Nachtrag am Ende.
 
 ## Lazy Lookup
 
 `FUN_081a9ab8` berechnet die ID `0x3280`, fragt über `FUN_081a9af4` den
 Factory-Container ab und ruft bei Erfolg die virtuelle Methode am Objekt-Offset
 `+0x14` mit der ID auf. Der Lookup geht über `0x0827d69e` und `0x0825e0c6` in
-einen generischen Container. Der Controller-Callback `FUN_0801e8f6` wird damit
-erst durch einen solchen Lookup ausgeführt.
+einen generischen Container. Dieser Lazy-Lookup ist ein möglicher
+Ausführungspfad für `FUN_0801e8f6`; er ist nicht der einzige.
 
 Die Analyse der direkten Xrefs fand 31 Funktionen, die den Lookup-Dispatcher
 aufrufen. Der wichtigste zuvor bekannte Erzeugungspfad ist
@@ -84,3 +85,31 @@ erreicht.
    beurteilen; bisher belegt ist kein kontrollierter PC/LR-Wert.
 4. Hardwaretests, die DFU oder einen Neustart voraussetzen, bleiben ausgesetzt,
    solange Sebastian nicht vor Ort ist.
+
+## Nachtrag: Factory-Batch-Callback beim MainApp-Start
+
+Eine spätere Prüfung des MainApp-VTables fand einen zweiten Ausführungspfad,
+der in der ursprünglichen direkten Konstruktorgraphanalyse fehlte:
+
+- `FUN_080202d8` erstellt den MainApp-Kontext über `FUN_08023670` und ruft
+  dessen VTable-Slot `+0x16c` auf. `FUN_0804fa58` ist dieser Callback und ruft
+  unter anderem Slot `+0x170` (`FUN_0804faa0`) auf.
+- `FUN_0804faa0` läuft über die 24 Zeilen bei `0x08553a04` und ruft pro Zeile
+  den Funktionszeiger bei `Eintrag+8` auf. Für Media-ID `0x3280` bei
+  `0x08553a70` ist das `0x0801e8f7` (`FUN_0801e8f6`); der Callback läuft somit
+  während der frühen MainApp-Initialisierung.
+- Dieser frühe Callback allokiert `0x104` Byte und ruft `FUN_08020fa8` mit
+  zweitem Argument `0` auf. Der Pfad erreicht `FUN_08022b08` und
+  `FUN_080253f4`, übergibt dort aber als Datenkontext weiterhin `0`.
+  `FUN_08032850(0)` liefert sofort `0`; `FUN_080253f4` kehrt mit `-0x32`
+  zurück, bevor `FUN_081ac420` und damit der ArtworkDB-Parser aufgerufen werden.
+- Der Befund korrigiert die Aussage, der Media-Factory-Callback laufe nur per
+  Lazy-Lookup. Belegt ist nun der frühe Factory-Aufruf, nicht ein früher
+  ArtworkDB-Parserlauf. Ein späterer nichtnulliger Kontext über
+  `FUN_080eb730`/`TMusicLoadingTask` bleibt zu verfolgen.
+
+Rohbelege: `/tmp/OSOS_mainapp_factory_batch_init_2026-10-25.txt`,
+`/tmp/OSOS_media_factory_preconditions_2026-10-25.txt` und
+`/tmp/OSOS_factory_runtime_decomp_2026-10-25.txt`. Die vollständige
+Auswirkungsbewertung steht in
+`OSOS-runtime-exploit-boot-feasibility-2026-10-25.md`.
