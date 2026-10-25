@@ -53,11 +53,22 @@ Die Reads gehen in lokale Puffer; beim 32-Byte-Fall wird ein fixes Wort in den
 Konfigurationszustand kopiert. Die Dateilänge wird nicht als Allokationsgröße
 oder Schreibgrenze verwendet.
 
-Direkte Aufrufer sind `FUN_080e9c54` und `FUN_080b2ca8`. Der erste liegt im
-Media-/Datenbankpfad um `FUN_081da550`; die vorhandene Startup-Callgraph-Analyse
-erreicht diesen Pfad nicht aus `MainAppTask`. Der zweite wird von
-`FUN_08099c48` aufgerufen; dessen automatischer Startaufrufer ist nicht
-nachgewiesen. Aus diesem Reader ergibt sich kein Speicherfehler.
+Direkte Aufrufer sind `FUN_080e9c54` und `FUN_080b2ca8`. Der erste wird von
+der ARM-Funktion `0x081da69c` aufgerufen. Die frühere Ghidra-Analyse hatte
+diesen Bereich irrtümlich als 2-Byte-Thumb-Funktion markiert; mit ARM-Modus
+beginnt bei `0x081da69c` tatsächlich ein 1.784-Byte-Setup. Dessen sichtbare
+Konstruktor-Kette lautet `FUN_0804cb72` → `FUN_0804f224` → `FUN_08050d84` →
+`FUN_08053670` → `0x081da69c`. Das Setup registriert unter anderem die Pfade
+`Photos/Photo Database`, `iPod_Control/Artwork/ArtworkDB` und
+`iPod_Control/iTunes/iTunesDB` und ruft den begrenzten Device-Konfigurations-
+Reader auf.
+
+`FUN_081da550` gehört nicht zu diesem Pfad: Sie ist ein UTF-16-Konverter,
+aufgerufen aus `FUN_081e2e70` bei `0x081e2ecc`. `FUN_080b2ca8` wird von
+`FUN_08099c48` aufgerufen. Für `FUN_0804cb72`, `FUN_08099c48` und den zweiten
+Konfigurationspfad ist kein automatischer Kaltstart-Aufrufer belegt; indirekte
+Factory-/Overlay-Aufrufe bleiben möglich. Der geprüfte Reader ergibt weiterhin
+keinen Speicherfehler.
 
 ## Workout-XML-Pfad
 
@@ -88,13 +99,40 @@ Nächste Offline-Schritte:
    Registrierung nachvollziehen.
 2. Die Eventzustellung an `FUN_08086ce8` vom MainApp-Kaltstart bis zur konkreten
    Eventquelle zurückverfolgen.
-3. Den Media-/Datenbankpfad um `FUN_081da550` und die Quelle seines nichtnulligen
-   Kontextes weiter prüfen.
+3. Die dynamische Registrierung und Startkette zu `FUN_0804cb72` sowie den
+   Kontext des Media-Setups `0x081da69c` weiterverfolgen. Die aktuelle direkte
+   Callgraph-Prüfung aus `MainAppTask` löst diesen Factory-/Overlay-Übergang
+   nicht auf.
+
+## Nachtrag: Media-Setup und ARM/Thumb-Korrektur
+
+Die Nachprüfung mit erzwungenem ARM-Modus korrigiert die vorherige Zuordnung:
+`0x081da69c` ist der Beginn einer ARM-Funktion, keine Thumb-Funktion. Sie ruft
+bei `0x081da7e4` `FUN_080e9c54` auf; diese initialisiert mehrere Device-Dienste
+und ruft den Reader `FUN_0825fe3c` auf. Der zweite Aufrufer des Media-Setups,
+`thumb_81199ac`, ruft es nur auf, wenn das globale Objekt bei
+`DAT_081199c0 + 0x14` an Offset `0x48` einen nichtnulligen Wert enthält. Für
+diese kleine Callback-Funktion und für `FUN_0804cb72` fand sich kein direkter
+Code-Xref. Ein Rohscan des OSOS-Bodys fand außerdem weder absolute noch
+24-Bit-relative Pointerwörter auf `0x081199ac` oder `0x0804cb72`.
+
+Damit ist die interne Konstruktor-Kette zum Media-Setup belegt, aber kein Weg
+von einem normalen Kaltstart bis zu diesem Konstruktor. Die frühere Aussage,
+Ghidras direkter MainApp-Graph schließe die Media-Initialisierung aus, war zu
+stark: indirekte Factory-, VTable- und Overlay-Wege werden von diesem Graphen
+nicht vollständig modelliert. Ein automatischer Dateieingang oder Exploit ist
+weiterhin nicht nachgewiesen.
 
 ## Rohbelege
 
 - `/tmp/OSOS_candidate_functions_followup_20261026.txt`
 - `/tmp/OSOS_media_config_and_playlist_helpers_20261026.txt`
+- `/tmp/OSOS_device_config_reader_callchain_20261026.txt`
+- `/tmp/OSOS_media_config_caller_arm_20261026.txt`
+- `/tmp/OSOS_media_setup_callers_20261026.txt`
+- `/tmp/OSOS_media_root_constructor_20261026.txt`
+- `/tmp/OSOS_utf16_caller_region_20261026.txt`
+- `/tmp/OSOS_workout_root_and_parser_20261026.txt`
 - `/tmp/OSOS_playlist_io_helpers_20261026.txt`
 - `/tmp/OSOS_playlist_io_helpers_followup_20261026.txt`
 - `/tmp/OSOS_workout_xml_helpers_20261026.txt`
