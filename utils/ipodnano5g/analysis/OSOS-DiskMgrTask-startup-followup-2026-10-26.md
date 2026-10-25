@@ -11,7 +11,7 @@ Stand: 26.10.2026. Ausschließlich statische Offline-Analyse. Ghidra-Projekte wu
 - Im Metadatenblock bei `osos_body.bin+0x4222c` steht `0x08010d5d` unmittelbar vor dem Namen `DiskMgrTask`.
 - Der Runtime-Einstieg `0x08010d5c` richtet einen Kontext mit `FUN_080067e8` ein, speichert dessen Zeiger bei `0x08552284` und ruft den externen Dienst über den Runtime-Trampolin `0x082002ac` auf. Danach ruft er `FUN_08006820` zum Kontextabbau und `FUN_0819396c`.
 - `FUN_0819396c` ist acht Byte lang: Es ruft nur `FUN_080000bc` auf. `FUN_080000bc` setzt `r0` auf null und springt über denselben Trampolin `0x082002ac`.
-- Der Trampolin bei `0x082002ac` ist ARM-Code `ldr pc,[pc,#-4]` mit Literal `0x220059d4`. Wegen der OSOS-Relokation des Prefixes von `0x08000000` nach `0x22000000` entspricht der Dienstcode dem Full-Body-Code bei `0x080059d4`. Dieser setzt Dienstnummer `25` und wechselt über `FUN_08004f14` in den SVC-/RTOS-Dispatcher `FUN_08000b70`. Die konkrete semantische Bezeichnung von Dienst 25 ist aus diesen statischen Belegen nicht sicher ableitbar.
+- Der Trampolin bei `0x082002ac` ist ARM-Code `ldr pc,[pc,#-4]` mit Literal `0x220059d4`. Wegen der OSOS-Relokation des Prefixes von `0x08000000` nach `0x22000000` entspricht der Dienstcode dem Full-Body-Code bei `0x080059d4`. Dieser setzt Dienstnummer `25` und wechselt über `FUN_08004f14` in den SVC-/RTOS-Dispatcher `FUN_08000b70`. Dessen Switch-Fall `0x19` setzt das Suspend-Flag des gewählten Tasks und entfernt dessen Listenknoten aus der Schedulerliste; der gepaarte Fall `0x1a` löscht das Flag und hängt einen wieder ausführbaren Task erneut ein. Der Aufruf aus `DiskMgrTask` übergibt Ziel-ID `0`, also den aktuellen Task. Das ordnet Dienst 25 als Task-Suspend ein, nicht als Datei-/Datenbankdienst.
 - In den geprüften Körpern von `DiskMgrTask` und `FUN_0819396c` gibt es keinen direkten Aufruf eines Datei-, iTunesDB- oder ArtworkDB-Parsers. Das beweist nicht, dass andere Tasks oder dynamische Dienste beim Kaltstart keine Datenbank laden.
 
 ## Bedeutung für den OSOS-Rockbox-Pfad
@@ -29,6 +29,7 @@ Das ist kein neuer Exploit. Der Befund grenzt lediglich den benannten `DiskMgrTa
 - Direkte Helfer: `/tmp/OSOS_diskmgr_direct_helpers_20261026.txt`
 - Relokierter Dienst `0x220059d4`: `/tmp/OSOS_diskmgr_service_220059d4_20261026.txt`
 - BootTask-Post-Init und Referenzen: `/tmp/OSOS_boot_task_postinit_services_20261026.txt`, `/tmp/OSOS_boot_task_postinit_refs_20261026.txt`
+- SVC-/RTOS-Dispatcher und Referenzen: `/tmp/OSOS_service25_dispatch_20261026.txt`, `/tmp/OSOS_service25_refs_20261026.txt`
 - Bootprefix: `/tmp/OSOS_bootprefix_3908_20261026.txt`
 
 Verwendete vorhandene Skripte: `nano5g/ghidra-logs/AnalyzeThumbFunctionAt.java`, `AnalyzeFunctionAt.java`, `AnalyzeOSOSFunctions.java` und `InspectRefsAt.java`.
