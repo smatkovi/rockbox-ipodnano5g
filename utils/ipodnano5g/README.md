@@ -275,3 +275,22 @@ USB-storage devloop references. Its main image hash is
 This variant was not installed or hardware-tested. Neither build supplies a
 persistent BootROM-to-Rockbox entry point: the verified start still depends
 on wInd3x/DFU and a RAM-loaded U-Boot.
+
+### Fresh bootloader rebuild and fallback review (2026-10-25)
+
+After the later N5G bootloader-source changes, `make -j16` in
+`build-n5g-blramdisk` rebuilt `bootloader/ipodnano4g.c` and produced
+`bootloader.bin` (69,504 bytes, SHA-256
+`7788923c3d9cfd12596ba42436ff378d37a1980e83e4678f010632289279096b`) and
+`bootloader-ipodnano5g.ipod` (69,512 bytes, SHA-256
+`38e4b8c9f1efe3c19c8c431fc2e94a43a5dc6ac41383eee4f475fc9732136718`).
+Disassembly of the rebuilt ELF confirms that a failed FAT mount branches to
+the signed OSOS hand-off, and that a failed PMU status read makes
+`pmu_holdswitch_locked()` return true. The Hold check occurs before storage
+initialization, so the locked-Hold path does not depend on the data FAT.
+
+This is a source-and-binary check only. At the time of the rebuild the iPod
+was still in U-Boot (`05ac:2137`), not DFU. No payload was started and no
+device storage was touched; the Hold and no-FAT branches still need a hardware
+run when returning to BootROM DFU is available. A fallback to Apple OS ends
+the current U-Boot session, so it was not triggered while the user was away.
