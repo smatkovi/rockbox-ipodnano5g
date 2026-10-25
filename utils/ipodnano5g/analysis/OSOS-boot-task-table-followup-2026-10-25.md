@@ -12,7 +12,7 @@ Nur lokale statische Analyse. Kein USB-Zugriff, kein DFU, kein Neustart und kein
 
 - Anfang `0x087600c0`
 - Ende `0x08760250`
-- Schrittweite `0x14` Byte, also 25 Datensätze
+- Schrittweite `0x14` Byte, also 20 Datensätze (`0x190 / 0x14`)
 - Callback `0x0801d785` ruft `FUN_0801e2b4` auf
 - Callback `0x0801d78d` ruft `FUN_0801e2d6` auf
 
@@ -20,7 +20,7 @@ Der erste Callback legt pro Datensatz einen Task an: Er speichert den erzeugten 
 
 Ghidras direkte Referenzen zeigen `FUN_083534e8` als einzigen direkten Aufrufer des Dispatchers. Die beiden Callback-Einstiege werden nur über die berechneten Aufrufe in `FUN_0801c684` erreicht. Die Tabelle selbst liegt außerhalb des gespeicherten OSOS-Bodys. Außerdem umfasst der zuvor identifizierte Startup-Nullungsbereich `0x086c43a8..0x08e54e4b` auch `0x087600c0..0x08760250`; die Datensätze sind somit nicht als bereits befüllte OSOS-Body-Daten nachgewiesen.
 
-`FUN_08354b08` baut vor dem Dispatcher einen 0x20-Byte-Service-/Konfigurationsdatensatz auf. In seinem sichtbaren Code gibt es keinen direkten Store in die Task-Tabelle. `FUN_08354ba8` initialisiert weitere Dienste und endet nach mehreren bedingten Aufrufen in einem indirekten Sprung über `DAT_08218508` mit Argument `0x3d`. Die importierten SVC-/Overlay-Ziele und die Quelle der 25 Task-Datensätze sind im gespeicherten OSOS-Abbild nicht aufgelöst. Da der normale OSOS-Start diesen Dispatcher erreicht, müssen die benötigten Laufzeitdaten anderswo bereitgestellt werden; welcher Dienst oder welches Overlay das erledigt, ist eine offene Hypothese.
+`FUN_08354b08` baut vor dem Dispatcher einen 0x20-Byte-Service-/Konfigurationsdatensatz auf. In seinem sichtbaren Code gibt es keinen direkten Store in die Task-Tabelle. `FUN_08354ba8` initialisiert weitere Dienste und endet nach mehreren bedingten Aufrufen in einem indirekten Sprung über `DAT_08218508` mit Argument `0x3d`. Die Quelle der Task-Datensätze ist unten als Constructor in der relativen Constructor-Tabelle identifiziert; die externe Startkette zu dessen Runner bleibt offen.
 
 Ein exakter Scan der lokalen `Firmware.MSE` und der extrahierten Firmware-Segmente fand keinen gespeicherten Zeiger `0x087600c0`. Ein Treffer auf `0x08760250` liegt in `rsrc.bin` bei `0x6cc3b04` (derselbe Inhalt in `Firmware.MSE` bei `0x6f3eb04`); die umgebenden Bytes zeigen keine erkennbare Pointertabelle. Dieser isolierte Treffer belegt daher keine serialisierte OSOS-Task-Tabelle.
 
@@ -45,7 +45,7 @@ Analysiertes Projekt: `/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime`.
 
 ## Ergebnis und nächste Offline-Schritte
 
-Kein neuer Signatur-Bypass, kein persistenter OSOS-/Rockbox-Einstieg und keine kontrollierte Kontrollflussübernahme. Die nächste sinnvolle statische Spur ist die Zuordnung der importierten Bootprefix-/OSOS-SVC-Slots (`0x0820d53c`, `0x0820d544`, `0x0820d54c` und `0x08218508`) zu den geladenen Laufzeit-Overlays und deren Schreibzugriffen auf `0x087600c0..0x08760250`. Dafür muss die Rebind-/Overlay-Kette von Bootprefix und OSOS gemeinsam verfolgt werden.
+Kein neuer Signatur-Bypass, kein persistenter OSOS-/Rockbox-Einstieg und keine kontrollierte Kontrollflussübernahme. Die nächste sinnvolle statische Spur ist die externe Start-/Rebind-Kette zu `FUN_08324af0` sowie die Zuordnung der importierten Bootprefix-/OSOS-SVC-Slots (`0x0820d53c`, `0x0820d544`, `0x0820d54c` und `0x08218508`) zu den geladenen Laufzeit-Overlays.
 
 Der `rb-n5g`-Arbeitsbaum war vor dieser Dokumentation sauber. Der separate lokale `wInd3x`-Checkout enthält bereits vorherige Änderungen und unversionierte Artefakte; er wurde nicht geändert.
 
@@ -76,19 +76,50 @@ liegt aber ein Metadatenblock mit dem Zeiger und benachbarten Task-Einträgen.
   `0x08552284`, ruft interne Dienste auf und räumt den Kontext auf. In diesem
   Einstieg ist kein direkter iTunesDB-/ArtworkDB-Parseraufruf zu sehen. Das
   schließt spätere Verarbeitung über die aufgerufenen Dienste nicht aus.
-- Der Dispatcherbereich `0x087600c0..0x08760250` (25 Datensätze × `0x14` Byte)
+- Der Dispatcherbereich `0x087600c0..0x08760250` (20 Datensätze × `0x14` Byte)
   und die Stackadressen liegen beide im Nullungsbereich. Ein read-only-Ghidra-
-  Referenzlauf fand keine statischen Xrefs auf den Metadatenblock bei
-  `0x08013fb0`; ein exakter Binärscan in `Firmware.MSE`, `rsrc.bin` sowie den
-  extrahierten Bootloader-/Diags-PE32-Modulen fand ebenfalls keinen Verweis auf
-  dessen Runtime-Adresse. Externe Rebinds, Abschnittsgrenzen oder ein
-  Bootprefix-Consumer bleiben möglich.
+  Referenzlauf fand keine direkten Xrefs auf den Metadatenblock bei
+  `0x08013fb0`; der Block wird über relative Constructor-Einträge referenziert.
+  Ein exakter Binärscan nach absoluten Zeigern auf diesen Metadatenblock in
+  `Firmware.MSE`, `rsrc.bin` und den extrahierten Bootloader-/Diags-PE32-Modulen
+  blieb ohne Treffer.
 
-Damit ist die statische Task-Liste nun sichtbar, aber ihre Verbindung zum
-BootTask-Dispatcher und der Code, der die Null-Tabelle befüllt, sind weiterhin
-offen. Aus den Metadaten allein folgt kein automatisch erreichter Dateiparser
+Die Verbindung zum BootTask-Dispatcher und der Code, der die Null-Tabelle
+befüllt, sind statisch gefunden: `FUN_08013d44` ist Eintrag 28 der relativen
+Constructor-Tabelle und schreibt 20 Task-Datensätze. Offen bleibt, ob dessen
+Runner über `FUN_08324af0` durch die reale externe OSOS-Startkette erreicht
+wird. Aus den Metadaten allein folgt kein automatisch erreichter Dateiparser
 und keine OSOS-RCE. Analysequellen: `osos_body.bin`,
 `/tmp/osos_runtime_dram_20261025.bin`, read-only-Ghidra-Projekt
 `/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime.gpr` sowie die Gegenprüfungen
 mit `arm-none-eabi-objdump` und dem exakten Little-Endian-Pointer-Scan. Keine
 Geräte-, USB-, DFU-, Boot- oder Flashaktion.
+
+## Nachtrag: relativer Constructor-Verweis auf die Task-Initialisierung
+
+Der direkte Xref- und absolute Pointer-Scan übersah die relative Constructor-
+Kodierung. Die Laufzeitfunktion `0x08012a24` bildet aus den Literalen bei
+`0x08012a40`/`0x08012a44` den Bereich `0x08550370..0x08550774` und iteriert
+257 32-Bit-Relativzeiger. Pro Eintrag addiert sie den vorzeichenbehafteten
+Wert zur Adresse des Eintrags und ruft das Ergebnis mit `BLX` auf.
+
+- Eintrag 28 bei `0x085503e0` enthält `0xffac3965`; relativ zu seiner eigenen
+  Adresse ergibt das den Thumb-Zeiger `0x08013d45` auf `FUN_08013d44`.
+- `FUN_08324af0` ruft den Constructor-Runner bei `0x08324b90` direkt auf.
+  Damit ist die Ausführung von `FUN_08013d44` belegt, wenn dieser Runner läuft.
+  Einen direkten oder absoluten Verweis auf `FUN_08324af0` habe ich in den
+  untersuchten Runtime-/Full-Body-Abbildern, `Firmware.MSE`, `rsrc.bin` und
+  Bootloader-PE32-Modulen nicht gefunden. Ein externer Einstieg oder ein
+  Overlay-/Rebind-Aufruf bleibt möglich; Kaltstart-Erreichbarkeit ist damit
+  noch nicht bewiesen.
+- `FUN_08013d44` erzeugt 20 Records mit Schrittweite `0x14` in
+  `0x087600c0..0x08760250`. `FUN_0819dcbc` setzt je Record fünf Wörter: zuerst
+  null, dann die vier übergebenen Felder. `FUN_0801e2b4` konsumiert die Felder,
+  legt den Task-Handle ab und ruft den importierten Task-Create-Dienst auf.
+- Die frühere Angabe „25 Datensätze“ war ein Zählfehler: `0x250 - 0xc0` ergibt
+  `0x190` Byte; geteilt durch `0x14` sind das 20 Records.
+
+Rohbelege: `utils/ipodnano5g/analysis/osos_runtime_constructor_table.tsv`,
+`/tmp/OSOS_task_table_init_thumb.txt`, `/tmp/OSOS_ctor_runner_caller_thumb.txt`,
+`/tmp/OSOS_boot_task_dispatch_followup.txt` sowie der read-only-Xref-Lauf zum
+Constructor-Runner. Keine Geräte-, USB-, DFU-, Boot- oder Flashaktion.
