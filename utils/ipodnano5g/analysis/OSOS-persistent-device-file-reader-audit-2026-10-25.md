@@ -21,8 +21,13 @@ Dieser Schritt hat zusätzliche OSOS-Dateipfade eingegrenzt:
   Datensätze laden. Der einzige gefundene direkte Aufrufer dieses Modus ist
   `FUN_08079610`, das von `FUN_08067588` aufgerufen wird. Für `FUN_08067588`
   wurde weder ein direkter Codeaufrufer noch ein gespeicherter Thumb-Zeiger
-  `0x08067589` im OSOS-Abbild gefunden. Dynamische oder externe Dispatches sind
-  dadurch nicht ausgeschlossen; automatischer Kaltstart ist nicht belegt.
+  `0x08067589` im OSOS-Abbild gefunden. Ein zusätzlicher Rohscan fand auch
+  keine absoluten Thumb-Zeiger auf `0x08067589`, dessen Runtime-Adresse
+  `0x0803930d` oder dessen Prefix-relokierte Adresse `0x2203930d` in den
+  extrahierten IPSW-Segmenten und `Firmware.MSE`. Ein Scan des OSOS-Bodys nach
+  einfachen 32-Bit-relativen Einträgen zu diesen Zielen blieb ebenfalls leer.
+  Das schließt dynamisch erzeugte, anders kodierte oder nicht extrahierte
+  Dispatches nicht aus; automatischer Kaltstart ist nicht belegt.
 - `iPod_Control/Device/Users` und `.../PlayCounts`: `FUN_0828bd04` ruft die
   jeweiligen Routinen `FUN_081ddc3c` und `FUN_081dde48` mit `param2 == 1` auf.
   Dieser Modus serialisiert die internen Objektlisten in Dateien. Insbesondere
