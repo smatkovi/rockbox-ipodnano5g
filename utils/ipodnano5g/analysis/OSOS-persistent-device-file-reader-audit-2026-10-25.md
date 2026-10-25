@@ -54,7 +54,10 @@ das Zielobjekt hinaus, weil es mit der ermittelten Länge angelegt wird. Damit
 ist derzeit nur ein möglicher OOB-Read/Stackdatenübertrag in ein internes
 Objekt belegt, keine RCE oder Kontrollflussübernahme. Ob Tag `0x3c` in einer
 realen Alarmdatei frei kontrollierbar ist, wurde nicht mit einer Fixture
-geprüft.
+geprüft. Die Gegenrichtung schreibt Tag `0x3c` mit der von
+`FUN_081c4d42` berechneten Länge einschließlich NUL-Byte; damit ist das Feld
+im normalen Writer ein C-String und der Importer prüft die erwartete
+Terminierung nicht.
 
 ## Belege
 
