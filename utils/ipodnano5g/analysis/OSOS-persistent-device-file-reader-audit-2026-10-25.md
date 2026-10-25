@@ -90,3 +90,42 @@ U-Boot-Zustand; es wurden keine Boot-, Reset-, NAND-/NOR-Schreib- oder
    Contacts-DB-Parser und dessen Startbedingungen verfolgen.
 4. Den vorhandenen ArtworkDB- und Music-Loading-Task-Pfad weiter auf einen
    automatischen Kaltstarttrigger eingrenzen.
+
+## Nachtrag: AlarmTask im Starttask-Table (26.10.2026)
+
+Der relative Constructor `FUN_08013d44` enthält tatsächlich einen Task-Eintrag
+mit Namen `AlarmTask`. Sein Thumb-Einstieg ist `0x08010be8` (`0x08010be9` als
+Funktionszeiger). Der Einstieg wurde im Runtime-Projekt read-only exportiert.
+Er richtet einen 20-Byte-Ereigniskontext ein und wartet in einer Endlosschleife
+auf Ereignisse. Die sichtbaren Fälle `9`, `10`, `11` und `0x11` konfigurieren
+Alarm-/Timer-Dienste oder ändern den Zustand der Taskinstanz; der Fall `0x11`
+setzt unter anderem über `FUN_0800a6f0` ein Flagbyte. Im Taskkörper gibt es
+keinen Aufruf des persistenten Alarmdatei-Parsers `FUN_0828f144` und keinen
+Dateizugriff.
+
+Die Alarmdatei wird im MainApp-Setup `FUN_08086ce8` über
+`FUN_0828bd04` → `FUN_081769ca` mit `param2 == 1` verarbeitet. Dieser Modus
+schreibt den internen Alarmzustand; er importiert die Datei nicht. Der
+Importmodus `param2 == 0` wird im untersuchten Abbild nur über
+`FUN_08079610` → `FUN_0828f144` erreicht, wobei der einzige direkte Aufrufer
+von `FUN_08079610` weiterhin `FUN_08067588` ist. Für `FUN_08067588` wurde
+keine Referenz aus dem `AlarmTask` oder dem statischen Starttask-Table
+gefunden; eine externe/dynamische Registrierung ist nicht ausgeschlossen.
+
+Der Eintrag zeigt, dass `AlarmTask` für den OSOS-Task-Dispatcher vorgesehen
+ist; die tatsächliche Kaltstarterreichbarkeit des externen Constructor-Runners
+bleibt offen. Auch der Taskkörper belegt keinen Alarmdatei-Import. Der
+bereits dokumentierte Feld-`0x3c`-Pfad bleibt ein bedingter Stack-OOB-Read,
+aber weder der automatische Import noch Kontrollflussübernahme oder RCE sind
+belegt.
+
+Read-only-Rohbelege:
+
+- `/tmp/OSOS_AlarmTask_entry_20261026.txt`
+- `/tmp/OSOS_AlarmTask_event11_callback_20261026_ARM.txt`
+- `/tmp/OSOS_device_alarms_context_20261026.txt`
+- `/tmp/OSOS_device_file_service_roots_20261026.txt`
+- `/tmp/OSOS_task_table_init_thumb.txt`
+
+Das Runtime-Abbild ist ein statisches Mapping, kein Live-RAM-Dump. Es gab
+keinen Geräte-, USB-, DFU-, Boot- oder Flashzugriff.

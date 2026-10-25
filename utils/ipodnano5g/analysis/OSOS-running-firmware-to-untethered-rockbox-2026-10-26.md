@@ -62,6 +62,16 @@ Kontrollflussübernahme:
 - **TunerSettings:** Ein persistenter Leser ist über das MainApp-Setup
   erreichbar, verarbeitet im geprüften Pfad aber feste typisierte Felder.
   Kein Speicherfehler oder RCE ist belegt.
+- **Alarmdatei:** Der Starttask-Plan enthält einen `AlarmTask`, dessen
+  Ereignisschleife den Dateiparser nicht aufruft. Das MainApp-Setup schreibt
+  den Alarmzustand; der Importpfad hat weiterhin keinen belegten automatischen
+  Startaufrufer. Das geprüfte Feld `0x3c` liefert nur einen bedingten
+  Stack-OOB-Read, keine bestätigte Kontrollflussübernahme.
+- **ArtworkDB-Start:** Der von `TMusicLoadingTask` benötigte Kontextslot ist im
+  gespeicherten Runtime- und Full-Body-Abbild null. Im OSOS-Code wurde kein
+  Schreiber gefunden; ein zusätzlicher Literal-Scan der verfügbaren Firmware-
+  und PE32-Module fand keine direkten Referenzen auf diesen Slot. Berechnete
+  oder nicht extrahierte Laufzeitverweise bleiben offen.
 - **Play Counts, Contacts, Device-Konfiguration, Workout-XML und weitere
   geprüfte Pfade:** bislang kein bestätigter Speicherfehler mit
   Kontrollflusswirkung und kein vollständiger automatischer Bootpfad.
@@ -71,7 +81,8 @@ Quellen im Arbeitsbaum: `OSOS-runtime-exploit-boot-feasibility-2026-10-25.md`,
 `OSOS-additional-persistent-paths-followup-2026-10-26.md`,
 `OSOS-play-counts-input-followup-2026-10-26.md`,
 `OSOS-radio-tuner-settings-parser-followup-2026-10-26.md` und
-`OSOS-workout-parser-and-ramboot-audit-2026-10-26.md`.
+`OSOS-workout-parser-and-ramboot-audit-2026-10-26.md` sowie
+`OSOS-DiskMgrTask-startup-followup-2026-10-26.md`.
 
 ## Schlussfolgerung und nächste Schritte
 

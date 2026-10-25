@@ -37,3 +37,32 @@ Verwendete vorhandene Skripte: `nano5g/ghidra-logs/AnalyzeThumbFunctionAt.java`,
 ## Nächster sinnvoller Schritt
 
 Weiter den automatischen Erzeuger des Music-Task-Kontexts und die statusgesteuerte Kette zu `FUN_081ac420` verfolgen. Dabei Runtime- und Full-Body-Adressen strikt getrennt halten. Der konkrete Hardwarezustand wurde nicht geprüft.
+
+## Nachtrag: Music-Kontextslot und externer Schreiber-Scan
+
+Der Runtime-Slot `0x08550ae0` ist im gespeicherten Runtime-Abbild null; der
+korrespondierende Full-Body-Slot liegt wegen des Mapping-Offsets `0x2e27c` bei
+`0x0857ed5c` und enthält ebenfalls null. Die untersuchten OSOS-Referenzen
+zeigen Leser des Slots, aber keinen Schreiber. `FUN_080fcc9c` initialisiert
+den benachbarten Zustand bei `0x08550acc + 0x10` (`0x08550adc`), schreibt
+jedoch nicht den benötigten Kontextzeiger bei `+0x14`.
+
+Ein zusätzlicher Little-Endian-Rohscan auf die Slot- und Objektadressen
+(`0x08550ae0`, `0x08550acc`, `0x0857ed5c`, `0x0857ed48`) fand keine direkten
+Slotreferenzen in `Firmware.MSE`, `segments/rsrc.bin`, `segments/osos.bin`,
+den extrahierten Diags-PE32-Modulen oder den Bootloader-PE32-Modulen. Der
+Objektbasiswert `0x08550acc` erscheint einmal in `Firmware.MSE` und einmal in
+`rsrc.bin`; beide Treffer liegen in den jeweiligen Kopien desselben
+OSOS-Inhalts. Das ist kein Hinweis auf einen externen Schreiber.
+
+Das schließt berechnete Adressen, relative Relokationen oder nicht extrahierte
+Laufzeitmodule nicht aus. Für die vorliegenden statischen Abbilder ist aber
+kein externer Schreiber des Music-Kontextslots belegt. Damit bleibt der
+ArtworkDB-Aufruf über `TMusicLoadingTask` ein bedingter Pfad; ein automatisch
+beim Kaltstart gestarteter ArtworkDB-Leser ist weiterhin nicht nachgewiesen.
+
+Rohbelege: `/tmp/OSOS_music_global_writers_followup_20261026.txt`,
+`/tmp/OSOS_music_context_init_followup_20261026.txt`,
+`/tmp/OSOS_fullbody_music_context_refs_corrected_20261026.txt` und
+`/tmp/OSOS_AlarmTask_entry_20261026.txt`. Der Rohscan war read-only und
+veränderte weder Firmwaredateien noch ein Ghidra-Projekt.
