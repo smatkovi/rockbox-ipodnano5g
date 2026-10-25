@@ -48,3 +48,47 @@ Analysiertes Projekt: `/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime`.
 Kein neuer Signatur-Bypass, kein persistenter OSOS-/Rockbox-Einstieg und keine kontrollierte Kontrollflussübernahme. Die nächste sinnvolle statische Spur ist die Zuordnung der importierten Bootprefix-/OSOS-SVC-Slots (`0x0820d53c`, `0x0820d544`, `0x0820d54c` und `0x08218508`) zu den geladenen Laufzeit-Overlays und deren Schreibzugriffen auf `0x087600c0..0x08760250`. Dafür muss die Rebind-/Overlay-Kette von Bootprefix und OSOS gemeinsam verfolgt werden.
 
 Der `rb-n5g`-Arbeitsbaum war vor dieser Dokumentation sauber. Der separate lokale `wInd3x`-Checkout enthält bereits vorherige Änderungen und unversionierte Artefakte; er wurde nicht geändert.
+
+## Nachtrag: statische Task- und Stack-Metadaten (2026-10-25)
+
+Korrektur zur Aussage, es gebe im OSOS-Body keinen gespeicherten Zeiger auf
+`0x087600c0`: Der Zeiger ist in `osos_body.bin` vorhanden. Der Task-Table selbst
+bleibt außerhalb des file-backed Images im Startup-Nullungsbereich; im Body
+liegt aber ein Metadatenblock mit dem Zeiger und benachbarten Task-Einträgen.
+
+- Datei `nano5g/osos_decrypted/osos_body.bin`, Offset `0x4222c` (Full-Body-VA
+  `0x0804222c`, Runtime-VA `0x08013fb0`): Wort `0x087600c0`. Danach folgen
+  Funktionszeiger und Namen, darunter `FirewireTask` (`0x08010d25`),
+  `TouchwheelTask` (`0x08010d01`), `USBPowerSense` (`0x080005f1`),
+  `DiskMgrTask` (`0x08010d5d`), `HoldSwitchTask` (`0x08017f31`),
+  `DeviceDiscovery` (`0x08002151`), `USBAudioTask` (`0x22004fc1`) und
+  `ChargeMgmtTask` (`0x08005a91`). `GraphicsManager` ist mit dem davorstehenden
+  Zeiger `0x2200c0e0` verknüpft. Das belegt statische Task-Metadaten, aber noch
+  nicht, welcher Startup-Dienst diesen Block auswertet.
+- Die unmittelbar davor gespeicherten RAM-Adressen reichen von
+  `0x08750020` bis `0x087600c0` und bilden 20 Intervalle. Jedes Intervall ist
+  `0x808`, `0x1008`, `0x2008` oder einmal `0x2808` Byte groß. Nach Abzug von
+  8 Byte pro Intervall summieren sich die Größen exakt zu `0x10000` Byte.
+  Das spricht stark für ein statisch reserviertes Task-Stack-Areal; Bedeutung
+  und Nutzung der zusätzlichen 8 Byte sind nicht belegt.
+- `DiskMgrTask` zeigt im Runtime-Abbild ab `0x08010d5c` gültigen Thumb-Code. Der
+  sichtbare Einstieg initialisiert einen Stack-Kontext, speichert ihn bei
+  `0x08552284`, ruft interne Dienste auf und räumt den Kontext auf. In diesem
+  Einstieg ist kein direkter iTunesDB-/ArtworkDB-Parseraufruf zu sehen. Das
+  schließt spätere Verarbeitung über die aufgerufenen Dienste nicht aus.
+- Der Dispatcherbereich `0x087600c0..0x08760250` (25 Datensätze × `0x14` Byte)
+  und die Stackadressen liegen beide im Nullungsbereich. Ein read-only-Ghidra-
+  Referenzlauf fand keine statischen Xrefs auf den Metadatenblock bei
+  `0x08013fb0`; ein exakter Binärscan in `Firmware.MSE`, `rsrc.bin` sowie den
+  extrahierten Bootloader-/Diags-PE32-Modulen fand ebenfalls keinen Verweis auf
+  dessen Runtime-Adresse. Externe Rebinds, Abschnittsgrenzen oder ein
+  Bootprefix-Consumer bleiben möglich.
+
+Damit ist die statische Task-Liste nun sichtbar, aber ihre Verbindung zum
+BootTask-Dispatcher und der Code, der die Null-Tabelle befüllt, sind weiterhin
+offen. Aus den Metadaten allein folgt kein automatisch erreichter Dateiparser
+und keine OSOS-RCE. Analysequellen: `osos_body.bin`,
+`/tmp/osos_runtime_dram_20261025.bin`, read-only-Ghidra-Projekt
+`/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime.gpr` sowie die Gegenprüfungen
+mit `arm-none-eabi-objdump` und dem exakten Little-Endian-Pointer-Scan. Keine
+Geräte-, USB-, DFU-, Boot- oder Flashaktion.
