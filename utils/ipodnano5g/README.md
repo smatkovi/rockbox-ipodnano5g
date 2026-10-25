@@ -172,6 +172,14 @@ disassembly; ByteFau1t has not been tested on Nano 5G, and this comparison
 does not rule out other bugs or a different cold-start path. The untethered
 entry point remains unproven.
 
+## OSOS startup and media factory reachability (2026-10-25)
+
+Static analysis confirms that the OSOS startup constructor list registers the
+`0x3280` media factory and its callback. A direct call graph from all 257
+constructors does not reach the callback's known lookup callers; indirect task
+and virtual dispatch remain unresolved. The full evidence and generated tables
+are in [the OSOS factory cold-start report](analysis/OSOS-factory-coldstart-2026-10-25.md).
+
 ## Hardware notes (measured on this unit)
 
 - LCD controller at `0x38300000`, same registers as the S5L8702. Panel id
