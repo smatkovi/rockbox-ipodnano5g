@@ -158,6 +158,20 @@ Nano 5G appears in its USB DFU/WTF identification table, not its installer
 table. `ipodpatcher` likewise has no N33/Nano 5G target. A cold-start loader
 that the device accepts is still required.
 
+## Nano 7G ByteFau1t is not a direct Nano 5G path
+
+The public [iPEMS repository](https://github.com/TGRgitx/ipodexecutionmethodswapper)
+describes ByteFau1t for Nano 7 (2012/2015): it changes the `rsrc` IMG1 format
+byte from `0x04` to `0x03`. The N33 IPSW's `rsrc` image is format 4, but the
+S5L8730 BootROM first authenticates the 64-byte IMG1 header, including that
+format byte, before accepting format 3 or 4. It then hashes the body and checks
+the X.509/RSA footer; format-3 decryption happens only after that check. A
+one-byte `0x04`→`0x03` edit therefore invalidates the existing header tag and
+does not bypass the Nano 5G verifier. This is based on the local S5L8730 ROM
+disassembly; ByteFau1t has not been tested on Nano 5G, and this comparison
+does not rule out other bugs or a different cold-start path. The untethered
+entry point remains unproven.
+
 ## Hardware notes (measured on this unit)
 
 - LCD controller at `0x38300000`, same registers as the S5L8702. Panel id
