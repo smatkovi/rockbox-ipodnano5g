@@ -593,7 +593,12 @@ deshalb die vom Games-Scan benötigte virtuelle Pfadabfrage nicht bedienen.
 Beim Kaltstart-Games-Scan ruft `FUN_08196cb8` `service->vtable[0x50]` mit dem
 aus dem Verzeichnisnamen gebildeten Pfad auf. Der verwendete Slot muss dafür
 einen konkreten Dienst enthalten; dessen Laufzeitobjekt und VTable sind im
-statisch abgebildeten OSOS-Body nicht bestimmt.
+statisch abgebildeten OSOS-Body nicht bestimmt. Der Wrapper löst den Dienst
+über `FUN_0827dce0`/`FUN_08263d14` auf; danach lädt `FUN_08196cb8` den Eintrag
+`+0x50` und ruft ihn ohne Nullprüfung auf. Würde hier der generische Fallback
+mit seinem leeren Eintrag verwendet, wäre das ein Absturzpfad. Ob der Fallback
+für einen tatsächlich durchlaufenen Games-Eintrag ausgewählt wird, ist nicht
+belegt.
 
 Ein weiterer Startup-Trace grenzt den Zeitpunkt ein: `FUN_081ac420` ruft
 `FUN_080b123c` auf. Wenn die Statusabfrage `FUN_081a8930(0)` null zurückgibt,
@@ -643,6 +648,8 @@ Rohbelege: `/tmp/OSOS_games_vfs_registry_deep_20261026.txt`,
 `/tmp/OSOS_vfs_status_check_20261026.txt`,
 `/tmp/OSOS_vfs_registration_callers_20261026.txt`,
 `/tmp/OSOS_vfs_registry_insert_semantics_20261026.txt`,
+`/tmp/OSOS_games_vfs_method_bridge_deep_20261026.txt`,
+`/tmp/OSOS_games_vfs_provider_wrapper_semantics_20261026.txt`,
 `/tmp/OSOS_vfs_registration_orphan_refs_20261026.log` und
 `/tmp/OSOS_vfs_registration_pointer_scan_20261026.log` sowie die bestehenden
 Bootloader-Quellen unter `bootloader/ipodnano4g.c`,
