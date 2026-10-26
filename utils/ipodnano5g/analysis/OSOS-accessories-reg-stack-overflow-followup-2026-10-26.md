@@ -456,6 +456,23 @@ indirekter oder außerhalb dieses Abbilds liegender Aufruf ist damit nicht
 ausgeschlossen. Es ist daher nicht belegt, ob Slot 0 beim normalen Kaltstart
 leer bleibt oder auf das FAT-Dateisystem zeigt.
 
+Eine erweiterte Xref-Prüfung aller Aufrufer von `FUN_0818e934` bestätigt diese
+Lücke: Die Startup-Funktion `FUN_080202d8` ruft `FUN_08021d08` auf; dieser holt
+den Registry-Manager und ruft danach nur `FUN_08029e80` auf, einen einzelnen
+`bx lr`-Stub. Der weitere Registry-Mutator `FUN_080e7e70` setzt einen
+vorhandenen Slot auf null und wird über `FUN_0821545a` zum Entfernen benutzt.
+Die anderen direkten Manager-Aufrufer sind Lookups, Synchronisation oder
+Statusabfragen. Der einzige direkte Insert-Aufruf bleibt `FUN_0818e998` über
+`FUN_082154b8` und `FUN_08000a10`. Für `FUN_08000a10` fand Ghidra keinen
+Code-Xref; zusätzlich enthält das rohe Runtime-Abbild weder den geraden
+Funktionszeiger `0x08000a10` noch den Thumb-Zeiger `0x08000a11` als 32-Bit-Wert.
+Das schließt indirekte Aufrufe aus geladenem oder externem Code nicht aus.
+
+Der komplette Xref-Auszug liegt unter
+`/tmp/OSOS_vfs_manager_all_xrefs_20261026.txt`; die untersuchten Startup-,
+Insert-, Remove- und Statusfunktionen sind in den übrigen Rohbelegen unten
+aufgeführt.
+
 Damit ist eine konkrete Schranke des aktuellen Exploit-Kandidaten verifiziert:
 Die ROP-Folge kann nicht allein aufgrund eines erfolgreichen Stream-Objekt-
 Aufbaus als lauffähig gelten. Sie benötigt einen aktiven Slot-0-Provider,
