@@ -247,8 +247,31 @@ Writer-konforme Struktur ist bytegenau nachvollzogen:
 Die Tokenwörter sind little-endian; das Feldende von `0x44` liegt wegen der
 neun Nutzbytes unaligned bei Dateioffset `0x29`. Die Datei ist ein normales,
 nicht übergroßes Beispiel und löst keinen Überlauf aus. Der Host hatte das
-Volume read-only eingehängt; ob es sich im normalen Apple-USB-/OSOS-Dateipfad
-ersetzen lässt, bleibt offen.
+Volume read-only eingehängt. Der aktuelle Rockbox-USB-Modus exportiert drei
+SCSI-LUNs:
+
+| Hostgerät | SCSI-Produkt | Größe | Schreibstatus | Zuordnung |
+| --- | --- | ---: | --- | --- |
+| `/dev/sda` | `Rockbox Ramdisk` | 8 MiB | schreibbar | RAM-Dateisystem, nicht persistent |
+| `/dev/sdb` | `Apple iPod Nano 5G` | 14,9 GiB | geschützt | Datenpartition mit `SEBIPOD` |
+| `/dev/sdc` | `Apple iPod Nano 5G FTL` | 15,1 GiB | geschützt | vollständige logische FTL-Sicht |
+
+Die Zuordnung ist durch SCSI-Inquiry-Namen, Größen und die Linux-Meldungen vom
+26.10.2026 belegt. Der Quellcode erklärt den Status: Die N5G-Konfiguration
+ordnet die RAM-Disk zuerst ein; danach meldet der NAND-Treiber die Daten-
+partition und die vollständige FTL-Sicht als zwei weitere Drives. Für
+`IPOD_NANO5G` wird `NAND_WRITABLE` nicht definiert, daher liefert
+`nand_readonly()` für beide NAND-Drives `true`. `usb_storage.c` setzt damit im
+SCSI-MODE-SENSE das Write-Protect-Bit und beantwortet SCSI-WRITE-Befehle mit
+`DATA_PROTECT`/`WRITE_PROTECTED`. Linux meldete für `/dev/sdb` und `/dev/sdc`
+entsprechend `Write Protect is on`; die RAM-Disk `/dev/sda` meldete
+Schreibschutz aus. Ein Remount der Datenpartition als RW scheiterte; auch
+`blockdev --setrw` änderte den vom Gerät gemeldeten Schutz nicht. In dieser
+Sitzung wurden keine Sektoren geschrieben. Die RAM-Disk ist laut
+`ramdisk_write_sectors()` nur ein Speicherbereich bei `RAMDISK_ADDR`; ihre
+Änderungen wären flüchtig und würden den benötigten persistenten Trigger nicht
+ersetzen. Ob Apples eigener USB-Disk-Modus die Datenpartition beschreibbar
+exportiert, bleibt offen.
 
 ## Writer/Producer
 
@@ -280,8 +303,9 @@ Kaltstart neu erzeugt.
 ## Grenzen der Aussage
 
 - Das echte Dateibeispiel ist normal und nicht übergroß. Ob `accessories.reg`
-  über die Apple-USB-Datenpartition gezielt ersetzt werden kann, bleibt offen;
-  aktuell ist nur die Rockbox-USB-Partition read-only verifiziert.
+  über Apples USB-/OSOS-Dateipfad gezielt ersetzt werden kann, bleibt offen.
+  Im aktuellen Rockbox-Modus ist die NAND-Datenpartition durch das Gerät
+  schreibgeschützt; nur die flüchtige RAM-Disk ist schreibbar.
 - Rücksprungkontrolle und ein geeignetes Pop-Gadget sind statisch belegt. Die
   ROP-Folge bis zum Loader-Entry ist abgezählt, aber nicht serialisiert oder
   ausgeführt. Provider-Erfolg, RAM-/Stack-Überlappung und die konkrete
@@ -294,9 +318,18 @@ Kaltstart neu erzeugt.
 
 ## Nächste statische Schritte
 
-1. Prüfen, ob der Host `accessories.reg` über den normalen USB-Datenpfad
-   ersetzen kann; das Wire-Format ist mit Writer und echtem Beispiel
-   abgeglichen.
+Der vorhandene Devloop bietet einen Rückweg von Rockbox zur U-Boot-USB-Konsole
+ohne DFU: `n5g-cycle.sh` wirft alle drei LUNs aus; `devloop_tick()` erkennt
+`devloop_usb_ejected` und kehrt mit `devloop_return_to_uboot()` zur Konsole
+zurück. `n5g-shellboot.sh` kann von dort Rockbox erneut aus RAM laden. Das ist
+ein wiederholbarer Rockbox-Testzyklus, aber kein Rückweg aus dem Apple-OS.
+Laut README beendet ein OSOS-Handoff die U-Boot-Sitzung; ohne physisches DFU
+ist die Rückkehr nicht belegt. Deshalb wurde der Apple-USB-Modus hier nicht
+gestartet.
+
+1. Statisch weiterverfolgen, ob Apples eigener USB-Disk-Modus oder ein OSOS-
+   Dateipfad `accessories.reg` persistent verändern kann. Der Rockbox-USB-
+   Modus erlaubt auf dem iPod nur RAM-Disk-Schreibzugriffe.
 2. Die abgezählte ROP-Folge vollständig in das bestätigte Format einordnen und
    die Pfadauflösung für `/.rockbox/bootloader.bin` offline prüfen.
    `rockbox.ipod` und `n5g-ramdisk.img` liegen bereits unter `/.rockbox/`;
@@ -370,5 +403,15 @@ Kaltstart neu erzeugt.
   `/tmp/OSOS_task_create_0801de7c_20261026.txt` und
   `/tmp/OSOS_runtime_alloc_081a5b80_20261026.txt` – MainAppTask-Setup und
   Stackallokation.
+- `firmware/export/config/ipodnano5g.h`,
+  `firmware/target/arm/s5l8702/ipodnano4g/nand-target.h`,
+  `firmware/target/arm/s5l8702/ipodnano4g/nand-nano4g.c` und
+  `firmware/storage.c` – Drive-Reihenfolge, fehlendes `NAND_WRITABLE` und
+  `storage_readonly()`-Zuordnung.
+- `firmware/usbstack/usb_storage.c` und `firmware/drivers/ramdisk.c` – SCSI-
+  Write-Protect-Antworten sowie RAM-Disk-Schreibpfad.
+- `lsblk -o NAME,TRAN,HCTL,RO,SIZE,TYPE,FSTYPE,LABEL,MOUNTPOINTS`, SCSI-Inquiry
+  aus `dmesg --ctime` und `lsusb -d 05ac:1265 -v` vom 26.10.2026 – drei
+  exportierte LUNs und deren Schreibstatus im angeschlossenen Rockbox-Modus.
 - `/tmp/ipod-sebipod-readonly/iPod_Control/Device/accessories.reg` –
   read-only extrahierte 69-Byte-Gerätedatei.
