@@ -181,3 +181,37 @@ Belege: `/tmp/OSOS_runtime_event_vtable_20261025.txt`,
 `/tmp/OSOS_runtime_music_task_vtable_literal_20261025.txt` und
 `/tmp/OSOS_runtime_music_dispatch_callback_20261025.txt`. Keine Geräteaktion,
 kein Build und keine Tests.
+
+## Nachtrag: XML-Reader-Aufrufpfade und Speakable-PLIST-Spuren (26.10.2026)
+
+Die direkten Referenzen des XML-Textreaders wurden im read-only Full-Body-
+Projekt erneut verfolgt. `FUN_08330614` hat dort genau einen direkten Aufrufer,
+den Wrapper `FUN_0829e15c`. Dieser Wrapper wird direkt aus `FUN_0810daf0` und
+`FUN_08163bb4` aufgerufen. `FUN_0810daf0` wird von `FUN_08280946` benutzt;
+`FUN_08280946` wiederum wird aus dem eApp-Manifestpfad `FUN_0811f194` und dem
+generischen Objektpfad `FUN_080841cc` aufgerufen. Dieser läuft
+über `FUN_081e16b8`, das in `FUN_081ddb38` zweimal mit unterschiedlichen
+Parsermodi aufgerufen wird. Für `FUN_081ddb38` fand sich im untersuchten
+Projekt kein direkter Code-Xref; ein indirekter Callback-/Factory-Aufruf bleibt
+möglich.
+
+Damit bestätigt der XML-Reader-Xrefgraph keinen allgemeinen automatischen
+Kaltstartparser für beliebige Dateien. Die sichtbaren Pfade führen zur
+eApp-Manifestverarbeitung und zu generischer Objekt-/Datenverarbeitung; deren
+Trigger- und Speicherfehlerbewertung bleibt durch die vorherigen Abschnitte
+begrenzt. Der zuvor separat untersuchte Workout-Scanner bleibt ein eigener
+Parserpfad. Für
+`/iPod_Control/Speakable/UISS.plist`, `CacheInfo.plist`, `ConfigInfo.plist` und
+`UISS_combined.plist.gz` sind die Strings im OSOS-Body vorhanden, aber die
+durchgeführten Ghidra-Xref-/Immediate-Suchen und Scans nach absoluten sowie
+base-relativen 24-/32-Bit-Zeigern fanden keine direkte Verbindung zu einem
+Leser. Das schließt dynamische Registrierungen, indirekte Referenzen oder
+nicht enthaltene Overlays nicht aus und macht diese Dateien derzeit nicht zu
+bestätigten Boot-Eingaben.
+
+Rohbelege: `/tmp/OSOS_xml_libxml_context_20261026.txt`,
+`/tmp/OSOS_xml_other_parser_context_20261026.txt`,
+`/tmp/OSOS_xml_dispatch_root_20261026.txt` und
+`/tmp/OSOS_speakable_immediate_refs_20261026.txt`. Alle Ghidra-Läufe nutzten
+`-noanalysis -readOnly`; das Gerät blieb unangetastet. Kein Build und keine
+Tests.
