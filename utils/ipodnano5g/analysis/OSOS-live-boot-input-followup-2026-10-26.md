@@ -125,23 +125,45 @@ nicht angesprochen.
 
 ## Nachtrag: MainApp-Erreichbarkeit des ArtworkDB-Laders
 
-Ein read-only-Aufrufgraph ab MainApp-Entry `0x080202d8` erreichte bei Tiefe 32
-3.956 Funktionen. Der Initialisierer bei `0x08022b18`, sein ArtworkDB-Setup
-`FUN_080253f4`, der Loader `FUN_081ac420` und der bedingte Callback
-`FUN_080eb730` wurden über direkte Call-Referenzen nicht erreicht. Der Block
-bei `0x08022b18` ruft `FUN_080253f4` tatsächlich auf; für den Block selbst
-fand Ghidra aber keinen direkten Code-Xref. Das schließt indirekte
-VTable-/Eventaufrufe nicht aus.
+Ein read-only-Direktaufrufgraph ab MainApp-Entry `0x080202d8` erreichte bei
+Tiefe 32 insgesamt 3.956 Funktionen. Er erreichte `FUN_080253f4`,
+`FUN_081ac420` und `FUN_080eb730` nicht über ausschließlich direkte
+Call-Referenzen. Das ist kein vollständiger Erreichbarkeitstest, weil der
+MainApp-Start Factory-Callbacks über Funktionszeiger ausführt.
 
-`FUN_081ac420` hat im Runtime-Abbild zwei gefundene Aufrufstellen:
+Die frühere Zieladresse `0x08022b18` war kein Funktionseinstieg, sondern ein
+Basic Block innerhalb von `thumb_8022b08`, dessen Thumb-Funktion bei
+`0x08022b08` beginnt. Die korrigierte lineare Disassemblierung zeigt den
+direkten Aufruf `0x08022b18 -> FUN_080253f4`.
+
+`FUN_081ac420` hat im Runtime-Abbild zwei direkte Aufrufstellen:
 `0x080254b6` in `FUN_080253f4` und `0x080eb73c` in `FUN_080eb730`. Letzterer
 steht als Thumb-Zeiger `0x080eb731` im VTable-Wort bei `0x08504b14` und ruft
 den Loader nur, wenn der verschachtelte Kontextzeiger und dessen Feld `+0x48`
-nicht null sind. Der Runtime-Wert dieses Kontexts ist nicht belegt. Damit ist
-ein persistenter Dateipfad statisch vorhanden, aber kein automatischer
-Kaltstarttrigger nachgewiesen.
+nicht null sind. Der statische Dateiinhalt enthält an der untersuchten
+Kontextposition null; ein Live-Runtime-Wert oder eine Laufzeitschreibstelle
+ist damit nicht bewiesen.
 
-Rohbelege: `/tmp/OSOS_mainapp_artwork_path_graph_20261026.txt`,
-`/tmp/OSOS_artworkdb_parent_08022b18_20261026.txt` und
-`/tmp/OSOS_music_callback_pointer_context_20261026.txt`. Die Ghidra-Läufe
-nutzten `-noanalysis -readOnly`; keine Geräteaktion.
+## Korrektur: Factory-Pfad und Nullkontext (2026-10-26)
+
+Der Callback-Pfad klärt die scheinbare Lücke des direkten Callgraphs. Der
+MainApp-Einstieg `FUN_080202d8` ruft über VTable-Slot `+0x16c` den frühen
+MainApp-Callback auf. Dieser stößt über Slot `+0x170` den Factory-Batch an;
+der Eintrag für ID `0x3280` bei `0x08553a70` enthält den Thumb-Zeiger
+`0x0801e8f7` auf `FUN_0801e8f6`. Der Callback ruft `FUN_08020fa8` mit zweitem
+Argument `0` auf. Dessen direkter Aufruf `0x08021018 -> 0x08022b08` übergibt
+den gespeicherten Nullkontext an `thumb_8022b08`.
+
+`thumb_8022b08` ruft `FUN_080253f4(0, object+0x48)` auf. `FUN_080253f4` gibt
+bei diesem Nullkontext über `FUN_08032850(0)` früh `-0x32` zurück; der
+ArtworkDB-Aufruf bei `0x080254b6` wird in diesem frühen Factory-Pfad nicht
+erreicht. Damit ist die Controllerkonstruktion im MainApp-Start statisch
+belegt, aber kein automatischer ArtworkDB-Parse durch diesen Konstruktor.
+Ein späterer Pfad über `FUN_080eb730` bleibt zustands- und kontextabhängig.
+
+Rohbelege: `/tmp/OSOS_mainapp_artwork_path_graph_corrected_20261026.txt`,
+`/tmp/OSOS_artwork_initializer_func_08022b08_20261026.txt`,
+`/tmp/OSOS_factory_runtime_decomp_2026-10-25.txt`,
+`/tmp/OSOS_music_callback_pointer_context_20261026.txt` und
+`rb-n5g/utils/ipodnano5g/analysis/OSOS-factory-coldstart-2026-10-25.md`.
+Die Ghidra-Aufrufe liefen mit `-noanalysis -readOnly`; kein Gerätezugriff.
