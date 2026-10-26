@@ -442,3 +442,56 @@ Rohbelege: `/tmp/OSOS_volume_io_chain_20261026.txt`,
 `/tmp/OSOS_volume_provider_refs_console_20261026.log`. Alle Ghidra-Läufe
 öffneten die Projektkopie mit `-readOnly -noanalysis`; es gab keinen Zugriff
 auf iPod, USB, DFU oder Flash.
+
+## Nachtrag: Games-VFS und Grenze zum eApp-Lader (26.10.2026)
+
+Der automatische Games-Scan verwendet zwei logische VFS-Slots. `FUN_081af8bc`
+ruft `FUN_081b343c` zuerst mit Slot 4 und dem Tabellenpfad
+`Resources/Games/games_RO/` auf, danach mit Slot 0 und
+`iPod_Control/games_RO/`. Die Pfad-/Iterator-Konstruktoren reichen diese IDs
+über `FUN_082784c8` und `FUN_0827faca` an den Service-Registry-Lookup weiter;
+`FUN_0826384c` akzeptiert nur IDs 0 bis 6. Der Enumerator prüft Pfade über
+einen virtuellen Service-Aufruf bei `+0x50` und liest Verzeichniseinträge über
+`+0x40`/`+0x44`. Das belegt die logischen Namensräume, aber weder ihre konkrete
+physische Partition noch Schreibrechte des OSOS-Prozesses.
+
+Auf Slot 0 wird beim Kaltstart für passende Unterordner automatisch
+`Manifest.plist` gelesen. In diesem Metadaten-Aufruf ist das optionale
+Sidecar-Feld des Parserdeskriptors null. Der Parser prüft die Datei auf
+höchstens `0x20000` Byte; die XML-Initialisierung setzt explizit nur
+`XML_PARSE_COMPACT`, nicht `DTDLOAD` oder `NOENT`. Das tatsächliche Verhalten
+der eingebetteten libxml2-Version bleibt offen. Damit ist eine erreichbare,
+potenziell hostseitig beeinflussbare Eingabe identifiziert, aber noch kein
+Speicherfehler oder Codeausführung.
+
+Der Kandidat `FUN_080f0f18` baut ebenfalls einen `Manifest.plist`-Pfad und
+ruft nach dem Parsen `FUN_08102d10` sowie `FUN_08102f64` auf, bevor er eine
+Callback-Methode startet. `FUN_08102f64` geht weiter über `FUN_0810872c` und
+`FUN_08108448`; in den geprüften Hilfsfunktionen liegen Bereichs- und
+Zählgrenzen. Ein direkter statischer Xref zu `FUN_080f0f18` fehlt, ebenso ein
+Zeigerfund auf die Thumb-Adresse `0x080f0f19`. Die Verbindung vom automatisch
+geladenen Katalog über die UI bis zu diesem eApp-Pfad ist deshalb weiterhin
+nicht belegt. `FUN_08102140` ist in diesem Abbild lediglich ein kleiner
+Deskriptor-Konstruktor; daraus folgt kein Nachweis, dass der Katalogpfad eine
+DER-Signaturprüfung ausführt oder umgeht.
+
+Bewertung: Der Slot-0-Katalogparser bleibt ein sinnvoller statischer
+Einstiegspunkt für eine mögliche OSOS-Lücke. Der getrennte eApp-Pfad zeigt
+zusätzliche Validierung vor dem Callback, aber deren vollständige
+Kryptografie-/Ladersemantik und die dynamische UI-Verbindung sind offen. Es
+gibt weiterhin keinen bestätigten Exploit und keinen belegten untethered
+Rockbox-Handoff. Als Nächstes sind die dynamische `ExecuteGame`-Empfänger-
+Verbindung und die konkrete Schreibbarkeit des `Manifest.plist` auf Slot 0 zu
+klären; außerdem bleibt die Zuordnung des zuvor gefundenen unteren
+Provider-VTable-Slots `+0x2c` offen.
+
+Rohbelege: `/tmp/OSOS_games_vfs_constructor_followup_20261026.txt`,
+`/tmp/OSOS_games_service_factory_followup_20261026.txt`,
+`/tmp/OSOS_games_service_registration_callers_20261026.txt`,
+`/tmp/OSOS_games_vfs_client_registrations_20261026.txt`,
+`/tmp/OSOS_games_service_impl_followup_20261026.txt`,
+`/tmp/OSOS_games_eapp_signature_bridge_20261026.txt`,
+`/tmp/OSOS_games_eapp_signature_internal_20261026.txt` und
+`/tmp/OSOS_games_eapp_cert_parser_helpers_20261026.txt`. Alle Ghidra-Läufe
+verwendeten `-noanalysis -readOnly`; es gab keinen Geräte-, USB-, DFU-, Boot-
+oder Flashzugriff.
