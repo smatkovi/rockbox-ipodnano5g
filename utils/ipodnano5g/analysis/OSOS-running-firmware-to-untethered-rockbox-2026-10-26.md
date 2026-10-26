@@ -586,14 +586,39 @@ Die VFS-Implementierung hinter dem Games-Scan ließ sich weiter bis zur
 Registry-Grenze verfolgen. `FUN_0818e934` liefert einen Manager mit sieben
 Service-Slots; `FUN_0818e998` trägt dynamisch einen Service in einen Slot ein.
 `FUN_0827faca` löst die logische Slot-ID auf, und `FUN_08268cda` greift auf den
-Manager zu oder verwendet den Fallback aus `FUN_0823fad4`. Der Fallbackzeiger
-ist `0x08762cb0`, außerhalb des statisch abgebildeten OSOS-Bodys. Beim
-Kaltstart-Games-Scan ruft `FUN_08196cb8` anschließend `service->vtable[0x50]`
-mit dem aus dem Verzeichnisnamen gebildeten Pfad auf. Der Empfänger und seine
-VTable kommen aus der dynamischen Registry und sind im analysierten OSOS-Body
-nicht enthalten. Damit bleibt offen, ob dieser konkrete Methodenpfad den
-UTF-8-Komponentensplitter `FUN_082284e0` erreicht; ein solcher Aufruf ist nicht
-bestätigt.
+Manager zu oder verwendet den Fallback aus `FUN_0823fad4`. Der Fallback wird
+beim ersten Bedarf lazy am RAM-Ziel `0x08762cb0` konstruiert; sein VTable-
+Zeiger ist `0x08536a78`. Der Eintrag bei `vtable + 0x50` ist null. Er kann
+deshalb die vom Games-Scan benötigte virtuelle Pfadabfrage nicht bedienen.
+Beim Kaltstart-Games-Scan ruft `FUN_08196cb8` `service->vtable[0x50]` mit dem
+aus dem Verzeichnisnamen gebildeten Pfad auf. Der verwendete Slot muss dafür
+einen konkreten Dienst enthalten; dessen Laufzeitobjekt und VTable sind im
+statisch abgebildeten OSOS-Body nicht bestimmt.
+
+Ein weiterer Startup-Trace grenzt den Zeitpunkt ein: `FUN_081ac420` ruft
+`FUN_080b123c` auf. Wenn die Statusabfrage `FUN_081a8930(0)` null zurückgibt,
+fordert diese Funktion über `FUN_080cbae0` den Typcode `0x72737263` (`rsrc`)
+an. Schon die Statusabfrage konstruiert einen VFS-Pfad-Wrapper für Slot 0 und
+ruft dort den virtuellen Slot `+0x48` auf; der anschließende Helper fragt
+ebenfalls VFS-Slot 0 über `FUN_08268cda` ab. Slot 0 wird damit schon in diesem
+Startup-Zweig benutzt, bevor die spätere Games-Aufzählung läuft. Der Trace
+zeigt nicht, wo Slot 0 oder Slot 4 registriert werden. Die ermittelten
+Registrierungs-Wrapper und die früh aufgerufenen Initialisierer führen weiter
+zu dynamischen beziehungsweise nicht zugeordneten Empfängern. Damit bleibt
+offen, ob der Games-Pfad den UTF-8-Komponentensplitter `FUN_082284e0` erreicht;
+ein solcher Aufruf ist nicht bestätigt.
+
+Die Eintragungsroutine prüft zuerst den angeforderten Slot und erzeugt bei
+freier Stelle einen Dienst über einen von zwei Konstruktorpfaden; erst danach
+schreibt sie den Zeiger in den Slot. `FUN_0826384c` verwirft Slot-IDs ab 7,
+bevor sie den Slotzugriff ausführt; ein einfacher Registry-Indexüberlauf ist
+damit in diesem Pfad nicht gegeben. Der automatische `rsrc`-Pfad ruft diese
+Routine über `FUN_082154b8` auf und belegt damit höchstens die bedingte
+Erzeugung von Slot 4 aus Daten, die über Slot 0 gelesen werden. Die andere
+direkte Aufrufstelle ist `FUN_08000a10`; für sie gibt es im analysierten
+Programm keinen direkten Code-Xref, und die Suche nach einem absoluten
+Thumb-Funktionszeiger fand keinen Treffer. Wie der physische Dateidienst für
+Slot 0 beim normalen Kaltstart registriert wird, bleibt daher ungeklärt.
 
 Für einen erfolgreichen OSOS-RCE gäbe es lokal bereits einen passenden
 Rockbox-seitigen Startpfad: Der N5G-Bootloader aus
@@ -609,7 +634,17 @@ andere Speicherfehler.
 
 Rohbelege: `/tmp/OSOS_games_vfs_registry_deep_20261026.txt`,
 `/tmp/OSOS_games_vfs_registry_clients_20261026.txt`,
-`/tmp/OSOS_games_vfs_registry_refs_20261026.txt` und die bestehenden
+`/tmp/OSOS_games_vfs_registry_refs_20261026.txt`,
+`/tmp/OSOS_vfs_fallback_globals_20261026.txt`,
+`/tmp/OSOS_vfs_default_vtable_entries_20261026.txt`,
+`/tmp/OSOS_vfs_manager_singleton_20261026.txt`,
+`/tmp/OSOS_mainapp_early_service_init_20261026.txt`,
+`/tmp/OSOS_typecode_registration_helper_20261026.txt`,
+`/tmp/OSOS_vfs_status_check_20261026.txt`,
+`/tmp/OSOS_vfs_registration_callers_20261026.txt`,
+`/tmp/OSOS_vfs_registry_insert_semantics_20261026.txt`,
+`/tmp/OSOS_vfs_registration_orphan_refs_20261026.log` und
+`/tmp/OSOS_vfs_registration_pointer_scan_20261026.log` sowie die bestehenden
 Bootloader-Quellen unter `bootloader/ipodnano4g.c`,
 `firmware/target/arm/s5l8702/boot.lds`,
 `firmware/target/arm/s5l8702/crt0.S` und
