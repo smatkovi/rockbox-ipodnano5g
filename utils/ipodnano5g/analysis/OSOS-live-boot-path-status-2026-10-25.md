@@ -1,6 +1,6 @@
 # OSOS-Lücke als untethered Rockbox-Einstieg: aktueller Stand
 
-Stand: 25.10.2026. Diese Arbeit war statisch und offline. Es gab keinen
+Stand: 26.10.2026. Diese Arbeit war statisch und offline. Es gab keinen
 USB-/DFU-Zugriff, keinen Neustart und keinen NAND-/NOR-Schreibzugriff.
 
 ## Kurzantwort
@@ -60,10 +60,18 @@ Der vorhandene Rockbox-Bootloader zeigt, dass die gewünschte Verzweigung auf
 Rockbox-Seite bereits implementiert ist:
 
 - `firmware/export/config/ipodnano5g.h` setzt `BOOTFILE` auf `rockbox.ipod`.
-- `bootloader/ipod-s5l87xx.c` prüft nach der Speicherinitialisierung
-  `button_hold()`. Bei gesetztem Hold ruft er `kernel_launch_onb()` auf.
-- Ohne Hold mountet er das Dateisystem, lädt `rockbox.ipod` mit
-  `load_firmware()` nach `DRAM_ORIG` und springt zum Image-Einstieg.
+- Der Nano 5G verwendet den gemeinsamen Nano-4G/5G-Pfad in
+  `bootloader/ipodnano4g.c`; `bootloader/ipod-s5l87xx.c` ist nicht sein
+  Startpfad. Im `IPOD_NANO5G`-Zweig prüft `main()` den Hold-Schalter früh und
+  startet bei gesperrtem Hold das signierte OSOS über
+  `launch_apple(APPLE_IMG_OSOS)`. Bei entsperrtem Hold mountet er das
+  Dateisystem, lädt `rockbox.ipod` mit `load_firmware()` nach `DRAM_ORIG` und
+  springt zum Image-Einstieg.
+- Fehlt die FAT-Partition, die Rockbox-Datei oder das erwartete RAM-Disk-Image,
+  versucht dieser Nano-5G-Pfad ebenfalls, das signierte OSOS zu starten. Der
+  Hold-gesperrte Apple-Pfad ist in diesem Quellzweig vorgesehen; ein OSOS-Exploit,
+  der diesen Rockbox-Bootloader aus dem normalen OSOS-Kontext startet, ist
+  weiterhin nicht gezeigt.
 
 Das belegt den Rockbox-seitigen Lade- und Fallbackpfad, **nicht** dass das
 unveränderte OSOS diesen Bootloader starten kann. Ein OSOS-Exploit müsste einen
@@ -92,6 +100,9 @@ erreichbarer und kontrollierbarer Datei-Exploit noch ein OSOS-zu-Rockbox-Handoff
 gezeigt.
 
 ## Rohbelege und nächster Schritt
+
+Der aktualisierte Laufzeit- und Rockbox-Handoff-Befund vom 26.10.2026 steht in
+`OSOS-running-firmware-to-untethered-rockbox-2026-10-26.md`.
 
 Neue Ghidra-Auszüge:
 

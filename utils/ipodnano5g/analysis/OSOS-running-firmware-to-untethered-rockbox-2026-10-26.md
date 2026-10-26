@@ -31,11 +31,21 @@ ausführt.
   von `nand_write_sectors()` gibt bei nichtleeren Schreibanforderungen deshalb
   `-3` zurück. Das belegt nur die Grenze des lokalen Rockbox-Treibers, nicht
   Apples eigenen NAND-Treiber oder dessen Berechtigungen.
-- `bootloader/ipod-s5l87xx.c` enthält den Datei-Ladepfad für `rockbox.ipod`;
-  die N5G-RAM-Bootloader-Analyse bestätigt außerdem Fallbacks zu OSOS bei
-  gesperrtem Hold oder fehlender/nicht ladbarer Rockbox-Datei. Diese Pfade
-  belegen den möglichen RAM-Handoff, nicht dass Apple-OSOS den Loader starten
-  kann.
+- Der tatsächlich für Nano 5G verwendete gemeinsame N4G/N5G-Bootloader steht
+  in `bootloader/ipodnano4g.c`. Im `IPOD_NANO5G`-Zweig prüft er den Hold-Schalter
+  vor dem FAT-Mount und startet bei gesperrtem Hold das signierte OSOS über
+  `launch_apple(APPLE_IMG_OSOS)`. Bei fehlendem FAT, fehlender
+  `rockbox.ipod`-Datei oder fehlendem RAM-Disk-Image gibt es ebenfalls einen
+  OSOS-Fallback. Bei entsperrtem Hold lädt er `rockbox.ipod` in RAM. Das ist ein
+  konkreter Handoff-Kandidat für einen OSOS-Exploit, aber ein Sprung aus dem
+  laufenden OSOS in diesen Bootloader ist noch nicht demonstriert.
+- Der N5G-Bootloader ist laut `firmware/target/arm/s5l8702/boot.lds` bei
+  `DRAM_ORIG + 16 MiB` gelinkt; der vorhandene RAM-Boot-Workflow verwendet
+  dafür `0x09000000`. `crt0.S` schaltet MMU/Caches aus, leert den
+  Instruktionspfad und setzt den VIC zurück. Der N5G-`system_preinit()` setzt
+  voraus, dass SDRAM, Takt, GPIO und PMU bereits initialisiert sind. Ein
+  Exploit müsste diese Startbedingungen beim Sprung aus OSOS berücksichtigen;
+  die Quelltexte belegen noch keine sichere OSOS-zu-Bootloader-Ausführung.
 - Das lokale Projekt beschreibt wInd3x als temporären DFU-/RAM-Pfad. Die
   Upstream-Dokumentation sagt ebenfalls, dass haxed DFU bis zum nächsten
   Neustart gilt und den persistenten Gerätezustand nicht verändert
@@ -569,6 +579,43 @@ Rohbelege: `/tmp/OSOS_games_path_normalizer_chain_20261026.txt`,
 `/tmp/OSOS_games_vfs_service_context_20261026.txt`. Die Läufe öffneten eine
 Projektkopie mit `-noanalysis -readOnly`; die Reports ändern weder das Gerät
 noch Flash-Inhalte.
+
+## Nachtrag: VFS-Registry und möglicher RAM-Handoff
+
+Die VFS-Implementierung hinter dem Games-Scan ließ sich weiter bis zur
+Registry-Grenze verfolgen. `FUN_0818e934` liefert einen Manager mit sieben
+Service-Slots; `FUN_0818e998` trägt dynamisch einen Service in einen Slot ein.
+`FUN_0827faca` löst die logische Slot-ID auf, und `FUN_08268cda` greift auf den
+Manager zu oder verwendet den Fallback aus `FUN_0823fad4`. Der Fallbackzeiger
+ist `0x08762cb0`, außerhalb des statisch abgebildeten OSOS-Bodys. Beim
+Kaltstart-Games-Scan ruft `FUN_08196cb8` anschließend `service->vtable[0x50]`
+mit dem aus dem Verzeichnisnamen gebildeten Pfad auf. Der Empfänger und seine
+VTable kommen aus der dynamischen Registry und sind im analysierten OSOS-Body
+nicht enthalten. Damit bleibt offen, ob dieser konkrete Methodenpfad den
+UTF-8-Komponentensplitter `FUN_082284e0` erreicht; ein solcher Aufruf ist nicht
+bestätigt.
+
+Für einen erfolgreichen OSOS-RCE gäbe es lokal bereits einen passenden
+Rockbox-seitigen Startpfad: Der N5G-Bootloader aus
+`bootloader/ipodnano4g.c` kann von `0x09000000` starten, `rockbox.ipod` und das
+RAM-Disk-Image von der FAT-Partition laden und bei Hold oder Ladefehler das
+signierte OSOS starten. Ein OSOS-Exploit könnte diesen Bootloader theoretisch
+jedes Mal aus einer persistenten Datei in RAM laden; dafür müsste kein
+Bootloader ins NAND/NOR geschrieben werden. Nicht belegt sind weiterhin ein
+automatisch erreichbarer RCE, die Schreibbarkeit/physische Zuordnung des
+Games-VFS-Slots auf dem Gerät und der Sprung aus dem initialisierten OSOS in
+den Rockbox-Bootloader. Die vorhandenen Parsergrenzen sind keine Garantie gegen
+andere Speicherfehler.
+
+Rohbelege: `/tmp/OSOS_games_vfs_registry_deep_20261026.txt`,
+`/tmp/OSOS_games_vfs_registry_clients_20261026.txt`,
+`/tmp/OSOS_games_vfs_registry_refs_20261026.txt` und die bestehenden
+Bootloader-Quellen unter `bootloader/ipodnano4g.c`,
+`firmware/target/arm/s5l8702/boot.lds`,
+`firmware/target/arm/s5l8702/crt0.S` und
+`firmware/target/arm/s5l8702/system-s5l8702.c`. Ghidra lief mit
+`-noanalysis -readOnly`; kein Build, Test, USB-, DFU-, Boot- oder
+Flashvorgang.
 
 Rohbelege: `/tmp/OSOS_xml_live_parser_refs_20261026.txt`,
 `/tmp/OSOS_xml_callbacks_and_limit_20261026.txt`,
