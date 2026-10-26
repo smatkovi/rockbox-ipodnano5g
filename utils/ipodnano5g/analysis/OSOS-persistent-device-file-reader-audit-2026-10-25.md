@@ -176,6 +176,50 @@ Wrapper wurde kein Gesamtdateilimit gefunden. Ein echtes Device/PlayCounts-
 Dateibeispiel fehlt im lokalen Backup; auch die Host-Schreibbarkeit genau
 dieses Pfads ist offline nicht verifiziert.
 
+### Nachtrag: Kontrollflussgrenze des rekursiven Skip-Parsers (26.10.2026)
+
+Eine genauere Prüfung von `FUN_0826dca0` bestätigt dateigesteuerten
+Rekursionsverbrauch, grenzt die direkte Kontrollflusswirkung aber ein. Jeder
+Aufruf führt `push {r2,r3,r4,r5,r6,lr}` aus und belegt 24 Byte. Die beiden
+vier Byte großen Parserziele liegen bei `sp+0` und `sp+4`; sie überlagern nur
+die gesicherten Eingangsregister `r2` und `r3`. Der gesicherte Rücksprungwert
+liegt bei `sp+0x14` und wird von keinem der beiden Token-Reads beschrieben.
+Der Reader erhält für diese Schritte stets die feste Länge 4. Ein
+verschachtelter Containerstream kann daher mit einer Datei deutlich unter
+24 KiB ungefähr 5.4 Tausend Ebenen erzeugen und sich der angeforderten
+`0x20000`-Byte-MainAppTask-Stackgrenze nähern. Die genaue Tiefe hängt vom
+bereits belegten Stack und den temporären Frames der Reader-Aufrufe ab.
+
+Im gleichen Skip-Pfad wird bei einem unbekannten Elementtyp mit Oberbyte 0
+die gelesene Länge ungeprüft um 4 erhöht (`local_14 += 4`). Ein Wert ab
+`0xfffffffc` wickelt dadurch auf `0..3` um. Der anschließende virtuelle Aufruf
+`+0x54` ist im verwendeten Stream-VTable `FUN_082b5a02`, ein relativer Seek;
+bei diesem Wrap springt der Parser daher nicht über die deklarierte Nutzlast,
+sondern liest danach deren erste Bytes als weitere Tokens. Die konkrete
+Wirkung ist eine dateikontrollierte Parser-Desynchronisierung. Sie erzeugt im
+geprüften Pfad weder einen großen Read noch einen großen Speicherzugriff: Der
+Seek bekommt nur den umgebrochenen kleinen Wert. Dass Payloadbytes als Tags
+weitergeparst werden, ist kein zusätzlicher Kontrollflussprimitive, da
+dieselben Tags auch direkt im äußeren Stream stehen können.
+
+Damit ist ein automatischer Stackerschöpfungs-/Absturzpfad plausibel. Eine
+direkte Übernahme des gespeicherten PC/LR aus Tokenbytes ist im Parserkörper
+nicht vorhanden. Bei Überschreiten des Stackblocks könnten Pushes zwar
+angrenzende Speicherbereiche treffen; Guard-Verhalten, Stackbasis und dortige
+Allokationen liegen jedoch hinter dem externen Taskdienst und sind nicht
+aufgelöst. Das belegt keine kontrollierte Speicherkorruption und keine RCE.
+Der normale MainApp-Aufruf des Importers bleibt statisch belegt; ein echtes
+`Device/PlayCounts`-Beispiel und der hostseitige Schreibpfad für genau diese
+Datei fehlen weiterhin.
+
+Rohbelege für diesen Nachtrag: `/tmp/OSOS_function_0826dca0_20261026.txt`,
+`/tmp/OSOS_playcounts_seek_method_20261026.txt`,
+`/tmp/OSOS_TAppShell_method_08028254_20261026.txt`,
+`/tmp/OSOS_task_create_MainAppTask_helper_20261026.txt`,
+`/tmp/OSOS_task_create_0801de7c_20261026.txt` und
+`/tmp/OSOS_rtos_task_create_0835d160_20261026.txt`. Keine Tests oder
+Geräteaktionen wurden ausgeführt.
+
 Rohbelege: `/tmp/OSOS_TAppShell_method_08028254_20261026.txt`,
 `/tmp/OSOS_TAppShell_corrected_vtable_and_second_lifecycle_20261026.txt`,
 `/tmp/OSOS_recursive_skip_direct_callers_20261026.txt`,

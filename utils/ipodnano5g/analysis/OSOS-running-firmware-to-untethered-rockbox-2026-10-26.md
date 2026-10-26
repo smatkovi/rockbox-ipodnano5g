@@ -108,10 +108,16 @@ Kontrollflussübernahme:
   zum passenden `0xc0`-Endtag übersprungen; ein Rekursionstiefenzähler ist im
   Code nicht sichtbar. Pro Ebene werden 24 Byte Register gesichert. Der
   MainApp-Task wird mit einem Stackgrößenargument `0x20000` eingerichtet,
-  sodass sehr tiefe Eingaben einen Task-Stack-Absturz plausibel machen. Das
-  beweist noch keine kontrollierte Rücksprungadresse oder RCE; Guard,
-  Stacklayout und Nachbarobjekte des externen Taskdienstes sind nicht
-  aufgelöst. Der Tag-`0x3e`-Leser begrenzt den Feldread auf 64 Byte, obwohl
+  sodass ein Containerstream von ungefähr 20–24 KiB die Stackgrenze erreichen
+  könnte. Das belegt keinen kontrollierten Rücksprung: Token-Reads schreiben
+  in die gespeicherten Argumentregister bei `sp` und `sp+4`, während der
+  gespeicherte LR bei `sp+0x14` liegt. Guard, dynamische Stackbasis und
+  Nachbarallokationen des externen Taskdienstes sind nicht aufgelöst. Der
+  Skip-Pfad addiert außerdem ungeprüft vier zur Länge eines unbekannten
+  Elementtyps 0; bei `0xfffffffc` oder höher kann diese Addition auf `0..3`
+  umspringen und die Folgedaten als Tokens sichtbar machen. Das ist eine
+  Parser-Desynchronisierung ohne großen Read oder kontrollierten PC. Der
+  Tag-`0x3e`-Leser begrenzt den Feldread auf 64 Byte, obwohl
   sein lokaler Puffer 56 Byte groß ist: höchstens acht Bytes treffen die
   danebenliegenden lokalen Slots, nicht den gespeicherten LR. Deren
   Kontrollflusswirkung ist nicht belegt. Bei 64 Nicht-NUL-Bytes sieht die
@@ -131,11 +137,12 @@ Kontrollflussübernahme:
   Gesamtlimit der Datei oder des Reads. Schon ab `0x110` tatsächlich
   gelieferten Bytes reicht die Eingabe bis in das lokale Stringobjekt, das
   unmittelbar danach über eine VTable-Funktion verarbeitet wird. Damit ist ein
-  beim frühen MainApp-Start
-  erreichbarer Stack-Überlauf mit dateigesteuerter Beschädigung eines
-  indirekt verwendeten Objekts statisch belegt. Die weitere Analyse zeigt,
-  dass sich VTable-Aufruf und Cleanup mit gültigen Objektwerten durchlaufen
-  lassen; LR und nachfolgende Caller-Stackwörter sind dateikontrollierbar. Das
+  dateigesteuerter Stack-Überlauf im Parser statisch belegt, sofern der Open
+  gelingt und der Read das Feld erreicht. Der Factory-Pfad ruft den Parser
+  automatisch auf, aber ein erfolgreicher Datei-Read ist nicht bestätigt. Die
+  weitere Analyse zeigt, dass sich VTable-Aufruf und Cleanup mit gültigen
+  Objektwerten durchlaufen lassen; LR und nachfolgende Caller-Stackwörter sind
+  dateikontrollierbar. Das
   Gadget `0x08007106` lädt `r0-r4` und PC aus diesem Stack und ermöglicht eine
   ROP-Folge in OSOS-Code. Eine stackrelative Kandidatenfolge bis zum Aufruf
   des vorhandenen Rockbox-Laders bei `0x09000000` ist nun aus bestätigten
@@ -149,8 +156,28 @@ Kontrollflussübernahme:
   CPU-Kontext bleiben ungeklärt. Die echte Datei wurde read-only geprüft und
   ist normal, nicht übergroß. `FUN_0814b13c` schreibt die Datei bei gesetztem
   Dirty-Flag; sein einziger direkter Caller `FUN_0825da88` hat keinen belegten
-  MainApp-Kaltstartaufruf. Details stehen in
-  `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
+  MainApp-Kaltstartaufruf. Die Factory-Callsite belegt noch keinen
+  erfolgreichen Datei-Read: `FUN_0812a870` und sein Fallback erreichen den
+  FAT-Pfadauflöser `FUN_081382c2`, in dem der neue LFN-Zeigerfehler liegt. Die
+  schreibgeschützte Prüfung des aktuellen Volumes bestätigt, dass
+  `iPod_Control` und `accessories.reg` tatsächlich Langnamen sind; ihr
+  8.3-Fallback (`IPOD_C~1`, `ACCESS~1.REG`) stimmt nicht mit der festen
+  OSOS-Pfadzeichenkette überein. Ein Abort oder fehlender Match ist daher
+  wahrscheinlich, aber ohne OSOS-Laufzeitbeobachtung nicht bewiesen. Der
+  USB-Massenspeichermodus führt den Open-Callback nicht aus. Im aktuellen
+  `.rockbox` liegt `rockbox.ipod`, aber nicht die vom Kandidaten erwartete
+  `bootloader.bin`. Details stehen in
+  `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md` und
+  `OSOS-FAT-LFN-index-taint-audit-2026-10-26.md`.
+- **FAT-LFN-Pfadauflösung:** `FUN_08158b64` übernimmt bei einem VFAT-LFN-Eintrag
+  im Register `r2` einen Stackpufferzeiger in den LFN-Zustand. `FUN_08159128`
+  verwendet ihn beim folgenden Kurznamen als Sektor-Eintragsindex und bildet
+  daraus eine ungültige Leseadresse. Der geprüfte Kopierer begrenzt sein
+  lokales 256-Byte-Ziel; für diesen Pfad sind weder ein Stackschreibfehler noch
+  eine Kontrollflussübernahme belegt. Das ist ein möglicher Dateisystem-DoS,
+  keine bestätigte RCE. Stackbasis und konkrete Fault-Adresse sind dynamisch
+  offen. Details und Xrefs stehen in
+  `OSOS-FAT-LFN-index-taint-audit-2026-10-26.md`.
 - **Weitere Play-Counts-, Contacts-, Device-Konfigurations- und Workout-XML-
   Pfade:** bisher kein bestätigter Speicherfehler mit Kontrollflusswirkung.
   Der separate iTunes-`Play Counts`-Leser verarbeitet feste Header- und
@@ -174,11 +201,12 @@ ist auch der automatische Import von `iPod_Control/Device/PlayCounts`; dessen
 rekursives Überspringen unbekannter Container ist ein plausibler Pfad zur
 Stackerschöpfung, aber noch keine nachgewiesene Kontrolle über die
 Rücksprungadresse oder RCE. Der Parser von `iPod_Control/Device/accessories.reg`
-ist ein stärkerer Kandidat: Die feste Datei wird im frühen MainApp-Factory-Pfad
-geöffnet, und eine Längenangabe erreicht einen Stackpuffer ohne die scheinbar
-vorgesehene 256-Byte-Grenze; danach wird ein vom Überlauf beschädigtes Objekt
-über einen indirekten Funktionsaufruf verwendet. Die statische Folge reicht bis
-zum überschriebenen LR und einem vorhandenen ROP-Gadget; eine statisch
+ist ein stärkerer Kandidat: Der frühe MainApp-Factory-Pfad ruft den Parser auf.
+Bei erfolgreichem Datei-Open erreicht eine Längenangabe einen Stackpuffer ohne
+die scheinbar vorgesehene 256-Byte-Grenze; danach wird ein vom Überlauf
+beschädigtes Objekt über einen indirekten Funktionsaufruf verwendet. Die
+statische Folge reicht bis zum überschriebenen LR und einem vorhandenen
+ROP-Gadget; eine statisch
 abgezählte, noch ungeprüfte ROP-Kandidatenfolge ruft Open, Read und den
 Rockbox-Lader auf. Der interne Writer und der echte Gerätedatensatz bestätigen
 das `accessories.reg`-Wire-Format; die für den Kandidaten nötige Feldlänge
@@ -191,12 +219,14 @@ brauchen weiterhin eine belastbare Kontrollfluss-Auswirkung.
 
 Weiterhin offen sind:
 
-1. Prüfen, ob der Host `iPod_Control/Device/accessories.reg` im normalen
-   Apple-USB-/OSOS-Dateipfad ersetzen kann; das Wire-Format ist durch internen
-   Writer und echtes Beispiel bestätigt. Danach die vollständige ROP-Datei,
-   Pfadauflösung zu `/.rockbox/bootloader.bin` sowie Stack-/Heap-Überschneidungen
-   offline prüfen. Das echte 69-Byte-Dateibeispiel ist normal und löst keinen
-   Überlauf aus;
+1. Als ersten Gerätetest bei einem regulären OSOS-Neustart den Open-Pfad für
+   `iPod_Control/Device/accessories.reg` beobachten; die aktuelle VFAT-Struktur
+   bestätigt den LFN-Zweig, aber nicht Fault oder Rückgabewert. Vor einem
+   späteren kontrollierten Trigger außerdem den Host-Schreibpfad, den
+   Loaderpfad (aktuell fehlt `/.rockbox/bootloader.bin`) und Stack-/Heap-
+   Überschneidungen klären. Das Wire-Format ist durch internen Writer und
+   echtes Beispiel bestätigt; die echte 69-Byte-Datei löst keinen Überlauf
+   aus;
 2. Stackgrenze und Guard des importierten Taskdienstes für den
    `PlayCounts`-Containerparser prüfen;
 3. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
@@ -703,11 +733,13 @@ damit in diesem Pfad nicht gegeben. Der automatische `rsrc`-Pfad ruft diese
 Routine über `FUN_082154b8` auf und belegt damit höchstens die bedingte
 Erzeugung von Slot 4 aus Daten, die über Slot 0 gelesen werden. Der weitere
 Insert-Wrapper `FUN_08000a10` hat einen direkten, zuvor wegen fehlender
-Thumb-Disassemblierung übersehenen Caller: `DeviceDiscovery`, Fall 0, bei
-`0x08010cc4`; er übergibt Slot-ID 0. Der physische Dateidienst für Slot 0,
-der tatsächliche Schedulerstart und das Erreichen von Fall 0 beim normalen
-Kaltstart bleiben ungeklärt. Die Gegenprüfung im vollständigen Body und die
-Pointer-Suche sind dokumentiert in
+Thumb-Disassemblierung übersehenen Caller: `PCFPowerMgr`, Fall 0, bei
+`0x08010cc4`; er übergibt Slot-ID 0. Die Task-Metadaten ordnen
+`0x08010c99` (`0x08010c98` Thumb-Code) `PCFPowerMgr` zu; `DeviceDiscovery`
+ist ein anderer Task bei `0x08002151`. Der physische Dateidienst für Slot 0,
+die Erzeugung des Zustand-0-Ereignisses, der tatsächliche Schedulerlauf und
+das Erreichen von Fall 0 vor dem MainApp-Parser bleiben ungeklärt. Die
+Gegenprüfung im vollständigen Body und die Pointer-Suche sind dokumentiert in
 `OSOS-vfs-registration-caller-followup-2026-10-26.md`.
 
 Für einen erfolgreichen OSOS-RCE gäbe es lokal bereits einen passenden
@@ -899,6 +931,44 @@ Pfad-/Provider-Erfolg, vollständige Payload-Datei und Laufzeit-Handoff bleiben
 offen. Details und Rohbelege stehen in
 `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
 
+## Nachtrag: Formatter-Aufrufstellen systematisch geprüft (26.10.2026)
+
+Die direkten Aufrufer des unbeschränkten `FUN_081c38b0` wurden im OSOS-Abbild
+gesichtet. Dabei wurde ein weiterer kleiner Stackfehler bestätigt:
+`FUN_081d75a8` schreibt mit acht `"%s %08x"`-Durchläufen 73 Bytes in zwei
+68-Byte-Stackpuffer, also jeweils fünf Bytes über das Arrayende. Die
+Nachbarwerte sind lokale Ausgabeplätze; ein gespeicherter LR oder kontrollierter
+Funktionszeiger wird dabei nicht erreicht. Die acht formatierten Wörter werden
+aus uninitialisiertem Stack gelesen. Das belegt weder einen kontrollierbaren
+Wert noch RCE. Details und Rohbelege stehen in
+`OSOS-sprintf-callsite-audit-2026-10-26.md`.
+
+Für den Device-XML-Loader ist nun geklärt, dass `0x8000` eine anfängliche
+Parserpuffergröße ist: `FUN_082a1a9c` wächst den Puffer bei Bedarf; die
+statische obere Schranke des Wachstumspfads ist `0x7fffffff`. Ein 32-KiB-
+Gesamtlimit ist somit nicht belegt. Die Dateinamens- und XML-Schlüsselquelle
+bleiben jedoch ohne gefundenen direkten Aufrufer oder nachgewiesene
+Kaltstartregistrierung. Siehe
+`OSOS-dynamic-device-xml-parser-audit-2026-10-26.md`.
+
+Ergebnis dieses Durchgangs: zwei zusätzliche statisch bestätigte
+Speicherfehler-Kandidaten, aber keine bestätigte beliebige Codeausführung,
+keinen Signatur-Bypass und keinen neuen Rockbox-Bootpfad.
+
+## Nachtrag: dynamischer Device-XML-Loader (26.10.2026)
+
+Ein zusätzlicher Parserpfad beim rekonstruierten Codekörper `0x08087d2c` baut
+`iPod_Control/Device/<name>.xml`, liest die Datei und fügt nach erfolgreichem
+Parse zwei dateikontrollierte Knotennamen mit dem unbeschränkten Formatter
+`FUN_081c38b0` in einen 252-Byte-Stackpuffer ein. Der Formatter schreibt ohne
+Zielgrenzenprüfung. Benachbarte lokale Werte werden ab 252 Bytes beschädigt;
+der gespeicherte LR liegt `0x228` Bytes hinter dem Pufferanfang, aber die
+lokalen Werte dazwischen werden zuerst überschrieben. Ein zuverlässiger
+Kontrollflussfehler ist daher nicht gezeigt. Für `0x08087d2c` wurde weder ein direkter Aufrufer
+noch ein statischer Funktionszeiger gefunden; Kaltstart-Erreichbarkeit und
+Annahme langer Parser-Schlüssel bleiben offen. Details und Rohbelege stehen in
+`OSOS-dynamic-device-xml-parser-audit-2026-10-26.md`.
+
 Die echte Datei `/tmp/ipod-sebipod-readonly/iPod_Control/Device/accessories.reg`
 ist 69 Byte groß, hat SHA-256
 `b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854` und
@@ -925,3 +995,56 @@ Rohbelege: `/tmp/OSOS_runtime_parser_20261026.txt`,
 `/tmp/OSOS_runtime_call_pop_sequences_20261026.txt`,
 `/tmp/OSOS_runtime_stack_pointer_gadgets_20261026.txt` und
 `/tmp/OSOS_runtime_stack_to_register_pop_20261026.txt`.
+
+## Nachtrag: MBR-zu-Slot-0-Pfad präzisiert (26.10.2026)
+
+Die Slot-0-Registrierung führt durch `FUN_0802ec8c` in den MBR-Parser. Er
+nimmt den ersten passenden DOS-FAT-Partitionstyp und erstellt über
+`FUN_081bcc14`/`FUN_0826b6e4` den Typ-2-Volumehandler, dessen
+MBR-Kontext `FUN_0813f0ac` initialisiert. Damit passt der statische
+Providerpfad grundsätzlich zum frühen Öffnen von
+`iPod_Control/Device/accessories.reg`.
+
+Noch offen ist, ob ATA-Worker und Queue-4-Ereignis diesen Dienst vor dem
+MainApp-Leser registrieren und ob der reale Pfad erfolgreich geöffnet wird.
+Der MBR-Parser prüft Partitionslänge gegen die Gesamtsektorzahl, aber nicht
+`Start + Länge`; daraus folgt bisher nur ein möglicher ungültiger
+Blockbereich. Weder diese Stelle noch der LBA-Cache-Wraparound belegt
+beliebige Codeausführung. Rohbelege stehen im
+`OSOS-vfs-registration-caller-followup-2026-10-26.md`.
+
+## Nachtrag: DRAM-Ziel des Loader-Handoffs ist ausführbar (26.10.2026)
+
+Die Bootprefix-MMU-Initialisierung richtet eine Identitätsabbildung für
+`0x08000000–0x0bffffff` mit Descriptor-Attributen `0x7c0e` ein und setzt
+SCTLR.XP. Im ARMv6-Abschnittsformat ist das XN-Bit gelöscht; damit ist
+`0x09000000` statisch ausführbar und privilegiert les-/schreibbar. Der
+Rockbox-Loader-Startup bereinigt D-Cache/Write-Buffer und verwirft
+I-Cache-/Prefetch-Zustand, bevor er MMU/Caches abschaltet. Dieser Teil der
+Übergabe ist damit plausibel. Ungeklärt bleiben die reale Ausführung des
+Parserpfads, Datei-Open/Read, und ob das Loaderziel im Heap den aktiven
+MainApp-Stack oder nötige Daten zerstört. Details und Belege stehen im
+Nachtrag „Loader-Ziel liegt in ausführbarer DRAM-Abbildung“ in
+`OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
+
+## Nachtrag: aktueller USB-Test ohne DFU (26.10.2026)
+
+Das angeschlossene Gerät meldete sich als iPod nano 5G im USB-Massenspeicher-
+Modus (`05ac:1265`), nicht als DFU. `/dev/sda1` wurde ausschließlich mit
+`ro,nosuid,nodev,noexec` eingehängt und anschließend wieder ausgehängt. Die
+VFAT-Aufzählung bestätigt die echten Langnamen `iPod_Control/Device` und
+`accessories.reg` sowie die 8.3-Aliase `IPOD_C~1`, `DEVICE` und
+`ACCESS~1.REG`. Das Gerät lieferte keine OSOS-Datei-Open-Beobachtung; weder der
+FAT-Callback noch der `accessories.reg`-Parser wurden in diesem Modus
+ausgeführt. Deshalb bleibt der erste dynamische Gerätetest der reguläre
+OSOS-Neustart mit Beobachtung des `accessories.reg`-Open-Pfads. Dafür ist
+derzeit kein DFU-Schritt nötig, aber die vorliegende USB-Konfiguration kann
+diesen Lauf nicht ersetzen. Details stehen in
+`OSOS-FAT-LFN-index-taint-audit-2026-10-26.md`.
+
+Eine engere statische Prüfung des automatisch erreichten
+`Manifest.plist`-Callbacks fand feste 3-/4-Eintrags-Hardwareschlüssel und
+dynamische Manifest-/Kataloglisten; in dieser Materialisierung wurde kein
+fester Stackpufferfehler gefunden. Das ist ein negativer Befund für diesen
+Callbackpfad, keine Aussage über Fehler im eingebetteten XML-Kern. Siehe
+`OSOS-games-folder-enumeration-followup-2026-10-26.md`.

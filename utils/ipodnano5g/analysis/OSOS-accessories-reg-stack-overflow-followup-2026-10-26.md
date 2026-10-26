@@ -10,19 +10,20 @@ keine Tests oder Builds.
 ## Ergebnis
 
 Der Parser für `iPod_Control/Device/accessories.reg` wird im frühen
-MainApp-Factory-Pfad aufgerufen. Bei seinem Token `0x44` liest er eine
-dateigesteuerte 32-Bit-Länge und benutzt sie als Leselänge für einen lokalen
-256-Byte-Puffer, ohne den an den Helper übergebenen Grenzwert `0x100`
-anzuwenden. Damit ist ein Stackpufferüberlauf statisch belegt. Er kann das
-lokale Stringobjekt, den gespeicherten LR und bei längerer Eingabe den
-Caller-Stack überschreiben. Die vorgeschaltete VTable-Verwendung und der
-Aufräumpfad lassen sich mit gültigen Objektwerten durchlaufen. Ein vorhandenes
-`pop {r0,r1,r2,r3,r4,pc}`-Gadget ermöglicht danach eine dateikontrollierte
-ROP-Folge in OSOS-Code. Der interne Writer und die echte 69-Byte-Datei stimmen
-beim Binärformat überein; eine Feldlänge von `0x2c4` passt strukturell in
-dieses Format. Die abgezählte Loaderfolge bleibt trotzdem ungetestet: Es gibt
-keinen verifizierten Datei-Open, Read oder Rockbox-Handoff und keinen Lauf auf
-dem Gerät.
+MainApp-Factory-Pfad aufgerufen. Wenn sein Datei-Open gelingt und ein Token
+`0x44` gelesen wird, benutzt er eine dateigesteuerte 32-Bit-Länge als Leselänge
+für einen lokalen 256-Byte-Puffer, ohne den an den Helper übergebenen
+Grenzwert `0x100` anzuwenden. Der Stackpufferüberlauf ist in diesem Parser
+statisch belegt: Er kann das lokale Stringobjekt, den gespeicherten LR und bei
+längerer Eingabe den Caller-Stack überschreiben. Die vorgeschaltete
+VTable-Verwendung und der Aufräumpfad lassen sich mit gültigen Objektwerten
+durchlaufen. Ein vorhandenes `pop {r0,r1,r2,r3,r4,pc}`-Gadget ermöglicht
+danach eine dateikontrollierte ROP-Folge in OSOS-Code. Der interne Writer und
+die echte 69-Byte-Datei stimmen beim Binärformat überein; eine Feldlänge von
+`0x2c4` passt strukturell in dieses Format. Die abgezählte Loaderfolge bleibt
+ungetestet: Datei-Open, Read und Rockbox-Handoff sind nicht verifiziert; ein
+neuer LFN-Befund im generischen FAT-Pfadauflöser kann den Read vorher
+unterbrechen.
 
 ## Kaltstartpfad
 
@@ -111,9 +112,11 @@ Wörter dieses Caller-Stacks, und die NUL folgt dahinter. Der LR kann auf
 dem dateikontrollierten Caller-Stack. Der Stack selbst muss dafür nicht
 ausführbar sein.
 
-Das belegt statisch eine erreichbare Kontrolle des Rücksprungs und eine
-ROP-fähige Register-/Stackfolge in vorhandenem OSOS-Code, falls die Datei mit
-einer langen Eingabe verändert werden kann. Zusätzlich ist bei `0x08030cbc`
+Das belegt statisch, dass ein erfolgreicher langer Datei-Read eine Kontrolle
+des Rücksprungs und eine ROP-fähige Register-/Stackfolge in vorhandenem
+OSOS-Code ermöglichen kann. Der automatische Factory-Aufruf des Parsers ist
+belegt, nicht jedoch ein erfolgreicher Open/Read bis zu diesem Feld. Zusätzlich
+ist bei `0x08030cbc`
 ein indirekter Aufruf `blx r3` mit anschließendem
 `pop {r3,r4,r5,pc}` bestätigt; ein direkter Einstieg an diesem Thumb-Aufruf
 kann die zuvor gesetzten Argumentregister verwenden. Ein Stackzeiger-Gadget bei
@@ -226,9 +229,9 @@ Open-Erfolg und exakte Provider-Rückgabe sind nicht nachgewiesen; die Folge
 prüft ihre Statuswerte nicht. Der Loader liegt mit seinem Ziel `0x09000000` im
 OSOS-Heapbereich und initialisiert zusätzlich BSS ab `0x09100000`. Ob diese
 Bereiche die laufende MainAppTask-Stackbelegung oder benötigte OSOS-Allokationen
-treffen, bleibt offen. Auch die Ausführbarkeit des RAM-Bereichs und der
-CPU-/MMU-Kontext beim ersten `BLX` sind nur aus dem Loader-Startupcode, nicht im
-OSOS-Kontext, abgeleitet.
+treffen, bleibt offen. Die Ausführbarkeit des Zielbereichs ist im
+MMU-Nachtrag unten statisch belegt; der erste `BLX`-Übergang und die
+Weiterverwendung des OSOS-Zustands sind nicht dynamisch verifiziert.
 
 ## Vorhandene Datei auf dem Gerät
 
@@ -312,12 +315,19 @@ Kaltstart neu erzeugt.
   über Apples USB-/OSOS-Dateipfad gezielt ersetzt werden kann, bleibt offen.
   Im aktuellen Rockbox-Modus ist die NAND-Datenpartition durch das Gerät
   schreibgeschützt; nur die flüchtige RAM-Disk ist schreibbar.
+- Der FAT-Open-Callback `FUN_0812a870` und sein Fallback erreichen beide
+  `FUN_081382c2`. Dessen LFN-Pfadauflöser speichert einen Stackpufferzeiger als
+  Verzeichniseintragsindex und kann dadurch den Datei-Open für LFN-Pfade
+  unterbrechen. Die statische Factory-Kette belegt daher nicht, dass die
+  tatsächliche `accessories.reg`-Nutzlast den überlaufenden Read erreicht.
 - Rücksprungkontrolle und ein geeignetes Pop-Gadget sind statisch belegt. Die
   ROP-Folge bis zum Loader-Entry ist abgezählt, aber nicht serialisiert oder
   ausgeführt. Provider-Erfolg, RAM-/Stack-Überlappung und die konkrete
   dynamische Basis des mit `0x20000` Byte angeforderten MainAppTask-Stacks sind
   noch offen.
-- Die RAM-/MMU-Eigenschaften und der Hold-gesperrte Apple-Fallback bleiben
+- Die statische MMU-Analyse bestätigt ausführbaren, privilegiert
+  schreibbaren DRAM bei `0x09000000`. Stack-/Heap-Überschneidung, der
+  tatsächliche Loader-Handoff und der Hold-gesperrte Apple-Fallback bleiben
   ungeprüft.
 - Die Hold-Prüfung und der Fallback zum signierten iPod-OS sind damit nicht
   gelöst.
@@ -450,11 +460,13 @@ werden über `FUN_0818e998` eingetragen. Dessen direkter Wrapper
 `FUN_082154b8` wird im analysierten Code für Slots 4, 5 und 6 benutzt; der
 `rsrc`-Zweig registriert Slot 4, nachdem er bereits Slot 0 abgefragt hat.
 Der weitere direkte Wrapper `FUN_08000a10` kann eine Partition als Dienst
-eintragen. Eine spätere Thumb-Nachprüfung fand als Caller `DeviceDiscovery`,
+eintragen. Eine spätere Thumb-Nachprüfung fand den Caller in `PCFPowerMgr`,
 Fall 0: `0x08010cc4` ruft `FUN_08000a10(r5, 0)` auf. Damit ist ein bedingter
 Registrierungsversuch für Slot 0 statisch belegt. Ob der Task im normalen
-Gerätelauf startet und Fall 0 erreicht, sowie ob Slot 0 dabei tatsächlich auf
-das FAT-Dateisystem zeigt, ist nicht dynamisch bestätigt. Details stehen in
+Gerätelauf startet und Fall 0 vor dem frühen MainApp-Parser erreicht, sowie ob
+Slot 0 dabei tatsächlich auf das FAT-Dateisystem zeigt, ist nicht dynamisch
+bestätigt. Die frühere Zuordnung des Callers zu `DeviceDiscovery` war falsch;
+Details und Task-Datensatz stehen in
 `OSOS-vfs-registration-caller-followup-2026-10-26.md`.
 
 Eine erweiterte Xref-Prüfung aller Aufrufer von `FUN_0818e934` bestätigt diese
@@ -496,3 +508,255 @@ Rohbelege: `/tmp/OSOS_vfs_candidate_open_helper_20261026.txt`,
 `/tmp/OSOS_disk_provider_parser_a_20261026.txt`,
 `/tmp/OSOS_disk_provider_parser_b_20261026.txt` und
 `/tmp/OSOS_disk_provider_parser_c_20261026.txt`.
+
+## Nachtrag: Queue-4-Produzent und mögliche Slot-0-Erreichbarkeit (26.10.2026)
+
+Der zuvor offene Queue-Produzent wurde im ATA-Worker eingegrenzt. `PCFPowerMgr`
+wartet auf Queue 4; `ATAWorkLoopTask` stellt beim Einstieg aus
+`FUN_0833cc58` einen statischen Queue-Datensatz ein. Der Pointer bei
+`0x0833ccd0` ist little-endian `0x08e51d7c`. Der frühe Resetpfad ruft
+`FUN_08005fec` auf und nullt den Bereich `0x086c43a8..0x08e54e4b`, der diesen
+Knoten enthält. Der Sender setzt Ereignisbyte `+0x10` im bedingten Zweig auf
+0; im anderen Zweig schreibt er es vor dem Post nicht. Unter der Annahme,
+dass kein anderer Pfad den Knoten vorher verändert, ist deshalb ein Ereignis
+Typ 0 plausibel.
+
+Der Fall 0 in `PCFPowerMgr` ruft `FUN_08000a10(r5, 0)` auf. `r5` stammt aus
+`FUN_0819ae24(1)`, das für diesen Modus ein Objekt über `FUN_0833a5e0`
+erzeugt. Damit gibt es jetzt einen konkreten statischen Produzenten und einen
+passenden Empfänger für den Slot-0-Registrierungsversuch. Noch offen bleibt,
+ob der ATA-Objektaufbau und beide Tasks im normalen Kaltstart vor dem frühen
+`accessories.reg`-Parser tatsächlich laufen. Für den ATA-Aufbau führen die
+gefundenen direkten Getter-Aufrufe über `FUN_0801f74a` und `FUN_0833b000`;
+deren Verbindung zu einem automatisch vorher ausgeführten Startpfad ist
+weiterhin nicht belegt.
+
+Der Slot-0-Inhalt ist ebenfalls nicht identifiziert. `FUN_0833a5e0` richtet
+einen internen Provider-/Pufferkontext ein, aber die vorliegende statische
+Analyse beweist nicht, dass dieser Provider FAT-Dateien über
+`/.rockbox/bootloader.bin` lesen kann. Es gibt weiterhin keinen Nachweis,
+dass der `accessories.reg`-Überlauf beim Kaltstart erreicht wird, den
+Rücksprung kontrolliert oder beliebigen Code ausführt. Der Loader-Handoff
+bleibt ein bedingter Kandidat.
+
+Rohbelege zum Nachtrag: `utils/ipodnano5g/analysis/OSOS-vfs-registration-caller-followup-2026-10-26.md`,
+`/tmp/OSOS_runtime_service4_queue_senders_20261026.txt`,
+`/tmp/OSOS_queue_node_literal_refs_20261026.txt`,
+`/tmp/OSOS_PCFPowerMgr_event_services_20261026.txt`,
+`/tmp/OSOS_pcf_provider_ctor_20261026.txt`,
+`/tmp/OSOS_pcf_creation_xrefs_20261026.txt` und
+`nano5g/ghidra-logs/OSOS_mmu_preinit_2026-10-25.txt`.
+
+## Korrektur: MBR-Registrierung erzeugt einen FAT-kompatiblen Volumehandler (26.10.2026)
+
+Eine gezielte Nachverfolgung der `FUN_08000a10`-Implementierung präzisiert
+den Slot-0-Kandidaten: Der Runtime-Alias führt zum Bodencode `FUN_0802ec8c`,
+der Sektor 0 liest, im MBR-Fall die erste passende Partition aus den FAT-
+Partitionstypen `0x01`, `0x04`, `0x06`, `0x0b`, `0x0c` und `0x0e` auswählt und
+den MBR-Handler über `FUN_081bcc14` unter Slot 0 einträgt. Der Typ-2-Zweig
+erstellt über `FUN_0826b6e4` den MBR-Volumehandler und initialisiert dessen
+Dateisystemkontext mit `FUN_0813f0ac`. Der frühere Satz, der
+Slot-0-Provider sei nicht als FAT-fähig belegt, ist damit korrigiert: Die
+statische Konstruktion passt grundsätzlich zum Zugriff auf
+`iPod_Control/Device`; einen erfolgreichen Datei-Open belegt sie nicht.
+
+Offen bleiben die Ausführung des ATA-Initialisierers und des Queue-4-Ereignisses
+vor dem MainApp-Parser, die erfolgreiche Laufzeit-Pfadauflösung und die
+Ersetzbarkeit von `accessories.reg`. ROP-Bytes wurden nicht ausgeführt; ein
+Loader-Handoff oder beliebige Codeausführung ist weiterhin nicht verifiziert.
+
+Rohbelege: `/tmp/OSOS_body_FUN_0802fbe8_20261026.txt`,
+`/tmp/OSOS_body_FUN_0802f4c8_20261026.txt`,
+`/tmp/OSOS_body_FUN_0802ec8c_recheck_20261026.txt` und
+`/tmp/OSOS_body_vfs_registry_insert_20261026.txt`.
+
+## Nachtrag: FAT-Volume-VTable und Pfadauflösung (26.10.2026)
+
+Der MBR-Volumehandler aus `FUN_0813f0ac` verwendet im Runtime-Abbild die
+VTable `0x085056b0`. Das wurde durch Abgleich des Body-Literals mit den rohen
+Runtime-Wörtern bestätigt. Der Eintrag bei `+0x14` ist `0x0812a871`, also der
+Thumb-Open-Callback `FUN_0812a870`; `+0x50` ist `0x0812aa07`, der
+Pfad-/Metadaten-Callback `FUN_0812aa06`. Damit ist die zuvor generisch
+vermutete Open-Schnittstelle für genau diesen FAT-Volumehandler identifiziert.
+
+Der normale Open-Callback kopiert und normalisiert den Pfad, prüft ihn mit
+`FUN_081e1694` und ruft anschließend den generischen Dateiöffner
+`FUN_081382c2` auf. Die Prüfung verwirft Komponenten mit mehr als 255 Byte und
+Gesamtpfade ab 260 Byte. Der Pfad `/.rockbox/bootloader.bin` ist 24 Byte lang
+und liegt innerhalb dieser Grenzen. Die Verzeichnisauflösung verwendet
+`FUN_081fdad2`, um den Standardlaufwerksindex aus dem per Task geführten
+VFS-Kontext zu holen, prüft den Index auf 0 bis 3 und beginnt bei einem
+absoluten Pfad am Root dieses Laufwerks. `FUN_081fdb38` zerlegt anschließend
+die Pfadkomponenten in einen 256-Byte-Puffer. Im normalen Open-Pfad liegt
+dieser Auflösung die genannte Längenprüfung voraus; die Splitterfunktion selbst
+hat keine eigene Kapazitätsprüfung.
+
+Das schließt eine Teilfrage des Loader-ROP-Kandidaten: Der MBR-Volumehandler
+hat echte FAT-Open- und Pfadabfrage-Methoden, und der fest verdrahtete
+Rockbox-Pfad passt in die sichtbaren Limits. Es beweist jedoch nicht, dass der
+MainApp-Task beim Parser den passenden Standardlaufwerksindex ausgewählt hat,
+dass Slot 0 zu diesem Zeitpunkt registriert ist, dass die Datei geöffnet und
+vollständig gelesen wird oder dass die Folge den Loader erfolgreich startet.
+Die Ausgabe der Candidate-ROP-Kette prüft Open-/Read-Statuswerte nicht; ein
+Fehler kann daher statt Rockbox einen ungültigen Sprung bzw. Absturz ergeben.
+
+Diese Nachverfolgung fand in den geprüften Pfadhelfern keinen zusätzlichen
+Überlauf: Die auffällige unbeschränkte Komponenten-Kopie wird im normalen
+Open-Callback durch die vorgeschaltete Pfadprüfung eingegrenzt, und die
+konkrete ROP-Zielzeichenkette ist kurz. Das ist ein begrenzter Negativbefund,
+kein vollständiger Audit aller VFS-Aufrufer.
+
+Rohbelege: `/tmp/OSOS_runtime_fat_vfs_callbacks_20261026.txt`,
+`/tmp/OSOS_runtime_fat_open_helpers_20261026.txt`,
+`/tmp/OSOS_runtime_fat_path_resolution_20261026.txt`,
+`/tmp/OSOS_runtime_fat_component_helpers_20261026.txt`,
+`/tmp/OSOS_runtime_fat_mount_path_semantics_20261026.txt`,
+`/tmp/OSOS_runtime_fat_default_service_followup_20261026.txt` und
+`/tmp/OSOS_runtime_vfs_context_accessors_20261026.txt`. Alle Headless-Ghidra-
+Läufe verwendeten `-noanalysis -readOnly`; keine Geräte-, USB-, DFU-, Boot-
+oder Flashoperation wurde ausgeführt.
+
+## Präzisierung: Loader-Stream bis zum FAT-Open-Callback
+
+Die weitere Auflösung zeigt, dass der Kandidat bei registriertem Slot 0 nicht
+beim generischen Fallback stehenbleibt. `FUN_0827ea84` ruft
+`FUN_0819878c` mit Service-ID 0 und Öffnungsmodus 1 auf. `FUN_0819878c`
+erzeugt mit `FUN_082784c8` den Dienstwrapper; `FUN_0827faca` fragt über
+`FUN_08268cda` genau Slot 0 ab, und `FUN_0826384c` prüft, ob dieser Slot
+belegt ist. Anschließend dispatcht `FUN_08224970` für den Öffnungsmodus über
+VTable-Offset `+0x14`. Beim bestätigten MBR-Volumehandler zeigt dieser Eintrag
+auf `FUN_0812a870`, der den Pfad normalisiert, Komponenten- und Gesamtlänge
+prüft und den generischen FAT-Dateiöffner aufruft. Die Registry-Slot-ID des
+Loader-Streams und die FAT-Open-Methode sind damit statisch verbunden.
+
+Der darunterliegende Resolver nimmt bei einem Pfad ohne Laufwerkspräfix den
+Standardindex aus dem aktuellen Taskkontext. `FUN_08229b84` nullt einen neu
+angelegten 0x38-Byte-Kontexteintrag; im untersuchten Abbild liest
+`FUN_08158f74` dessen Feld `+8`, aber unter den direkten Aufrufern von
+`FUN_08229b84` wurde kein Schreiber dieses Felds gefunden. Das spricht für
+Standardindex 0 im unveränderten Kontext, schließt indirekte oder externe
+Schreiber jedoch nicht aus. Ein erfolgreiches Öffnen beziehungsweise Lesen
+auf dem Gerät bleibt unbewiesen.
+
+Die dokumentierte Installation auf der Nutzdaten-FAT enthält
+`/.rockbox/rockbox.ipod` und `/.rockbox/n5g-ramdisk.img`; `bootloader.bin`
+wurde im bisherigen Workflow vom PC nach SDRAM übertragen. Die lokale Datei
+`build-n5g-blramdisk/bootloader.bin` ist aktuell 69.504 Byte groß und hat
+SHA-256 `09b2dc3ff4940855b175508ce817c5f913798f3d7b2ba7669edef3427e224d03`.
+Für den hier abgezählten Dateiladepfad müsste diese Datei erst zusätzlich als
+`/.rockbox/bootloader.bin` auf der Nutzdaten-FAT liegen. Das wurde hier nicht
+auf das Gerät kopiert.
+
+Rohbelege: `/tmp/OSOS_runtime_loader_stream_path_followup_20261026.txt`,
+`/tmp/OSOS_runtime_loader_stream_slot0_followup_20261026.txt`,
+`/tmp/OSOS_runtime_slot_registry_dispatch_20261026.txt`,
+`/tmp/OSOS_runtime_fat_default_service_followup_20261026.txt`,
+`/tmp/OSOS_runtime_vfs_context_accessors_20261026.txt`,
+`/tmp/OSOS_runtime_fat_vfs_callbacks_20261026.txt` und
+`utils/ipodnano5g/README.md`. Ghidra lief mit `-readOnly -noanalysis`; die
+lokale Binärdatei wurde nur mit `stat` und `sha256sum` gelesen.
+
+## Nachtrag: Erfolgreicher Overflow-Trigger belegt denselben VFS-Slot (26.10.2026)
+
+Die Slot-0-Abhängigkeit des ROP-Open-Aufrufs lässt sich mit dem Eingabepfad
+selbst verknüpfen. Der verwundbare Parser `FUN_0802c3c4` öffnet
+`iPod_Control/Device/accessories.reg` bei `0x0802c3f8` über
+`FUN_082721f0(..., mode=0)`. Dieser Wrapper übergibt an `FUN_0827ea84` denselben
+Service-Slot `0` und denselben internen Open-Modus `1` wie der abgezählte
+ROP-Aufruf für `/.rockbox/bootloader.bin`. Der Parser prüft den Open-Status und
+kehrt bei einem Fehler zurück, bevor er Token `0x44` lesen kann. Eine
+tatsächlich ausgelöste Überlänge setzt daher voraus, dass Slot 0 den
+Registry-Stream erfolgreich geöffnet hat.
+
+Der Registry-Stream wird am Parserende geschlossen, der VFS-Provider selbst
+wird dabei nicht aus Slot 0 entfernt. Der ROP-Kandidat öffnet den Loader direkt
+nach Parserrückkehr im selben `MainAppTask`-Kontext und verwendet denselben
+Standardlaufwerkskontext. Damit ist „Slot 0 war beim Overflow leer“ keine
+zusätzliche unabhängige Bedingung: Bei erfolgreichem Overflow-Trigger war der
+für beide Öffnungen verwendete Dienst bereits aktiv. Statisch offen bleibt,
+ob der automatische Kaltstartaufruf den Registry-Open tatsächlich erfolgreich
+erreicht und ob ein anderer Task den Provider genau in diesem kurzen Fenster
+entfernen kann. Der erfolgreiche Loader-Open/Read, der Rücksprung in den
+geladenen Code und ein Gerätelauf sind weiterhin nicht bestätigt.
+
+Rohbelege: `/tmp/OSOS_accessories_parser_same_service_20261026.txt`,
+`/tmp/OSOS_vfs_candidate_open_helper_20261026.txt`,
+`/tmp/OSOS_vfs_stream_factory_20261026.txt` und
+`/tmp/OSOS_accessories_open_path_helpers_20261026.txt`.
+
+## Nachtrag: Loader-Ziel liegt in ausführbarer DRAM-Abbildung (26.10.2026)
+
+Die zuvor offene XN-Frage ließ sich statisch auflösen. Die Bootprefix-Startkette
+ruft `FUN_08005d3c` bei `0x080050c8` auf. Dessen Aufruf bei `0x08005da8` reicht
+dem Abschnittsmapper die Werte `Start=0x08000000`, `Ende=0x0bffffff`,
+`Physisch=0x08000000` und Attribute `0x00007c0e` weiter. Der indirekte Stub
+`0x08003970` zeigt im Runtime-Abbild auf Thumb-Code bei `0x080e3e84`. Dieser
+Mapper nimmt 1-MiB-Abschnittsindizes, berechnet Einträge ab der Seitentabelle
+`0x086dc000` und schreibt für den DRAM-Bereich physische Adressen plus die
+übergebenen Attribute. Damit umfasst die Identitätsabbildung 64 Abschnitte
+einschließlich `0x09000000`.
+
+Die Initialisierung setzt außerdem SCTLR.XP (Bit 23) über
+`FUN_08004900` (`orr #0x00800000`) und aktiviert anschließend MMU und
+Seitentabelle. Im ARMv6-Abschnittsdeskriptor `0x7c0e` ist XN (Bit 4) null;
+laut ARM1176JZF-S-TRM bedeutet ein gelöschtes XN-Bit, dass Instruktionen aus
+der Region ausgeführt werden dürfen. AP[1:0]=3 und APX=0 lassen den Bereich
+auch für privilegierte Tasks les- und schreibbar. Der SVC-Taskkontext ist im
+separaten Bericht belegt. Der read-only CP15-Scan findet im untersuchten
+Abbild keinen weiteren Schreibzugriff auf TTBR nach dieser Initialisierung.
+
+Der vorhandene Rockbox-Loader bereinigt vor dem Hand-off D-Cache und
+Write-Buffer und verwirft stale I-Cache-/Prefetch-Zustand; sein Startcode
+schaltet danach MMU und Caches ab. Die statischen Quellstellen stehen in
+`firmware/target/arm/s5l8702/crt0.S` (N5G-Zweig ab `start_loc`). Damit ist eine
+fehlende XN-Ausführbarkeit oder ein ungeklärter Cache-Flush kein sichtbarer
+Blocker für den Sprung nach `0x09000000`.
+
+Grenze: `0x09000000` liegt in der von OSOS verwalteten Heapregion. Die
+MainAppTask-Stackbasis und die zur Laufzeit betroffenen Heapobjekte sind im
+statischen Abbild nicht rekonstruierbar. Ein Lesen des Loaders dorthin könnte
+also laufende Daten oder den aktiven Stack überschreiben; der geplante
+Übergang ist nur als endgültiger Einweg-Handoff plausibel. Weder der
+Datei-Read noch der Sprung wurden ausgeführt.
+
+Rohbelege: `/tmp/OSOS_runtime_mmu_mapper_clarified_20261026.txt`,
+`/tmp/OSOS_mmu_init_2026-10-25.txt`,
+`/tmp/OSOS_cp15_scan_2026-10-25.txt`,
+`utils/ipodnano5g/analysis/OSOS-task-context-privilege-handoff-2026-10-25.md`
+und `firmware/target/arm/s5l8702/crt0.S`. Architekturreferenz:
+[ARM1176JZF-S Technical Reference Manual, Abschnitte 3.2.1 und 6.5.3](https://documentation-service.arm.com/static/5e8e294efd977155116a6ca3).
+Alle Projektdateien wurden nur gelesen; keine Geräte-, USB-, DFU-, Boot- oder
+Flashaktion.
+
+## Nachtrag: aktuelle VFAT-LFN-Namen und Open-Erreichbarkeit (26.10.2026)
+
+Das angeschlossene Gerät wurde ohne DFU als `05ac:1265`-USB-Massenspeicher
+erkannt. `/dev/sda1` war read-only unter `/tmp/ipod-sebipod-readonly`
+eingehängt. Der Linux-ioctl `VFAT_IOCTL_READDIR_BOTH` bestätigte im aktuellen
+Volume die Zuordnungen `IPOD_C~1` → `iPod_Control`, `DEVICE` → `Device` und
+`ACCESS~1.REG` → `accessories.reg`. Die feste OSOS-Pfadzeichenkette verwendet
+die Langnamen. Ihr erster Bestandteil trifft daher bereits im Volume-Root auf
+einen VFAT-LFN-Eintrag; auch die spätere Datei ist ein LFN-Eintrag.
+
+Zusammen mit der statischen LFN-Datenflussanalyse ist das ein konkreter Grund,
+warum der automatische Parseraufruf nicht als erfolgreicher Datei-Open gelten
+darf: Beim Folge-Kurznamen wird der Stackzeiger als Eintragsindex verwendet.
+Wenn der erzeugte Langname dadurch nicht übereinstimmt, nimmt der Resolver den
+8.3-Fallback `IPOD_C~1`, der ebenfalls nicht der angefragte Langname ist. Ein
+Data Abort oder ein fehlender Match ist wahrscheinlich; ein erfolgreicher
+Open ist ohne OSOS-Laufzeitbeobachtung nicht bestätigt. Der
+USB-Massenspeichermodus liest die FAT vom Host, führt aber den OSOS-Datei-Open-
+Callback nicht aus. Es wurde kein Neustart ausgelöst.
+
+Im aktuellen `.rockbox`-Verzeichnis liegen `rockbox.ipod` und
+`n5g-ramdisk.img`; `/.rockbox/bootloader.bin`, das die offline abgezählte
+ROP-Folge derzeit öffnet, ist nicht vorhanden. Auch nach einer möglichen
+Kontrollflussübernahme müsste der Payload-Pfad daher angepasst oder die Datei
+später verfügbar gemacht werden. Es gab keine Schreiboperation.
+
+Rohbelege: `/tmp/OSOS_live_vfat_dir_ioctl_20261026.txt`,
+`/tmp/ipod_vfat_dir_ioctl.py`, `lsusb`, `fdisk -l /dev/sda` und der statische
+Nachweis in `OSOS-FAT-LFN-index-taint-audit-2026-10-26.md`. Der MBR des
+aktuellen Volumes meldet 4096-Byte-Sektoren, Start-LBA 63, Länge 3.901.312 und
+3.901.376 Gerätesektoren insgesamt. Dieser Ist-Zustand testet keine präparierte
+LBA-Kette.

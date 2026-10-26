@@ -218,3 +218,60 @@ Rohbelege: `/tmp/OSOS_mainapp_bootstrap_verification_20261026.txt`,
 `/tmp/OSOS_mainapp_plus_a8_and_related_20261026.txt`. Ghidra lief mit
 `-noanalysis -readOnly` auf der Offline-Kopie; keine Geräte-, USB-, DFU-, Boot-
 oder Flashaktion.
+
+## Nachtrag: dateinamensabhängiger Manifest-Pfadaufbau (26.10.2026)
+
+Der Kaltstart-Enumerator `FUN_081b343c` übernimmt Namen passender
+Games-Unterordner aus dem Verzeichnisiterator und baut daraus Pfadobjekte für
+`Manifest.plist`. Die zunächst auffälligen Stackobjekte sind String- und
+Iteratorobjekte, keine festen C-Zielpuffer für den kompletten Pfad. Der
+Formatierer `FUN_08196c00` verwendet einen 512-Byte-Stackpuffer und ruft
+`FUN_08273378(dest, 0x200, format, args)` auf. Dieser begrenzt die Ausgabe auf
+`0x1ff` Zeichen, bevor er den NUL-Terminator setzt. Der Ausgabe-Callback
+`FUN_081ae28e` prüft den Zähler gegen diese Kapazität, bevor er ein Zeichen
+schreibt. Der Formatstring wird aus statischen Daten gewählt; der
+Verzeichnisname ist nur ein `%s`-Wert und kann keine Formatdirektiven
+einschleusen.
+
+Damit ergibt sich aus einem langen, datenträgerkontrollierten Unterordnernamen
+kein Überlauf des 512-Byte-Stackpuffers. Der dynamische String wird über
+`FUN_081936ec` in ein Stringobjekt kopiert. Das schließt Fehler in der
+separaten XML-Bibliothek oder im FAT-LFN-Iterator nicht aus, bestätigt aber
+keinen neuen RCE-Pfad im automatischen Manifest-Pfadaufbau. Der reale aktuelle
+Volume-Root enthält kein `iPod_Control/games_RO`-Verzeichnis; dieser Befund
+belegt nur den Ist-Zustand und nicht die Schreibbarkeit eines solchen Ordners.
+
+Read-only-Ghidra-Ausgabe: `/tmp/OSOS_games_manifest_path_builder_followup_20261026.txt`.
+Das bestehende Projekt wurde mit `-noanalysis -readOnly` abgefragt.
+
+## Nachtrag: Materialisierung der Manifestfelder (26.10.2026)
+
+Die automatische Manifestverarbeitung wurde vom XML-Ergebnis bis zu den
+Katalogfeldern weiter geprüft. `FUN_08055f50` erhält den Feldkatalog aus
+`FUN_08259b78`: Die Funktion wählt anhand der Hardwarekennung eine statische
+Tabelle mit drei oder vier Einträgen. `FUN_08259bac` gleicht diese festen
+Einträge mit den XML-Schlüsseln ab; die äußere Schleife läuft über diese
+hardwareabhängige Anzahl und verwendet sie nicht als dateigesteuerten Index.
+
+Die passenden Werte werden in Stringobjekte kopiert. Die Listen für
+Manifestfelder und Katalogeinträge werden als dynamische 16-Byte- bzw.
+40-Byte-Elemente geführt. `FUN_080597b2` reserviert die 16-Byte-Liste anhand
+der geparsten Elementzahl und kopiert sie mit `FUN_082528c0`; der spätere
+Merge `FUN_082570de` aktualisiert die gleiche dynamische Vektorstruktur.
+`FUN_08255bc2` durchsucht die 40-Byte-Einträge vom Anfang bis zum gespeicherten
+Endzeiger. In diesem Materialisierungspfad fand sich kein festes Stackziel,
+das mit einem Manifestwert beschrieben wird, und kein dateikontrollierter
+Schleifenindex in die hardwarefeste Feldtabelle.
+
+Das schließt Fehler in libxml2, ungewöhnliche Parserzustände oder
+Ressourcenerschöpfung nicht aus. Es bestätigt in den geprüften
+Manifest-Callbacks aber keinen neuen festen Pufferüberlauf oder
+Kontrollflussfehler. Die automatische Erreichbarkeit des Parsers bleibt
+statisch belegt; ein Geräte-/Parserlauf wurde nicht ausgeführt.
+
+Rohbelege: `/tmp/OSOS_games_vfs_method_bridge_20261026.txt`,
+`/tmp/OSOS_games_manifest_startup_parser_20261026.txt`,
+`/tmp/OSOS_games_manifest_parser_helpers_20261026.txt`,
+`/tmp/OSOS_games_manifest_alloc_followup_20261026.txt` und
+`/tmp/OSOS_games_provider_boundary_20261026.txt`. Ghidra-Abfragen liefen
+read-only.
