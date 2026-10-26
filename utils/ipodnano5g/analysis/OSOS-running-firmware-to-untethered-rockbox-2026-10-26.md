@@ -59,6 +59,23 @@ Kontrollflussübernahme:
   optionale `Manifest.plist.p7b`-Prüfung umgehen. `.sinf`- und
   Metadatenverarbeitung folgen weiter; ein beliebiges ausführbares eApp oder
   ein automatischer Spielstart beim Einschalten ist nicht nachgewiesen.
+- **Games-Katalog beim Kaltstart:** Der MainApp-Lifecycle erreicht
+  `TEAppShell::FUN_08028254`. Dessen Provider-Callbacks bauen für passende
+  Unterordner in `iPod_Control/games_RO/` bzw. `Resources/Games/games_RO/`
+  einen `Manifest.plist`-Pfad und parsen die Metadaten automatisch. Dieser
+  Katalogpfad übergibt kein `.p7b`-Sidecar an den optionalen Prüfschritt und
+  startet kein eApp. Die gelesene Datei ist auf `0x20000` Byte begrenzt; in den
+  geprüften Parser-Wrappern ist kein konkreter Speicherfehler gefunden. Ein
+  Katalogarray wird mit `Kapazität * 0x10` Byte dynamisch alloziert; eine
+  Überlaufprüfung dieser Multiplikation ist nicht sichtbar, aber aus einer
+  normalen, durch die Dateigröße begrenzten XML-Liste ergibt sich kein
+  erreichbarer Wrap. Entity-Amplifikation und die genaue libxml2-Version/
+  Defaults bleiben ungeprüft. Auch die Beschreibbarkeit des N5G-Datenpfads auf
+  diesem Gerät ist offen. Eine Community-Anleitung beschreibt manuelles
+  Kopieren von Quizdaten für Nanos nach
+  `iPod_Control/Games_RO/11004/UserTrivia/Packs/`; sie belegt nicht, dass das
+  automatisch geparste Manifest ersetzt werden kann
+  ([Anleitung](https://github.com/Olsro/ipodclickwheelgamespreservationproject/blob/main/iQuiz/README.md)).
 - **TunerSettings:** Ein persistenter Leser ist über das MainApp-Setup
   erreichbar, verarbeitet im geprüften Pfad aber feste typisierte Felder.
   Kein Speicherfehler oder RCE ist belegt.
@@ -87,21 +104,25 @@ Quellen im Arbeitsbaum: `OSOS-runtime-exploit-boot-feasibility-2026-10-25.md`,
 ## Schlussfolgerung und nächste Schritte
 
 Der laufende OSOS-Pfad ist als Konzept ein realistischerer Weg als der Versuch,
-einen privaten Apple-Schlüssel zu erraten. Im geprüften Material wurde jedoch
-noch keine Lücke gefunden, die sich bereits als wiederholbarer untethered
-Start verwenden lässt. Die zwei stärksten Speicherfehlerkandidaten (Notes und
-ArtworkDB) brauchen weiterhin sowohl einen belegten automatischen
-Kaltstart-Trigger als auch eine belastbare Kontrollflussübernahme.
+einen privaten Apple-Schlüssel zu erraten. Der Games-Katalog liefert jetzt
+einen belegten automatischen Manifest-Metadatenparser beim Kaltstart, aber
+noch keine ausnutzbare Speicherfehlerstelle oder Kontrollflussübernahme. Die
+separaten Notes- und ArtworkDB-Speicherfehlerkandidaten brauchen weiterhin
+sowohl einen belegten automatischen Kaltstart-Trigger als auch eine belastbare
+Kontrollflussübernahme.
 
 Weiterhin offen sind:
 
-1. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
+1. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
+   erreichten Games-Manifestparser sowie die Schreibbarkeit der persistenten
+   N5G-`games_RO`-Quelle;
+2. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
    ArtworkDB-Parser beim normalen Kaltstart erreichen könnten;
-2. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
+3. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
    ArtworkDB-Heap-Overflows;
-3. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
+4. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
    durchführen kann, ohne den Hold-gesperrten Apple-Pfad zu stören;
-4. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
+5. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
    kein Beleg dafür, dass Apple-OSOS keine Flashoperation ausführen kann; ein
    solcher Schreibpfad würde außerdem die Signaturprüfung beim nächsten Start
    nicht automatisch umgehen.
