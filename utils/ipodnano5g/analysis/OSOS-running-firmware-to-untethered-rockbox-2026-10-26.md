@@ -107,3 +107,38 @@ Weiterhin offen sind:
    nicht automatisch umgehen.
 
 Das Gerät blieb unangetastet. Es wurden keine Tests oder Builds ausgeführt.
+
+## Nachtrag: MainApp-Media-Setup hängt an bedingtem Event (26.10.2026)
+
+Der zuvor offene Aufruf des MainApp-Setups `FUN_08086ce8` wurde eine Ebene
+weiter zurückverfolgt. Der direkte Aufrufer ist `FUN_08079fb4`; diese Routine
+wird im gespeicherten OSOS-Code nur aus dem Eventdispatcher `FUN_08066fb4`
+aufgerufen. Der Dispatcher akzeptiert hier Eventtyp `0x12` und verlangt, dass
+der Nutzdatenzeiger aus Feld `0xd00` genau auf `MainApp + 0x818` zeigt.
+
+Vor dem Setup prüft `FUN_08079fb4` über `FUN_08280452` das Byte
+`MainApp + 0x8e1`. Bei Wert `0x2c` (ASCII-Komma) setzt der Helper ein
+separates Statusbyte und die Setup-Routine wird übersprungen. Bei anderen
+Werten kann `FUN_08086ce8` folgen, sofern der zusätzliche globale
+Zustandstest ebenfalls den Setup-Zweig auswählt. `FUN_08086ce8` führt
+anschließend MainApp-/Device-Service-Initialisierung aus, darunter
+`FUN_0828bd04`; dieser Aufruf allein belegt keinen automatischen Lauf eines
+verwundbaren Dateiparsers.
+
+Für `FUN_08066fb4` gibt es im Ghidra-Projekt keinen direkten Code-Xref. Ein
+Rohscan des Full-Body-Binaries fand weder das absolute noch das 24-/32-Bit-
+relative Funktionsoffset für ARM- oder Thumb-Einstieg als gespeicherten
+Funktionszeiger. Damit ist die Eventquelle bzw. dynamische Registrierung
+weiterhin unbekannt. Die MainApp startet zwar ihren Eventloop, aber in den
+gespeicherten Daten ist kein Kaltstart-Sender für genau dieses Event
+nachgewiesen. Dies ist eine bedingte Runtime-Spur und kein bestätigter
+Kaltstart-Trigger oder Exploit.
+
+Rohbelege: `/tmp/OSOS_event_dispatch_08066fb4_20261026.txt`,
+`/tmp/OSOS_mainapp_setup_dispatch_20261026.txt`,
+`/tmp/OSOS_event_object_helpers_20261026.txt` und
+`/tmp/OSOS_mainapp_setup_refs_20261026.txt`. Ghidra wurde mit
+`-readOnly -noanalysis` auf dem Full-Body-Abbild verwendet; keine
+Geräte-/USB-/DFU-/Boot-/Flashaktion. Der Rohscan auf absolute und
+base-relative Funktionszeiger ist in
+`/tmp/OSOS_mainapp_event_pointer_scan_20261026.txt` festgehalten.
