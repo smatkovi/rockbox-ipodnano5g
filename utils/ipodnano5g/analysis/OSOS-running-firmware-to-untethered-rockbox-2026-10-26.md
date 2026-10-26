@@ -384,3 +384,40 @@ Rohbelege: `/tmp/OSOS_partition_mount_depth_20261026.txt`,
 die letzte Startup-Registrierung und einen OSOS-erreichbaren Schreib- oder
 Updatepfad zu `APPLE_MDFW` zu klären sowie die tatsächlichen
 Lower-I/O-Grenzprüfungen des Mountwrappers zu verfolgen.
+
+## Nachtrag: Mountwrapper bis zur virtuellen Block-I/O-Schnittstelle (26.10.2026)
+
+Die offene Lower-I/O-Spur wurde im read-only-Ghidra-Projekt weiterverfolgt.
+`FUN_08243734` bezieht über `FUN_081bcbb0` den globalen Storage-Provider und
+ruft `FUN_081bcc14` auf. Der Wrapper prüft dort den Volume-Slot auf `< 7`;
+`FUN_0826b6e4` übernimmt danach Provider sowie Partitionsparameter in das
+Volumeobjekt und richtet den Stream-/Cache-Unterbau ein. Die Blockgröße wird
+über `FUN_08280b68` abgefragt: bei fehlendem Provider liefert die Funktion
+`0x200`, andernfalls springt sie indirekt über den Provider-VTable-Slot
+`+0x2c`.
+
+`FUN_081bd3b0`, `FUN_081c319c` und `FUN_0828de8c` erzeugen bzw. richten den
+32-Byte-ausgerichteten Streampuffer ein. Die geprüften Initialisierer
+`FUN_0813f320` und `FUN_0813f0ac` richten weitere Objekt-/Cachezustände ein.
+In diesen sichtbaren Funktionen ist keine Prüfung des angefragten Sektors
+gegen `Partitionsstart + Partitionslänge` erkennbar; sie enthalten aber auch
+nicht die tatsächlich ausgeführte Leseoperation. Der anschließende Zugriff
+läuft über indirekte Provider-/Objektmethoden. Deren konkrete Implementierung
+und damit eine mögliche Begrenzungsprüfung ließ sich im analysierten OSOS-Body
+nicht auflösen.
+
+Das schließt die frühere Lücke nicht zu einem bestätigten Out-of-range-Read:
+Es bleibt offen, ob der konkrete Storage-Provider Anfragen außerhalb des
+Volumes oder Geräts ablehnt. Selbst ein ungültiger Sektorzugriff wäre für sich
+noch kein Speicherfehler oder kontrollierte Codeausführung. Der Mountpfad ist
+damit als nicht abgeschlossener Kandidat dokumentiert; die nächste sinnvolle
+Offline-Prüfung ist die Zuordnung des virtuellen Provider-Slots `+0x2c` zur
+konkreten Laufzeitimplementierung und deren Caller.
+
+Rohbelege: `/tmp/OSOS_volume_io_chain_20261026.txt`,
+`/tmp/OSOS_lower_io_dispatch_20261026.txt`,
+`/tmp/OSOS_volume_stream_helpers_20261026.txt`,
+`/tmp/OSOS_device_factory_20261026.txt` und
+`/tmp/OSOS_volume_provider_refs_console_20261026.log`. Alle Ghidra-Läufe
+öffneten die Projektkopie mit `-readOnly -noanalysis`; es gab keinen Zugriff
+auf iPod, USB, DFU oder Flash.
