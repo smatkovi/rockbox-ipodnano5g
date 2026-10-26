@@ -185,10 +185,11 @@ vier Byte großen Parserziele liegen bei `sp+0` und `sp+4`; sie überlagern nur
 die gesicherten Eingangsregister `r2` und `r3`. Der gesicherte Rücksprungwert
 liegt bei `sp+0x14` und wird von keinem der beiden Token-Reads beschrieben.
 Der Reader erhält für diese Schritte stets die feste Länge 4. Ein
-verschachtelter Containerstream kann daher mit einer Datei deutlich unter
-24 KiB ungefähr 5.4 Tausend Ebenen erzeugen und sich der angeforderten
-`0x20000`-Byte-MainAppTask-Stackgrenze nähern. Die genaue Tiefe hängt vom
-bereits belegten Stack und den temporären Frames der Reader-Aufrufe ab.
+verschachtelter Containerstream benötigt im idealisierten Format ungefähr
+8 Byte pro Ebene (Start- und Endtoken). Rund 5.461 Ebenen entsprechen damit
+etwa 43,7 KiB und nähern sich der angeforderten
+`0x20000`-Byte-MainAppTask-Stackgrenze. Die reale Schwelle hängt vom bereits
+belegten Stack und den temporären Frames der Reader-Aufrufe ab.
 
 Im gleichen Skip-Pfad wird bei einem unbekannten Elementtyp mit Oberbyte 0
 die gelesene Länge ungeprüft um 4 erhöht (`local_14 += 4`). Ein Wert ab
@@ -202,15 +203,27 @@ Seek bekommt nur den umgebrochenen kleinen Wert. Dass Payloadbytes als Tags
 weitergeparst werden, ist kein zusätzlicher Kontrollflussprimitive, da
 dieselben Tags auch direkt im äußeren Stream stehen können.
 
-Damit ist ein automatischer Stackerschöpfungs-/Absturzpfad plausibel. Eine
-direkte Übernahme des gespeicherten PC/LR aus Tokenbytes ist im Parserkörper
-nicht vorhanden. Bei Überschreiten des Stackblocks könnten Pushes zwar
-angrenzende Speicherbereiche treffen; Guard-Verhalten, Stackbasis und dortige
-Allokationen liegen jedoch hinter dem externen Taskdienst und sind nicht
-aufgelöst. Das belegt keine kontrollierte Speicherkorruption und keine RCE.
-Der normale MainApp-Aufruf des Importers bleibt statisch belegt; ein echtes
+Damit ist ein automatischer Stackerschöpfungspfad belegt. Eine direkte
+Übernahme des gespeicherten PC/LR aus Tokenbytes ist im Parserkörper nicht
+vorhanden. Ein isolierter QEMU-Test mit den unveränderten Parserbytes zeigt
+bei 5.462 Ebenen, dass der Stack im gewählten 128-KiB-Modell um 24 Byte
+unterläuft und ein parserabhängiges Wort in den synthetisch direkt unter den
+Stack gelegten Heap-Header schreibt. Das ist noch kein Gerätetrace: Die
+tatsächliche Stackbasis, ein möglicher Guard und die reale Nachbarallokation
+liegen hinter dem externen Taskdienst und sind nicht aufgelöst. Der normale
+MainApp-Aufruf des Importers bleibt statisch belegt; ein echtes
 `Device/PlayCounts`-Beispiel und der hostseitige Schreibpfad für genau diese
 Datei fehlen weiterhin.
+
+Der Stack wird über `FUN_081a5b80(0x20000)` aus demselben Heap angefordert;
+der generische Fallback-Allocator rundet die Anforderung auf `0x20008` und gibt
+den Blockanfang plus acht Byte zurück. Das erste Wort vor dem Stack ist somit
+Allocator-Größenmetadatum. `FUN_0802502a` liest dieses Wort beim Freigeben
+erneut und verwendet es zur Berechnung des nächsten Blocks. Der MainApp-Task
+läuft nach `FUN_080202d8` jedoch in `FUN_08025154` weiter; ein regulärer
+Freigabeaufruf des noch laufenden Taskstacks nach erfolgreichem Import ist
+nicht belegt. Auch eine direkte Nachbarschaft des anschließend angelegten
+0x44-Byte-Taskobjekts ist wegen möglicher anderer freier Heapblöcke offen.
 
 Rohbelege für diesen Nachtrag: `/tmp/OSOS_function_0826dca0_20261026.txt`,
 `/tmp/OSOS_playcounts_seek_method_20261026.txt`,
@@ -232,6 +245,6 @@ Rohbelege: `/tmp/OSOS_TAppShell_method_08028254_20261026.txt`,
 `/tmp/OSOS_task_create_MainAppTask_helper_20261026.txt`,
 `/tmp/OSOS_boot_mainapp_task_setup_20261026.txt`,
 `/tmp/OSOS_playcounts_callers_20261026.txt` und
-`/tmp/OSOS_device_persistent_file_handlers_20261026.txt`. Alle Ghidra-Läufe
-waren `-noanalysis -readOnly`; keine Geräte-, USB-, DFU-, Boot- oder
-Flashaktion.
+`/tmp/OSOS_device_persistent_file_handlers_20261026.txt`. Zum damaligen Stand
+waren alle Ghidra-Läufe `-noanalysis -readOnly`; es gab keine Geräte-, USB-,
+DFU-, Boot- oder Flashaktion.

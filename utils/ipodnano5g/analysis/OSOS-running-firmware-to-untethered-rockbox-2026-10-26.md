@@ -108,11 +108,16 @@ Kontrollflussübernahme:
   zum passenden `0xc0`-Endtag übersprungen; ein Rekursionstiefenzähler ist im
   Code nicht sichtbar. Pro Ebene werden 24 Byte Register gesichert. Der
   MainApp-Task wird mit einem Stackgrößenargument `0x20000` eingerichtet,
-  sodass ein Containerstream von ungefähr 20–24 KiB die Stackgrenze erreichen
-  könnte. Das belegt keinen kontrollierten Rücksprung: Token-Reads schreiben
-  in die gespeicherten Argumentregister bei `sp` und `sp+4`, während der
-  gespeicherte LR bei `sp+0x14` liegt. Guard, dynamische Stackbasis und
-  Nachbarallokationen des externen Taskdienstes sind nicht aufgelöst. Der
+  sodass ein verschachtelter Stream im idealisierten Modell ungefähr 43,7 KiB
+  Tokenbytes für rund 5.461 Ebenen benötigt. Der Stack ist beim Parseraufruf
+  bereits teilweise belegt; die reale Auslöseschwelle kann daher niedriger
+  liegen. Ein QEMU-Test mit den unveränderten Parserbytes erreicht bei 5.462
+  Ebenen die Stackgrenze und schreibt in den synthetisch direkt darunter
+  gelegten Allocator-Header. Das belegt keinen kontrollierten Rücksprung:
+  Token-Reads schreiben in die gespeicherten Argumentregister bei `sp` und
+  `sp+4`, während der gespeicherte LR bei `sp+0x14` liegt. Guard, dynamische
+  Stackbasis und tatsächliche Nachbarallokationen des externen Taskdienstes
+  sind nicht aufgelöst. Der
   Skip-Pfad addiert außerdem ungeprüft vier zur Länge eines unbekannten
   Elementtyps 0; bei `0xfffffffc` oder höher kann diese Addition auf `0..3`
   umspringen und die Folgedaten als Tokens sichtbar machen. Das ist eine
@@ -243,7 +248,9 @@ Weiterhin offen sind:
    solcher Schreibpfad würde außerdem die Signaturprüfung beim nächsten Start
    nicht automatisch umgehen.
 
-Das Gerät blieb unangetastet. Es wurden keine Tests oder Builds ausgeführt.
+Zum Stand dieses vorherigen Analyseabschnitts blieb das Gerät unangetastet;
+Tests und Builds kamen erst in späteren, ausdrücklich dokumentierten
+Nachträgen hinzu.
 
 ## Nachtrag: MainApp-Media-Setup hängt an bedingtem Event (26.10.2026)
 
@@ -1048,3 +1055,28 @@ dynamische Manifest-/Kataloglisten; in dieser Materialisierung wurde kein
 fester Stackpufferfehler gefunden. Das ist ein negativer Befund für diesen
 Callbackpfad, keine Aussage über Fehler im eingebetteten XML-Kern. Siehe
 `OSOS-games-folder-enumeration-followup-2026-10-26.md`.
+
+## Nachtrag: erneute USB- und Timer-Dateiabfrage (26.10.2026)
+
+Die erneute, rein lesende Abfrage sieht `05ac:1265` und `/dev/sda1` als
+14,9-GB-VFAT-Massenspeicher. Das Host-Dateisystem ist mit `ro,nosuid,nodev,noexec`
+eingehängt. Darauf liegen sowohl `.rockbox` als auch `iPod_Control`; in
+`iPod_Control/Device` sind unter anderem `SysInfo`, `accessories.reg` und die
+8 Byte große Datei `timer` vorhanden. USB-ID und Massenspeicherinhalt beweisen
+nicht, ob die sichtbare Oberfläche gerade Apples iPod-Software oder Rockbox
+ist.
+
+Der aktuelle Inhalt von `timer` lautet bytegenau
+`13 00 00 40 13 00 00 c0`: ein Start- und Endtoken mit ID `0x13`, ohne
+verschachtelten Inhalt. `FUN_0813ea44` behandelt ID `0x13` selbst; diese Datei
+ruft den rekursiven Skip-Pfad `FUN_0826dca0` daher nicht auf. Die Timer-Spur
+bleibt ein statischer, bedingter Stackerschöpfungskandidat: der einzige
+Modus-0-Caller ist weiterhin das nicht als Funktion zugeordnete Fragment ab
+`0x0802ab8a`; sein Methodenpointer steht in einer Datentabelle bei
+`0x084fef8c`, aber es gibt keinen belegten Code-Xref zur Tabellenbasis oder
+einen automatischen Kaltstarttrigger. Die read-only-Abfrage hat weder Datei
+noch Gerät verändert oder neu gestartet.
+
+Zusätzliche lokale Belege: `/tmp/OSOS_codewindow_0802ab_20261026.txt` und
+`/tmp/OSOS_timer_callers_deep_20261026.txt`; der aktuelle `timer`-Inhalt wurde
+direkt vom nur lesbar eingehängten Gerät gelesen.
