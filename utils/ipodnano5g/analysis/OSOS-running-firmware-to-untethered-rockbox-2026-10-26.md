@@ -234,3 +234,44 @@ Rohbelege: `/tmp/OSOS_accessory_tags_reader_20261026.txt`,
 `/tmp/OSOS_accessory_tags_caller_20261026.txt` und
 `/tmp/OSOS_accessory_tags_callers_20261026.txt`. Ausschließlich read-only-
 Ghidra-Analyse; keine Geräteaktion, kein Build und keine Tests.
+
+## Nachtrag: Update-Statusfelder und interner FTL-Schreibpfad (26.10.2026)
+
+Die Update-bezogenen Strings `UpdaterFamilyID`, `WillFlash`, `UpdateMethod`,
+`AutoRebootAfterFirmwareUpdate` und `UpdateRetriesSupported` wurden bis zu
+ihren Aufrufern verfolgt. `FUN_08058100`, `FUN_080585e4` und `FUN_080587b4`
+fügen diese Felder über die Objekt-/PLIST-Schreibhelfer `FUN_081c21f8`,
+`FUN_081c22cc` und `FUN_081c23b4` in Ausgabedatensätze ein. Die Funktionen
+werden aus `FUN_0803650c` und `FUN_08036b98` aufgerufen. Die sichtbaren Pfade
+lesen keinen Update-Payload ein und starten keinen Image-Installer; die
+Feldnamen allein belegen daher keine vom laufenden OSOS erreichbare
+Installationsschnittstelle.
+
+OSOS enthält zugleich einen internen FTL-Wartungspfad: `FUN_08062bf0` wählt
+bei Bedarf eine freie FTL-Section, verschiebt Daten über `FUN_08078f60` und
+aktualisiert Mapping-Zustand; sein Fehlerpfad nennt `VFL_Erase`. Das bestätigt
+NAND-Schreib-/Löschfähigkeit für die normale FTL-Verwaltung, aber keinen
+beliebigen Bootbereichsschreiber. Im Body sind außerdem Fehlermeldungen zu
+`VFL_Write2ndBootLoader` enthalten. Die geprüfte Ghidra-Xrefsuche zu diesen
+Meldungen (`0x084c1414`, `0x084c1458`, `0x084c149c`, `0x084c14e0`,
+`0x084c1524`) ergab keine Referenzen; ein zusätzlicher ausgerichteter
+32-Bit-Pointer-Scan auf `0x084c1414` ebenfalls keine. Das beweist weder, dass
+der Writer unerreichbar ist, noch dass er fehlt: unanalysierter Code,
+berechnete Aufrufe und externe Module bleiben außerhalb dieser Aussage.
+
+Damit ist belegt, dass der Retail-OSOS-Code FTL-Wartung ausführt und
+Update-Metadaten serialisiert. Nicht belegt ist eine Verbindung dieser
+Metadaten oder eines bisher untersuchten persistenten Eingabepfads zu einem
+Bootloader-/OS-Installer; auch ein Fehler, der so einen Pfad ausnutzt, ist
+nicht gefunden. Die bereits dokumentierten Notes- und ArtworkDB-Kandidaten
+brauchen weiterhin einen automatischen Kaltstart-Trigger und kontrollierte
+Codeausführung.
+
+Rohbelege: `/tmp/OSOS_nand_signed_driver_loader_20261026.txt`,
+`/tmp/OSOS_nand_readblock_api_20261026.txt`,
+`/tmp/OSOS_ftl_flash_ops_20261026.txt`,
+`/tmp/OSOS_updater_config_helpers_20261026.txt`,
+`/tmp/OSOS_fw_status_serializers_20261026.txt` und
+`nano5g/ghidra-logs/OSOS_strings_refs.tsv`. Alle Ghidra-Läufe verwendeten
+`-noanalysis -readOnly`; es gab keine Geräte-, USB-, DFU-, Boot- oder
+Flashaktion.
