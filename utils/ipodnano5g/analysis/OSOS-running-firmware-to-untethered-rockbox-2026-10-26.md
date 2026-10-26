@@ -126,18 +126,28 @@ Kontrollflussübernahme:
   `FUN_08039048` eine dateigesteuerte 32-Bit-Länge und übergibt sie unverändert
   als Leselänge für einen 256-Byte-Stackpuffer; der mitgegebene Grenzwert
   `0x100` wird in diesem Helper nicht verwendet. Der Lese-Stream reicht die
-  Länge an den Datei-Provider weiter; die Streamgrenze von `0x8000` Byte ist
-  deutlich größer als der lokale Puffer. Schon ab `0x110` Bytes reicht die
-  Eingabe bis in das lokale Stringobjekt, das unmittelbar danach über eine
-  VTable-Funktion verarbeitet wird. Damit ist ein beim frühen MainApp-Start
+  Länge an den Datei-Provider weiter. Der an `FUN_082721f0` übergebene Wert
+  `0x8000` ist die Kapazität eines nachfüllbaren Streampuffers, kein belegtes
+  Gesamtlimit der Datei oder des Reads. Schon ab `0x110` tatsächlich
+  gelieferten Bytes reicht die Eingabe bis in das lokale Stringobjekt, das
+  unmittelbar danach über eine VTable-Funktion verarbeitet wird. Damit ist ein
+  beim frühen MainApp-Start
   erreichbarer Stack-Überlauf mit dateigesteuerter Beschädigung eines
   indirekt verwendeten Objekts statisch belegt. Die weitere Analyse zeigt,
   dass sich VTable-Aufruf und Cleanup mit gültigen Objektwerten durchlaufen
   lassen; LR und nachfolgende Caller-Stackwörter sind dateikontrollierbar. Das
   Gadget `0x08007106` lädt `r0-r4` und PC aus diesem Stack und ermöglicht eine
-  ROP-Folge in OSOS-Code. Ein vollständiger ROP-Dateilader/Rockbox-Handoff ist
-  noch nicht nachgewiesen; die echte Datei wurde read-only geprüft und ist
-  normal, nicht übergroß. `FUN_0814b13c` schreibt die Datei bei gesetztem
+  ROP-Folge in OSOS-Code. Eine stackrelative Kandidatenfolge bis zum Aufruf
+  des vorhandenen Rockbox-Laders bei `0x09000000` ist nun aus bestätigten
+  Gadgets abgezählt; sie benötigt mindestens `0x2c4` Datenbytes und einen
+  zweiten Datei-Read über den OSOS-Provider von `0x10f80` Byte. Der interne
+  Writer und die echte Datei bestätigen das Wire-Format; damit entspräche das
+  Feld einer strukturell passenden Datei von `0x300` Byte. Die vollständige
+  ROP-Datei ist noch nicht serialisiert oder auf dem Gerät ausgeführt.
+  Pfadauflösung, Datei-/Provider-Erfolg, mögliche Überschneidung des
+  Loaderziels mit dem laufenden Taskstack sowie RAM-Ausführbarkeit und
+  CPU-Kontext bleiben ungeklärt. Die echte Datei wurde read-only geprüft und
+  ist normal, nicht übergroß. `FUN_0814b13c` schreibt die Datei bei gesetztem
   Dirty-Flag; sein einziger direkter Caller `FUN_0825da88` hat keinen belegten
   MainApp-Kaltstartaufruf. Details stehen in
   `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
@@ -168,18 +178,25 @@ ist ein stärkerer Kandidat: Die feste Datei wird im frühen MainApp-Factory-Pfa
 geöffnet, und eine Längenangabe erreicht einen Stackpuffer ohne die scheinbar
 vorgesehene 256-Byte-Grenze; danach wird ein vom Überlauf beschädigtes Objekt
 über einen indirekten Funktionsaufruf verwendet. Die statische Folge reicht bis
-zum überschriebenen LR und einem vorhandenen ROP-Gadget. Noch offen sind die
-gezielte Ersetzbarkeit der Datei im Apple-USB-Modus und ein ROP-Aufruf, der den
-Rockbox-Loader aus FAT nach RAM lädt. Die separaten Notes- und ArtworkDB-
-Speicherfehlerkandidaten brauchen weiterhin eine belastbare Kontrollfluss-
-Auswirkung.
+zum überschriebenen LR und einem vorhandenen ROP-Gadget; eine statisch
+abgezählte, noch ungeprüfte ROP-Kandidatenfolge ruft Open, Read und den
+Rockbox-Lader auf. Der interne Writer und der echte Gerätedatensatz bestätigen
+das `accessories.reg`-Wire-Format; die für den Kandidaten nötige Feldlänge
+`0x2c4` entspräche einer Datei von `0x300` Byte. Offen sind die gezielte
+Ersetzbarkeit der Datei im Apple-USB-Modus, Pfadauflösung und Datei-/Provider-
+Erfolg, die RAM-/Stack-Überschneidung am Loaderziel sowie der tatsächliche
+Kontrolltransfer. Die vollständige ROP-Datei wurde nicht erzeugt oder
+ausgeführt. Die separaten Notes- und ArtworkDB-Speicherfehlerkandidaten
+brauchen weiterhin eine belastbare Kontrollfluss-Auswirkung.
 
 Weiterhin offen sind:
 
-1. Ersetzbarkeit von `iPod_Control/Device/accessories.reg` über Apples
-   normalen USB-Modus klären und die ROP-Kette bis zum FAT-Dateilesen und
-   Loader-Handoff ausarbeiten; das echte 69-Byte-Dateibeispiel ist normal und
-   löst keinen Überlauf aus;
+1. Prüfen, ob der Host `iPod_Control/Device/accessories.reg` im normalen
+   Apple-USB-/OSOS-Dateipfad ersetzen kann; das Wire-Format ist durch internen
+   Writer und echtes Beispiel bestätigt. Danach die vollständige ROP-Datei,
+   Pfadauflösung zu `/.rockbox/bootloader.bin` sowie Stack-/Heap-Überschneidungen
+   offline prüfen. Das echte 69-Byte-Dateibeispiel ist normal und löst keinen
+   Überlauf aus;
 2. Stackgrenze und Guard des importierten Taskdienstes für den
    `PlayCounts`-Containerparser prüfen;
 3. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
@@ -189,8 +206,8 @@ Weiterhin offen sind:
    ArtworkDB-Parser beim normalen Kaltstart erreichen könnten;
 5. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
    ArtworkDB-Heap-Overflows;
-6. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
-   durchführen kann, ohne den Hold-gesperrten Apple-Pfad zu stören;
+6. ob OSOS einen RAM-Handoff aus seinem normalen Taskkontext durchführen kann,
+   ohne den Hold-gesperrten Apple-Pfad zu stören;
 7. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
    kein Beleg dafür, dass Apple-OSOS keine Flashoperation ausführen kann; ein
    solcher Schreibpfad würde außerdem die Signaturprüfung beim nächsten Start
@@ -872,20 +889,26 @@ Caller-Stack. Bei `0x08030cbc` ist zudem `blx r3` mit anschließendem
 kontrollierten Registern aufrufen kann. `0x0800396c` übergibt einen
 Stackzeiger in `r0`; `0x0805b092` bildet daraus einen stackrelativen Zeiger in
 `r1`. Das ist eine statisch tragfähige ROP-Grundlage ohne ausführbaren Stack,
-aber noch kein fertiger Stream-Read oder Rockbox-Handoff. Die nötige
-Pfadobjekt-/Dateiöffnungs-/Lesekette bis `0x09000000` bleibt offen.
+aber kein dynamisch verifizierter Stream-Read oder Rockbox-Handoff. Eine
+stackrelative Kandidatenfolge bis zum Aufruf bei `0x09000000` ist inzwischen
+abgezählt; Dateiformat und Bytes des normalen Gerätdatensatzes passen dazu.
+Pfad-/Provider-Erfolg, vollständige Payload-Datei und Laufzeit-Handoff bleiben
+offen. Details und Rohbelege stehen in
+`OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
 
 Die echte Datei `/tmp/ipod-sebipod-readonly/iPod_Control/Device/accessories.reg`
 ist 69 Byte groß, hat SHA-256
 `b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854` und
-enthält einen normalen `0x44`-Eintrag mit Länge `9` und `Pedometer`. Der Host
-hatte das FAT-Volume read-only eingehängt; die tatsächliche Schreibbarkeit über
-Apples USB-Modus ist ungeklärt. Ein interner Writer `FUN_0814b13c` schreibt die
-Datei bei gesetztem Dirty-Flag; sein einziger direkter Caller
-`FUN_0825da88` hat keinen belegten MainApp-Kaltstartaufruf. Damit ist ein beim
-MainApp-Start gelesener Dateipfad und eine statische Kontrollflussfolge belegt.
-Die gezielte Ersetzbarkeit der Datei im Apple-USB-Modus, die vollständige
-ROP-Dateiladekette und der Lauf auf dem Gerät sind nicht belegt; es gab keinen
+enthält einen normalen `0x44`-Eintrag mit Länge `9` und `Pedometer`. Die
+Container-/Feldmarker, Länge-/Datenreihenfolge und Terminatoren stimmen mit den
+Writer-Hilfsfunktionen überein. Der Host hatte das FAT-Volume read-only
+eingehängt; die tatsächliche Schreibbarkeit über Apples USB-Modus ist
+ungeklärt. Ein interner Writer `FUN_0814b13c` schreibt die Datei bei gesetztem
+Dirty-Flag; sein einziger direkter Caller `FUN_0825da88` hat keinen belegten
+MainApp-Kaltstartaufruf. Damit sind ein beim MainApp-Start gelesener Dateipfad,
+das Wire-Format und eine statisch abgezählte Kontrollflussfolge belegt. Die
+vollständige ROP-Datei wurde nicht erzeugt. Gezielte Ersetzbarkeit, Pfad- und
+Provider-Erfolg sowie der Lauf auf dem Gerät bleiben offen; es gab keinen
 ausgeführten Exploit, keinen verifizierten Loader-Handoff und keinen
 untethered Boot.
 
