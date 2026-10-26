@@ -36,14 +36,20 @@ das 32-Bit-Feld `TCB+0x2c`; Task-ID 0 bedeutet den aktuellen Task. Im
 BootTask-Pfad wird dieses Feld daher gelesen und auf null gesetzt. Diese
 Operation ist kein sichtbarer Aufruf eines Datei- oder Datenbankparsers.
 
-Der Veneer `0x08003908` lädt im gespeicherten Abbild den Wert `0x083534e8` aus
-`0x0800390c`. Im Ghidra-Projekt liegt diese Adresse innerhalb der als Thumb
-disassemblierten Funktion `FUN_0835331c`, an einem `blx` innerhalb der Funktion.
-Der Tabellenwert ist jedoch gerade und würde über den ARM-Veneer im ARM-Modus
-landen; die ARM-Disassemblierung der gespeicherten Bytes ist dort nicht
-plausibel. Ein Laufzeit-Overlay, eine Kontext-/Scheduler-Rebindung oder eine
-fehlerhafte statische Zuordnung bleibt möglich, ist aber nicht bewiesen. Die
-Callgraph-Suche ab diesem Ziel erreicht deshalb keine belastbare Parserwurzel.
+Der Veneer `0x08003908` lädt im rebasierten Bootprefix bei `0x2200390c` den
+Wert `0x083534e8`. Die frühere Prüfung dieses Werts im Full-Body-Adressraum war
+ein Mappingfehler: Das Runtime-Abbild beginnt bei OSOS-Dateioffset `0x2e27c`
+auf Adresse `0x08000000`. Runtime-VA `0x083534e8` gehört damit zu OSOS-Body-
+Dateioffset `0x381764` beziehungsweise Full-Body-VA `0x08381764`, nicht zu
+Full-Body-VA `0x083534e8`. Ein Bytevergleich bestätigt für die 84 Byte des
+BootTask-Einstiegs identischen Inhalt zwischen beiden korrekten Abbildungen.
+Im Runtime-Abbild ist `0x083534e8` ein gültiger ARM-Einstieg (`arm_83534e8`):
+Er richtet BootTask-Dienste ein, wertet mit `FUN_0801c684` die Tasktabelle aus,
+ruft `FUN_08354ba8` auf und kehrt anschließend über den gemeinsamen Scheduler-
+Pfad zurück. Die zuvor erwogene dynamische Rebindung oder ein Overlay ist für
+diese Zieladresse nicht erforderlich. Im analysierten BootTask-Code wurde
+keine Änderung des Veneer-Literals gefunden; eine globale Schreibersuche über
+alle Laufzeitkomponenten war damit nicht verbunden.
 
 Korrektur der älteren Spur: Die Sprünge über `0x080038f0` und `0x080038f8`
 gehören zur separaten Kernel-Schleife. Sie sind nicht das Ziel des BootTask-
@@ -98,12 +104,44 @@ Neue Ghidra-Auszüge liegen vorübergehend unter:
 Alle Headless-Aufrufe nutzten `-noanalysis -readOnly`; Ghidra meldete das
 Verwerfen der Änderungen an der read-only Programmdatenbank.
 
-1. Den tatsächlichen Laufzeitwert des Task-Dispatchers bei `0x0800390c` und
-   den Context-Switch-Pfad aus den RTOS-Supervisorfällen ableiten; die statische
-   Zieladresse `0x083534e8` allein reicht nicht.
-2. Den frühen MainApp-/BootEvent-Dispatch weiterverfolgen und klären, ob
+1. Den frühen MainApp-/BootEvent-Dispatch weiterverfolgen und klären, ob
    `ArtworkDB` vor einer Benutzeraktion automatisch geladen wird.
-3. Für einen Exploitpfad müssen Eingabequelle, Kaltstarterreichbarkeit,
+2. Für einen Exploitpfad müssen Eingabequelle, Kaltstarterreichbarkeit,
    Kontrollflussgewinn und OSOS→Rockbox-Handoff gemeinsam nachgewiesen werden.
    Bis dahin bleibt der Gerätezustand unverändert und es werden keine
    NAND-/NOR-Schreib- oder Flashversuche durchgeführt.
+
+## Nachtrag: BootTask-Ziel im Runtime-Adressraum (2026-10-26)
+
+Die 84-Byte-Gegenprobe aus dem vollständigen Body und dem gemappten Runtime-
+Abbild liegt unter `/tmp/OSOS_boot_task_runtime_mapping_20261026.txt`.
+Der ARM-Einstieg und seine Aufrufer sind unter
+`/tmp/OSOS_boottask_runner_caller_20261026.txt` exportiert. Das RTOS-
+Startkontext-Setup steht in `/tmp/OSOS_rtos_start_task_case_20261026.txt`;
+der Service-Dispatch und die BootTask-Aufrufe sind in
+`/tmp/OSOS_syscalls_20261026.txt` und `/tmp/OSOS_boot_dispatch_20261026.txt`
+belegt. Die Ghidra-Projekte wurden read-only geöffnet; das iPod-Gerät wurde
+nicht angesprochen.
+
+## Nachtrag: MainApp-Erreichbarkeit des ArtworkDB-Laders
+
+Ein read-only-Aufrufgraph ab MainApp-Entry `0x080202d8` erreichte bei Tiefe 32
+3.956 Funktionen. Der Initialisierer bei `0x08022b18`, sein ArtworkDB-Setup
+`FUN_080253f4`, der Loader `FUN_081ac420` und der bedingte Callback
+`FUN_080eb730` wurden über direkte Call-Referenzen nicht erreicht. Der Block
+bei `0x08022b18` ruft `FUN_080253f4` tatsächlich auf; für den Block selbst
+fand Ghidra aber keinen direkten Code-Xref. Das schließt indirekte
+VTable-/Eventaufrufe nicht aus.
+
+`FUN_081ac420` hat im Runtime-Abbild zwei gefundene Aufrufstellen:
+`0x080254b6` in `FUN_080253f4` und `0x080eb73c` in `FUN_080eb730`. Letzterer
+steht als Thumb-Zeiger `0x080eb731` im VTable-Wort bei `0x08504b14` und ruft
+den Loader nur, wenn der verschachtelte Kontextzeiger und dessen Feld `+0x48`
+nicht null sind. Der Runtime-Wert dieses Kontexts ist nicht belegt. Damit ist
+ein persistenter Dateipfad statisch vorhanden, aber kein automatischer
+Kaltstarttrigger nachgewiesen.
+
+Rohbelege: `/tmp/OSOS_mainapp_artwork_path_graph_20261026.txt`,
+`/tmp/OSOS_artworkdb_parent_08022b18_20261026.txt` und
+`/tmp/OSOS_music_callback_pointer_context_20261026.txt`. Die Ghidra-Läufe
+nutzten `-noanalysis -readOnly`; keine Geräteaktion.
