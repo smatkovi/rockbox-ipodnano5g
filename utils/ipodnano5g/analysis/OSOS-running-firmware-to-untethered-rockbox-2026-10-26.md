@@ -1,7 +1,9 @@
 # Laufende iPod-Software als möglicher untethered Rockbox-Einstieg
 
 Stand: 26.10.2026. Read-only-Prüfung lokaler Quelltexte und vorhandener
-OSOS-Analysen. Keine USB-, DFU-, Boot-, NAND-/NOR- oder Geräteaktion.
+OSOS-Analysen. Zusätzlich wurde die Datenpartition im Rockbox-USB-Modus
+read-only eingehängt und gelesen. Keine Gerätedaten wurden geändert; es gab
+keine DFU-, Boot-, NAND-/NOR- oder Flashoperation.
 
 ## Kurzantwort
 
@@ -129,9 +131,16 @@ Kontrollflussübernahme:
   Eingabe bis in das lokale Stringobjekt, das unmittelbar danach über eine
   VTable-Funktion verarbeitet wird. Damit ist ein beim frühen MainApp-Start
   erreichbarer Stack-Überlauf mit dateigesteuerter Beschädigung eines
-  indirekt verwendeten Objekts statisch belegt. RCE, konkrete Kontrolle des
-  Funktionszeigers und Beschreibbarkeit dieser Datei sind noch nicht bewiesen;
-  Details stehen in `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
+  indirekt verwendeten Objekts statisch belegt. Die weitere Analyse zeigt,
+  dass sich VTable-Aufruf und Cleanup mit gültigen Objektwerten durchlaufen
+  lassen; LR und nachfolgende Caller-Stackwörter sind dateikontrollierbar. Das
+  Gadget `0x08007106` lädt `r0-r4` und PC aus diesem Stack und ermöglicht eine
+  ROP-Folge in OSOS-Code. Ein vollständiger ROP-Dateilader/Rockbox-Handoff ist
+  noch nicht nachgewiesen; die echte Datei wurde read-only geprüft und ist
+  normal, nicht übergroß. `FUN_0814b13c` schreibt die Datei bei gesetztem
+  Dirty-Flag; sein einziger direkter Caller `FUN_0825da88` hat keinen belegten
+  MainApp-Kaltstartaufruf. Details stehen in
+  `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
 - **Weitere Play-Counts-, Contacts-, Device-Konfigurations- und Workout-XML-
   Pfade:** bisher kein bestätigter Speicherfehler mit Kontrollflusswirkung.
   Der separate iTunes-`Play Counts`-Leser verarbeitet feste Header- und
@@ -158,17 +167,19 @@ Rücksprungadresse oder RCE. Der Parser von `iPod_Control/Device/accessories.reg
 ist ein stärkerer Kandidat: Die feste Datei wird im frühen MainApp-Factory-Pfad
 geöffnet, und eine Längenangabe erreicht einen Stackpuffer ohne die scheinbar
 vorgesehene 256-Byte-Grenze; danach wird ein vom Überlauf beschädigtes Objekt
-über einen indirekten Funktionsaufruf verwendet. Eine lauffähige Kontrolle
-dieses Aufrufs oder ein Rockbox-Handoff ist noch nicht nachgewiesen. Die
-separaten Notes- und ArtworkDB-Speicherfehlerkandidaten brauchen weiterhin eine
-belastbare Kontrollfluss-Auswirkung.
+über einen indirekten Funktionsaufruf verwendet. Die statische Folge reicht bis
+zum überschriebenen LR und einem vorhandenen ROP-Gadget. Noch offen sind die
+gezielte Ersetzbarkeit der Datei im Apple-USB-Modus und ein ROP-Aufruf, der den
+Rockbox-Loader aus FAT nach RAM lädt. Die separaten Notes- und ArtworkDB-
+Speicherfehlerkandidaten brauchen weiterhin eine belastbare Kontrollfluss-
+Auswirkung.
 
 Weiterhin offen sind:
 
-1. Format und Schreibbarkeit von `iPod_Control/Device/accessories.reg`
-   nachvollziehen und die VTable-Beschädigung samt Task-Stacklage und
-   RAM-Ausführungsbedingungen statisch genauer bewerten; ein echtes
-   Dateibeispiel fehlt;
+1. Ersetzbarkeit von `iPod_Control/Device/accessories.reg` über Apples
+   normalen USB-Modus klären und die ROP-Kette bis zum FAT-Dateilesen und
+   Loader-Handoff ausarbeiten; das echte 69-Byte-Dateibeispiel ist normal und
+   löst keinen Überlauf aus;
 2. Stackgrenze und Guard des importierten Taskdienstes für den
    `PlayCounts`-Containerparser prüfen;
 3. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
@@ -836,6 +847,55 @@ Rohbelege: `/tmp/OSOS_unmapped_call_0802ab90_20261026.txt`,
 `/tmp/OSOS_music_startup_followup_20261026.txt`,
 `/tmp/OSOS_function_081f85e0_20261026.txt`,
 `/tmp/OSOS_function_0813e40c_20261026.txt` und
-`/tmp/OSOS_function_0813e1bc_20261026.txt`. Alle Ghidra-Auswertungen
-verwendeten `-noanalysis -readOnly`; es gab keinen Geräte-, USB-, DFU-, Boot-
-oder Flashzugriff.
+`/tmp/OSOS_function_0813e1bc_20261026.txt`. Die Ghidra-Auswertungen verwendeten
+`-noanalysis -readOnly`. Der folgende Nachtrag dokumentiert die spätere
+read-only USB-Sichtprüfung; es gab keine Schreib-, DFU-, Boot- oder
+Flashoperation.
+
+## Nachtrag: `accessories.reg` erreicht kontrollierten Caller-Stack (26.10.2026)
+
+Der `0x44`-Read in `FUN_0802c3c4` liest eine dateigesteuerte Länge in den
+Stackpuffer ab `sp+4`. Die lokale Stringinstanz beginnt bei Pufferoffset
+`0x10c`; LR liegt bei `0x138`. Der Konstruktor `FUN_08198770` setzt eine
+Standard-VTable, deren Slot `+8` auf den regulären String-Allokator
+`FUN_080a1cc0` zeigt. Mit gültiger VTable, leerem Stringpuffer, gesetztem
+Exit-Flag und einem statischen Nullwort als Close-Kontext laufen VTable-Aufruf
+und Cleanup auf dem normalen Pfad weiter. Eine Länge von `0x13c` überschreibt
+den gespeicherten LR vollständig; bei größeren Längen werden auch Wörter des
+Caller-Stacks nach dem PC überschrieben.
+
+Das Runtime-Abbild enthält bei `0x08007106` ein `pop {r0,r1,r2,r3,r4,pc}`.
+Der gespeicherte LR kann auf dieses Gadget zeigen; nach dem Parser-Epilog lädt
+es die nächste PC-Adresse und die Argumentregister aus dem überschriebenen
+Caller-Stack. Bei `0x08030cbc` ist zudem `blx r3` mit anschließendem
+`pop {r3,r4,r5,pc}` bestätigt, sodass eine ROP-Folge beliebige Funktionen mit
+kontrollierten Registern aufrufen kann. `0x0800396c` übergibt einen
+Stackzeiger in `r0`; `0x0805b092` bildet daraus einen stackrelativen Zeiger in
+`r1`. Das ist eine statisch tragfähige ROP-Grundlage ohne ausführbaren Stack,
+aber noch kein fertiger Stream-Read oder Rockbox-Handoff. Die nötige
+Pfadobjekt-/Dateiöffnungs-/Lesekette bis `0x09000000` bleibt offen.
+
+Die echte Datei `/tmp/ipod-sebipod-readonly/iPod_Control/Device/accessories.reg`
+ist 69 Byte groß, hat SHA-256
+`b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854` und
+enthält einen normalen `0x44`-Eintrag mit Länge `9` und `Pedometer`. Der Host
+hatte das FAT-Volume read-only eingehängt; die tatsächliche Schreibbarkeit über
+Apples USB-Modus ist ungeklärt. Ein interner Writer `FUN_0814b13c` schreibt die
+Datei bei gesetztem Dirty-Flag; sein einziger direkter Caller
+`FUN_0825da88` hat keinen belegten MainApp-Kaltstartaufruf. Damit ist ein beim
+MainApp-Start gelesener Dateipfad und eine statische Kontrollflussfolge belegt.
+Die gezielte Ersetzbarkeit der Datei im Apple-USB-Modus, die vollständige
+ROP-Dateiladekette und der Lauf auf dem Gerät sind nicht belegt; es gab keinen
+ausgeführten Exploit, keinen verifizierten Loader-Handoff und keinen
+untethered Boot.
+
+Rohbelege: `/tmp/OSOS_runtime_parser_20261026.txt`,
+`/tmp/OSOS_runtime_string_ctor_20261026.txt`,
+`/tmp/OSOS_runtime_string_setter_20261026.txt`,
+`/tmp/OSOS_runtime_string_length_20261026.txt`,
+`/tmp/OSOS_runtime_close_and_allocator_20261026.txt`,
+`/tmp/OSOS_runtime_rop_pop_context_20261026.txt` und
+`/tmp/OSOS_runtime_pop_pc_gadgets_20261026.txt`,
+`/tmp/OSOS_runtime_call_pop_sequences_20261026.txt`,
+`/tmp/OSOS_runtime_stack_pointer_gadgets_20261026.txt` und
+`/tmp/OSOS_runtime_stack_to_register_pop_20261026.txt`.
