@@ -126,7 +126,7 @@ Rohbelege: `utils/ipodnano5g/analysis/osos_runtime_constructor_table.tsv`,
 `/tmp/OSOS_boot_task_dispatch_followup.txt` sowie der read-only-Xref-Lauf zum
 Constructor-Runner. Keine Geräte-, USB-, DFU-, Boot- oder Flashaktion.
 
-## Korrektur: Resetpfad erreicht Constructor-Runner, BootTask und MainApp (26.10.2026)
+## Korrektur: Resetpfad erreicht Constructor-Runner und fordert Tasks an (26.10.2026)
 
 Der vollständige OSOS-Body und das daraus rebaste Bootprefix-Abbild ergeben
 eine zusammenhängende statische Startkette. Die früher offene
@@ -151,23 +151,33 @@ geschlossen:
    auswerten.
 4. Im BootTask-Post-Init ruft `FUN_08354ba8` zunächst `FUN_0801d594(0)` auf.
    Diese Funktion ruft `FUN_0801e3a4`, die mit dem Namen `MainAppTask`, dem
-   Thumb-Einstieg `0x080202d9` und dem Task-Create-Helfer `FUN_08193984` den
-   MainApp-Task anlegt. Die statische Kette reicht damit bis zum automatischen
-   MainApp-Start.
+   Thumb-Einstieg `0x080202d9` und `FUN_08193984` einen MainApp-Task
+   einzurichten versucht. `FUN_08193984` baut den Taskdatensatz und delegiert
+   über `FUN_0801de7c` an den importierten Dienst `0x2200d544`.
 
 Die Mapping-Gegenprüfung bestätigt identische Runtime-/Full-Body-Bytes an
 den relevanten Suffix-Adressen. Die unabhängige Funktion `FUN_08324af0` ruft
 ebenfalls den Constructor-Runner, ist für den nachgewiesenen Resetpfad aber
 nicht erforderlich. Die ältere Aussage, nur ein externer Einstieg oder ein
-Overlay könne den Runner erreichen, ist hiermit überholt.
+Overlay könne den Runner erreichen, ist hiermit überholt. Der Code richtet
+auch BootTask und MainAppTask ein; die Scheduler-Implementierung des externen
+Taskdienstes bleibt jedoch außerhalb des rekonstruierten Codes.
 
-Der Befund ist ein statischer Kaltstart- und Taskstartnachweis, noch kein
-Exploit: Die bereits analysierte frühe Media-Factory wird mit Nullkontext
-aufgerufen und bricht vor `FUN_081ac420` ab. Der automatische Start von
-MainApp belegt daher keinen automatischen Aufruf des ArtworkDB- oder Notes-
-Parsers und keine kontrollierte Codeausführung. Die nächste sinnvolle Spur ist
-die konkrete automatische MainApp-Nachricht samt Laufzeit-Handler und
-Kontextquelle bis zu einem persistenten Dateiparser.
+Grenze des statischen Nachweises: Der Zielcode des importierten Task-Dienstes
+`0x2200d544` ist im rekonstruierten Bootprefix-Abbild nicht enthalten; an
+Offset `0xd544` stehen dort Nullbytes. Die Task-Create-Semantik folgt aus den
+übergebenen Datensätzen und den Callern, aber die konkrete externe
+Scheduler-Implementierung und der tatsächliche Lauf am Gerät sind nicht
+bestätigt.
+
+Der Befund belegt den statischen Kaltstartpfad bis zu den Task-Create-Aufrufen,
+noch keinen Exploit oder dynamisch bestätigten MainApp-Lauf: Die bereits
+analysierte frühe Media-Factory wird mit Nullkontext aufgerufen und bricht vor
+`FUN_081ac420` ab. Die Anforderung, einen MainApp-Task anzulegen, belegt daher
+keinen automatischen Aufruf des ArtworkDB- oder Notes-Parsers und keine
+kontrollierte Codeausführung. Die nächste sinnvolle Spur ist die bedingte
+MainApp-Startnachricht samt Laufzeit-Handler und Kontextquelle bis zu einem
+persistent erreichbaren Dateiparser.
 
 Zusätzliche Rohbelege: `/tmp/OSOS_ctor_runner_fullbody_mapped_20261026.txt`,
 `/tmp/OSOS_task_ctor_helper_0819dcbc_20261026.txt`,
