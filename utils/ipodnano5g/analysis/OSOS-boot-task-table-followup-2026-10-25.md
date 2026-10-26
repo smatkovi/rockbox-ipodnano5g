@@ -88,7 +88,9 @@ Die Verbindung zum BootTask-Dispatcher und der Code, der die Null-Tabelle
 befüllt, sind statisch gefunden: `FUN_08013d44` ist Eintrag 28 der relativen
 Constructor-Tabelle und schreibt 20 Task-Datensätze. Offen bleibt, ob dessen
 Runner über `FUN_08324af0` durch die reale externe OSOS-Startkette erreicht
-wird. Aus den Metadaten allein folgt kein automatisch erreichter Dateiparser
+wird. Diese Aussage wird durch den Kaltstart-Nachtrag unten korrigiert:
+Der Resetpfad erreicht den Constructor-Runner über einen Relokationsstub.
+Aus den Metadaten allein folgt kein automatisch erreichter Dateiparser
 und keine OSOS-RCE. Analysequellen: `osos_body.bin`,
 `/tmp/osos_runtime_dram_20261025.bin`, read-only-Ghidra-Projekt
 `/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime.gpr` sowie die Gegenprüfungen
@@ -123,3 +125,58 @@ Rohbelege: `utils/ipodnano5g/analysis/osos_runtime_constructor_table.tsv`,
 `/tmp/OSOS_task_table_init_thumb.txt`, `/tmp/OSOS_ctor_runner_caller_thumb.txt`,
 `/tmp/OSOS_boot_task_dispatch_followup.txt` sowie der read-only-Xref-Lauf zum
 Constructor-Runner. Keine Geräte-, USB-, DFU-, Boot- oder Flashaktion.
+
+## Korrektur: Resetpfad erreicht Constructor-Runner, BootTask und MainApp (26.10.2026)
+
+Der vollständige OSOS-Body und das daraus rebaste Bootprefix-Abbild ergeben
+eine zusammenhängende statische Startkette. Die früher offene
+Kaltstart-Erreichbarkeit des Constructor-Runners ist damit für diesen Pfad
+geschlossen:
+
+1. Das Wort am IMG1-Body-Einstieg `0x08000000` ist `0xea001c0c` und verzweigt
+   nach `0x08007038`. Dort setzt der ARM-Code den Stack und verzweigt nach
+   `0x08005058`.
+2. `0x08005058` richtet den Bootprefix ein. Der Aufruf bei `0x08005108` geht
+   über den Stub `0x08003790`; dessen Literal bei `0x08003794` ist der
+   Thumb-Zeiger `0x08012a25` auf den Constructor-Runner im Runtime-Adressraum.
+   Das Runtime-Abbild beginnt mit dem Body-Suffix ab Offset `0x2e27c`; der
+   Runner entspricht daher im vollständigen Body `0x08040ca0`. Der Code
+   durchläuft 257 relative Constructor-Einträge, darunter Eintrag 28
+   (`0x08013d44`), der die 20 BootTask-Records füllt.
+3. Der Root legt anschließend den RTOS-Task `BootTask` an und geht in den
+   Scheduler. Das rebaste Prefix-Abbild unter `/tmp/osos_bootprefix_22000000.bin`
+   zeigt den Dispatch über `0x22003908`; dessen Literal bei `0x2200390c` ist
+   `0x083534e8`, der Runtime-Einstieg von `FUN_083534e8`. Dieser BootTask ruft
+   `FUN_0801c684` auf und lässt damit die zuvor befüllte 20-Record-Tabelle
+   auswerten.
+4. Im BootTask-Post-Init ruft `FUN_08354ba8` zunächst `FUN_0801d594(0)` auf.
+   Diese Funktion ruft `FUN_0801e3a4`, die mit dem Namen `MainAppTask`, dem
+   Thumb-Einstieg `0x080202d9` und dem Task-Create-Helfer `FUN_08193984` den
+   MainApp-Task anlegt. Die statische Kette reicht damit bis zum automatischen
+   MainApp-Start.
+
+Die Mapping-Gegenprüfung bestätigt identische Runtime-/Full-Body-Bytes an
+den relevanten Suffix-Adressen. Die unabhängige Funktion `FUN_08324af0` ruft
+ebenfalls den Constructor-Runner, ist für den nachgewiesenen Resetpfad aber
+nicht erforderlich. Die ältere Aussage, nur ein externer Einstieg oder ein
+Overlay könne den Runner erreichen, ist hiermit überholt.
+
+Der Befund ist ein statischer Kaltstart- und Taskstartnachweis, noch kein
+Exploit: Die bereits analysierte frühe Media-Factory wird mit Nullkontext
+aufgerufen und bricht vor `FUN_081ac420` ab. Der automatische Start von
+MainApp belegt daher keinen automatischen Aufruf des ArtworkDB- oder Notes-
+Parsers und keine kontrollierte Codeausführung. Die nächste sinnvolle Spur ist
+die konkrete automatische MainApp-Nachricht samt Laufzeit-Handler und
+Kontextquelle bis zu einem persistenten Dateiparser.
+
+Zusätzliche Rohbelege: `/tmp/OSOS_ctor_runner_fullbody_mapped_20261026.txt`,
+`/tmp/OSOS_task_ctor_helper_0819dcbc_20261026.txt`,
+`/tmp/OSOS_boot_mainapp_task_setup_20261026.txt`,
+`/tmp/OSOS_task_create_MainAppTask_helper_20261026.txt`,
+`/tmp/OSOS_MainAppTask_creation_dispatch_20261026.txt`,
+`/tmp/OSOS_boot_postinit_080cbbf8_20261026.txt` und
+`/tmp/OSOS_boot_postinit_0819c7bc_20261026.txt`. Die Ghidra-Projekte wurden
+read-only geöffnet. Weitere ältere Rohbelege: `/tmp/OSOS_reloc_prefix_boottask_20261025.txt`,
+`/tmp/OSOS_bootprefix_functions_2026-10-25.txt` und
+`/tmp/OSOS_BootTask_083534e8.txt`. Kein USB, DFU, Reset, NAND-/NOR-Zugriff
+oder Geräteboot.
