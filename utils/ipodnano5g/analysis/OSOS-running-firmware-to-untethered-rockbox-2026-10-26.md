@@ -215,3 +215,22 @@ Rohbelege: `/tmp/OSOS_xml_libxml_context_20261026.txt`,
 `/tmp/OSOS_speakable_immediate_refs_20261026.txt`. Alle Ghidra-Läufe nutzten
 `-noanalysis -readOnly`; das Gerät blieb unangetastet. Kein Build und keine
 Tests.
+
+## Nachtrag: Accessories/Tags ist ein Schreibpfad (26.10.2026)
+
+Die direkten Referenzen auf `iPod_Control/Device/Accessories/Tags/` führen zu
+`FUN_0832eedc`. Diese Funktion erstellt aus festen PLIST-Feldern wie
+`MajorVersion`, `ManufacturerID`, `ManufacturerName` und `DeviceName` einen
+zeitgestempelten Dateinamen und serialisiert anschließend die Daten über den
+Stream-Schreibpfad `FUN_081c6b08`. Der Code öffnet oder parst keine vorhandene
+Datei aus diesem Verzeichnis. Sein einziger direkter Aufrufer ist
+`FUN_08297668`; dieser hat im analysierten OSOS-Body vier direkte Aufrufer,
+darunter Zustands-/Ereignisfunktionen `FUN_081b9f7c`, `FUN_082a6efc` und
+`FUN_08200b14`. Die genaue Laufzeitregistrierung bleibt offen, aber der
+Accessories/Tags-Pfad ist nach dem sichtbaren Datenfluss kein persistenter
+Datei-Exploit-Trigger.
+
+Rohbelege: `/tmp/OSOS_accessory_tags_reader_20261026.txt`,
+`/tmp/OSOS_accessory_tags_caller_20261026.txt` und
+`/tmp/OSOS_accessory_tags_callers_20261026.txt`. Ausschließlich read-only-
+Ghidra-Analyse; keine Geräteaktion, kein Build und keine Tests.
