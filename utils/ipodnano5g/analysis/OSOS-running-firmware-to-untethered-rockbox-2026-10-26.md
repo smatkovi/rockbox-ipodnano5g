@@ -611,7 +611,13 @@ zeigt nicht, wo Slot 0 oder Slot 4 registriert werden. Die ermittelten
 Registrierungs-Wrapper und die früh aufgerufenen Initialisierer führen weiter
 zu dynamischen beziehungsweise nicht zugeordneten Empfängern. Damit bleibt
 offen, ob der Games-Pfad den UTF-8-Komponentensplitter `FUN_082284e0` erreicht;
-ein solcher Aufruf ist nicht bestätigt.
+ein solcher Aufruf ist nicht bestätigt. Eine separate Routine `FUN_081b17ec`
+im selben größeren Codebereich ruft über `FUN_08279be4` den Splitter mit
+Slot 0 auf. Ihre nachweisbaren direkten Aufrufer sind jedoch `FUN_08148740`
+und ein nicht als Funktion zugeordneter Call bei `0x0802ab90`; ein direkter
+Kontrollfluss von `FUN_081af8bc`/`FUN_081b343c` dorthin ist nicht belegt. Dieser
+Zusatz schließt die Normalisierer-Kette für den automatisch enumerierten
+Verzeichnisnamen daher nicht.
 
 Die Eintragungsroutine prüft zuerst den angeforderten Slot und erzeugt bei
 freier Stelle einen Dienst über einen von zwei Konstruktorpfaden; erst danach
@@ -650,6 +656,8 @@ Rohbelege: `/tmp/OSOS_games_vfs_registry_deep_20261026.txt`,
 `/tmp/OSOS_vfs_registry_insert_semantics_20261026.txt`,
 `/tmp/OSOS_games_vfs_method_bridge_deep_20261026.txt`,
 `/tmp/OSOS_games_vfs_provider_wrapper_semantics_20261026.txt`,
+`/tmp/OSOS_utf8_splitter_callers_20261026.txt`,
+`/tmp/OSOS_games_normalizer_candidate_caller_20261026.txt`,
 `/tmp/OSOS_vfs_registration_orphan_refs_20261026.log` und
 `/tmp/OSOS_vfs_registration_pointer_scan_20261026.log` sowie die bestehenden
 Bootloader-Quellen unter `bootloader/ipodnano4g.c`,
