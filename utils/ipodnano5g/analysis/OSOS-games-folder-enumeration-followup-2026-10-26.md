@@ -62,6 +62,17 @@ nicht die Instanziierung des Screens beim Kaltstart. Die separate
 Manifest-/eApp-Kette bleibt ohne bestätigte Verbindung zu dieser Registrierung
 oder zu einem automatisch gestarteten Games-Eintrag.
 
+Die Game-UI-Ereignisse zeigen ebenfalls eine indirekte Grenze: `FUN_080b60f0`
+baut eine `LaunchGame`-Nachricht, während `FUN_080cdc70` und `FUN_080cde24`
+`ExecuteGame`-Nachrichten bauen. Alle drei geben die Nachricht über einen
+virtuellen Empfänger bei VTable-Offset `+0x15c` weiter. `FUN_080cde24` ist
+zustandsabhängig: Im Zustand 1 verarbeitet sie Controls, in Zustand 2 kann sie
+zuerst `GotoGameRunningLayout` anfordern, und im Zustand 3 sendet sie
+`ExecuteGame`. Die konkrete Empfängerregistrierung ist nicht aufgelöst; aus
+diesen Produzenten gibt es keinen statischen Aufruf zu `FUN_080f0f18` oder
+`FUN_08102f64`. Das stützt einen UI-/Lifecycle-Pfad, beweist aber keine
+Kaltstart-Erreichbarkeit und schließt einen dynamischen Callback nicht aus.
+
 ## Bewertung und nächste statische Schritte
 
 Der neue Befund bestätigt einen persistenten Games-Verzeichnispfad und einen
@@ -71,11 +82,12 @@ Authentifizierungs-Bypass oder Rockbox-Handoff. Ein OSOS-Laufzeitfehler, der
 Rockbox nach jedem Kaltstart startet, ist damit weiterhin nicht gefunden.
 
 Offen bleiben die Erzeugung/Registrierung des `TEAppShell`-Objekts, der
-indirekte Aufruf von VTable-Slot `+0xa8` und die Laufzeitverbindung zum
-`eAppMotor::loadApp`-Pfad. Als Nächstes sollte die externe
-Konstruktor-/Factory-Registrierung und der Empfänger von `ExecuteGame`
-statisch verfolgt werden. Ein Live-Trace wäre erst nötig, wenn das Gerät wieder
-verfügbar ist; bis dahin ist kein Gerätezugriff erforderlich.
+indirekte Aufruf von VTable-Slot `+0xa8`, der Empfänger von `ExecuteGame` bei
+`+0x15c` und die Laufzeitverbindung zum `eAppMotor::loadApp`-Pfad. Als Nächstes
+sollten die externe Konstruktor-/Factory-Registrierung und die dynamische
+Empfängerregistrierung statisch verfolgt werden. Ein Live-Trace wäre erst nötig,
+wenn das Gerät wieder verfügbar ist; bis dahin ist kein Gerätezugriff
+erforderlich.
 
 Rohbelege (temporäre Exporte):
 
@@ -87,3 +99,5 @@ Rohbelege (temporäre Exporte):
 - `/tmp/OSOS_games_typeinfo_20261026.txt`
 - `/tmp/OSOS_games_class_vtable_words_20261026.txt`
 - `/tmp/OSOS_games_registration_function_20261026.txt`
+- `/tmp/OSOS_games_launch_callbacks_20261026.txt`
+- `/tmp/OSOS_game_action_string_callers_20261026.txt`
