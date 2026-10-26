@@ -271,7 +271,11 @@ Sitzung wurden keine Sektoren geschrieben. Die RAM-Disk ist laut
 `ramdisk_write_sectors()` nur ein Speicherbereich bei `RAMDISK_ADDR`; ihre
 Änderungen wären flüchtig und würden den benötigten persistenten Trigger nicht
 ersetzen. Ob Apples eigener USB-Disk-Modus die Datenpartition beschreibbar
-exportiert, bleibt offen.
+exportiert, bleibt für dieses Gerät noch ungetestet. Apples Anleitung beschreibt
+für iPod nano die Verwendung als Festplatte und das Kopieren beliebiger Dateien
+zum Gerät; das macht einen schreibbaren Hostpfad plausibel, belegt aber nicht,
+dass genau `iPod_Control/Device/accessories.reg` dort ersetzt werden kann:
+[Apple Support: iPod als Festplatte verwenden](https://support.apple.com/en-my/guide/itunes/itns3114/windows).
 
 ## Writer/Producer
 
@@ -328,8 +332,10 @@ ist die Rückkehr nicht belegt. Deshalb wurde der Apple-USB-Modus hier nicht
 gestartet.
 
 1. Statisch weiterverfolgen, ob Apples eigener USB-Disk-Modus oder ein OSOS-
-   Dateipfad `accessories.reg` persistent verändern kann. Der Rockbox-USB-
-   Modus erlaubt auf dem iPod nur RAM-Disk-Schreibzugriffe.
+   Dateipfad `accessories.reg` persistent verändern kann. Apples Anleitung
+   bestätigt allgemeines Dateikopieren im Disk-Modus, der Zugriff auf genau
+   diese Systemdatei bleibt zu prüfen. Der Rockbox-USB-Modus erlaubt auf dem
+   iPod nur RAM-Disk-Schreibzugriffe.
 2. Die abgezählte ROP-Folge vollständig in das bestätigte Format einordnen und
    die Pfadauflösung für `/.rockbox/bootloader.bin` offline prüfen.
    `rockbox.ipod` und `n5g-ramdisk.img` liegen bereits unter `/.rockbox/`;
