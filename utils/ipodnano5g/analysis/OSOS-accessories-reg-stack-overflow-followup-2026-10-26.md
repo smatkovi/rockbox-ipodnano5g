@@ -152,11 +152,13 @@ kontrollierter Lauf des Loaders. Eine stackrelative Kandidatenfolge lässt sich
 aus den bestätigten Gadgets aber inzwischen bis zum Entry des lokalen
 Rockbox-Laders abzählen.
 
-Der Open-Weg ist bis zum dynamischen VFS-Pfad verfolgt: `FUN_0819878c` baut
-den inneren Stream auf; `FUN_08224970` durchläuft Pfad-/Providerobjekte und
-übergibt die Pfadkomponenten an `FUN_082284e0`. Die konkrete Root-Mount-
-Zuordnung für `/.rockbox/bootloader.bin` ist in den statischen Daten nicht
-belegt. Die Datei- und Providerauflösung bleiben daher offen.
+Der Stream-Wrapper `FUN_0819878c` baut den inneren Stream auf. `FUN_08224970`
+kann für Streammodus 0 Pfadkomponenten an `FUN_082284e0` übergeben. Der unten
+beschriebene Kandidat nutzt `FUN_082721f0(..., mode=0)`, das den Modus vor dem
+Aufruf von `FUN_0827ea84` invertiert; der resultierende Streammodus ist 1 und
+überspringt diese spezielle Komponenten-Schleife. Die konkrete Root-Mount-
+Zuordnung für `/.rockbox/bootloader.bin` ist in den statischen Daten weiterhin
+nicht belegt.
 
 ### Offline abgezählte Loader-ROP-Folge
 
@@ -421,3 +423,57 @@ gestartet.
   exportierte LUNs und deren Schreibstatus im angeschlossenen Rockbox-Modus.
 - `/tmp/ipod-sebipod-readonly/iPod_Control/Device/accessories.reg` –
   read-only extrahierte 69-Byte-Gerätedatei.
+
+## Nachtrag: Service-Slot 0 und Dateizugriff des Loader-Kandidaten
+
+Der Loader-Kandidat öffnet `/.rockbox/bootloader.bin` mit
+`FUN_082721f0(..., mode=0)`. Der disassemblierte Helper übergibt an
+`FUN_0827ea84` als Service-ID ausdrücklich `0`; `FUN_0827ea84` reicht Pfad,
+Modus und Service-ID an `FUN_0819878c` weiter. Damit hängt dieser Kandidat
+konkret von einem nutzbaren Dienst in Registry-Slot 0 ab.
+
+`FUN_0827faca` holt den Dienst über `FUN_0818e934` und `FUN_08268cda`. Ist der
+Slot leer, liefert die Lookup-Routine `FUN_0823fad4` als Fallback. Dessen
+Konstruktor `FUN_08289208` setzt VTable `0x08536a78` und initialisiert unter
+anderem die Felder `+0x04` und `+0x0c` auf null. Der Pfad-Komponenten-Callback
+bei VTable-Offset `+0x58` ist `FUN_0813749c`; er gibt immer null zurück und
+liefert damit selbst keinen Dateizugriff. Entscheidend ist der abschließende
+virtuelle Aufruf bei `FUN_08224970`: Im Fallback zeigt VTable-Offset `+0x14`
+auf `FUN_081c6996`, das bei einem Nullfeld `+0x0c` oder fehlendem Objekt bei
+`+0x04` sofort Fehlercode `2` zurückgibt. `FUN_082721f0` verwirft daraufhin
+den Stream. Wenn Slot 0 beim betreffenden Aufruf leer ist, kann der Kandidat
+die Loader-Datei somit nicht lesen.
+
+Die Kaltstart-Registrierung von Slot 0 bleibt offen. Der Manager wird von
+`FUN_08020448` mit sieben leeren Slots angelegt. Die registrierten Dienste
+werden über `FUN_0818e998` eingetragen. Dessen direkter Wrapper
+`FUN_082154b8` wird im analysierten Code für Slots 4, 5 und 6 benutzt; der
+`rsrc`-Zweig registriert Slot 4, nachdem er bereits Slot 0 abgefragt hat.
+Der weitere direkte Wrapper `FUN_08000a10` kann eine Partition als Dienst
+eintragen, hat im analysierten Programm aber keinen direkten Code-Xref; die
+vorherige Suche fand auch keinen absoluten Thumb-Funktionszeiger darauf. Ein
+indirekter oder außerhalb dieses Abbilds liegender Aufruf ist damit nicht
+ausgeschlossen. Es ist daher nicht belegt, ob Slot 0 beim normalen Kaltstart
+leer bleibt oder auf das FAT-Dateisystem zeigt.
+
+Damit ist eine konkrete Schranke des aktuellen Exploit-Kandidaten verifiziert:
+Die ROP-Folge kann nicht allein aufgrund eines erfolgreichen Stream-Objekt-
+Aufbaus als lauffähig gelten. Sie benötigt einen aktiven Slot-0-Provider,
+erfolgreiche Pfadauflösung und lesbare Bytes der Loader-Datei. Keine dieser
+drei Eigenschaften wurde hier auf dem Gerät getestet; es gab keine USB-,
+NAND- oder NOR-Schreiboperation.
+
+Rohbelege: `/tmp/OSOS_vfs_candidate_open_helper_20261026.txt`,
+`/tmp/OSOS_vfs_stream_factory_20261026.txt`,
+`/tmp/OSOS_vfs_service_handle_20261026.txt`,
+`/tmp/OSOS_vfs_service_lookup_20261026.txt`,
+`/tmp/OSOS_eapp_vfs_normalization_20261026.txt`,
+`/tmp/OSOS_vfs_fallback_vtable_20261026.txt`,
+`/tmp/OSOS_vfs_fallback_open_method_20261026.txt`,
+`/tmp/OSOS_vfs_fallback_blockop_20261026.txt`,
+`/tmp/OSOS_vfs_manager_getter_20261026.txt`,
+`/tmp/OSOS_runtime_service_registry_setters_20261026.txt`,
+`/tmp/OSOS_runtime_provider_reg_callers_20261026.txt`,
+`/tmp/OSOS_disk_provider_parser_a_20261026.txt`,
+`/tmp/OSOS_disk_provider_parser_b_20261026.txt` und
+`/tmp/OSOS_disk_provider_parser_c_20261026.txt`.
