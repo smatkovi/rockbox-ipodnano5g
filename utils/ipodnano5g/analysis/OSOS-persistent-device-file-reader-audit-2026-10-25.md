@@ -147,10 +147,14 @@ Read kann deshalb acht Bytes in die lokalen Slots bei `sp+0x3c` und `sp+0x40`
 schreiben. Im Importzweig werden diese Slots nicht als Parserzustand benutzt;
 der gespeicherte LR liegt weiter oben und wird von diesem begrenzten Write
 nicht direkt erreicht. `FUN_081936ec` ermittelt anschließend mit einer
-NUL-Suche die Stringlänge und legt ein entsprechend großes Zielobjekt an. Ein
-fehlendes NUL kann über das Feldende hinaus Stackbytes lesen; eine
-Kontrollflusswirkung oder verwertbare Offenlegung ist damit noch nicht
-nachgewiesen.
+NUL-Suche die Stringlänge und legt ein entsprechend großes Zielobjekt an. Bei
+64 Nicht-NUL-Bytes liegt der nächste Bytezugriff der Suche bei `sp+0x44`, also
+auf dem vom Caller unverändert gehaltenen Token `local_2c`. Dessen niedrige 24
+Bits sind im `0x3e`-Zweig genau `0x3e`; im ARM-Little-Endian-Abbild folgen daher
+die Bytes `0x3e, 0x00`. Das `strlen` liest somit höchstens ein bekanntes
+Tagbyte jenseits der 64 gelesenen Feldbytes, bevor es terminiert. Die
+Allokation und Kopie umfassen 66 Byte einschließlich dieses Tags und des NUL;
+aus diesem Pfad ergibt sich keine Offenlegung uninitialisierter Stackbytes.
 
 Der allgemeine Skip-Parser `FUN_0826dca0` behandelt Tags mit Oberbyte `0x40`
 rekursiv und kehrt erst bei einem passenden `0xc0`-Endtag zurück. Ein

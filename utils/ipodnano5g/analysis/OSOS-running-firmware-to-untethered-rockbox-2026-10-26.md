@@ -112,8 +112,11 @@ Kontrollflussübernahme:
   aufgelöst. Der Tag-`0x3e`-Leser begrenzt den Feldread auf 64 Byte, obwohl
   sein lokaler Puffer 56 Byte groß ist: höchstens acht Bytes treffen die
   danebenliegenden lokalen Slots, nicht den gespeicherten LR. Deren
-  Kontrollflusswirkung ist nicht belegt. Ein echtes Dateibeispiel und die
-  Host-Schreibbarkeit genau dieses Pfads liegen nicht vor.
+  Kontrollflusswirkung ist nicht belegt. Bei 64 Nicht-NUL-Bytes sieht die
+  anschließende `strlen` höchstens das bekannte Tokenbyte `0x3e` und danach
+  dessen Nullbyte; uninitialisierte Stackdaten werden hierdurch nicht
+  offengelegt. Ein echtes Dateibeispiel und die Host-Schreibbarkeit genau
+  dieses Pfads liegen nicht vor.
 - **Weitere Play-Counts-, Contacts-, Device-Konfigurations- und Workout-XML-
   Pfade:** bisher kein bestätigter Speicherfehler mit Kontrollflusswirkung.
   Der separate iTunes-`Play Counts`-Leser verarbeitet feste Header- und
