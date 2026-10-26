@@ -450,11 +450,12 @@ werden über `FUN_0818e998` eingetragen. Dessen direkter Wrapper
 `FUN_082154b8` wird im analysierten Code für Slots 4, 5 und 6 benutzt; der
 `rsrc`-Zweig registriert Slot 4, nachdem er bereits Slot 0 abgefragt hat.
 Der weitere direkte Wrapper `FUN_08000a10` kann eine Partition als Dienst
-eintragen, hat im analysierten Programm aber keinen direkten Code-Xref; die
-vorherige Suche fand auch keinen absoluten Thumb-Funktionszeiger darauf. Ein
-indirekter oder außerhalb dieses Abbilds liegender Aufruf ist damit nicht
-ausgeschlossen. Es ist daher nicht belegt, ob Slot 0 beim normalen Kaltstart
-leer bleibt oder auf das FAT-Dateisystem zeigt.
+eintragen. Eine spätere Thumb-Nachprüfung fand als Caller `DeviceDiscovery`,
+Fall 0: `0x08010cc4` ruft `FUN_08000a10(r5, 0)` auf. Damit ist ein bedingter
+Registrierungsversuch für Slot 0 statisch belegt. Ob der Task im normalen
+Gerätelauf startet und Fall 0 erreicht, sowie ob Slot 0 dabei tatsächlich auf
+das FAT-Dateisystem zeigt, ist nicht dynamisch bestätigt. Details stehen in
+`OSOS-vfs-registration-caller-followup-2026-10-26.md`.
 
 Eine erweiterte Xref-Prüfung aller Aufrufer von `FUN_0818e934` bestätigt diese
 Lücke: Die Startup-Funktion `FUN_080202d8` ruft `FUN_08021d08` auf; dieser holt
@@ -462,11 +463,12 @@ den Registry-Manager und ruft danach nur `FUN_08029e80` auf, einen einzelnen
 `bx lr`-Stub. Der weitere Registry-Mutator `FUN_080e7e70` setzt einen
 vorhandenen Slot auf null und wird über `FUN_0821545a` zum Entfernen benutzt.
 Die anderen direkten Manager-Aufrufer sind Lookups, Synchronisation oder
-Statusabfragen. Der einzige direkte Insert-Aufruf bleibt `FUN_0818e998` über
-`FUN_082154b8` und `FUN_08000a10`. Für `FUN_08000a10` fand Ghidra keinen
-Code-Xref; zusätzlich enthält das rohe Runtime-Abbild weder den geraden
-Funktionszeiger `0x08000a10` noch den Thumb-Zeiger `0x08000a11` als 32-Bit-Wert.
-Das schließt indirekte Aufrufe aus geladenem oder externem Code nicht aus.
+Statusabfragen. Die beiden gefundenen direkten Insert-Wrapper sind
+`FUN_082154b8` und `FUN_08000a10`; der zuvor übersehene Caller von
+`FUN_08000a10` ist der Thumb-Aufruf bei `0x08010cc4`. Im Runtime-Abbild gibt es
+keinen absoluten Pointer auf `0x08000a10`/`0x08000a11`; die Caller-Nachprüfung
+fand auch keinen weiteren indirekten Pointer-Verweis. Die alte Aussage, für
+`FUN_08000a10` gebe es keinen Code-Xref, ist überholt.
 
 Der komplette Xref-Auszug liegt unter
 `/tmp/OSOS_vfs_manager_all_xrefs_20261026.txt`; die untersuchten Startup-,

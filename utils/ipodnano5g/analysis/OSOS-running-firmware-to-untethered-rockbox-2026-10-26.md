@@ -701,11 +701,14 @@ schreibt sie den Zeiger in den Slot. `FUN_0826384c` verwirft Slot-IDs ab 7,
 bevor sie den Slotzugriff ausführt; ein einfacher Registry-Indexüberlauf ist
 damit in diesem Pfad nicht gegeben. Der automatische `rsrc`-Pfad ruft diese
 Routine über `FUN_082154b8` auf und belegt damit höchstens die bedingte
-Erzeugung von Slot 4 aus Daten, die über Slot 0 gelesen werden. Die andere
-direkte Aufrufstelle ist `FUN_08000a10`; für sie gibt es im analysierten
-Programm keinen direkten Code-Xref, und die Suche nach einem absoluten
-Thumb-Funktionszeiger fand keinen Treffer. Wie der physische Dateidienst für
-Slot 0 beim normalen Kaltstart registriert wird, bleibt daher ungeklärt.
+Erzeugung von Slot 4 aus Daten, die über Slot 0 gelesen werden. Der weitere
+Insert-Wrapper `FUN_08000a10` hat einen direkten, zuvor wegen fehlender
+Thumb-Disassemblierung übersehenen Caller: `DeviceDiscovery`, Fall 0, bei
+`0x08010cc4`; er übergibt Slot-ID 0. Der physische Dateidienst für Slot 0,
+der tatsächliche Schedulerstart und das Erreichen von Fall 0 beim normalen
+Kaltstart bleiben ungeklärt. Die Gegenprüfung im vollständigen Body und die
+Pointer-Suche sind dokumentiert in
+`OSOS-vfs-registration-caller-followup-2026-10-26.md`.
 
 Für einen erfolgreichen OSOS-RCE gäbe es lokal bereits einen passenden
 Rockbox-seitigen Startpfad: Der N5G-Bootloader aus
