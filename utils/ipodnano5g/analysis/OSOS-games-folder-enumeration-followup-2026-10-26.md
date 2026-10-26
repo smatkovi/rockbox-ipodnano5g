@@ -101,3 +101,35 @@ Rohbelege (temporäre Exporte):
 - `/tmp/OSOS_games_registration_function_20261026.txt`
 - `/tmp/OSOS_games_launch_callbacks_20261026.txt`
 - `/tmp/OSOS_game_action_string_callers_20261026.txt`
+
+## Nachtrag: `TMP_SystemApp` und der MainApp-Startpfad
+
+Die beim MainApp-Start erzeugte `TMP_SystemApp`-Instanz wurde anhand von
+RTTI/VTable weiter verfolgt. Ihr VTable liegt bei `0x084fc984`; der Konstruktor
+`FUN_08023670` setzt diesen Zeiger und wird von `FUN_080202d8` aufgerufen. Der
+anschließende virtuelle Aufruf aus `FUN_080202d8` geht an Slot `+0x16c`, dessen
+Eintrag `0x0816c897` auf den Thumb-Code `0x0816c896` zeigt. Dieser besteht nur
+aus `bx lr` und ist ein No-op.
+
+Die für Games relevantere Methode `FUN_0803b520` steht dagegen bei VTable-Slot
+`+0xa4`. Ihr dekompilierter Code registriert `TDiskModeCntlr`,
+`TChargingModeCntlr` und `TChargingModeLowPowerCntlr` und ruft danach
+`FUN_0804933c` auf, das UI-Fabriken einschließlich Games-Komponenten
+registriert. Für `FUN_0803b520` fand die Ghidra-Referenzsuche nur den
+VTable-Datenzeiger bei `0x084fca28`, keinen direkten Code-Aufrufer. Auch der
+direkte Aufrufgraph ab `FUN_080202d8` (Tiefe 24) erreicht die Methode und
+`FUN_0804933c` nicht.
+
+Damit ist die Erstellung der SystemApp beim MainApp-Start belegt, aber nicht
+die Ausführung ihrer Games-/UI-Registrierung beim Kaltstart. Ein indirekter
+Framework-Aufruf oder Overlay-Dispatch bleibt möglich. Der Befund schließt
+keinen Fehler im laufenden OSOS aus, liefert aber keinen automatischen
+Games-/eApp-Parsertrigger und keinen Rockbox-Handoff.
+
+Rohbelege: `/tmp/OSOS_TMPSysApp_register_method_20261026.txt`,
+`/tmp/OSOS_TMPSysApp_virtual_start_slot_16c_20261026.txt`,
+`/tmp/OSOS_TMPSysApp_vtable_slot_16c_20261026.txt`,
+`/tmp/OSOS_TMPSysApp_factory_bootstrap_20261026.txt` und
+`/tmp/OSOS_games_bootstrap_vtable_20261026.txt`. Die Ghidra-Referenzsuche lief
+mit `-noanalysis -readOnly`; der Funktionsauszug wurde in einer isolierten
+Projektkopie angelegt. Keine Geräte-, USB-, DFU-, Boot- oder Flashaktion.
