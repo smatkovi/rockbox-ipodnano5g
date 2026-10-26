@@ -143,6 +143,40 @@ Geräte-/USB-/DFU-/Boot-/Flashaktion. Der Rohscan auf absolute und
 base-relative Funktionszeiger ist in
 `/tmp/OSOS_mainapp_event_pointer_scan_20261026.txt` festgehalten.
 
+## Nachtrag: FAT32-Spuren im OSOS-Body eingegrenzt (26.10.2026)
+
+Ein erster read-only-Suchlauf nach `FAT32`, `FAT12` und `FAT16` im lokalen
+dechiffrierten OSOS-Body (`nano5g/osos_decrypted/osos_body.bin`) fand vier
+Codeverwendungen der FAT32-Zeichenketten. Die Ghidra-Xrefs ordnen sie
+Format-/Volume-Verwaltung zu:
+
+- `FUN_08034df4` schreibt `FAT32` in einen erzeugten Volume-Sektor und reicht
+  den Sektor über den Blockgeräte-VTable-Slot `+8` zum Schreiben weiter.
+- `FUN_08037f18` erzeugt bzw. aktualisiert Volume-/Bootsektor-Metadaten; die
+  Funktion verarbeitet Geometrie und schreibt vorbereitete Sektordaten.
+- `FUN_080365c8` setzt ein Formatlabel (`HFSPLUS`, `FAT32` oder `Unknown`) in
+  einem Volume-Statusobjekt.
+- `FUN_08058658` serialisiert Volumeformat- und Unterstützungsfelder in einen
+  Ausgabedatensatz.
+
+Diese Verwendungen zeigen keinen FAT-Verzeichnis- oder Datei-Mountparser und
+keine beim OSOS-Kaltstart automatisch gelesene FAT-Metadaten-Eingabe. Das ist
+kein Beweis, dass der Parser fehlt: Der eigentliche Dateisystemtreiber kann
+über einen externen Kernel-/Providerdienst, eine nicht extrahierte Komponente
+oder einen dynamischen Dispatch eingebunden sein. Die vorhandene Spur ist
+deshalb eine Eingrenzung, kein Ausschluss eines FAT-Angriffs.
+
+Read-only-Rohbeleg: `/tmp/OSOS_fat_mount_funcs_20261026.txt`; Ghidra-Projekt
+`nano5g/ghidra-projects/N5G_OSOS_RTOS.gpr`, Programm `osos_body.bin`, mit
+`-noanalysis -readOnly`. Es wurden keine Geräte-, USB-, DFU-, Boot- oder
+Flashoperationen ausgeführt.
+
+Nächster sinnvoller Offline-Schritt: den Blockgeräte-/Filesystem-Provider,
+der beim Start den Datenvolume-Mount bereitstellt, über seine registrierten
+VTables und Dienst-IDs identifizieren. Erst wenn dessen Mountpfad als
+Kaltstart-erreichbar belegt ist, lohnt sich eine gezielte Prüfung von
+FAT-Verzeichnis- und Clustergrenzen.
+
 ## Nachtrag: OSOS-Abbild-Provenienz und Music-Event-VTable (26.10.2026)
 
 Der Adressversatz des Offline-Abbilds ließ sich bytegenau gegen die Quelldatei
