@@ -495,3 +495,87 @@ Rohbelege: `/tmp/OSOS_games_vfs_constructor_followup_20261026.txt`,
 `/tmp/OSOS_games_eapp_cert_parser_helpers_20261026.txt`. Alle Ghidra-Läufe
 verwendeten `-noanalysis -readOnly`; es gab keinen Geräte-, USB-, DFU-, Boot-
 oder Flashzugriff.
+
+## Nachtrag: Manifest-Push-Parser und Entity-Grenzen (26.10.2026)
+
+Der automatische Manifestpfad benutzt tatsächlich den XML-Push-Parser:
+`FUN_08240ac8` reicht die Datei in höchstens `0x200`-Byte-Blöcken an
+`FUN_082779c8`, das jeweils `FUN_080e1310` fortsetzt. Korrektur zur früheren
+Abgrenzung: Der Push-Zustandsautomat ruft bei `&` über `0x080e182c`
+`FUN_08123090` auf. Für interne allgemeine Entities kann diese Funktion in
+`FUN_08138c58` oder `FUN_0813980c` verzweigen; deren Parserkopien erreichen
+`FUN_08216dc4` und damit bei Entity-Inhalt mit Elementen auch
+`FUN_08139538`. Die rekursive Elementroutine ist also über die Entity-Route
+erreichbar, nicht als direkter Aufruf jedes Start-Tags des Push-Parsers.
+
+Im Slot-0-Manifestaufruf kommen die Zusatzoptionen als null an.
+`FUN_082bf67c` ergänzt `0x10000`; `FUN_082d3914` übernimmt damit im sichtbaren
+Optionspfad `XML_PARSE_COMPACT`. `NOENT` (`0x2`), `DTDLOAD` (`0x4`) und `HUGE`
+(`0x80000`) werden dort nicht angefordert. Die aktuelle libxml2-Dokumentation
+ordnet `COMPACT` der Speicherersparnis, `NOENT` der Entity-Ersetzung und
+`HUGE` gelockerten Grenzwerten zu; das ist keine Versionsbestimmung für den
+eingebetteten Parser ([Optionenreferenz](https://gnome.pages.gitlab.gnome.org/libxml2/html/parser_8h.html)).
+Die genaue Wirkung globaler Defaults und des externen Entity-Loaders bleibt
+offen.
+
+Die konkreten Zielgrenzen im Abbild sind kleiner als in der ersten
+Abschätzung angenommen. Der Wert bei `0x08672358` ist little-endian `0x100`
+(256), nicht `0x10000`; `FUN_08139538` und `FUN_0824c628` verwenden diesen
+Wert für Element-/Namenstacktiefe. `FUN_08138c58` und `FUN_0813980c` weisen
+Entity-Verschachtelung über `0x28` (40) ohne `HUGE` ab; mit `HUGE` läge ihre
+Grenze bei `0x400` (1024). `FUN_0820142c`, aufgerufen nach Entity-Verarbeitung
+aus `FUN_08123090`, prüft außerdem das Verhältnis der geparsten Entity-Menge
+zur bereits konsumierten Eingabe und setzt bei Überschreitung Fehler `0x59`.
+Aus den verwendeten Faktoren ergibt sich statisch eine Schwelle von ungefähr
+3,33:1; die genaue Laufzeitbilanz wurde nicht gemessen. `HUGE` würde auch
+diese Prüfung umgehen, wird im Manifest-Aufruf aber nicht gesetzt.
+
+Damit ist eine kontrollierbare XML-Eingabe und ein tiefer interner
+Verarbeitungspfad belegt, aber kein Speicherfehler oder RCE. Die 256er
+Elementgrenze ergibt zusammen mit den sichtbaren 72- und 24-Byte-Frames eine
+grobe Obergrenze von rund 24 KiB für die gegenseitige Elementrekursion; das
+liegt unter dem statisch eingerichteten `MainAppTask`-Stack von `0x20000`
+Byte, ohne damit Stack-Guard oder den gesamten Aufrufstack zu beweisen. Die
+40er Entity-Grenze und der Amplifikationscheck erschweren zusätzlich einen
+einfachen verschachtelten-XML- oder Entity-Expansion-DoS. Übrig bleiben
+ungeprüfte Parser-/Heapfehler, der nicht verifizierte physische Slot-0-Pfad
+und die Schreibbarkeit des Manifests. Es gibt weiterhin keinen bestätigten
+OSOS-Exploit, keinen Bootloader-Schreibpfad und keinen Rockbox-Handoff.
+
+## Zusatzprüfung: Games-Pfadnamen und UTF-8-Normalisierer
+
+Der automatische Games-Enumerator `FUN_081b343c` übernimmt den vom
+Verzeichnisiterator gelieferten Namen, hängt ihn an den Games-Pfad an und
+übergibt den so gebildeten Pfad an `FUN_08196cb8`. Dieser Wrapper löst den
+VFS-Dienst für den jeweiligen logischen Slot auf und ruft dessen virtuellen
+Slot `+0x50` auf. Der Verzeichnisname erreicht damit eine VFS-Pfadabfrage im
+Kaltstartscan. Ob diese konkrete Implementierung `FUN_082284e0` und damit den
+bekannten UTF-8-Komponenten-Splitter `FUN_08264d44` erreicht, bleibt offen:
+der Empfänger von VFS-Slot `+0x50` ist in diesem Abbild nicht aufgelöst.
+
+Der anschließende Manifest-Dateipfad ist enger abgegrenzt. `FUN_082526ca`
+öffnet über `FUN_0823ff24`; diese Funktion ruft `FUN_0827f35c` mit Modus `1`
+auf und speichert ihn im Streamobjekt. `FUN_08224970` ruft die fragliche
+Komponenten-Normalisierung nur für Modus `0` auf. Der belegte Manifest-Read
+läuft daher nicht selbst durch diesen Splitter. Eine mögliche Auslösung bei
+der vorangehenden VFS-Abfrage des Verzeichnisnamens bleibt eine bedingte Spur,
+keine nachgewiesene Kaltstart-Exploitation. Zusätzlich ist nicht geklärt, ob
+der FAT-/VFS-Treiber fehlerhafte UTF-8-Namen überhaupt unverändert an OSOS
+liefert.
+
+Rohbelege: `/tmp/OSOS_games_path_normalizer_chain_20261026.txt`,
+`/tmp/OSOS_games_vfs_path_candidates_20261026.txt`,
+`/tmp/OSOS_games_vfs_method_bridge_20261026.txt` und
+`/tmp/OSOS_games_vfs_service_context_20261026.txt`. Die Läufe öffneten eine
+Projektkopie mit `-noanalysis -readOnly`; die Reports ändern weder das Gerät
+noch Flash-Inhalte.
+
+Rohbelege: `/tmp/OSOS_xml_live_parser_refs_20261026.txt`,
+`/tmp/OSOS_xml_callbacks_and_limit_20261026.txt`,
+`/tmp/OSOS_xml_core_callback_paths_20261026.txt`,
+`/tmp/OSOS_xml_entity_and_stack_reach_20261026.txt`,
+`/tmp/OSOS_xml_entity_option_defaults_20261026.txt`,
+`/tmp/OSOS_xml_entity_expansion_guard_20261026.txt` und
+`/tmp/OSOS_xml_manifest_reader_construction_20261026.txt`. Die Checks liefen
+im read-only-Ghidra-Projekt; es gab keine Geräte-, USB-, DFU-, Boot-, NAND-,
+NOR- oder Flashaktion.
