@@ -309,3 +309,65 @@ Rohbelege: `/tmp/OSOS_nand_signed_driver_loader_20261026.txt`,
 `nano5g/ghidra-logs/OSOS_strings_refs.tsv`. Alle Ghidra-Läufe verwendeten
 `-noanalysis -readOnly`; es gab keine Geräte-, USB-, DFU-, Boot- oder
 Flashaktion.
+
+## Nachtrag: Partitions- und früher Resource-Mountpfad (26.10.2026)
+
+Die zunächst gefundene MBR-Auswahl `FUN_0802f4c8` prüft bei akzeptierten
+Partitionstypen den Bootstatus, nichtleeren Start und nichtleere Länge. Sie
+vergleicht die Länge mit der Gesamtsektorzahl des Geräts, prüft aber im
+sichtbaren Code nicht `Start + Länge <= Gesamtsektorzahl`. Das allein belegt
+einen möglichen ungültigen Blockgerätebereich, keinen Speicherfehler.
+
+Der zugehörige Einstieg `FUN_0802ec8c` ruft `FUN_0802fbe8` und anschließend
+`FUN_081bcc14` auf. Im read-only Ghidra-Xrefgraph hat `FUN_0802ec8c` keinen
+statischen Aufrufer; `FUN_0802fbe8` wird nur von diesem Einstieg referenziert.
+Zwei Rohbytesuchen nach `8c ec 02` waren Scheintreffer: Die Instruktionen bei
+`0x082f3748` und `0x08368cea` sind `BLX` zu `0x08231064` bzw. `0x0823c604`,
+nicht Aufrufe von `FUN_0802ec8c`. Eine indirekte Registrierung bleibt möglich,
+ist aber nicht gefunden.
+
+Daneben gibt es einen tatsächlich referenzierten Mountwrapper:
+`FUN_08243734` ruft `FUN_081bcc14` auf und hat vier direkte Aufrufstellen in
+`FUN_080f9d5c`, `FUN_080e307c` und `FUN_080fcb2c`. Vor dem Eintrag in die
+Volumes-Tabelle prüft `FUN_081bcc14` über `FUN_08291ac8`, dass der Slotindex
+kleiner als 7 ist. `FUN_0826b6e4` übernimmt Start und Länge in das
+Volumeobjekt; ob dessen spätere Lese-/Schreibmethoden die Grenzen des
+übergeordneten Geräts prüfen, ist noch offen.
+
+Ein früherer Resourcepfad ist zusätzlich sichtbar: `FUN_081da69c` ruft
+`FUN_080df4b8` auf. Bei erfolgreichem Status von `FUN_081d6bac(0)` fordert
+dieser über `FUN_080f9d5c` den FourCC `crsr` (Rohwort `0x72737263`), ID 0,
+Typ 2 an. `FUN_080f9d5c` verwendet `FUN_08113178`, das Sektor 0 nach
+Partitionsmetadaten durchsucht und bei einem Apple-Partitionsdatensatz den
+Eintrag `APPLE_MDFW` auswählt. `FUN_081121f0` sucht dann in dessen
+Resource-Tabelle mit höchstens 16 Einträgen nach dem Schlüssel und gibt den
+gefundenen Start-/Längenbereich an `FUN_08243734` weiter. Die
+64-Bit-Multiplikationen werden auf einen nichtnulligen oberen Wortteil
+geprüft; eine sichtbare Prüfung, dass der resultierende Bereich vollständig
+innerhalb der `APPLE_MDFW`-Partition liegt, fehlt in `FUN_081121f0`.
+
+Das ist der bisher klarste Kandidat für einen frühen fehlerhaften
+Storagebereich. Die Daten stammen laut sichtbarem Pfad aus `APPLE_MDFW`,
+nicht nachweislich aus der beschreibbaren FAT-Datenpartition. Weder ein
+Speicher-Overwrite noch kontrollierter PC/LR, Codeausführung, Signaturumgehung
+oder ein Rockbox-Handoff sind damit belegt. `FUN_081da69c` wird aus
+`FUN_08053670` und einem bedingten Callback aufgerufen; `FUN_08053670` wird
+von `FUN_08050d84` aufgerufen. Für `FUN_08050d84` fand sich kein direkter
+Code-Xref, deshalb bleibt die letzte Registrierung bzw. automatische
+Kaltstart-Erreichbarkeit dieser Kette unaufgelöst.
+
+Rohbelege: `/tmp/OSOS_partition_mount_depth_20261026.txt`,
+`/tmp/OSOS_partition_mount_refs_20261026.log`,
+`/tmp/OSOS_partition_false_call_1_20261026.txt`,
+`/tmp/OSOS_partition_false_call_2_20261026.txt`,
+`/tmp/OSOS_partition_alternate_mount_path_20261026.txt`,
+`/tmp/OSOS_partition_mount_wrapper_callers_20261026.txt`,
+`/tmp/OSOS_partition_mount_parent_context_20261026.txt`,
+`/tmp/OSOS_boot_resource_mount_parser_20261026.txt`,
+`/tmp/OSOS_boot_resource_volume_provider_20261026.txt`,
+`/tmp/OSOS_boot_resource_initializer_refs_20261026.log` und
+`/tmp/OSOS_boot_resource_root_context_20261026.txt`. Ghidra-Läufe waren
+`-noanalysis -readOnly`; das Gerät blieb unangetastet. Nächster Schritt ist,
+die letzte Startup-Registrierung und die Herkunft/Schreibbarkeit von
+`APPLE_MDFW` zu klären und die tatsächlichen Lower-I/O-Grenzprüfungen des
+Mountwrappers zu verfolgen.
