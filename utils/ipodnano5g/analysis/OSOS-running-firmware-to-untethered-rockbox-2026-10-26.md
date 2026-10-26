@@ -676,3 +676,117 @@ Rohbelege: `/tmp/OSOS_xml_live_parser_refs_20261026.txt`,
 `/tmp/OSOS_xml_manifest_reader_construction_20261026.txt`. Die Checks liefen
 im read-only-Ghidra-Projekt; es gab keine Geräte-, USB-, DFU-, Boot-, NAND-,
 NOR- oder Flashaktion.
+
+## Nachtrag: weitere Aufrufer des Pfadnormalisierers (26.10.2026)
+
+Der bisher nicht zugeordnete BL bei `0x0802ab90` liegt am Beginn einer
+unvollständig erkannten Routine ab `0x0802ab8a`. Die separat in einer
+read-only-Projektkopie erstellte Disassemblierung zeigt einen Aufruf
+`FUN_081b17ec(param_1, 0)`. Anschließend initialisiert der Caller Felder des
+Objekts und legt ein weiteres `0x4c`-Byte-Objekt an. Für `0x0802ab8a` gibt es
+keinen Code-Xref; ein aligned Pointer-Scan fand genau einen Thumb-Zeiger
+`0x0802ab8b` bei `0x084fef8c`. Dieser liegt in einer Sechs-Wort-Tabelle mit
+den Einträgen `0x080ee9cd`, `0x0802ab8b`, `0x0802ab87`, `0x080bd505`,
+`0x080bd4d1` und `0x08050411`. Die übrigen untersuchten Ziele sind einfache
+Return-/Nullwert-Stubs. Das sieht nach einem Dispatch-/Methodenblock aus, seine
+Klasse und sein Verbraucher sind aber nicht identifiziert. Für die Tabellenbasis
+gibt es keinen Ghidra-Xref; `0x0802ab8a` steht auch nicht in der bekannten
+globalen OSOS-Constructor-Tabelle. Ein automatischer Kaltstartaufruf ist damit
+nicht belegt.
+
+Der zweite direkte Aufrufer ist `FUN_08148740`: Er holt über
+`FUN_081b09d8` einen Dienst mit Schlüssel `0xad00` und ruft
+`FUN_081b17ec(dienst, 1)` auf. Bei Modus 1 kehrt der Helper sofort zurück,
+wenn das Byte bei `dienst + 0xa4` null ist. Wird der Pfad verarbeitet, stammt
+die normalisierte Zeichenkette fest aus dem ROM-String
+`iPod_Control/Device`; `FUN_082619d2` hängt danach das feste Literal `timer`
+an. Der konkrete Pfad ist damit `iPod_Control/Device/timer`. Der bekannte
+Splitter erhält an dieser Stelle keinen vom Benutzer gelieferten Pfadnamen.
+Im Modus 0 wird der Pfad über `FUN_082721f0` zum Lesen geöffnet und
+`FUN_0813ea44` verarbeitet Tokens daraus. Dessen Skip-Pfad
+`FUN_0826dca0` ruft sich bei Container-Tags mit oberstem Byte `0x40`
+rekursiv auf, bis ein passender Terminator `0xc0` erscheint. In der
+rekursiven Funktion ist kein Tiefenzähler sichtbar; jeder Aufruf sichert sechs
+Register (24 Byte). Sehr tiefe verschachtelte Eingaben könnten daher den
+verwendeten Task-Stack erschöpfen. Das ist ein bedingter Absturzkandidat, kein
+belegter Stack-Overwrite oder RCE. `FUN_082721f0` reicht `0x8000` als
+Puffergröße in den Stream-Wrapper; der Puffer-Helper reserviert dafür
+`0x8000 + 0x20` Byte. Der Wrapper `FUN_08260198` initialisiert sein
+Restlängenfeld auf `0xffffffff`; `FUN_0820cc90`/`FUN_0823c9c0` lesen danach
+in wiederholten Pufferblöcken weiter. `0x8000` ist daher in dieser
+Stream-Schicht kein Gesamtlimit der Datei. Die konkrete Dateigrenze kommt vom
+Provider-EOF beziehungsweise einem Providerfehler; ein zusätzliches
+Gesamtgrößenlimit wurde in diesem Pfad nicht gefunden.
+
+Dieser Modus-0-Lesepfad ist nur am unzugeordneten Caller `0x0802ab8a`
+nachgewiesen. Der andere direkte Aufrufer `FUN_08148740` verwendet Modus 1;
+ob das Statusbyte `dienst + 0xa4` dort jemals gesetzt ist, bleibt offen.
+Schreibbarkeit der Datei `timer`, Parser-Stackgröße und ein automatischer
+Kaltstartaufruf des Modus-0-Callers sind nicht belegt. Die Eintrags- und
+Tokenverarbeitung wurde noch nicht auf weitere Speicherfehler geprüft.
+
+`FUN_08148740` steht in `FUN_0825da88`, dessen nachgewiesene direkte Aufrufer
+sind `FUN_0835ed24`, `FUN_08058a6c` und `FUN_08251624`. Die ersten beiden
+liegen hinter Event-/Zustandsroutinen; `FUN_08251624` wird unter anderem aus
+einem zeit-/zustandsabhängigen Pfad (`FUN_081f85e0`), einem Ereignisfall in
+`FUN_0813e40c` und einem Bereitschaftsgate in `FUN_0813e1bc` aufgerufen. Damit
+ist ein Runtime-Aufruf des Device-Verzeichnispfads belegt, aber kein
+automatischer, bei jedem Kaltstart erreichter Trigger. Ebenso ist nicht
+gezeigt, dass die anschließend iterierten Verzeichniseinträge den bekannten
+UTF-8-Splitter durchlaufen.
+
+Bewertung: Diese Caller schließen die bisher fehlende direkte Verbindung
+zwischen dem Games-Enumerator und `FUN_082284e0` nicht. Sie liefern eine
+separate, bedingte `iPod_Control/Device`-Eingabespur. Bisher ist weder ein
+Speicherfehler in deren Eintragsverarbeitung noch eine Kontrollflussübernahme
+oder ein OSOS-zu-Rockbox-Handoff nachgewiesen.
+
+## Nachtrag: HTML2Shell-Hinweis
+
+Die String-/Referenzprüfung des Runtime-Abbilds fand die libxml2-Meldung
+`libxml2 built without HTML support` bei `0x080ca060` und `0x0813a5c0` sowie
+`HTML Document not expected` bei `0x08250074`. Im OSOS-Stringbestand wurden
+keine WebKit-, Safari-, Node.js- oder Brotli-Komponenten gefunden. Das belegt
+keinen allgemeinen Browser-/HTML-Renderpfad in diesem OSOS-Abbild; XML/PLIST-
+Parser sind vorhanden. Zur Nummernklärung: `CVE-2026-42069` ist ein echter
+Kirby-CMS-Fehler, bei dem Leserechte auf Site-, Benutzer- und Rollendaten nicht
+hinreichend geprüft wurden ([GitHub-Advisory](https://github.com/advisories/GHSA-2h7v-4372-f6x2),
+[Kirby-Sicherheitsübersicht](https://getkirby.com/security/)); die „HTML2Shell“-
+Grafik dazu ist ein Scherz und beschreibt diese CVE nicht ([Fact Check](https://leadstories.com/hoax-alert/2026/10/fact-check-cve-2026-42069-html2shell-vulnerability.html)).
+Die zunächst genannte `CVE-2026-24069` ist laut [NVD](https://nvd.nist.gov/vuln/detail/CVE-2026-24069)
+ein anderer Fehler: Kiuwan-SAST-SSO für lokal deaktivierte Konten. Der ähnlich
+benannte echte Node.js-Brotli-Fehler ist `CVE-2026-111497`, keine HTML-Lücke;
+die [Node.js-Advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)
+grenzt ihn auf Node.js 22/24/26 ein.
+
+Rohbelege: `/tmp/OSOS_unmapped_call_0802ab90_20261026.txt`,
+`/tmp/OSOS_callsite_refs_0802ab90_20261026.txt`,
+`/tmp/OSOS_caller_0802ab8a_20261026.txt`,
+`/tmp/OSOS_function_08148740_20261026.txt`,
+`/tmp/OSOS_08148740_refs_20261026.txt`,
+`/tmp/OSOS_081b17ec_literals_refs_20261026.txt`,
+`/tmp/OSOS_iPod_Control_Device_string_context_20261026.txt`,
+`/tmp/OSOS_function_0813ea44_20261026.txt`,
+`/tmp/OSOS_function_081c28ea_20261026.txt`,
+`/tmp/OSOS_function_0826dca0_20261026.txt`,
+`/tmp/OSOS_function_0827ea84_20261026.txt`,
+`/tmp/OSOS_function_08271014_20261026.txt`,
+`/tmp/OSOS_function_0818f134_20261026.txt`,
+`/tmp/OSOS_timer_stream_functions_20261026.txt`,
+`/tmp/OSOS_unmapped_caller_table_context_20261026.txt`,
+`/tmp/OSOS_timer_factory_stream_deep_20261026.txt`,
+`/tmp/OSOS_timer_registry_followup_20261026.txt`,
+`/tmp/OSOS_timer_actual_stream_vtables_20261026.txt`,
+`/tmp/OSOS_timer_reader_wrapper_081b832e_20261026.txt`,
+`/tmp/OSOS_timer_wrapper_read_0820cc90_20261026.txt`,
+`/tmp/OSOS_timer_reader_state_20261026.txt`,
+`/tmp/OSOS_html_parser_refs_corrected_20261026.txt`,
+`/tmp/OSOS_0825da88_caller_refs_20261026.txt`,
+`/tmp/OSOS_function_0835ed24_20261026.txt`,
+`/tmp/OSOS_function_08058a6c_20261026.txt`,
+`/tmp/OSOS_music_startup_followup_20261026.txt`,
+`/tmp/OSOS_function_081f85e0_20261026.txt`,
+`/tmp/OSOS_function_0813e40c_20261026.txt` und
+`/tmp/OSOS_function_0813e1bc_20261026.txt`. Alle Ghidra-Auswertungen
+verwendeten `-noanalysis -readOnly`; es gab keinen Geräte-, USB-, DFU-, Boot-
+oder Flashzugriff.
