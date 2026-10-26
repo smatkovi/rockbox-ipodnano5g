@@ -346,11 +346,23 @@ gefundenen Start-/Längenbereich an `FUN_08243734` weiter. Die
 geprüft; eine sichtbare Prüfung, dass der resultierende Bereich vollständig
 innerhalb der `APPLE_MDFW`-Partition liegt, fehlt in `FUN_081121f0`.
 
-Das ist der bisher klarste Kandidat für einen frühen fehlerhaften
-Storagebereich. Die Daten stammen laut sichtbarem Pfad aus `APPLE_MDFW`,
-nicht nachweislich aus der beschreibbaren FAT-Datenpartition. Weder ein
-Speicher-Overwrite noch kontrollierter PC/LR, Codeausführung, Signaturumgehung
-oder ein Rockbox-Handoff sind damit belegt. `FUN_081da69c` wird aus
+Der lokale Stock-Container bestätigt den Parserpfad: `Firmware.MSE` hat bei
+Offset `0x100` die erwartete Signatur `]ih[` und den Resource-Tabellenoffset
+`0x4000`. Mit 4096-Byte-Blöcken führt die Division in `FUN_081121f0` zum
+Tabellenbereich bei `0x5000`; dort enthält der Eintrag bei `0x5118` den
+Schlüssel `DNANcrsr`, Datenoffset `0x27b000` und Länge `0x07901263`. Dieser
+Datenbereich ist bytegenau identisch mit dem lokalen extrahierten
+`segments/rsrc.bin` (SHA-256
+`d3c6ce3ffd81ffbf9547be6906167a7114fdbce2ba64075cce827a1ce8267093`). Der
+`crsr`-Aufruf greift damit auf die Apple-`rsrc`-Komponente im
+`APPLE_MDFW`-Firmwarebereich zu.
+
+Die fehlende Bereichsprüfung bleibt eine strukturelle Schwäche, falls diese
+Metadaten verändert werden können. Die konkrete Referenzeingabe ist jedoch
+Apple-Firmwareinhalt und nicht als von der beschreibbaren FAT-Datenpartition
+beeinflussbar belegt. Weder ein Speicher-Overwrite noch kontrollierter PC/LR,
+Codeausführung, Signaturumgehung oder ein Rockbox-Handoff sind damit belegt.
+`FUN_081da69c` wird aus
 `FUN_08053670` und einem bedingten Callback aufgerufen; `FUN_08053670` wird
 von `FUN_08050d84` aufgerufen. Für `FUN_08050d84` fand sich kein direkter
 Code-Xref, deshalb bleibt die letzte Registrierung bzw. automatische
@@ -366,8 +378,9 @@ Rohbelege: `/tmp/OSOS_partition_mount_depth_20261026.txt`,
 `/tmp/OSOS_boot_resource_mount_parser_20261026.txt`,
 `/tmp/OSOS_boot_resource_volume_provider_20261026.txt`,
 `/tmp/OSOS_boot_resource_initializer_refs_20261026.log` und
-`/tmp/OSOS_boot_resource_root_context_20261026.txt`. Ghidra-Läufe waren
+`/tmp/OSOS_boot_resource_root_context_20261026.txt` sowie
+`/tmp/OSOS_MSE_crsr_resource_match_20261026.txt`. Ghidra-Läufe waren
 `-noanalysis -readOnly`; das Gerät blieb unangetastet. Nächster Schritt ist,
-die letzte Startup-Registrierung und die Herkunft/Schreibbarkeit von
-`APPLE_MDFW` zu klären und die tatsächlichen Lower-I/O-Grenzprüfungen des
-Mountwrappers zu verfolgen.
+die letzte Startup-Registrierung und einen OSOS-erreichbaren Schreib- oder
+Updatepfad zu `APPLE_MDFW` zu klären sowie die tatsächlichen
+Lower-I/O-Grenzprüfungen des Mountwrappers zu verfolgen.
