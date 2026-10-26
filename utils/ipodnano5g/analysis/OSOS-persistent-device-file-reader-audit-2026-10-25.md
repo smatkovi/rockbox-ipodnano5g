@@ -28,12 +28,13 @@ Dieser Schritt hat zusätzliche OSOS-Dateipfade eingegrenzt:
   einfachen 32-Bit-relativen Einträgen zu diesen Zielen blieb ebenfalls leer.
   Das schließt dynamisch erzeugte, anders kodierte oder nicht extrahierte
   Dispatches nicht aus; automatischer Kaltstart ist nicht belegt.
-- `iPod_Control/Device/Users` und `.../PlayCounts`: `FUN_0828bd04` ruft die
-  jeweiligen Routinen `FUN_081ddc3c` und `FUN_081dde48` mit `param2 == 1` auf.
-  Dieser Modus serialisiert die internen Objektlisten in Dateien. Insbesondere
-  der Aufruf aus dem MainApp-Setup `FUN_08086ce8` ist damit ein Schreibpfad,
-  kein Nachweis eines automatischen Dateilese-/Parserpfads. Andere indirekte
-  Aufrufer oder Modi bleiben gesondert zu prüfen.
+- `iPod_Control/Device/Users`: `FUN_0828bd04` ruft `FUN_081ddc3c` mit
+  `param2 == 1` auf; dieser Modus serialisiert die interne Objektliste. Ein
+  automatischer Import ist in dem damaligen Teil-Audit nicht belegt.
+- `iPod_Control/Device/PlayCounts`: `FUN_0828bd04` ruft `FUN_081dde48` mit
+  `param2 == 1` zum Schreiben auf. Ein separater Runtime-Pfad `FUN_081afbcc`
+  liest dieselbe Datei im MainApp-Kaltstart mit `param2 == 0`; siehe Nachtrag
+  unten. Die frühere Einordnung als nur beobachteter Writer war unvollständig.
 - `iPod_Control/Device/iPod_Contacts.db`: `FUN_08277218` erstellt lazy einen
   kleinen Pfad-haltenden Heap-Eintrag für diese Datenbank. Die Funktion selbst
   parst keine Daten. Vier direkte Aufrufer wurden gefunden, ihre vollständige
@@ -129,3 +130,60 @@ Read-only-Rohbelege:
 
 Das Runtime-Abbild ist ein statisches Mapping, kein Live-RAM-Dump. Es gab
 keinen Geräte-, USB-, DFU-, Boot- oder Flashzugriff.
+
+## Nachtrag: Device/PlayCounts wird im MainApp-Kaltstart importiert (26.10.2026)
+
+Die Datei `iPod_Control/Device/PlayCounts` ist von der separaten Datei
+`iPod_Control/iTunes/Play Counts` zu unterscheiden. Der `TEAppShell`-VTable-
+Eintrag `+0xa8` zeigt auf `FUN_08028254`; der dokumentierte MainApp-Factory-
+und Child-Lifecycle ruft diese Methode beim Kaltstart auf. Sie ruft
+`FUN_081afbcc(param + 0x7c, 0)` auf. Dieser Modus öffnet den festen
+`Device/PlayCounts`-Pfad im Lesemodus und parst Tokens `0x3d`, `0x3e` und
+`0x3f`; andere Tags gehen an `FUN_0826dca0`.
+
+Der `0x3e`-Feldleser (`FUN_0822cc02`) begrenzt die gelesene Länge auf `0x40`,
+während der Caller nur einen 56-Byte-Stackpuffer bereitstellt. Ein maximaler
+Read kann deshalb acht Bytes in die lokalen Slots bei `sp+0x3c` und `sp+0x40`
+schreiben. Im Importzweig werden diese Slots nicht als Parserzustand benutzt;
+der gespeicherte LR liegt weiter oben und wird von diesem begrenzten Write
+nicht direkt erreicht. `FUN_081936ec` ermittelt anschließend mit einer
+NUL-Suche die Stringlänge und legt ein entsprechend großes Zielobjekt an. Ein
+fehlendes NUL kann über das Feldende hinaus Stackbytes lesen; eine
+Kontrollflusswirkung oder verwertbare Offenlegung ist damit noch nicht
+nachgewiesen.
+
+Der allgemeine Skip-Parser `FUN_0826dca0` behandelt Tags mit Oberbyte `0x40`
+rekursiv und kehrt erst bei einem passenden `0xc0`-Endtag zurück. Ein
+Rekursionstiefenzähler ist im Funktionskörper nicht sichtbar; pro Ebene sichert
+er sechs Register (24 Byte). Der MainApp-Task wird mit einem
+Stackgrößenargument `0x20000` angelegt: Das Wort an Runtime-VA `0x085512dc`
+ist `0x2000`, und `FUN_0801e3a4` verschiebt es vor dem Aufruf von
+`FUN_08193984` um vier Bits nach links. Tief verschachtelte gültig gepaarte
+Container sind deshalb ein plausibler Task-Stack-Absturzpfad. Der normale
+Writer erzeugt nur die bekannten Tags `0x3d`, `0x3e` und `0x3f`; die
+verschachtelten unbekannten Tags erfordern daher eine geänderte Eingabedatei.
+Die tatsächliche Stackgrenze, ein möglicher Guard und der angrenzende Speicher
+gehören zum importierten Taskdienst und sind im Abbild nicht aufgelöst. Das
+belegt weder kontrollierte Return-Adress-Korruption noch RCE.
+
+Der vorhandene Streampfad übergibt `0x8000` als Puffergröße; der Streamzustand
+startet mit Restlänge `0xffffffff` und lädt weitere Blöcke nach. In diesem
+Wrapper wurde kein Gesamtdateilimit gefunden. Ein echtes Device/PlayCounts-
+Dateibeispiel fehlt im lokalen Backup; auch die Host-Schreibbarkeit genau
+dieses Pfads ist offline nicht verifiziert.
+
+Rohbelege: `/tmp/OSOS_TAppShell_method_08028254_20261026.txt`,
+`/tmp/OSOS_TAppShell_corrected_vtable_and_second_lifecycle_20261026.txt`,
+`/tmp/OSOS_recursive_skip_direct_callers_20261026.txt`,
+`/tmp/OSOS_function_0826dca0_20261026.txt`,
+`/tmp/OSOS_playcounts_helpers_20261026.txt`,
+`/tmp/OSOS_playcounts_stream_bounds_20261026.txt`,
+`/tmp/OSOS_function_08271014_20261026.txt`,
+`/tmp/OSOS_function_0818f134_20261026.txt`,
+`/tmp/OSOS_timer_reader_state_20261026.txt`,
+`/tmp/OSOS_task_create_MainAppTask_helper_20261026.txt`,
+`/tmp/OSOS_boot_mainapp_task_setup_20261026.txt`,
+`/tmp/OSOS_playcounts_callers_20261026.txt` und
+`/tmp/OSOS_device_persistent_file_handlers_20261026.txt`. Alle Ghidra-Läufe
+waren `-noanalysis -readOnly`; keine Geräte-, USB-, DFU-, Boot- oder
+Flashaktion.

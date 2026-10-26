@@ -99,9 +99,25 @@ Kontrollflussübernahme:
   Schreiber gefunden; ein zusätzlicher Literal-Scan der verfügbaren Firmware-
   und PE32-Module fand keine direkten Referenzen auf diesen Slot. Berechnete
   oder nicht extrahierte Laufzeitverweise bleiben offen.
-- **Play Counts, Contacts, Device-Konfiguration, Workout-XML und weitere
-  geprüfte Pfade:** bislang kein bestätigter Speicherfehler mit
-  Kontrollflusswirkung und kein vollständiger automatischer Bootpfad.
+- **`iPod_Control/Device/PlayCounts`:** Anders als der separate iTunes-Pfad
+  `iPod_Control/iTunes/Play Counts` wird diese Datei im MainApp-Kaltstart über
+  `TEAppShell::FUN_08028254` → `FUN_081afbcc(..., 0)` eingelesen. Unbekannte
+  Container-Tags mit Oberbyte `0x40` werden von `FUN_0826dca0` rekursiv bis
+  zum passenden `0xc0`-Endtag übersprungen; ein Rekursionstiefenzähler ist im
+  Code nicht sichtbar. Pro Ebene werden 24 Byte Register gesichert. Der
+  MainApp-Task wird mit einem Stackgrößenargument `0x20000` eingerichtet,
+  sodass sehr tiefe Eingaben einen Task-Stack-Absturz plausibel machen. Das
+  beweist noch keine kontrollierte Rücksprungadresse oder RCE; Guard,
+  Stacklayout und Nachbarobjekte des externen Taskdienstes sind nicht
+  aufgelöst. Der Tag-`0x3e`-Leser begrenzt den Feldread auf 64 Byte, obwohl
+  sein lokaler Puffer 56 Byte groß ist: höchstens acht Bytes treffen die
+  danebenliegenden lokalen Slots, nicht den gespeicherten LR. Deren
+  Kontrollflusswirkung ist nicht belegt. Ein echtes Dateibeispiel und die
+  Host-Schreibbarkeit genau dieses Pfads liegen nicht vor.
+- **Weitere Play-Counts-, Contacts-, Device-Konfigurations- und Workout-XML-
+  Pfade:** bisher kein bestätigter Speicherfehler mit Kontrollflusswirkung.
+  Der separate iTunes-`Play Counts`-Leser verarbeitet feste Header- und
+  Datensatzlängen und bleibt nach dem bisherigen Audit ohne Speicherfehler.
 
 Quellen im Arbeitsbaum: `OSOS-runtime-exploit-boot-feasibility-2026-10-25.md`,
 `OSOS-persistent-device-file-reader-audit-2026-10-25.md`,
@@ -116,23 +132,29 @@ Quellen im Arbeitsbaum: `OSOS-runtime-exploit-boot-feasibility-2026-10-25.md`,
 Der laufende OSOS-Pfad ist als Konzept ein realistischerer Weg als der Versuch,
 einen privaten Apple-Schlüssel zu erraten. Der Games-Katalog liefert jetzt
 einen belegten automatischen Manifest-Metadatenparser beim Kaltstart, aber
-noch keine ausnutzbare Speicherfehlerstelle oder Kontrollflussübernahme. Die
-separaten Notes- und ArtworkDB-Speicherfehlerkandidaten brauchen weiterhin
-sowohl einen belegten automatischen Kaltstart-Trigger als auch eine belastbare
-Kontrollflussübernahme.
+noch keine ausnutzbare Speicherfehlerstelle oder Kontrollflussübernahme. Neu
+ist auch der automatische Import von `iPod_Control/Device/PlayCounts`; dessen
+rekursives Überspringen unbekannter Container ist ein plausibler
+Pfad zur Stackerschöpfung, aber noch keine nachgewiesene Kontrolle über die
+Rücksprungadresse oder RCE. Die separaten Notes- und ArtworkDB-
+Speicherfehlerkandidaten brauchen weiterhin eine belastbare Kontrollfluss-
+Auswirkung.
 
 Weiterhin offen sind:
 
-1. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
+1. Stackgrenze, Guard und Nachbarspeicher des importierten Taskdienstes für den
+   `PlayCounts`-Containerparser sowie Format und Beschreibbarkeit genau dieser
+   Datei; ein echtes Dateibeispiel fehlt;
+2. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
    erreichten Games-Manifestparser sowie die Schreibbarkeit der persistenten
    N5G-`games_RO`-Quelle;
-2. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
+3. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
    ArtworkDB-Parser beim normalen Kaltstart erreichen könnten;
-3. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
+4. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
    ArtworkDB-Heap-Overflows;
-4. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
+5. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
    durchführen kann, ohne den Hold-gesperrten Apple-Pfad zu stören;
-5. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
+6. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
    kein Beleg dafür, dass Apple-OSOS keine Flashoperation ausführen kann; ein
    solcher Schreibpfad würde außerdem die Signaturprüfung beim nächsten Start
    nicht automatisch umgehen.
@@ -694,6 +716,18 @@ gibt es keinen Ghidra-Xref; `0x0802ab8a` steht auch nicht in der bekannten
 globalen OSOS-Constructor-Tabelle. Ein automatischer Kaltstartaufruf ist damit
 nicht belegt.
 
+Eine erneute Ghidra-Autoanalyse des Runtime-Abbilds (53 Sekunden, Projekt
+schreibgeschützt) bestätigte die Referenzlage: `0x0802ab8a` hat nur den
+Datenverweis des Tabellenworts bei `0x084fef8c`; für die Tabellenbasis
+`0x084fef80` und den Methodeneintrag selbst wurde kein Codeverweis gefunden.
+Das stärkt die Einordnung als nicht zugeordneter Callback statt als statisch
+belegter Startpfad. Es schließt Aufrufe über dynamisch gebaute Objekte,
+Laufzeitregistrierung oder nicht enthaltene Komponenten nicht aus. Der
+Autoanalyse-Lauf protokolliert seine Referenzabfrage in
+`/home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log`; die
+manuelle Neudisassemblierung des benachbarten Methodenblocks liegt unter
+`/tmp/OSOS_unmapped_method_block_0802ab74_20261026.txt`.
+
 Der zweite direkte Aufrufer ist `FUN_08148740`: Er holt über
 `FUN_081b09d8` einen Dienst mit Schlüssel `0xad00` und ruft
 `FUN_081b17ec(dienst, 1)` auf. Bei Modus 1 kehrt der Helper sofort zurück,
@@ -741,23 +775,12 @@ separate, bedingte `iPod_Control/Device`-Eingabespur. Bisher ist weder ein
 Speicherfehler in deren Eintragsverarbeitung noch eine Kontrollflussübernahme
 oder ein OSOS-zu-Rockbox-Handoff nachgewiesen.
 
-## Nachtrag: HTML2Shell-Hinweis
+## Nachtrag: HTML-/Browser-Einstieg nicht belegt
 
 Die String-/Referenzprüfung des Runtime-Abbilds fand die libxml2-Meldung
-`libxml2 built without HTML support` bei `0x080ca060` und `0x0813a5c0` sowie
-`HTML Document not expected` bei `0x08250074`. Im OSOS-Stringbestand wurden
-keine WebKit-, Safari-, Node.js- oder Brotli-Komponenten gefunden. Das belegt
-keinen allgemeinen Browser-/HTML-Renderpfad in diesem OSOS-Abbild; XML/PLIST-
-Parser sind vorhanden. Zur Nummernklärung: `CVE-2026-42069` ist ein echter
-Kirby-CMS-Fehler, bei dem Leserechte auf Site-, Benutzer- und Rollendaten nicht
-hinreichend geprüft wurden ([GitHub-Advisory](https://github.com/advisories/GHSA-2h7v-4372-f6x2),
-[Kirby-Sicherheitsübersicht](https://getkirby.com/security/)); die „HTML2Shell“-
-Grafik dazu ist ein Scherz und beschreibt diese CVE nicht ([Fact Check](https://leadstories.com/hoax-alert/2026/10/fact-check-cve-2026-42069-html2shell-vulnerability.html)).
-Die zunächst genannte `CVE-2026-24069` ist laut [NVD](https://nvd.nist.gov/vuln/detail/CVE-2026-24069)
-ein anderer Fehler: Kiuwan-SAST-SSO für lokal deaktivierte Konten. Der ähnlich
-benannte echte Node.js-Brotli-Fehler ist `CVE-2026-111497`, keine HTML-Lücke;
-die [Node.js-Advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)
-grenzt ihn auf Node.js 22/24/26 ein.
+`libxml2 built without HTML support` sowie `HTML Document not expected`.
+XML-/PLIST-Parser sind vorhanden; ein allgemeiner HTML-Renderer oder Browser-
+Einstieg ist in diesem Abbild nicht belegt.
 
 Rohbelege: `/tmp/OSOS_unmapped_call_0802ab90_20261026.txt`,
 `/tmp/OSOS_callsite_refs_0802ab90_20261026.txt`,
