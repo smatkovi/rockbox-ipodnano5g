@@ -142,3 +142,55 @@ weiterhin nicht nachgewiesen.
 - `/tmp/OSOS_mainapp_parser_reach_20261026.txt`
 
 Verwandte Analyse: [OSOS-runtime-exploit-boot-feasibility-2026-10-25.md](OSOS-runtime-exploit-boot-feasibility-2026-10-25.md).
+
+## Nachtrag: libxml2-Reader und Workout-Dateisuche getrennt (26.10.2026)
+
+Im OSOS-Body ist libxml2-Code enthalten. `FUN_0829e15c` ist ein XML-Reader-
+Loop; es ruft unter anderem `FUN_08270b8c` zur Reader-/TextReader-Verarbeitung
+und `FUN_08330614` für Elementereignisse auf. Die SAX-Textfunktion
+`FUN_08167ff0` prüft vor dem Anhängen von Text die Längen-/Kapazitätsgrenzen,
+verwendet einen realloc-Pfad und meldet überlange Textknoten bzw. Überlauf als
+Parserfehler. In dieser Funktion ist kein unmittelbarer Out-of-bounds-Schreib-
+oder Kontrollflussfehler erkennbar. Das ist keine vollständige Prüfung der
+gesamten libxml2-Implementierung.
+
+Der konkrete Einstieg in diesen Reader ist `FUN_08163bb4` → `FUN_0829e15c`.
+`FUN_08163bb4` wird direkt aus `FUN_0815c47c` aufgerufen; dieser Pfad hängt an
+`FUN_0814a988` und dessen bedingter Objekt-/Statusverarbeitung. Der Reader
+besitzt im geprüften Callgraph keinen direkten Bezug zur Workout-Dateisuche.
+`FUN_081a3704` sucht zwar `Trainer/Workouts/Empeds/preferences.xml` und
+`lastWorkout.xml` und reicht gefundene Objekte an `FUN_0827af50` weiter, doch
+`FUN_0827af50` geht hier über `FUN_082d83c4`/`FUN_0826a418`. Ein direkter Aufruf
+oder Funktionszeiger von diesem Workout-Pfad auf `FUN_08163bb4` bzw.
+`FUN_0829e15c` wurde nicht gefunden. Die bloße Existenz von libxml2 belegt daher
+keinen XML-Parserzugriff auf diese persistenten Workout-Dateien.
+
+Der nachgelagerte Objektmapper `FUN_0826a418` verwendet dynamische Arrays.
+Im Typ-1-Zweig wird die Zahl der Einträge bei 1200 gedeckelt; im Typ-2-Zweig
+leitet sie sich aus der Länge eines 32-Byte-Elementvektors ab und die Routine
+schreibt genau einen 32-Bit-Wert pro Element. Für konsistente Vektorgrenzen
+zeigt der geprüfte Pfad keinen festen Pufferüberlauf. Fehler in den nicht
+vollständig aufgelösten virtuellen Methoden oder im vorgeschalteten Erzeuger
+sind damit nicht ausgeschlossen.
+
+Für die beiden Workout-Einstiege `FUN_081a3704` und `FUN_081a3970` gibt es im
+Full-Body-Ghidra-Projekt keine direkten Code-Xrefs. `FUN_081a3970` liest
+`Trainer/Workouts/Empeds/Trainer/historysummary` als Binärformat und begrenzt
+die geprüften Tabellen auf höchstens 12 bzw. 13 Einträge mit festen
+Datensatzbreiten; dieser Nachbarpfad ist kein XML-Reader. Die separaten Funktionen
+`FUN_08163bb4` und `FUN_08163d50` haben dagegen direkte Aufrufer
+(`FUN_0815c47c` bzw. `FUN_08155978`); diese bilden keinen direkten Pfad von der
+Workout-Dateisuche zu libxml2. Ein Rohscan fand für `FUN_081a3704`,
+`FUN_08163bb4` und `FUN_08163d50` keine exakten absoluten Thumb-Zeiger im Body;
+das schließt berechnete oder zur Laufzeit erzeugte Verweise nicht aus. Die
+geprüften Spuren ergeben somit weder einen automatischen Workout-Parserlauf
+beim Kaltstart noch eine bestätigte RCE oder einen Rockbox-Handoff.
+
+Neue Read-only-Ghidra-Auszüge: `/tmp/OSOS_workout_parser_chain_20261026.txt`,
+`/tmp/OSOS_workout_config_factory_20261026.txt`,
+`/tmp/OSOS_xml_textreader_callers_20261026.txt`,
+`/tmp/OSOS_xml_app_callers_20261026.txt`,
+`/tmp/OSOS_workout_xml_feature_callers_20261026.txt`,
+`/tmp/OSOS_workout_xml_owner_context_20261026.txt` und
+`/tmp/OSOS_workout_count_buffer_bounds_20261026.txt`. Alle Läufe verwendeten
+`-readOnly -noanalysis`; keine Geräte-, USB-, DFU-, Boot- oder Flashaktion.
