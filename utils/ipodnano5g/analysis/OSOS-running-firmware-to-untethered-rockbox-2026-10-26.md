@@ -142,3 +142,42 @@ Rohbelege: `/tmp/OSOS_event_dispatch_08066fb4_20261026.txt`,
 Geräte-/USB-/DFU-/Boot-/Flashaktion. Der Rohscan auf absolute und
 base-relative Funktionszeiger ist in
 `/tmp/OSOS_mainapp_event_pointer_scan_20261026.txt` festgehalten.
+
+## Nachtrag: OSOS-Abbild-Provenienz und Music-Event-VTable (26.10.2026)
+
+Der Adressversatz des Offline-Abbilds ließ sich bytegenau gegen die Quelldatei
+prüfen. `/tmp/osos_runtime_dram_20261025.bin` (7.095.208 Byte) entspricht
+dem Suffix von `osos_body.bin` ab Dateioffset `0x2e27c` (gleiche Länge) bis
+auf 2.267 abweichende Bytes im letzten Bereich `0x6c3768..0x6c43a7`.
+`/tmp/n5g-osos-md.txt` enthält nach dem Parsen aller Adresszeilen exakt die
+7.284.260 Bytes von `osos_body.bin` (keine Abweichung). Diese Dateien sind
+somit keine unabhängigen Belege für veränderliche Zustände eines bereits
+laufenden OSOS. Insbesondere bedeutet der Nullwert bei `0x08550ae0` nur, dass
+der statische Offline-Abbildwert null ist; der echte Wert nach Initialisierung
+bleibt unbekannt.
+
+Der Tabellenhinweis wurde im korrekten Adressraum erneut eingeordnet:
+Runtime-Tabelle `0x084f7590` entspricht Full-Body-Adresse `0x0852580c`.
+Ihre ersten zehn Einträge sind bis auf Slot 1 mit dem Teil der
+`TMusicLoadingTask`-VTable ab `0x08504b74` identisch. Der abweichende Slot
+zeigt in der Tabelle `0x084f7590` auf `FUN_08038d38`; die von
+`FUN_080bb0c0` für `TMusicLoadingTask` gesetzte VTable enthält dort dagegen
+`FUN_08271b7c`. Diese Routine ist ein allgemeiner Event-Fallback, während
+`FUN_08038d38` Ereignistypen und objektinterne Zeiger speziell dispatcht.
+Das spricht für eine verwandte Interface-/Klassenmethode, identifiziert aber
+weder den Besitzer der ersten Tabelle noch einen Aufrufer beim Kaltstart.
+Für die Tabellenbasis gibt es weiterhin keinen statischen Verweis; der
+Callback-Zeiger `0x08038d39` steht im Offline-Abbild nur als Tabelleneintrag.
+
+Bewertung: Der Eventtabellenfund ist kein neuer OSOS-Einstieg. Er grenzt die
+Music-Task-Hypothese ein: `FUN_08038d38` ist nicht der in der bekannten
+`TMusicLoadingTask`-VTable eingetragene Eventhandler. Eine Verbindung zu
+`FUN_081ac420`, zu persistenten Benutzerdaten oder zu einem Kaltstart-Trigger
+ist weiterhin nicht nachgewiesen. Die VTable-Zuordnung und alle daraus
+gezogenen Aussagen bleiben statische Image-Analyse, keine Laufzeitmessung.
+
+Belege: `/tmp/OSOS_runtime_event_vtable_20261025.txt`,
+`/tmp/OSOS_runtime_music_task_vtable_20261025.txt`,
+`/tmp/OSOS_runtime_music_task_vtable_literal_20261025.txt` und
+`/tmp/OSOS_runtime_music_dispatch_callback_20261025.txt`. Keine Geräteaktion,
+kein Build und keine Tests.
