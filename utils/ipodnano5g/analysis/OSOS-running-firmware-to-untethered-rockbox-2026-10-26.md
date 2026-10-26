@@ -117,6 +117,21 @@ Kontrollflussübernahme:
   dessen Nullbyte; uninitialisierte Stackdaten werden hierdurch nicht
   offengelegt. Ein echtes Dateibeispiel und die Host-Schreibbarkeit genau
   dieses Pfads liegen nicht vor.
+- **`iPod_Control/Device/accessories.reg`:** Der frühe Media-Factory-Callback
+  wird beim MainApp-Start aus der Factory-Tabelle ausgeführt und ruft
+  `FUN_08022b08` auf; diese ruft den Parser `FUN_0802c3c4` auf. Der Parser öffnet
+  den festen Pfad auch mit Nullkontext. Bei Token `0x44` liest
+  `FUN_08039048` eine dateigesteuerte 32-Bit-Länge und übergibt sie unverändert
+  als Leselänge für einen 256-Byte-Stackpuffer; der mitgegebene Grenzwert
+  `0x100` wird in diesem Helper nicht verwendet. Der Lese-Stream reicht die
+  Länge an den Datei-Provider weiter; die Streamgrenze von `0x8000` Byte ist
+  deutlich größer als der lokale Puffer. Schon ab `0x110` Bytes reicht die
+  Eingabe bis in das lokale Stringobjekt, das unmittelbar danach über eine
+  VTable-Funktion verarbeitet wird. Damit ist ein beim frühen MainApp-Start
+  erreichbarer Stack-Überlauf mit dateigesteuerter Beschädigung eines
+  indirekt verwendeten Objekts statisch belegt. RCE, konkrete Kontrolle des
+  Funktionszeigers und Beschreibbarkeit dieser Datei sind noch nicht bewiesen;
+  Details stehen in `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md`.
 - **Weitere Play-Counts-, Contacts-, Device-Konfigurations- und Workout-XML-
   Pfade:** bisher kein bestätigter Speicherfehler mit Kontrollflusswirkung.
   Der separate iTunes-`Play Counts`-Leser verarbeitet feste Header- und
@@ -137,27 +152,35 @@ einen privaten Apple-Schlüssel zu erraten. Der Games-Katalog liefert jetzt
 einen belegten automatischen Manifest-Metadatenparser beim Kaltstart, aber
 noch keine ausnutzbare Speicherfehlerstelle oder Kontrollflussübernahme. Neu
 ist auch der automatische Import von `iPod_Control/Device/PlayCounts`; dessen
-rekursives Überspringen unbekannter Container ist ein plausibler
-Pfad zur Stackerschöpfung, aber noch keine nachgewiesene Kontrolle über die
-Rücksprungadresse oder RCE. Die separaten Notes- und ArtworkDB-
-Speicherfehlerkandidaten brauchen weiterhin eine belastbare Kontrollfluss-
-Auswirkung.
+rekursives Überspringen unbekannter Container ist ein plausibler Pfad zur
+Stackerschöpfung, aber noch keine nachgewiesene Kontrolle über die
+Rücksprungadresse oder RCE. Der Parser von `iPod_Control/Device/accessories.reg`
+ist ein stärkerer Kandidat: Die feste Datei wird im frühen MainApp-Factory-Pfad
+geöffnet, und eine Längenangabe erreicht einen Stackpuffer ohne die scheinbar
+vorgesehene 256-Byte-Grenze; danach wird ein vom Überlauf beschädigtes Objekt
+über einen indirekten Funktionsaufruf verwendet. Eine lauffähige Kontrolle
+dieses Aufrufs oder ein Rockbox-Handoff ist noch nicht nachgewiesen. Die
+separaten Notes- und ArtworkDB-Speicherfehlerkandidaten brauchen weiterhin eine
+belastbare Kontrollfluss-Auswirkung.
 
 Weiterhin offen sind:
 
-1. Stackgrenze, Guard und Nachbarspeicher des importierten Taskdienstes für den
-   `PlayCounts`-Containerparser sowie Format und Beschreibbarkeit genau dieser
-   Datei; ein echtes Dateibeispiel fehlt;
-2. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
+1. Format und Schreibbarkeit von `iPod_Control/Device/accessories.reg`
+   nachvollziehen und die VTable-Beschädigung samt Task-Stacklage und
+   RAM-Ausführungsbedingungen statisch genauer bewerten; ein echtes
+   Dateibeispiel fehlt;
+2. Stackgrenze und Guard des importierten Taskdienstes für den
+   `PlayCounts`-Containerparser prüfen;
+3. Entity-/Ressourcenlimits und weitere mögliche Speicherfehler im automatisch
    erreichten Games-Manifestparser sowie die Schreibbarkeit der persistenten
    N5G-`games_RO`-Quelle;
-3. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
+4. dynamische Factory-/Overlay-Registrierungen, die den Notes- oder
    ArtworkDB-Parser beim normalen Kaltstart erreichen könnten;
-4. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
+5. die tatsächliche Kontrollflusswirkung der Notes-Unterlaufkopie und des
    ArtworkDB-Heap-Overflows;
-5. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
+6. ob OSOS einen beliebigen RAM-Handoff aus seinem normalen Taskkontext
    durchführen kann, ohne den Hold-gesperrten Apple-Pfad zu stören;
-6. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
+7. Apples eigener NAND-/Firmware-Schreibpfad. Die lokale Rockbox-Sperre ist
    kein Beleg dafür, dass Apple-OSOS keine Flashoperation ausführen kann; ein
    solcher Schreibpfad würde außerdem die Signaturprüfung beim nächsten Start
    nicht automatisch umgehen.
