@@ -162,3 +162,46 @@ Zusätzliche Rohbelege:
 - `/tmp/OSOS_xml_08150e44_20261026.txt`
 - `/tmp/OSOS_xml_intern_and_nodes_20261026.txt`
 - `/tmp/OSOS_xml_tree_methods_20261026.txt`
+
+## Nachtrag: Aufrufer des dynamischen XML-Loaders (27.10.2026)
+
+Die getrennte Loaderkette wurde im read-only-Ghidra-Projekt eine Ebene weiter
+verfolgt. `FUN_082e0a0c` hat genau einen direkten Code-Aufrufer:
+`FUN_082d91f0`. Dieser wird ausschließlich von `FUN_0828fc1c` erzeugt; der
+Getter legt sein Objekt lazy einmalig an. Die XML-Auswahl kommt in
+`FUN_082e0a0c` über eine virtuelle Methode am übergebenen Objekt, also bleibt
+der konkrete Dateiname vom jeweiligen Aufruferkontext abhängig.
+
+Für den Singleton-Getter `FUN_0828fc1c` sind sieben direkte Aufrufer im
+Full-Body-Projekt verzeichnet: `FUN_082cbe78`, `FUN_082743b8`,
+`FUN_0813ca48`, `FUN_082df6fc`, `FUN_082f7da8`, `FUN_082e4b2c` und
+`FUN_082dfa04`. Die Rückverfolgung ordnet einen Teil der Äste
+Workout-/Ereignisverarbeitung zu: `FUN_081b7c28` vergleicht die Handlernamen
+`HandleDeleteAllWorkouts`, `HandleClearBests`, `HandleClearTotals` und
+Kalibrierungs-Handler; `FUN_081b82e0` prüft `HandleHerculesKey`. Ein anderer
+Ast läuft über `FUN_08223f8c` aus den Methoden `FUN_082d2972` und
+`FUN_082d7e70`. Mehrere verbleibende Elternfunktionen haben im gespeicherten
+Ghidra-Projekt keine direkten Code-Xrefs.
+
+Damit wurde für diesen Singleton weiterhin kein statischer Weg vom
+MainApp-Kaltstart bis zum dateikontrollierten XML-Parse hergestellt. Die
+Callback-/VTable- und Overlay-Registrierung kann direkte Xrefs umgehen; ihr
+Fehlen ist daher kein Beweis für Nichterreichbarkeit. Der getrennte
+Device-XML-Loader bleibt ein Speicherfehler-Kandidat ohne bestätigten
+Kaltstart-Trigger oder zuverlässige Kontrollflussübernahme. Für den
+rekonstruierten Einstieg `0x08087d2c` wurde durch diese Prüfung kein neuer
+Aufrufer gefunden.
+
+Zusätzliche Rohbelege aus `osos_body.bin`:
+
+- `/tmp/OSOS_xml_loader_parent_refs_20261027.txt`
+- `/tmp/OSOS_xml_loader_grandparent_refs_20261027.txt`
+- `/tmp/OSOS_xml_loader_ancestors2_20261027.txt`
+- `/tmp/OSOS_xml_loader_ancestor_functions_20261027.txt`
+- `/tmp/OSOS_xml_loader_handler_roots_20261027.txt`
+- `/tmp/OSOS_xml_loader_handler_roots2_20261027.txt`
+- `/tmp/OSOS_xml_loader_handler_roots3_20261027.txt`
+- `/tmp/OSOS_xml_loader_core_20261027.txt`
+
+Die Abfragen nutzten `analyzeHeadless -readOnly -noanalysis`; es gab keinen
+Geräte-, USB-, DFU-, Neustart- oder Flashzugriff.
