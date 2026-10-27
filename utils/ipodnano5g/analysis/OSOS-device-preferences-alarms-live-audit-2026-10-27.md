@@ -82,3 +82,54 @@ Rohbelege:
 - `/tmp/OSOS_preferences_parser_followup_20261027.txt`
 - `/tmp/OSOS_preferences_config_parser_core_20261027.txt`
 - `/tmp/OSOS_device_config_callers_20261027.txt`
+
+## Nachtrag: Alarm-Callback im Runtime-Dispatch (27.10.2026)
+
+Die bislang offene Alarm-Aufrufspur wurde im Runtime-Mapping
+`/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime` weiterverfolgt. Der
+32-Bit-Wert an `0x084f970c` ist dort `0x08028ce9`, also der Thumb-Zeiger auf
+`thumb_8028ce8`. Die Funktion setzt kurzzeitig ein Statusbyte bei
+`param_1+0x2a1`, löscht `param_1+0x2a4` und ruft bei `0x08028d00`
+`FUN_0803930c(param_2)` auf.
+
+`FUN_0803930c` erreicht `FUN_0804b394`; diese Funktion ruft
+`FUN_08260ec8(param, 0)` auf. Modus 0 öffnet
+`iPod_Control/Device/alarms` zum Lesen. Unbekannte Tags werden an den
+rekursiven Skip-Parser `FUN_0826dca0` gegeben. Der zuvor dokumentierte
+Stackerschöpfungskandidat ist damit an einen konkreten Runtime-Callback
+gebunden.
+
+Die Nachbareinträge der Dispatch-Tabelle zeigen Kalenderkontext:
+`thumb_8028e98` registriert über `FUN_081a79aa` unter anderem
+`TSilverCalendarCntlr_CalendarMenu`, `MonthViewer`, `DayViewer`,
+`EventViewer`, `ToDoList`, `ToDoDispatcher` und `Alarm`. `thumb_8029030`
+initialisiert Controller-Zustand. Das stützt die Einordnung als
+Kalender-/Controller-Eventpfad. Es ist eine statische Kontextinferenz, kein
+Beweis, dass der Alarm-Callback beim normalen Kaltstart ausgeführt wird.
+
+Der Runtime-Referenzlauf findet keinen direkten Code-Xref auf
+`0x084f96c0`, `0x084f970c` oder die Tabelleneinträge. Der Consumer der Tabelle,
+die Bedingung für diesen Event und eine automatische Kaltstarterreichbarkeit
+bleiben offen. Die in diesem Nachtrag untersuchten Funktionen stammen aus dem
+Runtime-Mapping; gleichnamige Adressen im separaten Full-Body-Projekt können
+andere Bytes enthalten und wurden für diese Zuordnung nicht verwendet.
+
+**Auswirkung:** Unbekannte oder tief verschachtelte Tags können beim Erreichen
+des Alarm-Readers einen Stackerschöpfungs-/Verfügbarkeitsfehler auslösen. Eine
+Kontrollflussübernahme, Codeausführung oder ein Rockbox-Handoff ist nicht
+belegt. Für den untethered Boot fehlt weiterhin sowohl ein bestätigter
+automatischer Trigger als auch eine sichere Übergabe an Rockbox.
+
+Neue Read-only-Rohbelege:
+
+- `/tmp/OSOS_runtime_alarm_callback_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_dispatch_table_words_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_sibling_08028d71_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_sibling_08028e21_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_sibling_08028e99_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_sibling_08029031_20261027.txt`
+- `/tmp/OSOS_runtime_alarm_sibling_08029065_20261027.txt`
+- `/tmp/OSOS_runtime_calendar_controller_helpers_20261027.txt`
+
+Keine Geräteabfrage, kein Neustart und kein Flash-/NAND-/NOR-Zugriff in
+diesem Nachtrag.
