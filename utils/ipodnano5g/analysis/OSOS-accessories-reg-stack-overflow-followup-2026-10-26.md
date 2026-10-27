@@ -175,6 +175,30 @@ im Build vorhanden ist. Der abgezählte Loaderaufruf hängt damit zusätzlich
 von einem derzeit nicht vorhandenen Dateipfad ab. Ob eine spätere gezielte
 Dateiablage möglich und persistent wäre, ist nicht geprüft.
 
+### Statischer Loader-Entry-Abgleich (2026-10-27)
+
+Der lokale `bootloader.elf` hat Entry `0x09000000`. Sein erster LOAD-Segment
+beginnt an derselben Adresse und hat `FileSiz=0x10f80` (69.504 Byte), genau
+die Länge des im ROP-Kandidaten angeforderten Reads. Der disassemblierte
+Entry ist ARM-Code; ein `BLX` auf die gerade Adresse `0x09000000` wählt daher
+den passenden ARM-Zustand. Die Datei endet am Beginn des NOLOAD-Stacks bei
+`0x09010f80`. `crt0` richtet daraus den SYS-Stack bis `0x09012f80` und die
+Ausnahmestacks bis `0x09013780` ein. Der zweite LOAD-Segment beschreibt BSS
+ab `0x09100000` mit `MemSiz=0x9fd00` und ohne Dateibytes.
+
+Der Startcode maskiert IRQ/FIQ, führt die Relokation zum Linkziel aus, kopiert
+die Vektoren nach `0x22000000`, setzt MMU-/Cachezustand zurück und springt
+anschließend nach `main`. Im lokalen ELF ruft `main` zuerst
+`usec_timer_init`, `i2c_preinit`, `system_preinit`, `memory_init` und danach
+`bss_init` auf. Für `IPOD_NANO5G` kehrt `system_preinit` laut Quelltext sofort
+zurück, damit die bestehende SDRAM-Konfiguration erhalten bleibt;
+`memory_init` richtet die Rockbox-Seitentabellen ein und `bss_init` löscht
+den Bereich `[0x09100000, 0x0919fd00)`. Damit stimmen Read-Länge, Entryadresse,
+Stack und BSS des lokalen Artefakts statisch zusammen. Das bestätigt weder die
+Ausführbarkeit unter der MMU-Abbildung des laufenden OSOS noch den
+Provider-Open oder die Datei-Erreichbarkeit; der LFN-Pfad und die fehlende
+Datei bleiben vorherige Schranken.
+
 ### Offline abgezählte Loader-ROP-Folge
 
 Die folgenden Offsets beziehen sich auf den Parser-Stackzeiger `S` am Anfang
@@ -436,6 +460,9 @@ gestartet.
   `/tmp/OSOS_fat_provider_slot58_temp_20261027.txt` und
   `/tmp/OSOS_fat_provider_slot58_helpers_20261027.txt` – FAT-Provider-Slots
   und Pfadprüfung.
+- `/tmp/OSOS_n5g_candidate_loader_startup_20261027.txt` und
+  `/tmp/OSOS_n5g_candidate_loader_elf_20261027.txt` – Entry-/CRT0-Disassembly
+  sowie ELF-Header, Load-Segmente und Hash des lokalen Loaders.
 - `/tmp/OSOS_function_0825da88_20261026.txt` – Writer-Aufrufer und umgebender
   Ereignis-/Zustandspfad.
 - `/tmp/OSOS_runtime_stack_address_ops_20261026.txt` – Stackbezogene
