@@ -156,12 +156,24 @@ aus den bestätigten Gadgets aber inzwischen bis zum Entry des lokalen
 Rockbox-Laders abzählen.
 
 Der Stream-Wrapper `FUN_0819878c` baut den inneren Stream auf. `FUN_08224970`
-kann für Streammodus 0 Pfadkomponenten an `FUN_082284e0` übergeben. Der unten
-beschriebene Kandidat nutzt `FUN_082721f0(..., mode=0)`, das den Modus vor dem
-Aufruf von `FUN_0827ea84` invertiert; der resultierende Streammodus ist 1 und
-überspringt diese spezielle Komponenten-Schleife. Die konkrete Root-Mount-
-Zuordnung für `/.rockbox/bootloader.bin` ist in den statischen Daten weiterhin
-nicht belegt.
+kann für Streammodus 0 Pfadkomponenten an `FUN_082284e0` übergeben. Die
+geprüfte FAT-Provider-Tabelle bei `0x085056b0` bindet Slot `+0x58` an
+`FUN_0812a7b4`; dieser Callback löst Pfade über `FUN_08137c12`,
+`FUN_081fdb38` und `FUN_0821b42c` mit demselben FAT-LFN-Resolver auf. Slot
+`+0x14` zeigt auf `FUN_0812a870`, das den endgültigen Open über
+`FUN_081382c2` ausführt. Ein 8.3-Alias-Umweg ist in diesen beiden Slots nicht
+vorhanden. Der unten beschriebene Kandidat nutzt `FUN_082721f0(..., mode=0)`,
+das den Modus vor dem Aufruf von `FUN_0827ea84` invertiert; der resultierende
+Streammodus ist 1 und überspringt diese spezielle Komponenten-Schleife. Die
+konkrete Root-Mount-Zuordnung für `/.rockbox/bootloader.bin` und eine
+abweichende Provider-Auswahl sind weiterhin nicht belegt.
+
+Der vorhandene read-only Verzeichnisdump zeigt außerdem, dass `.rockbox` den
+Kurznamen `ROCKBO~1` hat und `bootloader.bin` im Geräteverzeichnis fehlt; dort
+liegen `rockbox.ipod` und `n5g-ramdisk.img`, während `bootloader.bin` nur lokal
+im Build vorhanden ist. Der abgezählte Loaderaufruf hängt damit zusätzlich
+von einem derzeit nicht vorhandenen Dateipfad ab. Ob eine spätere gezielte
+Dateiablage möglich und persistent wäre, ist nicht geprüft.
 
 ### Offline abgezählte Loader-ROP-Folge
 
@@ -322,7 +334,7 @@ Kaltstart neu erzeugt.
   Auf dem untersuchten Volume passt deshalb `iPod_Control` nicht auf
   `IPOD_C~1`; die statische Spur lässt den Open für diese Registry-Datei eher
   scheitern, bevor der übergroße Read erreicht wird. Der genaue Laufzeitfehler
-  und ein alternativer Providerpfad bleiben ungeprüft.
+  und eine abweichende Provider-Auswahl bleiben ungeprüft.
 - Rücksprungkontrolle und ein geeignetes Pop-Gadget sind statisch belegt. Die
   ROP-Folge bis zum Loader-Entry ist abgezählt, aber nicht serialisiert oder
   ausgeführt. Provider-Erfolg, RAM-/Stack-Überlappung und die konkrete
@@ -419,6 +431,11 @@ gestartet.
 - `/tmp/OSOS_accessories_lfn_name_fallback_20261027.txt` und
   `/tmp/OSOS_accessories_open_dispatch_deep_20261027.txt` – direkter
   8.3-Fallbackvergleich und weiterer VFS-Dispatcherpfad.
+- `/tmp/OSOS_fat_provider_callbacks_refs_20261027.txt`,
+  `/tmp/OSOS_fat_provider_vtable_20261027.txt`,
+  `/tmp/OSOS_fat_provider_slot58_temp_20261027.txt` und
+  `/tmp/OSOS_fat_provider_slot58_helpers_20261027.txt` – FAT-Provider-Slots
+  und Pfadprüfung.
 - `/tmp/OSOS_function_0825da88_20261026.txt` – Writer-Aufrufer und umgebender
   Ereignis-/Zustandspfad.
 - `/tmp/OSOS_runtime_stack_address_ops_20261026.txt` – Stackbezogene

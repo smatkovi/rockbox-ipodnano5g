@@ -200,13 +200,18 @@ Directory-Callbacks, Fault-Behandlung und tatsächliche Open-Rückgabe wurden
 nicht dynamisch geprüft; ein alternativer Providerpfad ist daher nicht
 ausgeschlossen.
 
-Auch der zusätzliche Mehrkomponentenpfad in `FUN_08224970` enthält in den
-untersuchten Funktionen keine erkennbare 8.3-zu-LFN-Übersetzung. Er ruft bei
-mehr als einer Komponente `FUN_082284e0` über einen Provider-Slot auf und
-dispatcht anschließend den endgültigen Open-Aufruf über einen weiteren
-Provider-Slot. Die Zuordnung sämtlicher Laufzeitprovider und ihrer internen
-Fallbacks ist nicht vollständig. Damit ist dies kein Beweis, dass kein
-anderer Provider den Pfad öffnen kann.
+Der zusätzliche Mehrkomponentenpfad in `FUN_08224970` enthält ebenfalls keine
+erkennbare 8.3-zu-LFN-Übersetzung. Die geprüfte FAT-Provider-Tabelle bei
+`0x085056b0` hat bei `+0x14` den Thumb-Zeiger auf `FUN_0812a870` und bei
+`+0x58` den Thumb-Zeiger auf `FUN_0812a7b4`. `FUN_08224970` verwendet diese
+beiden Slots für den endgültigen Open beziehungsweise die Prüfung eines
+mehrteiligen Pfades. `FUN_0812a7b4` delegiert an `FUN_08137c12`; dieser Pfad
+zerlegt und löst Komponenten über `FUN_081fdb38` und `FUN_0821b42c` auf und
+landet damit wieder im beschriebenen FAT-LFN-Resolver. `FUN_0821ab24` im
+anderen Zweig initialisiert nur einen Providerzustand und enthält keinen
+Pfadauflöser. Das schließt einen anderen, dynamisch ausgewählten Provider
+nicht aus, bestätigt aber für die geprüfte FAT-Provider-Tabelle keinen
+Kurzname-Umweg.
 
 **Auswirkung auf den Rockbox-Kandidaten:** Der statisch abgezählte Überlauf in
 `FUN_0802c3c4` bleibt eine echte Rücksprungkontrollmöglichkeit, falls sein
@@ -226,6 +231,12 @@ Neue Rohbelege:
 - `/tmp/OSOS_accessories_open_path_helpers_20261026.txt` und
   `/tmp/OSOS_accessories_vfs_open_followup_20261026.txt` – Provider- und
   Stream-Aufrufpfad.
+- `/tmp/OSOS_fat_provider_callbacks_refs_20261027.txt` und
+  `/tmp/OSOS_fat_provider_vtable_20261027.txt` – Xref und Methodenwerte der
+  geprüften FAT-Provider-Tabelle.
+- `/tmp/OSOS_fat_provider_slot58_temp_20261027.txt` und
+  `/tmp/OSOS_fat_provider_slot58_helpers_20261027.txt` – dekompilierter
+  `+0x58`-Pfad und seine Resolver-Helfer.
 
 Die Ghidra-Abfrage lief read-only mit `-readOnly -noanalysis`; es gab keine
 Geräteabfrage, keinen Neustart, keinen Dateisystemtest und keinen
