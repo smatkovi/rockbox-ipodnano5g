@@ -248,3 +248,40 @@ Rohbelege: `/tmp/OSOS_TAppShell_method_08028254_20261026.txt`,
 `/tmp/OSOS_device_persistent_file_handlers_20261026.txt`. Zum damaligen Stand
 waren alle Ghidra-Läufe `-noanalysis -readOnly`; es gab keine Geräte-, USB-,
 DFU-, Boot- oder Flashaktion.
+
+## Nachtrag: Contacts-DB-Aufrufer und Startbedingungen (27.10.2026)
+
+Im ursprünglichen `osos_body.bin`-Ghidra-Projekt wurden die vier direkten
+Aufrufer des Lazy-Pfadhilfs `FUN_08277218` untersucht. Der Helper selbst legt
+nur ein Objekt mit dem Pfad `iPod_Control/Device/iPod_Contacts.db` an; er liest
+die Datei nicht. `FUN_0808a254` baut SQL-`SELECT`-Abfragen für `ABPerson` und
+`ABMultiValue`, während `FUN_080acbfc` `ABPerson`- und MultiValue-Datensätze
+schreibt. Beim ersten Zugriff laufen Hilfsaufrufe über `FUN_080ccba0` und
+`FUN_0827ef54`; Abfragen werden über `FUN_08287260` an `FUN_0828222c`
+weitergereicht. Die genaue Engine, der tatsächliche On-Disk-Lesepfad und deren
+Parser wurden in diesem Schritt nicht identifiziert oder auf Fehler untersucht.
+
+Die Aufrufer liegen in Contact-/Datenzugriffsmethoden. Für den Pfad über
+`FUN_08081244` führt der sichtbare Weg über `FUN_0806c740` und
+`FUN_0805aab8`; für `FUN_08081298` und `FUN_080812c4` über
+`FUN_0806c840` und denselben Methodenblock. `FUN_0805aab8` hat im Projekt
+keinen eingehenden Code-Xref. Auch `FUN_08089bd8` (Writer) hat keinen
+eingehenden Code-Xref. Die alternativen Aufrufketten zu `FUN_08216d18`
+beginnen bei `FUN_0809a2b8` beziehungsweise `FUN_0809d620`; für diese beiden
+Methoden wurden ebenfalls keine eingehenden Referenzen gefunden. Das belegt
+keinen automatischen Kaltstart-Aufruf des Contacts-DB-Pfads. Dynamische oder
+von UI-/Event-Dispatches abhängige Aufrufe bleiben möglich.
+
+Bei der aktuellen read-only-Aufzählung von `iPod_Control/Device` war
+`iPod_Contacts.db` nicht vorhanden. Damit ist dieser Pfad derzeit kein
+bestätigter persistenter Boot-Trigger. Es gab keinen Datei- oder Gerätetest.
+Rohbelege: `/tmp/OSOS_contact_accessor_callers_20261027.txt`,
+`/tmp/OSOS_contact_accessor_targets_20261027.txt`,
+`/tmp/OSOS_contact_accessor_parents_20261027.txt`,
+`/tmp/OSOS_contacts_dispatch_handlers_20261027.txt`,
+`/tmp/OSOS_contacts_init_callers_20261027.txt`,
+`/tmp/OSOS_contacts_dispatch_sources_20261027.txt`,
+`/tmp/OSOS_contacts_db_helpers_20261027.txt`,
+`/tmp/OSOS_contacts_sqlite_boundary_20261027.txt` und
+`/tmp/OSOS_contacts_db_entrypoints_20261027.txt`. Die Abfragen erfolgten
+read-only im Projekt `/tmp/N5G_OSOS_RTOS_analysis/N5G_OSOS_RTOS`.
