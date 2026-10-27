@@ -136,3 +136,60 @@ bleibt statisch offen. Der aktuelle MBR testet diesen Randfall nicht.
 Rohprüfung des Gerätes: `lsusb`, `fdisk -l /dev/sda`,
 `blockdev --getss /dev/sda`, `blockdev --getsz /dev/sda` und die read-only
 BPB-Ausgabe aus `/dev/sda1`. Es wurde kein Sektor verändert.
+
+## Nachtrag: FAT-Clusterwert kann die LBA-Berechnung umlaufen (27.10.2026)
+
+Der offene Datenfluss von FAT-Metadaten zur Sektoradresse ist jetzt teilweise
+geschlossen. `FUN_0822fbbc` liest einen FAT-Eintrag über `FUN_081e0e10` und
+`FUN_082015bc`. Für den Dateisystemtyp 8 behält `FUN_08235b00` den unteren
+28-Bit-Wert bei, solange er nicht exakt `0x0fffffff` ist. Der daraus gelesene
+Clusterwert erreicht unter anderem `FUN_0822641e` über
+`FUN_081608f8`.
+
+`FUN_0822641e` berechnet die Sektoradresse als
+`first_data_lba + ((cluster - 2) << cluster_shift)`. Die Addition und
+Linksverschiebung sind 32-bittig; eine Carry-Prüfung fehlt. Anschließend wird
+nur geprüft, ob das Ergebnis kleiner als `end_data_lba` ist. Eine untere
+Grenze gegen `first_data_lba` fehlt ebenfalls. Für `cluster_shift = 7` ergibt
+der FAT-Wert `0x02000002` rechnerisch einen um `2^32` umlaufenden Offset und
+damit wieder `first_data_lba`. Andere passende Clusterwerte können die
+Ergebnisadresse unter den Beginn des Datenbereichs umlaufen lassen. Das setzt
+voraus, dass der BPB-Pfad diesen Cluster-Shift akzeptiert; dessen vollständige
+Initialisierung und Grenzprüfung ist noch nicht lokalisiert.
+
+Der Clusterlauf wird beim Durchlaufen von Verzeichnissen verwendet:
+`FUN_081f83c8` ruft `FUN_081608f8` auf; die FAT-Pfadauflösung erreicht diesen
+Pfad über `FUN_0814f238` beziehungsweise `FUN_08158b64`. Damit ist ein
+datenträgerkontrollierter Weg bis zur fehlerhaften LBA-Abbildung belegt,
+sobald ein solcher VFS-Pfad ausgeführt wird. Der konkrete Effekt ist bisher
+eine fehlgeleitete Sektor-Leseadresse, etwa ein Zugriff auf reservierte
+Sektoren oder auf Sektoren vor dem Datenbereich. Ein RAM-Schreibzugriff,
+eine Rücksprungkontrolle oder Codeausführung folgt daraus nicht.
+
+Die zuvor dokumentierte ATA-Cache-Quellüberlesung ist damit noch nicht als
+erreichbar belegt: Für sie wäre eine hohe LBA nötig, die zugleich durch
+`end_data_lba` zugelassen wird und den Cache-Hit-Wraparound trifft. Ob
+manipulierte BPB-/Partitionsgeometrie diese Kombination nach erfolgreichem
+Mount ermöglicht, bleibt offen. Es gab keinen Laufzeit- oder Gerätetest.
+
+Ein zweiter arithmetischer Kandidat liegt im Dateileser `FUN_08143298`: Die
+Prüfung `file_size <= offset + count` verwendet eine 32-Bit-Summe ohne
+Carry-Prüfung. Ein Offset nahe `0xffffffff` kann deshalb eine Kürzung auf die
+Restlänge der Datei umgehen. Die Bytes werden weiterhin nur in den vom
+Aufrufer angeforderten Puffer kopiert; ein kleiner Zielpuffer zusammen mit
+einem größeren Count oder eine Speicherbeschädigung ist aus diesem Pfad nicht
+belegt. Dieser Befund ist vorerst ein mögliches Lesen über das Dateiende.
+
+Rohbelege: `/tmp/OSOS_LBA_cluster_core_20261027.txt`,
+`/tmp/OSOS_LBA_cluster_reader_20261027.txt`,
+`/tmp/OSOS_LBA_fat_core_20261027.txt`,
+`/tmp/OSOS_LBA_runtime_fat_callbacks_20261027.txt` und
+`/tmp/OSOS_runtime_provider_disk_io_20261026.txt`. Ghidra-Projekt:
+`/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime`, geöffnet mit
+`-readOnly -noanalysis`.
+
+Nächste statische Schritte: den BPB-Geometrieparser und alle Schreibstellen
+für `cluster_shift`, `first_data_lba` und `end_data_lba` lokalisieren; danach
+die resultierende LBA gegen den darunterliegenden Provider und den Aufrufer-
+Puffer des Dateilesers verfolgen. Bis dahin sind beide Befunde Kandidaten für
+Fehlzugriffe beziehungsweise Datenlesen, nicht für bestätigte Codeausführung.
