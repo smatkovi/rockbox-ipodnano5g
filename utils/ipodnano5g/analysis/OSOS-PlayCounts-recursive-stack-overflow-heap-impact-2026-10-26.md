@@ -123,3 +123,39 @@ Rohbelege: `/tmp/OSOS_function_0826dca0_20261026.txt`,
 `/tmp/n5g_playcounts_recurse_heapheader.S` und
 `/tmp/n5g_playcounts_recurse_heapheader.out`. Die Ghidra-Läufe verwendeten
 `-readOnly -noanalysis`. Der QEMU-Test lief ausschließlich auf dem Host.
+
+## Nachtrag: MainApp-Task-Lebenszyklus (27.10.2026)
+
+Die Task-Erzeugung reserviert den 0x20000-Byte-Stack über FUN_081a5b80 aus
+dem OSOS-Heap und fordert danach in einem getrennten Allocator-Aufruf ein
+0x44-Byte-Taskobjekt an. Ob die beiden Blöcke im Heap benachbart liegen, bleibt
+unbekannt. Der Startpfad ruft
+FUN_0835d160 auf; dessen Importtrampolin geht zu 0x220054fc. Der zugehörige
+Bootprefix-Wrapper FUN_080054fc stellt Dienstnummer 0x15 ein. Der entsprechende
+Fall in FUN_08000b70 richtet den initialen Register-/Stackkontext ein und
+nimmt den Task in die Schedulerliste auf. Das ist ein Startpfad; darin ist
+keine Freigabe des Taskstacks zu sehen. FUN_081a5bc0 ruft einen separaten
+Taskdaten-Dienst auf und zeigt ebenfalls keine Stackfreigabe.
+
+FUN_080202d8 ruft nach dem MainApp-Start die Eventschleife FUN_08025154 auf.
+Wenn diese zurückkehrt, folgt FUN_081a78b4. Dieser Helper ruft bei gesetztem
+Cleanup-Flag mehrere globale Aufräumfunktionen auf und löscht danach das Flag;
+im sichtbaren Körper gibt es keinen Heap-Free-Aufruf für den Taskstack. Die
+Implementierung des externen Task-Erzeugers und der Rückkehrpfad, der nach
+Ende einer Taskfunktion ausgeführt wird, sind im Runtime-Abbild nicht enthalten.
+Ob der externe Taskdienst den Stack später freigibt, bleibt deshalb offen.
+
+Damit ist weiterhin weder ein späterer Allocator-Zugriff auf den beschädigten
+Stack-Header noch eine daraus folgende Heap-Manipulation belegt. Der
+PlayCounts-Befund bleibt eine starke Stackerschöpfungs-/Korruptionshypothese
+mit konkreter Kaltstart-Erreichbarkeit, aber ohne bestätigte PC-Kontrolle oder
+Codeausführung.
+
+Neue Rohbelege: /tmp/OSOS_task_stack_allocator_helpers_20261027.txt.
+Ergänzend wurden
+/tmp/OSOS_task_create_0801de7c_20261026.txt,
+/tmp/OSOS_rtos_task_create_0835d160_20261026.txt,
+/tmp/OSOS_MainAppTask_entry_20261026.txt,
+/tmp/OSOS_MainAppTask_tail_20261026.txt und
+/tmp/OSOS_prefix_task_svc_wrappers_20261025.txt erneut abgeglichen.
+Alle Ghidra-Läufe dieser Runde waren read-only; es gab keinen Gerätezugriff.

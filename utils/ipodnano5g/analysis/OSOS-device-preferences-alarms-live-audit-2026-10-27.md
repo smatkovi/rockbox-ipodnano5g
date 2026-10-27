@@ -133,3 +133,51 @@ Neue Read-only-Rohbelege:
 
 Keine Geräteabfrage, kein Neustart und kein Flash-/NAND-/NOR-Zugriff in
 diesem Nachtrag.
+
+## Nachtrag: Alarm-Stringfeld und Preferences-Puffer (27.10.2026)
+
+Die feste Preferences-Datei wird in einen neu angeforderten `0xb90`-Byte-
+Heapblock gelesen. `FUN_0824d560` reicht genau diese feste Länge an den
+generischen Streamreader weiter. Nach dem Read setzt der Caller nur ein
+Statusbyte, schließt den Stream und gibt den Block frei. Ein expliziter
+Nach-Read-Parser, Copy-back oder Callback ist im sichtbaren Pfad nicht
+vorhanden. Vor dem Read ruft der Caller den externen Helper `FUN_0826d0f4`
+mit dem Zustands- und Blockzeiger auf; dessen interne Semantik ist im
+Runtime-Mapping nicht enthalten. Eine indirekte gemeinsame Nutzung des Blocks
+kann deshalb nicht ausgeschlossen werden. Ein dateigesteuerter
+Speicherfehler im sichtbaren Reader ist nicht belegt.
+
+Im Alarm-Record-Parser `FUN_081c4b56` gibt es dagegen einen kleinen
+Stack-Read-Kandidaten. Die Funktion reserviert `0x108` Byte und verwendet ab
+`sp+4` einen 256-Byte-Puffer für Feld `0x3c`. `FUN_0822cc02` liest zuerst die
+32-Bit-Länge, begrenzt den Read auf höchstens `0x100` Byte und schreibt keinen
+Stringabschluss. Direkt danach ruft `FUN_081936ec` den Längenhelfer
+`FUN_08196ac6` auf dem Puffer auf und übernimmt den so ermittelten C-String in
+das Stringobjekt bei `record+0x20`.
+
+Bei einem kürzeren Feld ohne NUL kann `strlen` daher nicht geschriebene Bytes
+des lokalen Puffers lesen; `FUN_081936ec` kopiert sie anschließend in den
+Heap-String. Der aktuelle Tag liegt bei `sp+0x104` und hat die niedrigen Bytes
+`0x3c, 0x00`. Wenn zuvor im gesamten 256-Byte-Puffer kein NUL steht, endet
+die Suche spätestens beim zweiten Byte dieses Tagworts. Damit reicht der
+statische Read höchstens bis `sp+0x105`; gespeicherte Register und LR liegen
+oberhalb davon und werden nicht erreicht. Der Pfad zeigt keine Stack-Schreib-
+oder Rücksprungadresskontrolle.
+
+Ein erfolgreich geparster Record wird über `FUN_0827eef4` in die Alarm-Liste
+übernommen. Der Schreibmodus von `FUN_081c4b56` serialisiert Feld `0x3c`
+wieder aus diesem Stringobjekt. Das macht eine begrenzte Offenlegung von
+Stack-Restdaten in einer später gespeicherten Alarmdatei plausibel. Ob der
+Callback im normalen Kaltstart läuft, der OSOS-Open den LFN-Pfad passiert und
+die geänderten Bytes anschließend tatsächlich gespeichert und auslesbar
+werden, ist nicht belegt. Das ist ein bedingter Informationsleck-Kandidat,
+kein nachgewiesener Codeausführungspfad.
+
+Neue Rohbelege:
+
+- `/tmp/OSOS_alarm_record_parser_20261027.txt`
+- `/tmp/OSOS_alarm_string_field_20261027.txt`
+- `/tmp/OSOS_preferences_lifecycle_followup_20261027.txt`
+
+Die Ghidra-Abfragen liefen mit `-readOnly -noanalysis`; kein Gerät wurde
+abgefragt und es gab keine Datei-, NAND-, NOR- oder Flashänderung.

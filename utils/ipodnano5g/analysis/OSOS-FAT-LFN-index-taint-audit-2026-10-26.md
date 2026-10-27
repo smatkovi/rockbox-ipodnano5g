@@ -143,3 +143,34 @@ den USB-Massenspeicherzugriff bereitstellt. Der aktuelle Langnamenbestand
 verschärft die Erreichbarkeitsbedingung des `accessories.reg`-Kandidaten; der
 Stacküberlauf bleibt der stärkste Kontrollfluss-Kandidat, aber sein
 automatischer Open/Read und der Loader-Handoff sind weiterhin unbestätigt.
+
+## Nachtrag: LFN-Zustandswert und gemeinsam veränderte Zählvariable (27.10.2026)
+
+Die Aufruferprüfung bestätigt den fehlerhaften Wert genauer: In beiden
+Aufrufketten erhält FUN_08158b64 als drittes Argument die Adresse eines lokalen
+Stackfelds. Bei einem VFAT-LFN-Eintrag speichert FUN_081f7f9c das unverändert
+übergebene r2 in state[1]. FUN_08159128 verwendet state[1] anschließend als
+Index und bildet daraus mit index * 0x20 eine Leseadresse im gecachten
+Verzeichnisblock. Das bestätigt einen datenträgerabhängigen Out-of-bounds-Read
+aus einer aus dem Stackzeiger abgeleiteten Adresse.
+
+Die Kopierroutine FUN_08160828 begrenzt das Ziel weiter auf den lokalen
+256-Byte-Puffer. Im untersuchten Pfad schreibt sie nicht an die berechnete
+Quelladresse. Der Befund bleibt daher ein ungültiger Read mit möglichem Abort
+oder fehlerhafter Namensauflösung; eine Kontrollflussübernahme ist daraus nicht
+ersichtlich.
+
+Zusätzlich addieren FUN_0814f6c8 und FUN_08158b64 Werte aus diesem
+Stackargument in das gemeinsame globale Wort bei 0x086b7544. Die direkten
+Referenzen zeigen dort Read-Add-Write-Sequenzen, aber keine sichtbare
+Verzweigung anhand des Werts. Das liefert derzeit keine zusätzliche
+Kontrollflusskante. Der genaue Zweck der globalen Zählvariable ist weiter
+offen.
+
+Belege aus dieser Runde: /tmp/OSOS_lfn_resolver_deep_20261027.txt,
+/tmp/OSOS_lfn_resolver_callers_20261027.txt,
+/tmp/OSOS_lfn_global_users_20261027.txt,
+/tmp/OSOS_lfn_globals_20261027.txt,
+/tmp/OSOS_lfn_globals2_20261027.txt und der Ghidra-Xref-Lauf zu
+0x086b7544. Die Headless-Ghidra-Läufe verwendeten -readOnly -noanalysis.
+Es gab keinen Gerätezugriff und keinen Dateisystemtest.
