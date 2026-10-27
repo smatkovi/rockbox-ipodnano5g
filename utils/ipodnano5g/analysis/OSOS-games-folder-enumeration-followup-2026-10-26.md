@@ -275,3 +275,39 @@ Rohbelege: `/tmp/OSOS_games_vfs_method_bridge_20261026.txt`,
 `/tmp/OSOS_games_manifest_alloc_followup_20261026.txt` und
 `/tmp/OSOS_games_provider_boundary_20261026.txt`. Ghidra-Abfragen liefen
 read-only.
+
+## Nachtrag: Manifest-Parseroptionen und Versionshinweis (27.10.2026)
+
+Die Parseroptionen wurden im passenden Runtime-Ghidra-Projekt
+`/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime` nachgeprüft. Der
+Manifest-Pfad erreicht `FUN_082526ca` aus `FUN_08055f50`; bei diesem Aufruf ist
+der optionale Sidecar-/Prüfpfadparameter null. `FUN_082526ca` übergibt die
+Manifestdaten an `FUN_080df874`, das den Reader über `FUN_0826fee0` anlegt.
+Der Reader-Aufruf übergibt keine zusätzlichen Optionsbits. `FUN_082bf67c`
+ergänzt intern `0x10000` und leitet die Optionen an `FUN_082d3914` weiter.
+Damit ist im untersuchten Aufruf kein explizites DTD-Laden oder Ersetzen von
+Entities angefordert; die globalen Defaults und das Verhalten der konkreten
+eingebetteten libxml2-Version bleiben offen.
+
+Ein druckbarer Versionshinweis ließ sich im OSOS-Body nicht finden. Die
+Strings `libxml2 built without HTML support` und ein Quellpfad zu
+`LIBXML/xpath.c` belegen die Bibliothekszuordnung, aber keine Versionsnummer.
+Eine vorherige Adressabfrage im Full-Body-Projekt wurde für diese Parserkette
+nicht herangezogen: Die hier verifizierten Adressen stammen aus dem
+Runtime-Projekt `osos_runtime_dram_20261025.bin`.
+
+Das grenzt die Optionen dieses Manifest-Aufrufs ein, bestätigt aber weder
+einen Speicherfehler in libxml2 noch sichere globale Parser-Defaults. Es gab
+keinen XML-Lauf und keinen Gerätezugriff; ein RCE- oder Rockbox-Handoff ist
+weiterhin nicht belegt.
+
+Rohbelege:
+
+- `/tmp/OSOS_manifest_xml_xref_runtime_20261027.txt`
+- `/tmp/OSOS_manifest_xml_runtime_functions_20261027.txt`
+- `/tmp/OSOS_games_parser_option_setter_20261026.txt`
+- `/tmp/OSOS_games_plist_xml_engine_20261026.txt`
+- `strings -a -n 5 /home/sebastian/ipod-re/nano5g/osos_decrypted/osos_body.bin`
+
+Alle Ghidra-Abfragen nutzten `-readOnly -noanalysis`; es gab keinen
+Geräte-, USB-, DFU-, Boot- oder Flashzugriff.
