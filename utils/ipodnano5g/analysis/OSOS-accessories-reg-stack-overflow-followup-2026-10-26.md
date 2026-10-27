@@ -316,10 +316,13 @@ Kaltstart neu erzeugt.
   Im aktuellen Rockbox-Modus ist die NAND-Datenpartition durch das Gerät
   schreibgeschützt; nur die flüchtige RAM-Disk ist schreibbar.
 - Der FAT-Open-Callback `FUN_0812a870` und sein Fallback erreichen beide
-  `FUN_081382c2`. Dessen LFN-Pfadauflöser speichert einen Stackpufferzeiger als
-  Verzeichniseintragsindex und kann dadurch den Datei-Open für LFN-Pfade
-  unterbrechen. Die statische Factory-Kette belegt daher nicht, dass die
-  tatsächliche `accessories.reg`-Nutzlast den überlaufenden Read erreicht.
+  `FUN_081382c2`. Der LFN-Pfadauflöser speichert einen Stackpufferzeiger als
+  Verzeichniseintragsindex. Sein Kurzname-Fallback vergleicht den angeforderten
+  Namen direkt mit dem formatierten 8.3-Alias und expandiert den Alias nicht.
+  Auf dem untersuchten Volume passt deshalb `iPod_Control` nicht auf
+  `IPOD_C~1`; die statische Spur lässt den Open für diese Registry-Datei eher
+  scheitern, bevor der übergroße Read erreicht wird. Der genaue Laufzeitfehler
+  und ein alternativer Providerpfad bleiben ungeprüft.
 - Rücksprungkontrolle und ein geeignetes Pop-Gadget sind statisch belegt. Die
   ROP-Folge bis zum Loader-Entry ist abgezählt, aber nicht serialisiert oder
   ausgeführt. Provider-Erfolg, RAM-/Stack-Überlappung und die konkrete
@@ -343,8 +346,10 @@ Laut README beendet ein OSOS-Handoff die U-Boot-Sitzung; ohne physisches DFU
 ist die Rückkehr nicht belegt. Deshalb wurde der Apple-USB-Modus hier nicht
 gestartet.
 
-1. Statisch weiterverfolgen, ob Apples eigener USB-Disk-Modus oder ein OSOS-
-   Dateipfad `accessories.reg` persistent verändern kann. Apples Anleitung
+1. Prüfen, ob ein anderer Provider oder ein anderer, bereits vorhandener
+   Mount-Alias den LFN-Fehler beim Open umgeht. Apples eigener USB-Disk-Modus
+   oder ein OSOS-Dateipfad müsste `accessories.reg` persistent verändern.
+   Apples Anleitung
    bestätigt allgemeines Dateikopieren im Disk-Modus, der Zugriff auf genau
    diese Systemdatei bleibt zu prüfen. Der Rockbox-USB-Modus erlaubt auf dem
    iPod nur RAM-Disk-Schreibzugriffe.
@@ -411,6 +416,9 @@ gestartet.
 - `/tmp/OSOS_accessories_open_path_helpers_20261026.txt` und
   `/tmp/OSOS_accessories_vfs_open_followup_20261026.txt` – Stringkopie beim
   Streamaufbau und dynamischer VFS-/Providerpfad.
+- `/tmp/OSOS_accessories_lfn_name_fallback_20261027.txt` und
+  `/tmp/OSOS_accessories_open_dispatch_deep_20261027.txt` – direkter
+  8.3-Fallbackvergleich und weiterer VFS-Dispatcherpfad.
 - `/tmp/OSOS_function_0825da88_20261026.txt` – Writer-Aufrufer und umgebender
   Ereignis-/Zustandspfad.
 - `/tmp/OSOS_runtime_stack_address_ops_20261026.txt` – Stackbezogene

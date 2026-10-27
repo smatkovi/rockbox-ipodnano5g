@@ -174,3 +174,59 @@ Belege aus dieser Runde: /tmp/OSOS_lfn_resolver_deep_20261027.txt,
 /tmp/OSOS_lfn_globals2_20261027.txt und der Ghidra-Xref-Lauf zu
 0x086b7544. Die Headless-Ghidra-Läufe verwendeten -readOnly -noanalysis.
 Es gab keinen Gerätezugriff und keinen Dateisystemtest.
+
+## Nachtrag: 8.3-Fallback und erreichbarer Openpfad (27.10.2026)
+
+Der Kurzname-Fallback wurde jetzt bis zu seinem Vergleich verfolgt.
+`FUN_0821758c` formt aus den elf Bytes des FAT-Kurzeintrags einen druckbaren
+8.3-Namen (Leerzeichen werden ausgelassen, ein Punkt trennt Basisname und
+Erweiterung). `FUN_08158b64` versucht bei einem LFN-Eintrag zuerst die
+Rekonstruktion über `FUN_08159128` und vergleicht sie mit dem angeforderten
+Pfadbestandteil über `FUN_08160950`. Wenn das nicht passt, baut es den
+Kurznamen und ruft `FUN_081f1a38` auf. Dieser Wrapper setzt nur den
+Wildcard-Modus und landet wieder in `FUN_08160950`. Der Vergleich ist
+case-insensitiv und kann `*`/`?` im angeforderten Muster auswerten; er wandelt
+den Kurznamen nicht in den Langnamen um.
+
+Für den ausgelesenen Datenträger passen daher `Device` und `DEVICE` nach
+Groß-/Kleinschreibung, aber `iPod_Control` passt nicht auf `IPOD_C~1` und
+`accessories.reg` nicht auf `ACCESS~1.REG`. Die automatische
+`accessories.reg`-Route muss zunächst das Root-Verzeichnis `iPod_Control`
+auflösen. Sie erreicht das normale Datei-Open/den übergroßen Read deshalb nach
+dieser statischen Spur voraussichtlich nicht. Zusätzlich ist beim ersten
+LFN-Eintrag der aus einer Stackadresse abgeleitete Index als mögliche
+Data-Abort-/Fehlauflösungsursache belegt. Die Reihenfolge der internen
+Directory-Callbacks, Fault-Behandlung und tatsächliche Open-Rückgabe wurden
+nicht dynamisch geprüft; ein alternativer Providerpfad ist daher nicht
+ausgeschlossen.
+
+Auch der zusätzliche Mehrkomponentenpfad in `FUN_08224970` enthält in den
+untersuchten Funktionen keine erkennbare 8.3-zu-LFN-Übersetzung. Er ruft bei
+mehr als einer Komponente `FUN_082284e0` über einen Provider-Slot auf und
+dispatcht anschließend den endgültigen Open-Aufruf über einen weiteren
+Provider-Slot. Die Zuordnung sämtlicher Laufzeitprovider und ihrer internen
+Fallbacks ist nicht vollständig. Damit ist dies kein Beweis, dass kein
+anderer Provider den Pfad öffnen kann.
+
+**Auswirkung auf den Rockbox-Kandidaten:** Der statisch abgezählte Überlauf in
+`FUN_0802c3c4` bleibt eine echte Rücksprungkontrollmöglichkeit, falls sein
+Read erreicht wird. Mit dem aktuellen FAT-Namensbestand und dem untersuchten
+Vergleich ist der benötigte Open/Read jedoch nicht belegt und eher blockiert.
+Die ROP-Folge ist daher kein ausführbarer oder bestätigter Installationsweg.
+Dasselbe Erreichbarkeitsproblem kann andere fest codierte
+`iPod_Control/...`-Dateien betreffen; kurze letzte Komponenten wie `alarms`
+umgehen das lange Root-Verzeichnis nicht.
+
+Neue Rohbelege:
+
+- `/tmp/OSOS_accessories_lfn_name_fallback_20261027.txt` – Vergleichs- und
+  8.3-Formatierungsfunktionen.
+- `/tmp/OSOS_accessories_open_dispatch_deep_20261027.txt` – Dispatcher
+  `FUN_08224970`, Komponenten-Zähler und `FUN_082284e0`.
+- `/tmp/OSOS_accessories_open_path_helpers_20261026.txt` und
+  `/tmp/OSOS_accessories_vfs_open_followup_20261026.txt` – Provider- und
+  Stream-Aufrufpfad.
+
+Die Ghidra-Abfrage lief read-only mit `-readOnly -noanalysis`; es gab keine
+Geräteabfrage, keinen Neustart, keinen Dateisystemtest und keinen
+NAND-/NOR-/Flashzugriff.

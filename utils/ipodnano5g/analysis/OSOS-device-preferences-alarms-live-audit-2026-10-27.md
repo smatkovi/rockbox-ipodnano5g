@@ -179,5 +179,29 @@ Neue Rohbelege:
 - `/tmp/OSOS_alarm_string_field_20261027.txt`
 - `/tmp/OSOS_preferences_lifecycle_followup_20261027.txt`
 
+## Nachtrag: gemeinsamer LFN-Openpfad (27.10.2026)
+
+Der Alarm-Reader erzeugt den konstanten Pfad `iPod_Control/Device/alarms` und
+öffnet ihn mit `FUN_082721f0`, also derselben Stream-API, deren FAT-Auflösung
+im Zubehör-Registry-Audit untersucht wurde. Der Kurzname `DEVICE` passt zu
+`Device` und `ALARMS` zu `alarms`; der Root-Bestandteil `iPod_Control` passt
+jedoch nicht zum vorhandenen Alias `IPOD_C~1`. Der untersuchte Resolver
+expandiert den 8.3-Alias im Fallback nicht und hat zusätzlich den
+LFN-Zustandsfehler. Daher ist auch für diesen Alarm-Parser ein erfolgreicher
+Open über den untersuchten FAT-Provider nicht belegt und statisch eher
+blockiert.
+
+Das gilt als Reachability-Einschränkung, keine Widerlegung des Parserbefunds:
+die genaue Provider-Auswahl und ein alternativer Openpfad wurden für den
+Alarm-Callback nicht dynamisch geprüft. Der bekannte Alarm-Stringread bleibt
+ein begrenzter bedingter Stack-Restdaten-Kandidat; die rekursive Skip-Routine
+bleibt ein bedingter Verfügbarkeitskandidat. Keiner davon belegt RCE oder
+untethered Rockbox.
+
+Belege: `/tmp/OSOS_accessories_lfn_name_fallback_20261027.txt`,
+`/tmp/OSOS_accessories_open_dispatch_deep_20261027.txt` und die oben
+aufgeführten Alarm-Parser-Rohbelege. Read-only-Ghidra; keine Geräteabfrage,
+kein Neustart und keine Flash-/NAND-/NOR-Änderung.
+
 Die Ghidra-Abfragen liefen mit `-readOnly -noanalysis`; kein Gerät wurde
 abgefragt und es gab keine Datei-, NAND-, NOR- oder Flashänderung.
