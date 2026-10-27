@@ -1080,3 +1080,21 @@ noch Gerät verändert oder neu gestartet.
 Zusätzliche lokale Belege: `/tmp/OSOS_codewindow_0802ab_20261026.txt` und
 `/tmp/OSOS_timer_callers_deep_20261026.txt`; der aktuelle `timer`-Inhalt wurde
 direkt vom nur lesbar eingehängten Gerät gelesen.
+
+## Nachtrag: Adresssuche für den Timer-Methodenblock (27.10.2026)
+
+Eine erneute Xref-Abfrage und ein Scan des disassemblierten OSOS-Listings
+fanden für `0x0802ab8a` weiterhin nur den Dateneintrag `0x084fef8c` mit dem
+Thumb-Ziel `0x0802ab8b`, keinen direkten Codeaufruf. Im Runtime-Abbild gibt es
+keinen wörtlichen Zeiger auf die Tabellenadressen `0x084fef80`, `0x084fef88`
+oder `0x084fef8c`; im disassemblierten Listing wurde auch kein passendes
+`MOVW`/`MOVT`-Immediatepaar (`0xef80`/`0x084f`) oder vollständiges Immediate
+gefunden. Das spricht gegen eine einfache statische Adressierung dieser
+Tabelle. Es beweist keine Unerreichbarkeit: dynamisch aufgebaute Dispatches,
+Adressberechnung aus anderen Werten oder nicht im Runtime-Abbild enthaltene
+Registrierungen bleiben offen. Damit wird der Timer-Caller nicht als
+automatischer Bootpfad gewertet.
+
+Beleg für die Immediate-Suche: `/tmp/OSOS_table_address_scalar_scan_20261027.txt`;
+die Rohbyte- und Xref-Abfragen betreffen `/tmp/osos_runtime_dram_20261025.bin`
+und das read-only-Ghidra-Projekt `/tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime`.
