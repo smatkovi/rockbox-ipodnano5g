@@ -1,0 +1,32 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08160164 <.data+0x160164>:
+ 8160164:	f000 f801 	bl	0x816016a
+ 8160168:	bd10      	pop	{r4, pc}
+ 816016a:	b510      	push	{r4, lr}
+ 816016c:	69c0      	ldr	r0, [r0, #28]
+ 816016e:	f042 e8c0 	blx	0x81a22f0
+ 8160172:	bd10      	pop	{r4, pc}
+ 8160174:	b510      	push	{r4, lr}
+ 8160176:	460c      	mov	r4, r1
+ 8160178:	2112      	movs	r1, #18
+ 816017a:	f045 fbb9 	bl	0x81a58f0
+ 816017e:	4902      	ldr	r1, [pc, #8]	@ (0x8160188)
+ 8160180:	6084      	str	r4, [r0, #8]
+ 8160182:	6001      	str	r1, [r0, #0]
+ 8160184:	bd10      	pop	{r4, pc}
+ 8160186:	0000      	movs	r0, r0
+ 8160188:	68f8      	ldr	r0, [r7, #12]
+ 816018a:	0853      	lsrs	r3, r2, #1
+ 816018c:	b510      	push	{r4, lr}
+ 816018e:	f11b f95b 	bl	0x827b448
+ 8160192:	bd10      	pop	{r4, pc}
+ 8160194:	b510      	push	{r4, lr}
+ 8160196:	f031 fda1 	bl	0x8191cdc
+ 816019a:	bd10      	pop	{r4, pc}
+ 816019c:	2000      	movs	r0, #0
+ 816019e:	4770      	bx	lr

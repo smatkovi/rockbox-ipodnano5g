@@ -1,0 +1,66 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08020a14 <.data+0x20a14>:
+ 8020a14:	b570      	push	{r4, r5, r6, lr}
+ 8020a16:	f002 ffb3 	bl	0x8023980
+ 8020a1a:	4915      	ldr	r1, [pc, #84]	@ (0x8020a70)
+ 8020a1c:	4604      	mov	r4, r0
+ 8020a1e:	4605      	mov	r5, r0
+ 8020a20:	6001      	str	r1, [r0, #0]
+ 8020a22:	31ff      	adds	r1, #255	@ 0xff
+ 8020a24:	31c1      	adds	r1, #193	@ 0xc1
+ 8020a26:	61c1      	str	r1, [r0, #28]
+ 8020a28:	4912      	ldr	r1, [pc, #72]	@ (0x8020a74)
+ 8020a2a:	30ff      	adds	r0, #255	@ 0xff
+ 8020a2c:	3071      	adds	r0, #113	@ 0x71
+ 8020a2e:	2200      	movs	r2, #0
+ 8020a30:	c006      	stmia	r0!, {r1, r2}
+ 8020a32:	1de0      	adds	r0, r4, #7
+ 8020a34:	30f9      	adds	r0, #249	@ 0xf9
+ 8020a36:	2301      	movs	r3, #1
+ 8020a38:	6242      	str	r2, [r0, #36]	@ 0x24
+ 8020a3a:	6302      	str	r2, [r0, #48]	@ 0x30
+ 8020a3c:	62c2      	str	r2, [r0, #44]	@ 0x2c
+ 8020a3e:	6343      	str	r3, [r0, #52]	@ 0x34
+ 8020a40:	4601      	mov	r1, r0
+ 8020a42:	63c2      	str	r2, [r0, #60]	@ 0x3c
+ 8020a44:	20ff      	movs	r0, #255	@ 0xff
+ 8020a46:	3041      	adds	r0, #65	@ 0x41
+ 8020a48:	35ff      	adds	r5, #255	@ 0xff
+ 8020a4a:	5103      	str	r3, [r0, r4]
+ 8020a4c:	20ff      	movs	r0, #255	@ 0xff
+ 8020a4e:	3029      	adds	r0, #41	@ 0x29
+ 8020a50:	638a      	str	r2, [r1, #56]	@ 0x38
+ 8020a52:	3545      	adds	r5, #69	@ 0x45
+ 8020a54:	5502      	strb	r2, [r0, r4]
+ 8020a56:	2300      	movs	r3, #0
+ 8020a58:	4629      	mov	r1, r5
+ 8020a5a:	4620      	mov	r0, r4
+ 8020a5c:	f186 fac0 	bl	0x81a6fe0
+ 8020a60:	217d      	movs	r1, #125	@ 0x7d
+ 8020a62:	4628      	mov	r0, r5
+ 8020a64:	00c9      	lsls	r1, r1, #3
+ 8020a66:	f186 fac3 	bl	0x81a6ff0
+ 8020a6a:	4620      	mov	r0, r4
+ 8020a6c:	bd70      	pop	{r4, r5, r6, pc}
+ 8020a6e:	0000      	movs	r0, r0
+ 8020a70:	6824      	ldr	r4, [r4, #0]
+ 8020a72:	0850      	lsrs	r0, r2, #1
+ 8020a74:	54d8      	strb	r0, [r3, r3]
+ 8020a76:	0853      	lsrs	r3, r2, #1
+ 8020a78:	4770      	bx	lr
+ 8020a7a:	0000      	movs	r0, r0
+ 8020a7c:	4a01      	ldr	r2, [pc, #4]	@ (0x8020a84)
+ 8020a7e:	60d1      	str	r1, [r2, #12]
+ 8020a80:	6090      	str	r0, [r2, #8]
+ 8020a82:	4770      	bx	lr
+ 8020a84:	3ce8      	subs	r4, #232	@ 0xe8
+ 8020a86:	0855      	lsrs	r5, r2, #1
+ 8020a88:	4770      	bx	lr
+ 8020a8a:	0000      	movs	r0, r0
+ 8020a8c:	2200      	movs	r2, #0
+ 8020a8e:	b510      	push	{r4, lr}

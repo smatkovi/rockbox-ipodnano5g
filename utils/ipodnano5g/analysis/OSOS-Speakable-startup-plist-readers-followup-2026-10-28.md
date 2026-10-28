@@ -683,8 +683,89 @@ Die neuen, persistent abgelegten Belege für diesen Nachtrag sind:
 - `OSOS_speakable_final_side_effect_crosscheck_20261028.log`
 - `OSOS_speakable_context_parent_gate_20261028.log`
 
-Als nächste statische Schritte bleiben die Ermittlung des Registrierers für
-Service `0xa700` und seines Slots `+0x1a8` sowie die Rückverfolgung der
-Erzeuger für Eventtyp `0x12` und dessen Senderwert. Ein Gerätetest ist für
-diese offenen Laufzeitbedingungen erst nötig, wenn das Gerät dafür wieder
-verfügbar ist.
+Die Folgeanalyse unten hat den wahrscheinlichen Slot `+0x1a8` und einen
+statischen Erzeuger für Eventtyp `0x12` gefunden. Offen bleiben die konkrete
+Zuordnung des Registry-Eintrags `0xa700`, die Laufzeitzuordnung des
+`time`-Callbacks zu seinem Empfänger sowie der tatsächliche Senderwert.
+
+### Nachtrag 2026-10-28: Service `0xa700` und Erzeuger für Eventtyp `0x12`
+
+Der erste Factory-Eintrag bei `0x08553a04` trägt die Kennung `0xa700` und
+verweist auf den Thumb-Factory-Callback `0x0801e75c`. Dessen Konstruktor
+`0x08020a14` setzt die primäre VTable `0x08506824`. In dieser VTable steht
+bei `+0x1a8` (`0x085069cc`) der Thumb-Zeiger `0x0803cd4d`, also der Code bei
+`0x0803cd4c`. Dieser kopiert den globalen Wert bei `0x08553988` nach
+`0x0855398c` und ruft `FUN_08251884` mit dem Objekt auf. Die Methode liest
+Zustands-/Zeitwerte, aktualisiert Felder und sendet bedingte
+Benachrichtigungen über virtuelle Methoden. Der Slot ist damit auf Code
+zurückgeführt, der hier keinen direkten Sprung in Nutzdaten oder
+Codezeigerüberschreibung zeigt.
+
+Die Verbindung zum Laufzeit-Registry ist nicht vollständig bewiesen: Der
+Lookup für `0xa700` läuft über `DAT_081a9b08`, dessen Zeiger `0x087644fc`
+außerhalb des Abbilds `0x08000000–0x086c43a7` liegt. Die Übereinstimmung von
+Registry-Schlüssel und erster Factory-Zeile sowie deren VTable macht
+`0x08506824` zum plausiblen Slotbesitzer; die konkrete Laufzeitinstanz kann
+aus diesem Dump allein nicht bestätigt werden.
+
+Für Eventtyp `0x12` wurden alle direkten Aufrufer des Nachrichten-Builders
+`FUN_081a58f0` geprüft. Unter diesen Aufrufern setzt nur `FUN_08160174` den
+Typ `0x12`. Der Builder initialisiert den von ihm übergebenen Speicher
+in-place; `FUN_08160174` füllt damit eine 12-Byte-Nachricht auf dem Stack
+mit VTable `0x085368f8`, Typ `0x12` und einem Senderzeiger aus `r1`.
+`FUN_08154544` ruft diesen Builder auf und dispatcht die Stack-Nachricht
+anschließend über Slot `+0x3c` des Empfängerobjekts.
+
+Ein roher Scan findet den Callback-Zeiger `0x08154545` genau einmal in der
+Datentabelle bei `0x084315dc`, direkt nach dem ASCII-Schlüssel `time`. Das
+belegt den statischen Eintrag „time → `FUN_08154544`“, aber keine direkte
+Code-XRef und noch keinen erreichbaren Dispatcher. In `FUN_08154544` ist der
+Sender `*(param_1 + 0x0c)`; der Empfänger wird aus dessen Feld `+0x24`
+geladen. Falls dieser Empfänger die VTable `0x084f7558` hat, führt Slot
+`+0x3c` zu `FUN_08038d38`. Dessen Typ-`0x12`-Zweig liest den Sender über
+Interface-ID `0x0d00` und verlangt einen Treffer auf einen festgelegten
+Objekt-Offset, unter anderem `this + 0x818`. Die Request-Argumente in
+`param_2` bis `param_4` werden beim In-place-Aufbau überschrieben; sie
+steuern weder Nachrichtentyp noch Senderzeiger. Ob der `time`-Callback im
+Gerät tatsächlich diesen Empfänger und den passenden Senderkontext erhält,
+ist im vorhandenen Abbild nicht belegt.
+
+Damit bleibt dies ein möglicher Ereignispfad zur bereits untersuchten
+Speakable-Logik, aber kein Nachweis für kontrollierbaren Codefluss oder einen
+Rockbox-Handoff. Die nächste statische Runde sollte die Verwendung der
+Datentabelle `0x084315d8` und die Herkunft ihres Callback-Kontexts klären,
+dann die Empfänger-/Sendergleichheit gegen den Konstruktor der VTable
+`0x084f7558` prüfen. Ohne diese Verbindungen ist der Pfad nicht als
+ausnutzbar einzustufen.
+
+Neue persistente Belege und das Hilfsskript liegen unter
+`evidence/speakable-2026-10-28/`:
+
+- `OSOS_speakable_service_a700_constructor_and_initializer_20261028.log`
+- `OSOS_speakable_service_a700_constructor_thumb_20261028.log`
+- `OSOS_speakable_service_a700_factory_row0_20261028.log`
+- `OSOS_speakable_service_a700_row0_thumb_20261028.log`
+- `OSOS_speakable_service_a700_slot_1a8_resolution_20261028.log`
+- `OSOS_speakable_service_a700_slot_1a8_thumb_20261028.log`
+- `OSOS_speakable_service_a700_registry_binding_20261028.log`
+- `OSOS_speakable_service_a700_slot_effect_globals_20261028.log`
+- `OSOS_speakable_message_constructor_all_callers_20261028.log`
+- `OSOS_speakable_event12_producer_and_callers_20261028.log`
+- `OSOS_speakable_event12_dispatch_reachability_20261028.log`
+- `OSOS_speakable_event12_producer_thumb_20261028.log`
+- `OSOS_speakable_event12_raw_pointer_scan_20261028.log`
+- `OSOS_speakable_event12_dispatch_table_scan_20261028.log`
+- `OSOS_speakable_event12_dispatch_table_xrefs_20261028.log`
+- `OSOS_speakable_event12_handler_cluster_thumb_20261028.log`
+- `OSOS_speakable_event12_allocator_lifetime_20261028.log`
+- `OSOS_speakable_event12_constructor_thumb_20261028.log`
+- `OSOS_speakable_event12_message_vtable_20261028.log`
+- `OSOS_speakable_event12_message_method_thumb_20261028.log`
+- `OSOS_speakable_event12_message_methods_20261028.log`
+- `OSOS_speakable_event12_receiver_vtable_check_20261028.log`
+- `OSOS_speakable_message_allocator_thumb_20261028.log`
+- `scripts/DecompileDirectCallers.java`
+
+Die Ghidra-Abfragen liefen mit `-noanalysis -readOnly` auf dem lokalen
+Runtime-Projekt. Es gab in dieser Runde keinen USB-, Geräte-, DFU-, NAND-,
+NOR- oder Flashzugriff und keine Tests.
