@@ -1,0 +1,255 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (720 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1378 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x08265800' '0x08193d0c' '0x0831a81e' '0x0831a7b6' '0x0827c5d4' '0x08278cc2' '0x08278dea' '0x0827ee44' '0x0827a608' '0x0827a610' '0x0827ac3c'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 08265800 FUN_08265800 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_08265800(byte *param_1,undefined4 *param_2,undefined4 param_3)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  uint uVar8;
+  int iVar9;
+  
+  iVar9 = 0;
+  piVar1 = (int *)FUN_0827e6c8();
+  iVar2 = *piVar1;
+  pbVar6 = param_1;
+  do {
+    pbVar5 = pbVar6;
+    uVar8 = (uint)*pbVar5;
+    pbVar6 = pbVar5 + 1;
+    if (uVar8 == 0) break;
+    piVar3 = (int *)FUN_0827d4d4();
+  } while ((*(byte *)(*piVar3 + uVar8) & 1) != 0);
+  pbVar7 = pbVar6;
+  if ((uVar8 != 0x2b) && (pbVar7 = pbVar5, uVar8 == 0x2d)) {
+    iVar9 = 0x400;
+    pbVar7 = pbVar6;
+  }
+  *piVar1 = 0;
+  iVar4 = FUN_0831601c(pbVar7,param_2,param_3);
+  if ((param_2 != (undefined4 *)0x0) && ((byte *)*param_2 == pbVar7)) {
+    *param_2 = param_1;
+  }
+  if (*piVar1 != 2) {
+    *piVar1 = iVar2;
+    if (iVar9 << 0x15 < 0) {
+      return -iVar4;
+    }
+  }
+  return iVar4;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08193d0c FUN_08193d0c ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_08193d0c(int param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int local_10;
+  int local_c;
+  
+  if (param_1 == 0) {
+    param_1 = DAT_08193d40;
+  }
+  local_10 = param_2;
+  local_c = param_1;
+  if (param_2 == 0) {
+    local_10 = DAT_08193d40;
+  }
+  do {
+    iVar1 = FUN_0827f2a0(&local_c);
+    iVar2 = FUN_0827f2a0(&local_10);
+    if (iVar1 != iVar2) {
+      return iVar1 - iVar2;
+    }
+  } while (iVar1 != 0);
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0831a81e FUN_0831a81e ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined1 FUN_0831a81e(int param_1)
+
+{
+  return *(undefined1 *)(*(int *)(param_1 + 0xcec) + 0xb04);
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0831a7b6 FUN_0831a7b6 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0831a7b6(int param_1)
+
+{
+  if (*(char *)(*(int *)(param_1 + 0xcec) + 0xb04) != '\0') {
+    *(undefined1 *)(*(int *)(param_1 + 0xcec) + 0xb04) = 0;
+    FUN_0827f34e(*(undefined4 *)(param_1 + 0xcec));
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827c5d4 FUN_0827c5d4 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_0827c5d4(void)
+
+{
+  return 0x20;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08278cc2 FUN_08278cc2 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+bool FUN_08278cc2(int param_1)
+
+{
+  return *(int *)(param_1 + 0x18) != -1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08278dea FUN_08278dea ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+uint FUN_08278dea(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  uint uVar4;
+  undefined4 uStack_10;
+  
+  uStack_10 = param_4;
+  FUN_0827310a(&uStack_10,param_1);
+  iVar1 = FUN_08278cc2(param_1);
+  if (iVar1 == 0) {
+    uVar4 = *(uint *)(param_1 + 0x1c);
+  }
+  else {
+    uVar2 = FUN_08254818(param_1 + 0x40);
+    piVar3 = (int *)FUN_0827dce0(param_1,1);
+    uVar4 = (**(code **)(*piVar3 + 0x2c))(piVar3,*(undefined4 *)(param_1 + 0x18));
+    uVar4 = uVar4 | uVar2;
+  }
+  FUN_08279d68(&uStack_10);
+  return uVar4;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827ee44 FUN_0827ee44 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 *
+FUN_0827ee44(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined1 param_4)
+
+{
+  *param_1 = DAT_0827ee60;
+  param_1[1] = param_2;
+  param_1[2] = param_3;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  *(undefined1 *)(param_1 + 5) = param_4;
+  FUN_08194f36(param_1);
+  return param_1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827a608 FUN_0827a608 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0827a608(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  *(undefined1 *)(param_1 + 1) = 0;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827a610 FUN_0827a610 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_0827a610(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int *piVar1;
+  undefined4 uVar2;
+  undefined4 uStack_18;
+  undefined4 uStack_14;
+  undefined4 uStack_10;
+  undefined4 uStack_c;
+  
+  uStack_18 = param_1;
+  uStack_14 = param_2;
+  uStack_10 = param_3;
+  uStack_c = param_4;
+  FUN_08273028(&uStack_18);
+  piVar1 = (int *)FUN_0827dce0(&uStack_18,1);
+  uVar2 = (**(code **)(*piVar1 + 0x5c))(piVar1,param_1);
+  FUN_08273044(&uStack_18);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827ac3c FUN_0827ac3c ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int * FUN_0827ac3c(int *param_1)
+
+{
+  if (*param_1 != 0) {
+    FUN_0827ec10(*(undefined4 *)(*param_1 + 0x20));
+    *param_1 = 0;
+  }
+  *(undefined1 *)(param_1 + 2) = 0;
+  return param_1;
+}
+
+ (GhidraScript)  

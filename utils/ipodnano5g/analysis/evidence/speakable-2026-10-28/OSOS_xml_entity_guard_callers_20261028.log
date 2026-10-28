@@ -1,0 +1,1638 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (695 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1319 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: InspectFunctionsShort.java '0x08123090' '0x08130a98' '0x0820142c'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/InspectFunctionsShort.java (HeadlessAnalyzer)  
+INFO  InspectFunctionsShort.java> ===== TARGET 08123090 FUNC 08123090 FUN_08123090 ===== (GhidraScript)  
+INFO  InspectFunctionsShort.java> 
+void FUN_08123090(int *param_1)
+
+{
+  char cVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  undefined4 uVar7;
+  undefined *puVar8;
+  code *pcVar9;
+  int *piVar10;
+  undefined4 *puVar11;
+  int *piVar12;
+  undefined4 local_38;
+  int *local_34;
+  int *local_30;
+  int local_2c;
+  int local_28;
+  int *local_24;
+  int *local_20;
+  int local_1c;
+  int *local_18;
+  
+  local_2c = 0;
+  pcVar2 = *(char **)(param_1[9] + 0x10);
+  if (*pcVar2 != '&') {
+    return;
+  }
+  local_18 = param_1 + 0x40;
+  if (pcVar2[1] == '#') {
+    cVar1 = pcVar2[2];
+    iVar3 = FUN_081392c0(param_1);
+    if (iVar3 == 0) {
+      return;
+    }
+    if (*local_18 != 1) {
+      if (iVar3 < 0x100) {
+        local_38._0_2_ = (ushort)(byte)iVar3;
+        if (*param_1 == 0) {
+          return;
+        }
+        pcVar9 = *(code **)(*param_1 + 0x44);
+        if (pcVar9 == (code *)0x0) {
+          return;
+        }
+        if (param_1[0x35] != 0) {
+          return;
+        }
+        iVar4 = param_1[1];
+        iVar3 = 1;
+        puVar11 = &local_38;
+        goto LAB_0812319a;
+      }
+      if ((cVar1 == 'x') || (cVar1 == 'X')) {
+        puVar8 = &DAT_081234b0;
+      }
+      else {
+        puVar8 = &DAT_081234b8;
+      }
+      FUN_08193640(&local_38,10,puVar8,iVar3);
+      if (*param_1 == 0) {
+        return;
+      }
+      pcVar9 = *(code **)(*param_1 + 0x40);
+      if (pcVar9 == (code *)0x0) {
+        return;
+      }
+      if (param_1[0x35] != 0) {
+        return;
+      }
+      iVar3 = param_1[1];
+      puVar11 = &local_38;
+      goto LAB_08123386;
+    }
+    iVar3 = FUN_0824a878(&local_38,iVar3);
+    *(undefined1 *)((int)&local_38 + iVar3) = 0;
+    if (*param_1 == 0) {
+      return;
+    }
+    pcVar9 = *(code **)(*param_1 + 0x44);
+    if (pcVar9 == (code *)0x0) {
+      return;
+    }
+    if (param_1[0x35] != 0) {
+      return;
+    }
+    iVar4 = param_1[1];
+    puVar11 = &local_38;
+    goto LAB_0812319a;
+  }
+  iVar3 = FUN_08130108(param_1);
+  if (iVar3 == 0) {
+    return;
+  }
+  if (param_1[3] == 0) {
+    return;
+  }
+  local_28 = *(int *)(iVar3 + 0x48);
+  if (*(int *)(iVar3 + 8) != 0) {
+    local_1c = iVar3 + 0x20;
+    cVar1 = *(char *)(iVar3 + 0x30);
+    if (cVar1 != '\x06') {
+      local_20 = param_1 + 0x68;
+      local_24 = param_1 + 0x60;
+      if (local_28 == 0) {
+        local_30 = (int *)param_1[0x6e];
+        piVar10 = (int *)param_1[1];
+        if (piVar10 == param_1) {
+          piVar10 = (int *)0x0;
+        }
+        if (cVar1 == '\x01') {
+          param_1[0x3e] = param_1[0x3e] + 1;
+          iVar4 = FUN_08138c58(param_1,*(undefined4 *)(iVar3 + 0x28),piVar10,&local_2c);
+LAB_081231f6:
+          param_1[0x3e] = param_1[0x3e] + -1;
+        }
+        else {
+          if (cVar1 == '\x02') {
+            iVar4 = param_1[0x3e];
+            param_1[0x3e] = iVar4 + 1;
+            local_38 = *(undefined4 *)(iVar3 + 0x34);
+            local_34 = &local_2c;
+            iVar4 = FUN_0813980c(param_1[2],param_1,*param_1,piVar10,iVar4 + 1,
+                                 *(undefined4 *)(iVar3 + 0x40));
+            goto LAB_081231f6;
+          }
+          iVar4 = 0x58;
+          FUN_082313da(param_1,1,s_invalid_entity_type_found_081234bc,0);
+        }
+        *(int *)(iVar3 + 0x48) = local_24[0xe] - (int)local_30;
+        if (iVar4 == 0x59) {
+          FUN_08274d14(param_1,0x59,0);
+LAB_08123236:
+          FUN_082601c8(local_2c);
+          return;
+        }
+        iVar5 = FUN_0820142c(param_1,0,iVar3);
+        if (iVar5 != 0) goto LAB_08123236;
+        if (iVar4 == 0) {
+          if (local_2c != 0) {
+            if (((*(char *)(local_1c + 0x10) == '\x01') || (*(char *)(local_1c + 0x10) == '\x02'))
+               && (*(int *)(iVar3 + 0xc) == 0)) {
+              *(int *)(iVar3 + 0xc) = local_2c;
+              if (param_1[4] == 0) {
+                *(undefined4 *)(iVar3 + 0x44) = 1;
+                do {
+                  *(int *)(local_2c + 0x14) = iVar3;
+                  if (*(int *)(local_2c + 0x18) == 0) {
+                    *(int *)(iVar3 + 0x10) = local_2c;
+                  }
+                  local_2c = *(int *)(local_2c + 0x18);
+                } while (local_2c != 0);
+                local_2c = 0;
+              }
+              else if (((*(char *)(local_2c + 4) == '\x03') && (*(int *)(local_2c + 0x18) == 0)) ||
+                      ((char)local_20[5] == '\x05')) {
+                *(int *)(local_2c + 0x14) = iVar3;
+                local_2c = 0;
+                *(undefined4 *)(iVar3 + 0x44) = 1;
+              }
+              else {
+                *(undefined4 *)(iVar3 + 0x44) = 0;
+                do {
+                  *(int *)(local_2c + 0x14) = param_1[0xd];
+                  *(int *)(local_2c + 0x20) = param_1[2];
+                  if (*(int *)(local_2c + 0x18) == 0) {
+                    *(int *)(iVar3 + 0x10) = local_2c;
+                  }
+                  local_2c = *(int *)(local_2c + 0x18);
+                } while (local_2c != 0);
+                local_2c = *(int *)(iVar3 + 0xc);
+              }
+            }
+            else {
+LAB_081232d8:
+              FUN_082601c8();
+              local_2c = 0;
+            }
+          }
+        }
+        else if (iVar4 == 0x1b) {
+          if (local_2c != 0) goto LAB_081232d8;
+        }
+        else {
+          FUN_0824f5c4(param_1,0x1a,s_Entity___s__failed_to_parse_081234d8,
+                       *(undefined4 *)(iVar3 + 8));
+        }
+        if (*(int *)(iVar3 + 0x48) == 0) {
+          *(undefined4 *)(iVar3 + 0x48) = 1;
+        }
+      }
+      else if (local_28 != 1) {
+        param_1[0x6e] = param_1[0x6e] + local_28;
+      }
+      piVar10 = *(int **)(iVar3 + 0xc);
+      if (piVar10 == (int *)0x0) {
+        if (local_28 != 0) {
+          piVar10 = (int *)param_1[1];
+          if (piVar10 == param_1) {
+            piVar10 = (int *)0x0;
+          }
+          if (*(char *)(local_1c + 0x10) == '\x01') {
+            param_1[0x3e] = param_1[0x3e] + 1;
+            iVar4 = FUN_08138c58(param_1,*(undefined4 *)(iVar3 + 0x28),piVar10,0);
+          }
+          else {
+            if (*(char *)(local_1c + 0x10) != '\x02') {
+              FUN_082313da(param_1,1,s_invalid_entity_type_found_081234bc,0);
+              goto LAB_0812336a;
+            }
+            iVar4 = param_1[0x3e];
+            param_1[0x3e] = iVar4 + 1;
+            local_38 = *(undefined4 *)(iVar3 + 0x34);
+            local_34 = (int *)0x0;
+            iVar4 = FUN_0813980c(param_1[2],param_1,*param_1,piVar10,iVar4 + 1,
+                                 *(undefined4 *)(iVar3 + 0x40));
+          }
+          param_1[0x3e] = param_1[0x3e] + -1;
+          if (iVar4 == 0x59) {
+            FUN_08274d14(param_1,0x59,0);
+            return;
+          }
+        }
+LAB_0812336a:
+        if (*param_1 == 0) {
+          return;
+        }
+        pcVar9 = *(code **)(*param_1 + 0x40);
+        if (pcVar9 == (code *)0x0) {
+          return;
+        }
+        if (param_1[4] != 0) {
+          return;
+        }
+      }
+      else {
+        if ((*param_1 == 0) || (pcVar9 = *(code **)(*param_1 + 0x40), pcVar9 == (code *)0x0)) {
+          if (param_1[4] == 0) {
+            return;
+          }
+LAB_081233a4:
+          if (param_1[0xd] == 0) {
+            return;
+          }
+          if (((local_2c == 0) && (*(int *)(iVar3 + 0x44) == 0)) || ((char)local_20[5] == '\x05')) {
+            piVar12 = (int *)0x0;
+            do {
+              piVar6 = (int *)FUN_081c5064(piVar10,param_1[2],1);
+              iVar4 = 0;
+              if (piVar6 != (int *)0x0) {
+                if (*piVar6 == 0) {
+                  *piVar6 = *piVar10;
+                }
+                if (piVar12 == (int *)0x0) {
+                  piVar12 = piVar6;
+                }
+                iVar4 = FUN_08254cea(param_1[0xd],piVar6);
+              }
+              if (*(int **)(iVar3 + 0x10) == piVar10) {
+                if ((((char)local_20[5] == '\x05') && (iVar4 != 0)) &&
+                   ((*(char *)(iVar4 + 4) == '\x01' && (*(int *)(iVar4 + 0xc) == 0)))) {
+                  *(undefined2 *)(iVar4 + 0x3a) = 1;
+                }
+                break;
+              }
+              piVar10 = (int *)piVar10[6];
+            } while (piVar10 != (int *)0x0);
+          }
+          else if (local_2c == 0) {
+            piVar12 = (int *)0x0;
+            *(undefined4 *)(iVar3 + 0xc) = 0;
+            local_34 = *(int **)(iVar3 + 0x10);
+            *(undefined4 *)(iVar3 + 0x10) = 0;
+            do {
+              local_30 = (int *)piVar10[6];
+              piVar10[6] = 0;
+              piVar10[5] = 0;
+              piVar6 = (int *)FUN_081c5064(piVar10,param_1[2],1);
+              if (piVar6 != (int *)0x0) {
+                if (*piVar6 == 0) {
+                  *piVar6 = *piVar10;
+                }
+                if (piVar12 == (int *)0x0) {
+                  piVar12 = piVar10;
+                }
+                FUN_08254cea(iVar3,piVar6);
+                FUN_08254cea(param_1[0xd],piVar10);
+              }
+            } while ((piVar10 != local_34) && (piVar10 = local_30, local_30 != (int *)0x0));
+            if (*(int *)(iVar3 + 0x44) == 0) {
+              *(undefined4 *)(iVar3 + 0x44) = 1;
+            }
+          }
+          else {
+            uVar7 = FUN_08270928(local_18[10],s_nbktext_081234f8,0xffffffff);
+            if (*(char *)(*(int *)(iVar3 + 0xc) + 4) == '\x03') {
+              *(undefined4 *)(*(int *)(iVar3 + 0xc) + 8) = uVar7;
+            }
+            iVar4 = *(int *)(iVar3 + 0x10);
+            if ((iVar4 != *(int *)(iVar3 + 0xc)) && (*(char *)(iVar4 + 4) == '\x03')) {
+              *(undefined4 *)(iVar4 + 8) = uVar7;
+            }
+            FUN_081e2822(param_1[0xd],*(undefined4 *)(iVar3 + 0xc));
+          }
+          local_18[2] = 0;
+          local_18[1] = 0;
+          return;
+        }
+        if (param_1[4] != 0) goto LAB_081233a4;
+      }
+      if (param_1[0x35] != 0) {
+        return;
+      }
+      puVar11 = *(undefined4 **)(iVar3 + 8);
+      iVar3 = param_1[1];
+LAB_08123386:
+      (*pcVar9)(iVar3,puVar11);
+      return;
+    }
+  }
+  puVar11 = *(undefined4 **)(iVar3 + 0x28);
+  if (puVar11 == (undefined4 *)0x0) {
+    return;
+  }
+  if (*param_1 == 0) {
+    return;
+  }
+  if (*(int *)(*param_1 + 0x44) == 0) {
+    return;
+  }
+  if (param_1[0x35] != 0) {
+    return;
+  }
+  iVar3 = FUN_08264440(puVar11);
+  iVar4 = param_1[1];
+  pcVar9 = *(code **)(*param_1 + 0x44);
+LAB_0812319a:
+  (*pcVar9)(iVar4,puVar11,iVar3);
+  return;
+}
+
+ (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123090  push {r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123092  sub sp,#0x2c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123094  mov r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123096  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123098  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812309a  ldr r0,[r4,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812309c  ldr r0,[r0,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812309e  ldrb r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230a0  cmp r1,#0x26 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230a2  bne 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230a4  ldrb r2,[r0,#0x1] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230a6  adds r1,r4,#0x7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230a8  adds r1,#0xf9 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230aa  mov r6,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ac  adds r6,#0xc0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ae  cmp r2,#0x23 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230b0  str r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230b2  bne 0x0812314c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230b4  ldrb r5,[r0,#0x2] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230b6  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230b8  bl 0x081392c0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230bc  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230be  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230c0  ldr r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230c2  ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230c4  cmp r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230c6  beq 0x08123120 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230c8  cmp r0,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ca  bgt 0x081230ee (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230cc  mov r3,sp (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ce  strb r0,[r3,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230d0  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230d2  strb r0,[r3,#0x9] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230d4  ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230d6  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230d8  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230da  ldr r3,[r0,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230dc  cmp r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230de  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230e0  ldr r0,[r6,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230e2  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230e4  bne 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230e6  ldr r0,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230e8  movs r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ea  add r1,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ec  b 0x0812319a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230ee  cmp r5,#0x78 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230f0  beq 0x081230f6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230f2  cmp r5,#0x58 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230f4  bne 0x081230fc (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230f6  mov r3,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230f8  adr r2,[0x81234b0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230fa  b 0x08123100 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230fc  mov r3,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081230fe  adr r2,[0x81234b8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123100  movs r1,#0xa (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123102  add r0,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123104  bl 0x08193640 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123108  ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812310a  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812310c  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812310e  ldr r2,[r0,#0x40] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123110  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123112  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123114  ldr r0,[r6,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123116  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123118  bne 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812311a  ldr r0,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812311c  add r1,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812311e  b 0x08123386 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123120  add r2,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123122  mov r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123124  add r5,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123126  mov r0,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123128  bl 0x0824a878 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812312c  movs r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812312e  strb r1,[r5,r0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123130  ldr r1,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123132  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123134  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123136  ldr r3,[r1,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123138  cmp r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812313a  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812313c  ldr r1,[r6,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812313e  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123140  bne 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123142  ldr r4,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123144  mov r2,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123146  add r1,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123148  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812314a  b 0x0812319a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812314c  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812314e  bl 0x08130108 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123152  movs r5,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123154  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123156  ldr r0,[r4,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123158  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812315a  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812315c  ldr r0,[r5,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812315e  str r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123160  ldr r1,[r5,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123162  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123164  beq 0x08123172 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123166  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123168  adds r1,#0x20 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812316a  str r1,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812316c  ldrb r1,[r1,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812316e  cmp r1,#0x6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123170  bne 0x081231a0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123172  ldr r5,[r5,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123174  cmp r5,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123176  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123178  ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812317a  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812317c  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812317e  ldr r0,[r0,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123180  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123182  beq 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123184  ldr r0,[r6,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123186  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123188  bne 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812318a  mov r0,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812318c  bl 0x08264440 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123190  ldmia r4!,{r1,r6} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123192  mov r2,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123194  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123196  ldr r3,[r1,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123198  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812319a  blx r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812319c  add sp,#0x2c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812319e  pop {r4,r5,r6,r7,pc} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231a0  mov r2,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231a2  adds r2,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231a4  adds r2,#0xa1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231a6  str r2,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231a8  subs r2,#0x20 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231aa  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ac  str r2,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ae  bne 0x081232a4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231b0  ldr r0,[r2,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231b2  str r0,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231b4  ldr r3,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231b6  cmp r3,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231b8  bne 0x081231bc (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ba  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231bc  cmp r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231be  bne 0x081231d4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231c0  ldr r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231c2  mov r2,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231c4  add r3,sp,#0x14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231c6  adds r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231c8  str r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ca  ldr r1,[r5,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231cc  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ce  bl 0x08138c58 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231d2  b 0x081231f6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231d4  cmp r1,#0x2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231d6  bne 0x08123200 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231d8  ldr r2,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231da  adds r2,r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231dc  str r2,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231de  ldr r1,[r5,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231e0  ldr r0,[r5,#0x40] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231e2  mov r7,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231e4  str r7,[sp,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231e6  add r7,sp,#0x4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231e8  add r2,sp,#0x14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ea  stmia r7!,{r0,r1,r2} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ec  mov r1,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231ee  ldr r2,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231f0  ldr r0,[r4,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231f2  bl 0x0813980c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231f6  mov r7,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231f8  ldr r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231fa  subs r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231fc  str r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081231fe  b 0x0812320e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123200  movs r7,#0x58 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123202  movs r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123204  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123206  adr r2,[0x81234bc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123208  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812320a  bl 0x082313da (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812320e  ldr r0,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123210  ldr r1,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123212  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123214  subs r0,r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123216  cmp r7,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123218  str r0,[r5,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812321a  bne 0x08123228 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812321c  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812321e  movs r1,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123220  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123222  bl 0x08274d14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123226  b 0x08123236 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123228  movs r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812322a  mov r2,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812322c  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812322e  bl 0x0820142c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123232  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123234  beq 0x0812323e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123236  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123238  bl 0x082601c8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812323c  b 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812323e  cmp r7,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123240  bne 0x081232c0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123242  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123244  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123246  beq 0x081232e0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123248  ldr r1,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812324a  ldrb r1,[r1,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812324c  cmp r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812324e  beq 0x08123254 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123250  cmp r1,#0x2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123252  bne 0x081232d8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123254  ldr r1,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123256  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123258  bne 0x081232d8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812325a  str r0,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812325c  ldr r1,[r4,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812325e  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123260  beq 0x081232a6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123262  ldrb r1,[r0,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123264  cmp r1,#0x3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123266  bne 0x0812326e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123268  ldr r1,[r0,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812326a  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812326c  beq 0x08123276 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812326e  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123270  ldrb r1,[r1,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123272  cmp r1,#0x5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123274  bne 0x08123282 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123276  str r5,[r0,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123278  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812327a  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812327c  movs r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812327e  str r0,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123280  b 0x081232e0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123282  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123284  str r0,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123286  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123288  ldr r1,[r4,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812328a  str r1,[r0,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812328c  ldr r1,[r4,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812328e  str r1,[r0,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123290  ldr r1,[r0,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123292  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123294  bne 0x08123298 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123296  str r0,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123298  ldr r0,[r0,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812329a  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812329c  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812329e  bne 0x08123286 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232a0  ldr r0,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232a2  b 0x081232de (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232a4  b 0x081232ec (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232a6  movs r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232a8  str r0,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232aa  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ac  str r5,[r0,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ae  ldr r1,[r0,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232b0  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232b2  bne 0x081232b6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232b4  str r0,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232b6  ldr r0,[r0,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232b8  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ba  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232bc  bne 0x081232aa (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232be  b 0x081232e0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232c0  cmp r7,#0x1b (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232c2  beq 0x081232d2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232c4  ldr r3,[r5,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232c6  movs r1,#0x1a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232c8  adr r2,[0x81234d8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ca  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232cc  bl 0x0824f5c4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232d0  b 0x081232e0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232d2  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232d4  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232d6  beq 0x081232e0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232d8  bl 0x082601c8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232dc  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232de  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232e0  ldr r0,[r5,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232e2  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232e4  bne 0x081232f6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232e6  movs r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232e8  str r0,[r5,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ea  b 0x081232f6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ec  cmp r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232ee  beq 0x081232f6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232f0  ldr r1,[r2,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232f2  adds r1,r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232f4  str r1,[r2,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232f6  ldr r7,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232f8  cmp r7,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232fa  bne 0x0812338a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232fc  ldr r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081232fe  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123300  beq 0x0812336a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123302  ldr r3,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123304  cmp r3,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123306  bne 0x0812330a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123308  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812330a  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812330c  ldrb r0,[r0,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812330e  cmp r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123310  bne 0x08123326 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123312  ldr r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123314  mov r2,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123316  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123318  adds r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812331a  str r0,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812331c  ldr r1,[r5,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812331e  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123320  bl 0x08138c58 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123324  b 0x08123348 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123326  cmp r0,#0x2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123328  bne 0x0812335e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812332a  ldr r2,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812332c  adds r2,r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812332e  str r2,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123330  ldr r1,[r5,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123332  ldr r0,[r5,#0x40] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123334  mov r7,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123336  str r7,[sp,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123338  add r7,sp,#0x4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812333a  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812333c  stmia r7!,{r0,r1,r2} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812333e  mov r1,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123340  ldr r2,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123342  ldr r0,[r4,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123344  bl 0x0813980c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123348  ldr r1,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812334a  subs r1,r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812334c  cmp r0,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812334e  str r1,[r6,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123350  bne 0x0812336a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123352  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123354  movs r1,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123356  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123358  bl 0x08274d14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812335c  b 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812335e  movs r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123360  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123362  adr r2,[0x81234bc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123364  mov r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123366  bl 0x082313da (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812336a  ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812336c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812336e  beq 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123370  ldr r2,[r0,#0x40] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123372  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123374  beq 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123376  ldr r0,[r4,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123378  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812337a  bne 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812337c  ldr r0,[r6,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812337e  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123380  bne 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123382  ldr r1,[r5,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123384  ldr r0,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123386  blx r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123388  b 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812338a  ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812338c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812338e  beq 0x0812339e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123390  ldr r2,[r0,#0x40] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123392  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123394  beq 0x0812339e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123396  ldr r0,[r4,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123398  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812339a  beq 0x0812337c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812339c  b 0x081233a4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812339e  ldr r0,[r4,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233a0  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233a2  beq 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233a4  ldr r0,[r4,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233a6  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233a8  beq 0x0812335c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233aa  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ac  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ae  bne 0x081233b6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233b0  ldr r1,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233b2  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233b4  beq 0x081233be (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233b6  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233b8  ldrb r1,[r1,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ba  cmp r1,#0x5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233bc  bne 0x08123414 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233be  movs r6,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233c0  ldr r1,[r4,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233c2  movs r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233c4  mov r0,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233c6  bl 0x081c5064 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ca  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233cc  beq 0x081233e8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ce  ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233d0  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233d2  bne 0x081233d8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233d4  ldr r1,[r7,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233d6  str r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233d8  cmp r6,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233da  bne 0x081233de (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233dc  mov r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233de  ldr r2,[r4,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233e0  mov r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233e2  mov r0,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233e4  bl 0x08254cea (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233e8  ldr r1,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ea  cmp r1,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ec  bne 0x0812340c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233ee  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233f0  ldrb r1,[r1,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233f2  cmp r1,#0x5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233f4  bne 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233f6  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233f8  beq 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233fa  ldrb r1,[r0,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233fc  cmp r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081233fe  bne 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123400  ldr r1,[r0,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123402  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123404  bne 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123406  movs r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123408  strh r1,[r0,#0x3a] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812340a  b 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812340c  ldr r7,[r7,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812340e  cmp r7,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123410  bne 0x081233c0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123412  b 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123414  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123416  bne 0x08123472 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123418  movs r6,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812341a  str r6,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812341c  ldr r1,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812341e  str r1,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123420  str r6,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123422  ldr r0,[r7,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123424  movs r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123426  str r0,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123428  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812342a  str r0,[r7,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812342c  str r0,[r7,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812342e  ldr r1,[r4,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123430  mov r0,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123432  bl 0x081c5064 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123436  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123438  beq 0x0812345a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812343a  ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812343c  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812343e  bne 0x08123444 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123440  ldr r1,[r7,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123442  str r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123444  cmp r6,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123446  bne 0x0812344a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123448  mov r6,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812344a  mov r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812344c  mov r0,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812344e  bl 0x08254cea (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123452  ldr r0,[r4,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123454  mov r1,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123456  bl 0x08254cea (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812345a  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812345c  cmp r7,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812345e  beq 0x08123466 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123460  ldr r7,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123462  cmp r7,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123464  bne 0x08123422 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123466  ldr r0,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123468  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812346a  bne 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812346c  movs r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812346e  str r0,[r5,#0x44] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123470  b 0x081234a2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123472  ldr r0,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123474  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123476  mvns r2,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123478  adr r1,[0x81234f8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812347a  ldr r0,[r0,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812347c  bl 0x08270928 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123480  ldr r1,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123482  ldrb r2,[r1,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123484  cmp r2,#0x3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123486  bne 0x0812348a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123488  str r0,[r1,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812348a  ldr r2,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812348c  ldr r1,[r5,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812348e  cmp r1,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123490  beq 0x0812349a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123492  ldrb r2,[r1,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123494  cmp r2,#0x3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123496  bne 0x0812349a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08123498  str r0,[r1,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812349a  ldr r1,[r5,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812349c  ldr r0,[r4,#0x34] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0812349e  bl 0x081e2822 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234a2  ldr r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234a4  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234a6  str r0,[r1,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234a8  ldr r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234aa  str r0,[r1,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 081234ac  b 0x0812319c (GhidraScript)  
+INFO  InspectFunctionsShort.java> ===== TARGET 08130a98 FUNC 08130a98 FUN_08130a98 ===== (GhidraScript)  
+INFO  InspectFunctionsShort.java> 
+int FUN_08130a98(int param_1,uint param_2,int param_3,uint param_4,int param_5,int param_6,
+                int param_7)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined1 *puVar7;
+  byte *pbVar8;
+  int iVar9;
+  char *pcVar10;
+  int iVar11;
+  bool bVar12;
+  bool bVar13;
+  int local_40;
+  int local_3c;
+  uint local_38;
+  char *local_34;
+  char *local_30;
+  int local_2c;
+  int local_28;
+  int local_24;
+  uint local_20;
+  int iStack_1c;
+  uint local_18;
+  
+  iVar11 = 0;
+  local_34 = (char *)0x0;
+  bVar12 = param_1 == 0;
+  do {
+    if (bVar12) {
+      return 0;
+    }
+    bVar12 = true;
+  } while (param_2 == 0);
+  if (-1 < param_3) {
+    local_38 = param_2 + param_3;
+    local_28 = param_1 + 0xc0;
+    local_24 = param_1;
+    local_20 = param_2;
+    iStack_1c = param_3;
+    local_18 = param_4;
+    if (((*(int *)(param_1 + 0xf8) < 0x29) || (*(int *)(param_1 + 0x168) << 0xc < 0)) &&
+       (*(int *)(param_1 + 0xf8) < 0x401)) {
+      iVar2 = 300;
+      iVar3 = (*(code *)*DAT_08130dc8)();
+      bVar12 = iVar3 == 0;
+LAB_08130af0:
+      if (!bVar12) {
+        iVar9 = iVar3;
+        if (local_38 <= local_20) {
+LAB_08130d76:
+          *(undefined1 *)(iVar9 + iVar11) = 0;
+          return iVar9;
+        }
+        iVar4 = FUN_08232570(local_24,local_20,&local_40);
+        local_2c = local_24 + 0x180;
+        do {
+          if (((iVar4 == 0) || (iVar4 == param_5)) ||
+             ((iVar4 == param_6 || ((iVar4 == param_7 || (iVar4 == 0)))))) goto LAB_08130d76;
+          iVar6 = iVar9;
+          iVar3 = iVar9;
+          if (iVar4 == 0x26) {
+            if (*(char *)(local_20 + 1) == '#') {
+              uVar5 = FUN_0813046c(local_24,&local_20);
+              if (uVar5 != 0) {
+LAB_08130ba0:
+                iVar3 = FUN_0824a878(iVar9 + iVar11,uVar5);
+                iVar11 = iVar3 + iVar11;
+              }
+              goto LAB_08130b30;
+            }
+            if ((local_18 & 1) == 0) goto LAB_08130d80;
+            if (*DAT_08130dd0 != 0) {
+              (*(code *)*DAT_08130e04)(*DAT_08130e00,s_String_decoding_Entity_Reference_08130dd4);
+            }
+            puVar7 = (undefined1 *)FUN_081305b8(local_24,&local_20);
+            bVar12 = *(int *)(local_2c + 4) == 0x59;
+            do {
+              if (bVar12) goto LAB_08130dac;
+              bVar12 = true;
+            } while (*(int *)(local_2c + 4) == 1);
+            if (puVar7 != (undefined1 *)0x0) {
+              *(int *)(local_2c + 0x38) = *(int *)(local_2c + 0x38) + *(int *)(puVar7 + 0x48);
+              pbVar8 = *(byte **)(puVar7 + 0x28);
+              if (puVar7[0x30] == '\x06') {
+                if (pbVar8 != (byte *)0x0) {
+                  uVar5 = (uint)*pbVar8;
+                  goto LAB_08130ba0;
+                }
+                FUN_0824f382(local_24,1,s_predefined_entity_has_no_content_08130e08);
+                goto LAB_08130d4c;
+              }
+              if (pbVar8 != (byte *)0x0) {
+                *(int *)(local_28 + 0x38) = *(int *)(local_28 + 0x38) + 1;
+                local_34 = (char *)FUN_0824ad3c(local_24,*(undefined4 *)(puVar7 + 0x28),local_18,0,0
+                                                ,0);
+                *(int *)(local_28 + 0x38) = *(int *)(local_28 + 0x38) + -1;
+                pcVar10 = local_34;
+                if (local_34 != (char *)0x0) goto LAB_08130c24;
+                goto LAB_08130d4c;
+              }
+              iVar3 = FUN_08264440(*(undefined4 *)(puVar7 + 8));
+              puVar7 = *(undefined1 **)(puVar7 + 8);
+              *(undefined1 *)(iVar9 + iVar11) = 0x26;
+              iVar11 = iVar11 + 1;
+              if (iVar11 <= (iVar2 - iVar3) + -100) {
+LAB_08130c72:
+                for (; 0 < iVar3; iVar3 = iVar3 + -1) {
+                  uVar1 = *puVar7;
+                  puVar7 = puVar7 + 1;
+                  *(undefined1 *)(iVar6 + iVar11) = uVar1;
+                  iVar11 = iVar11 + 1;
+                }
+                *(undefined1 *)(iVar6 + iVar11) = 0x3b;
+                iVar11 = iVar11 + 1;
+                goto LAB_08130d4c;
+              }
+              iVar2 = iVar2 * 2 + 100;
+              iVar6 = (*(code *)*DAT_08130dcc)(iVar9,iVar2);
+              bVar12 = true;
+              if (iVar6 != 0) goto LAB_08130c72;
+              while (bVar13 = true, iVar3 = iVar6, pcVar10 = local_30, !bVar12) {
+LAB_08130c24:
+                do {
+                  local_30 = pcVar10;
+                  if (*local_30 == '\0') goto LAB_08130d40;
+                  *(char *)(iVar3 + iVar11) = *local_30;
+                  iVar11 = iVar11 + 1;
+                  local_30 = local_30 + 1;
+                  pcVar10 = local_30;
+                } while (iVar11 <= iVar2 + -100);
+                iVar9 = FUN_0820142c(local_24,iVar11,puVar7);
+                if (iVar9 != 0) goto LAB_08130dac;
+                iVar2 = iVar2 * 2 + 100;
+                iVar6 = (*(code *)*DAT_08130dcc)(iVar3,iVar2);
+                iVar9 = iVar3;
+                bVar12 = iVar6 == 0;
+              }
+              goto LAB_08130b48;
+            }
+          }
+          else {
+            if ((iVar4 == 0x25) && ((int)(local_18 << 0x1e) < 0)) {
+              if (*DAT_08130dd0 != 0) {
+                (*(code *)*DAT_08130e04)
+                          (*DAT_08130e00,s_String_decoding_PE_Reference_____08130e2c,local_20);
+              }
+              local_3c = FUN_0813080c(local_24,&local_20);
+              if (*(int *)(local_2c + 4) != 0x59) {
+                if (local_3c != 0) {
+                  *(int *)(local_2c + 0x38) = *(int *)(local_2c + 0x38) + *(int *)(local_3c + 0x48);
+                  if (*(int *)(local_3c + 0x28) == 0) {
+                    FUN_0812f928(local_24,local_3c);
+                  }
+                  *(int *)(local_28 + 0x38) = *(int *)(local_28 + 0x38) + 1;
+                  pcVar10 = (char *)FUN_0824ad3c(local_24,*(undefined4 *)(local_3c + 0x28),local_18,
+                                                 0,0,0);
+                  *(int *)(local_28 + 0x38) = *(int *)(local_28 + 0x38) + -1;
+                  local_34 = pcVar10;
+                  if (pcVar10 != (char *)0x0) {
+                    while (iVar3 = iVar9, *pcVar10 != '\0') {
+                      *(char *)(iVar3 + iVar11) = *pcVar10;
+                      pcVar10 = pcVar10 + 1;
+                      iVar11 = iVar11 + 1;
+                      iVar9 = iVar3;
+                      if (iVar2 + -100 < iVar11) {
+                        iVar9 = FUN_0820142c(local_24,iVar11,local_3c);
+                        if (iVar9 != 0) goto LAB_08130dac;
+                        iVar2 = iVar2 * 2 + 100;
+                        iVar9 = (*(code *)*DAT_08130dcc)(iVar3,iVar2);
+                        if (iVar9 == 0) goto LAB_08130da4;
+                      }
+                    }
+LAB_08130d40:
+                    (*(code *)*DAT_08130e54)(local_34);
+                    local_34 = (char *)0x0;
+                    iVar6 = iVar3;
+                  }
+                }
+                goto LAB_08130d4c;
+              }
+              goto LAB_08130dac;
+            }
+LAB_08130d80:
+            if (local_40 == 1) {
+              *(char *)(iVar9 + iVar11) = (char)iVar4;
+              iVar11 = iVar11 + 1;
+            }
+            else {
+              iVar3 = FUN_0824a878(iVar9 + iVar11,iVar4);
+              iVar11 = iVar3 + iVar11;
+            }
+            local_20 = local_20 + local_40;
+LAB_08130b30:
+            if (iVar2 + -100 < iVar11) {
+              iVar2 = iVar2 * 2 + 100;
+              iVar6 = (*(code *)*DAT_08130dcc)(iVar9,iVar2);
+              bVar13 = iVar6 == 0;
+LAB_08130b48:
+              bVar12 = true;
+              iVar3 = iVar9;
+              if (bVar13) goto LAB_08130af0;
+            }
+          }
+LAB_08130d4c:
+          iVar9 = iVar6;
+          if (local_38 <= local_20) goto LAB_08130d76;
+          iVar4 = FUN_08232570(local_24,local_20,&local_40);
+        } while( true );
+      }
+LAB_08130da4:
+      FUN_08269014(local_24,0);
+LAB_08130dac:
+      if (local_34 != (char *)0x0) {
+        (*(code *)*DAT_08130e54)();
+      }
+      if (iVar3 != 0) {
+        (*(code *)*DAT_08130e54)(iVar3);
+      }
+    }
+    else {
+      FUN_08274d14(param_1,0x59,0);
+    }
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130a98  push {r0,r1,r2,r3,r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130a9a  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130a9c  sub sp,#0x24 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130a9e  mov r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aa0  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aa2  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aa4  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aa6  beq 0x08130ae0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aa8  ldr r0,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aaa  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aac  beq 0x08130aa6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aae  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ab0  blt 0x08130ae0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ab2  adds r0,r0,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ab4  str r0,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ab6  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ab8  adds r0,#0xc0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aba  str r0,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130abc  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130abe  cmp r0,#0x28 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ac0  ble 0x08130ace (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ac2  ldr r1,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ac4  adds r1,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ac6  adds r1,#0x41 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ac8  ldr r1,[r1,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aca  lsls r1,r1,#0xc (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130acc  bpl 0x08130ad6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ace  movs r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ad0  lsls r1,r1,#0xa (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ad2  cmp r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ad4  ble 0x08130ae2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ad6  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ad8  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ada  movs r1,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130adc  bl 0x08274d14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ae0  b 0x08130dc4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ae2  ldr r1,[0x08130dc8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ae4  movs r0,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ae6  adds r0,#0x2d (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ae8  mov r5,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aea  ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aec  blx r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130aee  movs r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130af0  beq 0x08130bea (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130af2  ldr r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130af4  ldr r0,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130af6  cmp r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130af8  bcs 0x08130bec (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130afa  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130afc  add r2,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130afe  bl 0x08232570 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b02  ldr r1,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b04  adds r1,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b06  adds r1,#0x81 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b08  str r1,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b0a  b 0x08130d5c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b0c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b0e  beq 0x08130bec (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b10  cmp r0,#0x26 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b12  bne 0x08130bee (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b14  ldr r2,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b16  ldrb r1,[r2,#0x1] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b18  cmp r1,#0x23 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b1a  bne 0x08130b4e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b1c  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b1e  add r1,sp,#0x28 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b20  bl 0x0813046c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b24  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b26  beq 0x08130b30 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b28  adds r2,r6,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b2a  mov r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b2c  mov r0,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b2e  b 0x08130ba0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b30  mov r0,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b32  subs r0,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b34  cmp r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b36  ble 0x08130b4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b38  ldr r2,[0x08130dcc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b3a  lsls r5,r5,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b3c  adds r5,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b3e  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b40  ldr r2,[r2,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b42  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b44  blx r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b46  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b48  beq 0x08130af0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b4a  mov r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b4c  b 0x08130d4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b4e  ldr r1,[sp,#0x30] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b50  lsls r1,r1,#0x1f (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b52  beq 0x08130c52 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b54  ldr r0,[0x08130dd0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b56  ldr r0,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b58  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b5a  beq 0x08130b68 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b5c  ldr r3,[0x08130e04] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b5e  ldr r0,[0x08130e00] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b60  adr r1,[0x8130dd4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b62  ldr r3,[r3,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b64  ldr r0,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b66  blx r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b68  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b6a  add r1,sp,#0x28 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b6c  bl 0x081305b8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b70  mov r7,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b72  ldr r0,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b74  ldr r0,[r0,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b76  cmp r0,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b78  beq 0x08130c54 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b7a  cmp r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b7c  beq 0x08130b78 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b7e  cmp r7,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b80  beq 0x08130b4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b82  ldr r0,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b84  ldr r1,[r7,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b86  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b88  adds r0,r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b8a  ldr r1,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b8c  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b8e  movs r0,#0x30 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b90  ldrb r0,[r0,r7] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b92  cmp r0,#0x6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b94  ldr r0,[r7,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b96  bne 0x08130bb4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b98  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b9a  beq 0x08130ba8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b9c  ldrb r1,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130b9e  adds r0,r6,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ba0  bl 0x0824a878 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ba4  adds r4,r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ba6  b 0x08130b30 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ba8  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130baa  movs r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bac  adr r2,[0x8130e08] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bae  bl 0x0824f382 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bb2  b 0x08130d4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bb4  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bb6  beq 0x08130c2e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bb8  ldr r0,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bba  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bbc  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bbe  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bc0  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bc2  adds r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bc4  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bc6  str r2,[sp,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bc8  str r2,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bca  ldr r1,[r7,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bcc  ldr r2,[sp,#0x30] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bce  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bd0  bl 0x0824ad3c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bd4  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bd6  ldr r0,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bd8  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bda  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bdc  subs r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bde  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130be0  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130be2  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130be4  beq 0x08130b4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130be6  str r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130be8  b 0x08130c24 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bea  b 0x08130da4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bec  b 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bee  b 0x08130c80 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bf0  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bf2  ldr r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bf4  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bf6  adds r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bf8  str r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bfa  mov r0,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bfc  subs r0,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130bfe  cmp r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c00  ble 0x08130c24 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c02  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c04  mov r2,r7 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c06  mov r1,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c08  bl 0x0820142c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c0c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c0e  bne 0x08130c54 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c10  ldr r2,[0x08130dcc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c12  lsls r5,r5,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c14  adds r5,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c16  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c18  ldr r2,[r2,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c1a  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c1c  blx r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c1e  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c20  beq 0x08130b48 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c22  mov r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c24  ldr r0,[sp,#0x18] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c26  ldrb r0,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c28  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c2a  bne 0x08130bf0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c2c  b 0x08130d40 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c2e  ldr r0,[r7,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c30  bl 0x08264440 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c34  str r0,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c36  ldr r7,[r7,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c38  movs r0,#0x26 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c3a  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c3c  ldr r0,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c3e  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c40  subs r0,r5,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c42  subs r0,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c44  cmp r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c46  bge 0x08130c72 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c48  lsls r5,r5,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c4a  adds r5,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c4c  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c4e  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c50  b 0x08130c56 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c52  b 0x08130d74 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c54  b 0x08130da2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c56  ldr r2,[0x08130dcc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c58  ldr r2,[r2,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c5a  blx r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c5c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c5e  beq 0x08130c20 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c60  mov r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c62  b 0x08130c72 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c64  ldrb r0,[r7,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c66  adds r7,r7,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c68  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c6a  ldr r0,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c6c  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c6e  subs r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c70  str r0,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c72  ldr r0,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c74  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c76  bgt 0x08130c64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c78  movs r0,#0x3b (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c7a  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c7c  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c7e  b 0x08130d4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c80  cmp r0,#0x25 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c82  bne 0x08130d80 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c84  ldr r1,[sp,#0x30] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c86  lsls r1,r1,#0x1e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c88  bpl 0x08130d80 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c8a  ldr r0,[0x08130dd0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c8c  ldr r0,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c8e  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c90  beq 0x08130ca0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c92  ldr r3,[0x08130e04] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c94  ldr r0,[0x08130e00] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c96  ldr r2,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c98  adr r1,[0x8130e2c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c9a  ldr r3,[r3,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c9c  ldr r0,[r0,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130c9e  blx r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ca0  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ca2  add r1,sp,#0x28 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ca4  bl 0x0813080c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ca8  str r0,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130caa  ldr r0,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cac  ldr r0,[r0,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cae  cmp r0,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cb0  beq 0x08130dac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cb2  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cb4  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cb6  beq 0x08130d4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cb8  ldr r0,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cba  ldr r1,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cbc  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cbe  ldr r1,[r1,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cc0  adds r0,r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cc2  ldr r1,[sp,#0x1c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cc4  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cc6  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cc8  ldr r0,[r0,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cca  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ccc  bne 0x08130cd6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cce  ldr r1,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cd0  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cd2  bl 0x0812f928 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cd6  ldr r0,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cd8  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cda  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cdc  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cde  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ce0  adds r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ce2  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ce4  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ce6  str r2,[sp,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130ce8  str r2,[sp,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cea  ldr r2,[sp,#0x30] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cec  ldr r1,[r0,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cee  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cf0  bl 0x0824ad3c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cf4  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cf6  ldr r0,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cf8  ldr r1,[sp,#0x20] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cfa  ldr r0,[r0,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cfc  subs r0,r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130cfe  str r0,[r1,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d00  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d02  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d04  beq 0x08130d4c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d06  mov r7,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d08  b 0x08130d3a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d0a  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d0c  mov r0,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d0e  adds r7,r7,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d10  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d12  subs r0,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d14  cmp r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d16  ble 0x08130d3a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d18  ldr r2,[sp,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d1a  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d1c  mov r1,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d1e  bl 0x0820142c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d22  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d24  bne 0x08130dac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d26  ldr r2,[0x08130dcc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d28  lsls r5,r5,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d2a  adds r5,#0x64 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d2c  mov r1,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d2e  ldr r2,[r2,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d30  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d32  blx r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d34  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d36  beq 0x08130da4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d38  mov r6,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d3a  ldrb r0,[r7,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d3c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d3e  bne 0x08130d0a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d40  ldr r1,[0x08130e54] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d42  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d44  ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d46  blx r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d48  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d4a  str r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d4c  ldr r1,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d4e  ldr r0,[sp,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d50  cmp r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d52  bcs 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d54  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d56  add r2,sp,#0x8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d58  bl 0x08232570 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d5c  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d5e  beq 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d60  ldr r1,[sp,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d62  cmp r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d64  beq 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d66  ldr r1,[sp,#0x4c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d68  cmp r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d6a  beq 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d6c  ldr r1,[sp,#0x50] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d6e  cmp r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d70  beq 0x08130d76 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d72  b 0x08130b0c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d74  b 0x08130d80 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d76  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d78  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d7a  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d7c  add sp,#0x34 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d7e  pop {r4,r5,r6,r7,pc} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d80  ldr r1,[sp,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d82  cmp r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d84  bne 0x08130d8c (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d86  strb r0,[r6,r4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d88  adds r4,r4,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d8a  b 0x08130d98 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d8c  adds r2,r6,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d8e  mov r1,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d90  mov r0,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d92  bl 0x0824a878 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d96  adds r4,r0,r4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d98  ldr r1,[sp,#0x8] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d9a  ldr r0,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d9c  adds r0,r0,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130d9e  str r0,[sp,#0x28] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130da0  b 0x08130b30 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130da2  b 0x08130dac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130da4  ldr r0,[sp,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130da6  movs r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130da8  bl 0x08269014 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dac  ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dae  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130db0  beq 0x08130db8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130db2  ldr r1,[0x08130e54] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130db4  ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130db6  blx r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130db8  cmp r6,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dba  beq 0x08130dc4 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dbc  ldr r1,[0x08130e54] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dbe  mov r0,r6 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dc0  ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dc2  blx r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dc4  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08130dc6  b 0x08130d7c (GhidraScript)  
+INFO  InspectFunctionsShort.java> ===== TARGET 0820142c FUNC 0820142c FUN_0820142c ===== (GhidraScript)  
+INFO  InspectFunctionsShort.java> 
+undefined4 FUN_0820142c(int param_1,uint param_2,int param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  
+  iVar3 = 0;
+  if (param_1 == 0) {
+    return 0;
+  }
+  if (*(int *)(param_1 + 0x168) << 0xc < 0) {
+    return 0;
+  }
+  if (*(int *)(param_1 + 0x184) != 0x59) {
+    if (param_2 == 0) {
+      if (param_3 == 0) {
+        return 0;
+      }
+      iVar1 = *(int *)(param_1 + 0x24);
+      if (iVar1 != 0) {
+        iVar3 = (*(int *)(iVar1 + 0x10) - *(int *)(iVar1 + 0xc)) + *(int *)(iVar1 + 0x24);
+      }
+      if ((uint)(*(int *)(param_3 + 0x48) * 3) < (uint)((*(int *)(param_1 + 0x1bc) + iVar3) * 10)) {
+        return 0;
+      }
+    }
+    else {
+      if (param_2 < 1000) {
+        return 0;
+      }
+      iVar1 = *(int *)(param_1 + 0x24);
+      if (iVar1 != 0) {
+        iVar3 = (*(int *)(iVar1 + 0x10) - *(int *)(iVar1 + 0xc)) + *(int *)(iVar1 + 0x24);
+      }
+      uVar2 = (*(int *)(param_1 + 0x1bc) + iVar3) * 10;
+      if ((param_2 <= uVar2 && uVar2 - param_2 != 0) &&
+         ((uint)(*(int *)(param_1 + 0x1b8) * 3) < uVar2)) {
+        return 0;
+      }
+    }
+    FUN_08274d14(param_1,0x59,0);
+  }
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820142c  movs r3,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820142e  push {r4,r5,r6,lr} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201430  cmp r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201432  beq 0x082014a8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201434  movs r4,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201436  adds r4,#0x69 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201438  ldr r4,[r4,r0] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820143a  lsls r4,r4,#0xc (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820143c  bmi 0x082014a8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820143e  mov r4,r0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201440  adds r4,#0xff (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201442  adds r4,#0x81 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201444  ldr r5,[r4,#0x4] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201446  cmp r5,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201448  bne 0x0820144e (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820144a  movs r0,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820144c  pop {r4,r5,r6,pc} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820144e  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201450  beq 0x08201482 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201452  movs r2,#0x7d (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201454  lsls r2,r2,#0x3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201456  cmp r1,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201458  bcc 0x082014a8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820145a  ldr r2,[r0,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820145c  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820145e  beq 0x0820146a (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201460  ldr r5,[r2,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201462  ldr r3,[r2,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201464  ldr r2,[r2,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201466  subs r3,r3,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201468  adds r3,r3,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820146a  ldr r2,[r4,#0x3c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820146c  adds r2,r2,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820146e  movs r3,#0xa (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201470  muls r2,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201472  cmp r2,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201474  bls 0x082014ac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201476  ldr r1,[r4,#0x38] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201478  lsls r3,r1,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820147a  adds r1,r3,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820147c  cmp r1,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820147e  bcs 0x082014ac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201480  b 0x082014a8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201482  cmp r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201484  beq 0x082014a8 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201486  ldr r1,[r0,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201488  ldr r2,[r2,#0x48] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820148a  cmp r1,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820148c  beq 0x08201498 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820148e  ldr r5,[r1,#0xc] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201490  ldr r3,[r1,#0x10] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201492  ldr r1,[r1,#0x24] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201494  subs r3,r3,r5 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201496  adds r3,r3,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 08201498  ldr r1,[r4,#0x3c] (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820149a  adds r1,r1,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820149c  lsls r3,r2,#0x1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 0820149e  adds r2,r3,r2 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014a0  movs r3,#0xa (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014a2  muls r1,r3 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014a4  cmp r2,r1 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014a6  bcs 0x082014ac (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014a8  movs r0,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014aa  pop {r4,r5,r6,pc} (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014ac  movs r2,#0x0 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014ae  movs r1,#0x59 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014b0  bl 0x08274d14 (GhidraScript)  
+INFO  InspectFunctionsShort.java> 082014b4  b 0x0820144a (GhidraScript)  

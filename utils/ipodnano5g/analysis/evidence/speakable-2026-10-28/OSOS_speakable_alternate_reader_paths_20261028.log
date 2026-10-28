@@ -1,0 +1,376 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (662 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1307 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x0821b70e' '0x0821b742' '0x0803bdb4' '0x080389f8' '0x0804db50' '0x0804df80'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 0821b70e FUN_0821b70e ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4
+FUN_0821b70e(int param_1,undefined4 param_2,undefined4 *param_3,code *param_4,int param_5)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int *piVar3;
+  undefined1 auStack_30 [4];
+  code *local_2c;
+  undefined4 local_28;
+  int iStack_24;
+  undefined4 local_20;
+  undefined4 *puStack_1c;
+  code *local_18;
+  
+  iStack_24 = param_1;
+  local_20 = param_2;
+  puStack_1c = param_3;
+  local_18 = param_4;
+  if (param_3[3] == 0) {
+    param_1 = 0;
+  }
+  else if ((param_3[3] != -1) && (iVar1 = (*param_4)(param_3), iVar1 != 0)) {
+    param_1 = iVar1;
+  }
+  uVar2 = FUN_0827837e();
+  if (param_5 != 0) {
+    FUN_0818eb44(0x1c);
+    uVar2 = FUN_0804df80();
+  }
+  piVar3 = (int *)FUN_081c6918();
+  local_28 = *param_3;
+  iVar1 = (**(code **)(*piVar3 + 0x48))(piVar3,&local_28,4);
+  if (iVar1 == -1) {
+    uVar2 = 0;
+  }
+  else {
+    (**(code **)(*piVar3 + 0x3c))(piVar3,iVar1,auStack_30);
+    uVar2 = (*local_2c)(param_1,local_20,uVar2,param_3,local_18);
+  }
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0821b742 <none> ===== (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0803bdb4 FUN_0803bdb4 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_0803bdb4(int param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = FUN_081af6fe(param_2,0xf00);
+  if (*(int *)(*(int *)(iVar1 + 8) + 4) != DAT_0803be04) {
+    return 0;
+  }
+  iVar1 = *(int *)(param_1 + 0xa0) + **(int **)(*(int *)(iVar1 + 8) + 0xc);
+  *(int *)(param_1 + 0xa0) = iVar1;
+  if (iVar1 < 1) {
+    if (iVar1 == 0) {
+LAB_0803bdea:
+      FUN_082797b0(1);
+      goto LAB_0803bdf6;
+    }
+    uVar2 = 0;
+  }
+  else {
+    if (iVar1 < 1) goto LAB_0803bdf6;
+    if (iVar1 == 1) goto LAB_0803bdea;
+    uVar2 = 1;
+  }
+  *(undefined4 *)(param_1 + 0xa0) = uVar2;
+LAB_0803bdf6:
+  uVar2 = FUN_0804db50(param_1);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 080389f8 FUN_080389f8 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+/* WARNING: Function: switch8_r3 replaced with injection: switch8_r3 */
+/* WARNING (jumptable): Removing unreachable block (ram,0x08038a62) */
+/* WARNING: Removing unreachable block (ram,0x08038a62) */
+
+undefined4 FUN_080389f8(int param_1,int param_2,int param_3,int param_4,int *param_5)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined *puVar3;
+  int iVar4;
+  uint uVar5;
+  char *pcVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  bool bVar10;
+  undefined1 auStack_220 [4];
+  int local_21c;
+  undefined1 auStack_218 [512];
+  undefined4 local_18;
+  
+  local_18 = 1;
+  uVar7 = param_3 - DAT_08038cbc;
+  iVar9 = param_1 + 0x124;
+  if (param_3 != DAT_08038cbc) {
+    if (DAT_08038cbc <= param_3) {
+                    /* WARNING: Could not recover jumptable at 0x08038a62. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+      if (DAT_08038a66 <= uVar7) {
+        uVar7 = (uint)DAT_08038a66;
+      }
+      uVar2 = (*(code *)((uint)*(byte *)(uVar7 + 0x8038a67) * 2 + 0x8038a67))();
+      return uVar2;
+    }
+    iVar1 = param_3 - DAT_08038cc0;
+    if (param_3 == DAT_08038cc0) {
+      *param_5 = (int)&DAT_08038cc8;
+      FUN_08047e70(*(undefined4 *)(param_1 + 0x48),param_4,auStack_218);
+      goto LAB_08038c9e;
+    }
+    if (param_3 < DAT_08038cc0) {
+      param_3 = param_3 + DAT_08038cc4;
+      if (param_3 == 0) {
+        FUN_08196bf0(auStack_220);
+        FUN_081936ec(auStack_220,&DAT_08038cc8);
+        uVar2 = FUN_081909a4(auStack_220);
+        FUN_0825e812(iVar9,uVar2);
+        *param_5 = iVar9;
+        uVar7 = 0;
+        iVar1 = 0;
+        do {
+          uVar5 = uVar7 & 0xff;
+          uVar7 = uVar7 + 1;
+          FUN_081e2cfe(uVar5);
+          iVar4 = FUN_081e2cac();
+          iVar8 = iVar1;
+          if ((iVar4 != 0) && (iVar8 = iVar1 + 1, iVar1 == param_4)) {
+            if ((*(char *)(iVar4 + 0x40) != -1) &&
+               ((*(char *)(iVar4 + 0x41) != -1 && (*(char *)(iVar4 + 0x42) != -1)))) {
+              FUN_08196c00(auStack_220,s__d__d__d_08038cd0,*(char *)(iVar4 + 0x40),
+                           *(char *)(iVar4 + 0x41),*(char *)(iVar4 + 0x42));
+            }
+            break;
+          }
+          iVar1 = iVar8;
+        } while (uVar7 < 2);
+LAB_08038ad0:
+        uVar2 = FUN_081909a4(auStack_220);
+        FUN_0825e812(iVar9,uVar2);
+        FUN_0818ebc0(auStack_220);
+        return local_18;
+      }
+      if (param_3 == 1) {
+        FUN_08196bf0(auStack_220);
+        uVar2 = FUN_081a3f7c();
+        uVar2 = FUN_081af950(uVar2,DAT_08038cc0 + -0x66);
+        FUN_081936ec(auStack_220,uVar2);
+        uVar2 = FUN_081909a4(auStack_220);
+        FUN_0825e812(iVar9,uVar2);
+        *param_5 = iVar9;
+        uVar7 = 0;
+        iVar1 = 0;
+        do {
+          uVar5 = uVar7 & 0xff;
+          uVar7 = uVar7 + 1;
+          FUN_081e2cfe(uVar5);
+          pcVar6 = (char *)FUN_081e2cac();
+          iVar8 = iVar1;
+          if ((pcVar6 != (char *)0x0) && (iVar8 = iVar1 + 1, iVar1 == param_4)) {
+            if (*pcVar6 != '\0') {
+              iVar1 = FUN_08196ac6(pcVar6);
+              FUN_0827f454(auStack_220,pcVar6,iVar1 + -1);
+            }
+            break;
+          }
+          iVar1 = iVar8;
+        } while (uVar7 < 2);
+        goto LAB_08038ad0;
+      }
+      bVar10 = param_3 == 0x2c;
+    }
+    else {
+      if (iVar1 == 1) {
+        FUN_081937c8(&local_21c,0);
+LAB_08038b8c:
+        *param_5 = local_21c;
+        FUN_0819ce02(&local_21c);
+        return local_18;
+      }
+      if (iVar1 == 2) {
+        FUN_0804c0e0(&local_21c,param_1,param_4);
+        goto LAB_08038b8c;
+      }
+      bVar10 = false;
+      if (iVar1 == 3) {
+        *param_5 = (int)&DAT_08038cc8;
+        if (param_2 == DAT_08038ccc) {
+          if (param_4 == 0) {
+            param_4 = 1;
+          }
+        }
+        else if (param_4 == 0) goto LAB_08038c8c;
+        FUN_08047be4(*(undefined4 *)(param_1 + 0x48),param_4 + -1,auStack_218);
+        goto LAB_08038c9e;
+      }
+    }
+    if (!bVar10) {
+      return 0;
+    }
+    uVar2 = FUN_0827aa20(param_1 + 0x50,param_4);
+    puVar3 = (undefined *)FUN_0818e65c(uVar2,1000);
+LAB_08038bb8:
+    *param_5 = (int)puVar3;
+    return local_18;
+  }
+  *param_5 = (int)&DAT_08038cc8;
+  if (param_2 == DAT_08038ccc) {
+    if (param_4 == 0) {
+      param_4 = 1;
+    }
+  }
+  else if (param_4 == 0) {
+LAB_08038c8c:
+    if (param_2 == DAT_08038cdc) {
+      uVar2 = FUN_081a3f7c();
+      puVar3 = (undefined *)FUN_081af950(uVar2,DAT_08038cc0 + -0x6c);
+    }
+    else {
+      puVar3 = &DAT_08038cc8;
+    }
+    goto LAB_08038bb8;
+  }
+  FUN_08047cfc(*(undefined4 *)(param_1 + 0x48),param_4 + -1,auStack_218);
+LAB_08038c9e:
+  FUN_081dad68(auStack_218,iVar9,0x300,0);
+  *param_5 = iVar9;
+  return local_18;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0804db50 FUN_0804db50 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_0804db50(int *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  int *piVar2;
+  int iVar3;
+  code *pcVar4;
+  int iVar5;
+  int iVar6;
+  
+  iVar3 = DAT_0804dc0c;
+  iVar5 = DAT_0804dc0c + -1;
+  iVar6 = DAT_0804dc0c + 1;
+  if (param_1[0x28] == 0) {
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,iVar3,0);
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,iVar3 + 3);
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,iVar6,iVar5);
+    piVar2 = (int *)FUN_081a7454();
+    iVar3 = 0;
+    pcVar4 = *(code **)(*piVar2 + 0xf8);
+  }
+  else {
+    if (param_1[0x28] != 1) goto LAB_0804dbea;
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,iVar3,iVar5);
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,iVar6,0);
+    piVar2 = (int *)FUN_081a7454();
+    (**(code **)(*piVar2 + 0xf8))(piVar2,DAT_0804dc0c + 3,0);
+    piVar2 = (int *)FUN_081a7454();
+    iVar3 = DAT_0804dc0c + 2;
+    pcVar4 = *(code **)(*piVar2 + 0xf8);
+  }
+  (*pcVar4)(piVar2,DAT_0804dc0c + 4,iVar3);
+LAB_0804dbea:
+  uVar1 = DAT_0804dc10;
+  (**(code **)(*param_1 + 100))
+            (param_1,DAT_0804dc10,DAT_0804dc0c + 5,*(code **)(*param_1 + 100),param_4);
+  (**(code **)(*param_1 + 100))(param_1,uVar1,DAT_0804dc0c + 6);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0804df80 FUN_0804df80 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 * FUN_0804df80(undefined4 param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  
+  puVar1 = (undefined4 *)FUN_0827bbdc(param_1,0,1);
+  *puVar1 = DAT_0804dfa8;
+  uVar2 = FUN_081a7454();
+  puVar1[5] = uVar2;
+  uVar2 = FUN_081a7c88();
+  puVar1[6] = uVar2;
+  FUN_0826beec(puVar1,puVar1[5]);
+  return puVar1;
+}
+
+ (GhidraScript)  
+INFO  REPORT: Execute script: DumpCallersMany.java '0x0821b70e' '0x0821b742' '0x0803bdb4' '0x080389f8' '0x0804db50' '0x0804df80'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/DumpCallersMany.java (HeadlessAnalyzer)  
+INFO  DumpCallersMany.java> ===== TARGET 0821b70e ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0803c6de caller=FUN_0803c694@0803c694 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 082033d4 caller=FUN_082033a0@082033a0 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=2 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0821b742 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=0 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0803bdb4 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0802adce caller=FUN_0802adba@0802adba (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 080389f8 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=0 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0804db50 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0803bdf8 caller=FUN_0803bdb4@0803bdb4 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0804df80 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0821b742 caller=FUN_0821b70e@0821b70e (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  

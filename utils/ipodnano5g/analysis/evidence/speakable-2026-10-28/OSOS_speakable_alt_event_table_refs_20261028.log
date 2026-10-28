@@ -1,0 +1,76 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (690 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1354 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: FindOSOSWordRefsBatch.java '0x0802adbb' '0x0803bdb5' '0x0803b935' '0x0804db51' '0x0804df81' '0x0803c695' '0x082033a1'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/FindOSOSWordRefsBatch.java (HeadlessAnalyzer)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0802adbb (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fef20 block=ram cu=addr 0802adbb function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0803bdb5 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0803b935 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0804db51 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0804df81 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x0803c695 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 085015ac block=ram cu=addr 0803c695 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08506934 block=ram cu=addr 0803c695 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> TARGET_WORD 0x082033a1 (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084f6190 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084f895c block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fa288 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fc354 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fc514 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fcde0 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fcf74 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fd28c block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fe010 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 084fe708 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08502e9c block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08504fdc block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08506404 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08508064 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08508268 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 08508634 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 0850ac04 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 0850bf9c block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 0850c578 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  
+INFO  FindOSOSWordRefsBatch.java> MATCH 0850db38 block=ram cu=addr 082033a1 function=<none> (GhidraScript)  

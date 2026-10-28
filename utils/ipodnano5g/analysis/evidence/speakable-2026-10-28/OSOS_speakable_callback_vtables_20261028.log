@@ -1,0 +1,114 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (738 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1396 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x085087c0' '28'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 085087c0  0814d997  function=FUN_0814d996@0814d996 data=null (GhidraScript)  
+INFO  DumpWords.java> 085087c4  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087c8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087cc  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087d0  08135761  function=FUN_08135760@08135760 data=null (GhidraScript)  
+INFO  DumpWords.java> 085087d4  08129f45  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087d8  0811ebbf  function=FUN_0811ebbe@0811ebbe data=null (GhidraScript)  
+INFO  DumpWords.java> 085087dc  080f10f5  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087e0  081356e5  function=FUN_081356e4@081356e4 data=null (GhidraScript)  
+INFO  DumpWords.java> 085087e4  080f10fd  function=FUN_080f10fc@080f10fc data=null (GhidraScript)  
+INFO  DumpWords.java> 085087e8  0813575d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087ec  08129f53  function=FUN_08129f52@08129f52 data=null (GhidraScript)  
+INFO  DumpWords.java> 085087f0  08129f61  function=FUN_08129f60@08129f60 data=null (GhidraScript)  
+INFO  DumpWords.java> 085087f4  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087f8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085087fc  08301c49  function=FUN_08301c48@08301c48 data=null (GhidraScript)  
+INFO  DumpWords.java> 08508800  082f63af  function=FUN_082f63ae@082f63ae data=null (GhidraScript)  
+INFO  DumpWords.java> 08508804  082f63a5  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08508808  082f639b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850880c  000000f8  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08508810  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08508814  084eafec  function=- data=addr 08536c10 (GhidraScript)  
+INFO  DumpWords.java> 08508818  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850881c  080bc11b  function=- data=?? B5h (GhidraScript)  
+INFO  DumpWords.java> 08508820  08170b29  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08508824  08170b2b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08508828  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850882c  080bbf7d  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x0850cef0' '32'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 0850cef0  083bdca0  function=FUN_083bdca0@083bdca0 data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cef4  083bdccc  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cef8  083bdcdc  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cefc  0813d343  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf00  082d8e27  function=- data=ds "!@0AspG" (GhidraScript)  
+INFO  DumpWords.java> 0850cf04  082d8e25  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf08  082d8e2f  function=- data=?? 21h    ! (GhidraScript)  
+INFO  DumpWords.java> 0850cf0c  082d0741  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf10  082d0747  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf14  0813d357  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf18  0813d33d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf1c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf20  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf24  081d37e5  function=FUN_081d37e4@081d37e4 data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf28  08301e55  function=FUN_08301e54@08301e54 data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf2c  081a9d0d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf30  08301e4b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf34  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf38  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf3c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf40  080ee88b  function=FUN_080ee88a@080ee88a data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf44  08170b29  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf48  08170b2b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf4c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf50  080ee877  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf54  08196965  function=FUN_08196964@08196964 data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf58  08290ccb  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf5c  08290cc5  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf60  080f11f9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf64  0819e4e1  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf68  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0850cf6c  00000000  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: QueryOsosRefs.java '0x08508808' '0x0850cf30'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/QueryOsosRefs.java (HeadlessAnalyzer)  
+INFO  QueryOsosRefs.java> TARGET 08508808 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 0850cf30 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> MEMORY BLOCKS (GhidraScript)  
+INFO  QueryOsosRefs.java>   ram 08000000-086c43a7 read=true write=true execute=true (GhidraScript)  

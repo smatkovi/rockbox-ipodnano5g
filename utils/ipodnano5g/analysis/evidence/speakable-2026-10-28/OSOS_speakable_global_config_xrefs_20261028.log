@@ -1,0 +1,120 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (625 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1280 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /tmp/ghidra-query-script
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /tmp/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: QueryOsosRefs.java '0x0827d138' '0x08553cd8' '0x08553ce8' '0x08553cec' '0x08553cf0' '0x08553cf4' '0x08553cf8' '0x08553cfc' '0x08553d00' '0x08553d04' '0x08553d08' '0x08553d0c' '0x08553d10' '0x08553d14' '0x08553d18' '0x08553d1c' '0x08553d20' '0x08553d24' '0x08553d28' '0x08553d2c'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /tmp/ghidra-query-script/QueryOsosRefs.java (HeadlessAnalyzer)  
+INFO  QueryOsosRefs.java> TARGET 0827d138 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827ce52 type=READ caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d030 type=READ caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d094 type=READ caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cd8 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083230a0 type=READ caller=FUN_08323094@08323094 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08089b3c type=PARAM caller=FUN_08089b38@08089b38 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08267e28 type=READ caller=FUN_08267e20@08267e20 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080b6222 type=READ caller=FUN_080b6214@080b6214 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080b622a type=WRITE caller=FUN_080b6214@080b6214 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080b6220 type=PARAM caller=FUN_080b6214@080b6214 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081d5180 type=READ caller=FUN_081d5174@081d5174 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827ce58 type=WRITE caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d1bc type=WRITE caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d1f4 type=READ caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d26e type=READ caller=FUN_0827ccfc@0827ccfc (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553ce8 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cec function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809be76 type=READ caller=FUN_0809be74@0809be74 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08220a70 type=READ caller=FUN_08220a68@08220a68 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a7456 type=READ caller=FUN_081a7454@081a7454 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805d290 type=READ caller=FUN_0805d28c@0805d28c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0822c58e type=READ caller=FUN_0822c588@0822c588 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081fbfc6 type=READ caller=FUN_081fbfbc@081fbfbc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08081058 type=READ caller=FUN_08081054@08081054 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08080fd0 type=READ caller=FUN_08080fcc@08080fcc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0802db68 type=WRITE caller=FUN_0802daf4@0802daf4 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cf0 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804fabe type=READ caller=thumb_804faa0@0804faa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804fada type=READ caller=thumb_804faa0@0804faa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08020a80 type=WRITE caller=FUN_08020a7c@08020a7c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023ea2 type=READ caller=FUN_08023e90@08023e90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023eaa type=READ caller=FUN_08023e90@08023e90 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cf4 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804fae6 type=READ caller=thumb_804faa0@0804faa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08020a7e type=WRITE caller=FUN_08020a7c@08020a7c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023eb6 type=READ caller=FUN_08023e90@08023e90 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cf8 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023edc type=WRITE caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023ee4 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f0a type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f20 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553cfc function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804fad2 type=READ caller=thumb_804faa0@0804faa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f12 type=WRITE caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f18 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f30 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d00 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08059e18 type=READ caller=FUN_08059dfc@08059dfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d490 type=READ caller=FUN_0827d464@0827d464 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f2e type=WRITE caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f38 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08023f40 type=READ caller=FUN_08023ec4@08023ec4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804e3ae type=READ caller=FUN_0804e3a8@0804e3a8 (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d04 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080160c4 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d08 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d0c function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d10 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d14 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d18 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d1c function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d20 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d24 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0807cc42 type=READ caller=FUN_0807cc0c@0807cc0c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0807cc4a type=PARAM caller=FUN_0807cc0c@0807cc0c (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d28 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080144b8 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java> TARGET 08553d2c function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08271f9a type=READ caller=FUN_08271f90@08271f90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804ea4c type=READ caller=FUN_0804ea40@0804ea40 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804ea9a type=READ caller=FUN_0804ea40@0804ea40 (GhidraScript)  
+INFO  QueryOsosRefs.java> MEMORY BLOCKS (GhidraScript)  
+INFO  QueryOsosRefs.java>   ram 08000000-086c43a7 read=true write=true execute=true (GhidraScript)  
