@@ -1,0 +1,394 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (719 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1389 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x08506ba8' '32'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 08506ba8  0832cae5  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bac  080ec671  function=FUN_080ec670@080ec670 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bb0  08170b29  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bb4  08170b2b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bb8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bbc  082d9d29  function=- data=?? 22h    " (GhidraScript)  
+INFO  DumpWords.java> 08506bc0  082ac655  function=- data=?? 46h    F (GhidraScript)  
+INFO  DumpWords.java> 08506bc4  08289081  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bc8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bcc  084eae78  function=- data=addr 08536c20 (GhidraScript)  
+INFO  DumpWords.java> 08506bd0  0822bb51  function=FUN_0822bb50@0822bb50 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bd4  08291547  function=FUN_08291546@08291546 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bd8  0828be45  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bdc  0828bdf1  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506be0  0828beb9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506be4  0828c039  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506be8  0828bebd  function=FUN_0828bebc@0828bebc data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bec  0828bf69  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bf0  0828bf85  function=FUN_0828bf84@0828bf84 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bf4  0828be01  function=FUN_0828be00@0828be00 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bf8  0828c059  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506bfc  0828bed9  function=FUN_0828bed8@0828bed8 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c00  0828be4d  function=FUN_0828be4c@0828be4c data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c04  fffffffc  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c08  084eae78  function=- data=addr 08536c20 (GhidraScript)  
+INFO  DumpWords.java> 08506c0c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c10  0828dbb3  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c14  08263219  function=FUN_08263218@08263218 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c18  08264055  function=FUN_08264054@08264054 data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c1c  080de5a3  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c20  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08506c24  08279399  function=FUN_08279398@08279398 data=null (GhidraScript)  
+INFO  REPORT: Execute script: QueryOsosRefs.java '0x08506ba8'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/QueryOsosRefs.java (HeadlessAnalyzer)  
+INFO  QueryOsosRefs.java> TARGET 08506ba8 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08270726 type=DATA caller=FUN_08270714@08270714 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08325774 type=DATA caller=FUN_08325764@08325764 (GhidraScript)  
+INFO  QueryOsosRefs.java> MEMORY BLOCKS (GhidraScript)  
+INFO  QueryOsosRefs.java>   ram 08000000-086c43a7 read=true write=true execute=true (GhidraScript)  
+INFO  REPORT: Execute script: FindScalarValues.java '0x0000a700' '0x000001a8' '0x000008d0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/FindScalarValues.java (HeadlessAnalyzer)  
+INFO  FindScalarValues.java> 0805c4a6 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_0805c490@0805c490 (GhidraScript)  
+INFO  FindScalarValues.java> 0805c546 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_0805c490@0805c490 (GhidraScript)  
+INFO  FindScalarValues.java> 0805c5b2 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_0805c490@0805c490 (GhidraScript)  
+INFO  FindScalarValues.java> 0805c60a add r0,sp,#0x1a8 op1=0x1a8 function=FUN_0805c490@0805c490 (GhidraScript)  
+INFO  FindScalarValues.java> 0805c664 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_0805c490@0805c490 (GhidraScript)  
+INFO  FindScalarValues.java> 080853f4 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_08085370@08085370 (GhidraScript)  
+INFO  FindScalarValues.java> 0808551a add r1,sp,#0x1a8 op1=0x1a8 function=FUN_08085370@08085370 (GhidraScript)  
+INFO  FindScalarValues.java> 0808563e add r1,sp,#0x1a8 op1=0x1a8 function=FUN_08085370@08085370 (GhidraScript)  
+INFO  FindScalarValues.java> 080856aa add r0,sp,#0x1a8 op1=0x1a8 function=FUN_08085370@08085370 (GhidraScript)  
+INFO  FindScalarValues.java> 080d188e add r0,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d18ce add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d190e add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d199a add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d19ee add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1a78 add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1b5c add r0,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1d38 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1d40 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1d4c add r1,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 080d1e72 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_080d1844@080d1844 (GhidraScript)  
+INFO  FindScalarValues.java> 0818ce48 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_0818cb44@0818cb44 (GhidraScript)  
+INFO  FindScalarValues.java> 08196fb8 add sp,#0x1a8 op1=0x1a8 function=FUN_08196fa2@08196fa2 (GhidraScript)  
+INFO  FindScalarValues.java> 081de98a ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_081de8a0@081de8a0 (GhidraScript)  
+INFO  FindScalarValues.java> 081de9ac ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_081de8a0@081de8a0 (GhidraScript)  
+INFO  FindScalarValues.java> 081de9d2 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_081de8a0@081de8a0 (GhidraScript)  
+INFO  FindScalarValues.java> 0821340e str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08213400@08213400 (GhidraScript)  
+INFO  FindScalarValues.java> 082134e0 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_08213400@08213400 (GhidraScript)  
+INFO  FindScalarValues.java> 08213680 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_08213400@08213400 (GhidraScript)  
+INFO  FindScalarValues.java> 08238650 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08238512@08238512 (GhidraScript)  
+INFO  FindScalarValues.java> 0823865e str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08238512@08238512 (GhidraScript)  
+INFO  FindScalarValues.java> 08238664 str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08238512@08238512 (GhidraScript)  
+INFO  FindScalarValues.java> 082a5b3c ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_082a5970@082a5970 (GhidraScript)  
+INFO  FindScalarValues.java> 082ed508 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_082ed4cc@082ed4cc (GhidraScript)  
+INFO  FindScalarValues.java> 082ed530 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_082ed4cc@082ed4cc (GhidraScript)  
+INFO  FindScalarValues.java> 082eeab0 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_082ee650@082ee650 (GhidraScript)  
+INFO  FindScalarValues.java> 082eeac0 add r0,sp,#0x1a8 op1=0x1a8 function=FUN_082ee650@082ee650 (GhidraScript)  
+INFO  FindScalarValues.java> 082f1850 add sp,#0x1a8 op1=0x1a8 function=FUN_082f1764@082f1764 (GhidraScript)  
+INFO  FindScalarValues.java> 082fc810 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_082fc7b4@082fc7b4 (GhidraScript)  
+INFO  FindScalarValues.java> 082fc830 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_082fc7b4@082fc7b4 (GhidraScript)  
+INFO  FindScalarValues.java> 082fda5c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_082fd9b0@082fd9b0 (GhidraScript)  
+INFO  FindScalarValues.java> 082fda66 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_082fd9b0@082fd9b0 (GhidraScript)  
+INFO  FindScalarValues.java> 083441f8 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 08344820 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 08344ab8 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 083478c0 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 083478d0 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 083478d8 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08344124@08344124 (GhidraScript)  
+INFO  FindScalarValues.java> 0836f274 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 0836f750 str r7,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 0836f7d4 ldr r7,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 0836fa20 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 083702e4 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 083702f8 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 08370f84 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 083716b4 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0836f218@0836f218 (GhidraScript)  
+INFO  FindScalarValues.java> 08374754 vldr.64 d14,[pc,#0x1a8] op1=0x1a8 function=FUN_083746ac@083746ac (GhidraScript)  
+INFO  FindScalarValues.java> 08374a0c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083749cc@083749cc (GhidraScript)  
+INFO  FindScalarValues.java> 08375790 str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_083749cc@083749cc (GhidraScript)  
+INFO  FindScalarValues.java> 083757bc ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_083749cc@083749cc (GhidraScript)  
+INFO  FindScalarValues.java> 08375f0c ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083749cc@083749cc (GhidraScript)  
+INFO  FindScalarValues.java> 083787b4 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 08378bdc str r9,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837953c str r5,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837a0c0 ldr r12,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837a290 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837a2ac ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837a9a4 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837ae34 str r4,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837b120 str r4,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 0837b640 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08378728@08378728 (GhidraScript)  
+INFO  FindScalarValues.java> 08385238 str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 08385258 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 083880ac str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08388030@08388030 (GhidraScript)  
+INFO  FindScalarValues.java> 08388b80 ldr r2,[sp,#0x1a8] op1=0x1a8 function=FUN_08388030@08388030 (GhidraScript)  
+INFO  FindScalarValues.java> 083892cc str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08388030@08388030 (GhidraScript)  
+INFO  FindScalarValues.java> 08389480 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08388030@08388030 (GhidraScript)  
+INFO  FindScalarValues.java> 08389674 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838a450 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838a460 str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838ba8c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838be94 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838c72c ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0838c73c str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08389570@08389570 (GhidraScript)  
+INFO  FindScalarValues.java> 0839cf9c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0839cf4c@0839cf4c (GhidraScript)  
+INFO  FindScalarValues.java> 0839d77c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0839cf4c@0839cf4c (GhidraScript)  
+INFO  FindScalarValues.java> 0839df58 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0839cf4c@0839cf4c (GhidraScript)  
+INFO  FindScalarValues.java> 0839f0e4 add r3,r3,#0x1a8 op2=0x1a8 function=FUN_0839ee14@0839ee14 (GhidraScript)  
+INFO  FindScalarValues.java> 083bbc40 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bc2e0 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bcb40 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bcb4c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bcd54 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bd164 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083bd174 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_083bbbd0@083bbbd0 (GhidraScript)  
+INFO  FindScalarValues.java> 083da294 str r5,[sp,#0x1a8] op1=0x1a8 function=FUN_083d9f94@083d9f94 (GhidraScript)  
+INFO  FindScalarValues.java> 083da318 ldr r5,[sp,#0x1a8] op1=0x1a8 function=FUN_083d9f94@083d9f94 (GhidraScript)  
+INFO  FindScalarValues.java> 083de750 str r1,[sp,#0x1a8] op1=0x1a8 function=FUN_083dd4d4@083dd4d4 (GhidraScript)  
+INFO  FindScalarValues.java> 083decac ldr r3,[sp,#0x1a8] op1=0x1a8 function=FUN_083dd4d4@083dd4d4 (GhidraScript)  
+INFO  FindScalarValues.java> 083e1400 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e140c ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e144c ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e1b9c str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e2240 str r12,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e2250 ldr r12,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e2fd8 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e30d4 str r12,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e3108 ldr r3,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e3420 str r3,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e3484 ldr r3,[sp,#0x1a8] op1=0x1a8 function=FUN_083e0cf8@083e0cf8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e56f4 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e5740 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e6574 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e65d4 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e77c0 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e7824 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083e5464@083e5464 (GhidraScript)  
+INFO  FindScalarValues.java> 083e8d28 str r7,[sp,#0x1a8] op1=0x1a8 function=FUN_083e85d8@083e85d8 (GhidraScript)  
+INFO  FindScalarValues.java> 083e8d7c ldr r7,[sp,#0x1a8] op1=0x1a8 function=FUN_083e85d8@083e85d8 (GhidraScript)  
+INFO  FindScalarValues.java> 083edeb8 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083eb444@083eb444 (GhidraScript)  
+INFO  FindScalarValues.java> 083edec8 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083eb444@083eb444 (GhidraScript)  
+INFO  FindScalarValues.java> 083edf00 ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083eb444@083eb444 (GhidraScript)  
+INFO  FindScalarValues.java> 083ef390 str r11,[sp,#0x1a8] op1=0x1a8 function=FUN_083eec28@083eec28 (GhidraScript)  
+INFO  FindScalarValues.java> 083ef3a0 ldr r11,[sp,#0x1a8] op1=0x1a8 function=FUN_083eec28@083eec28 (GhidraScript)  
+INFO  FindScalarValues.java> 083eff88 str lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083eec28@083eec28 (GhidraScript)  
+INFO  FindScalarValues.java> 083effac ldr lr,[sp,#0x1a8] op1=0x1a8 function=FUN_083eec28@083eec28 (GhidraScript)  
+INFO  FindScalarValues.java> 083ff8e4 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_083ff620@083ff620 (GhidraScript)  
+INFO  FindScalarValues.java> 08404958 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08403084@08403084 (GhidraScript)  
+INFO  FindScalarValues.java> 0840806c str r8,[sp,#0x1a8] op1=0x1a8 function=FUN_08407f7c@08407f7c (GhidraScript)  
+INFO  FindScalarValues.java> 0840903c ldr r7,[sp,#0x1a8] op1=0x1a8 function=FUN_08407f7c@08407f7c (GhidraScript)  
+INFO  FindScalarValues.java> 08409844 ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_08407f7c@08407f7c (GhidraScript)  
+INFO  FindScalarValues.java> 0840a70c sub r2,r1,#0x1a8 op2=0x1a8 function=FUN_08407f7c@08407f7c (GhidraScript)  
+INFO  FindScalarValues.java> 0840b03c str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_08407f7c@08407f7c (GhidraScript)  
+INFO  FindScalarValues.java> 0841ff48 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0841ff1c@0841ff1c (GhidraScript)  
+INFO  FindScalarValues.java> 08420160 str r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0841ff1c@0841ff1c (GhidraScript)  
+INFO  FindScalarValues.java> 084203c8 ldr r0,[sp,#0x1a8] op1=0x1a8 function=FUN_0841ff1c@0841ff1c (GhidraScript)  
+INFO  FindScalarValues.java> 084203cc ldr r1,[sp,#0x1a8] op1=0x1a8 function=FUN_0841ff1c@0841ff1c (GhidraScript)  
+INFO  FindScalarValues.java> 0847ee68 add r1,sp,#0x1a8 op1=0x1a8 function=<none> (GhidraScript)  
+INFO  FindScalarValues.java> 0847f008 add r2,sp,#0x1a8 op1=0x1a8 function=<none> (GhidraScript)  
+INFO  FindScalarValues.java> 0847f310 add r3,sp,#0x1a8 op1=0x1a8 function=<none> (GhidraScript)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x0827d69e' '0x08268f44' '0x08261f58' '0x0819a100' '0x08272a22'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 0827d69e FUN_0827d69e ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0827d69e(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  undefined4 *puStack_10;
+  undefined4 local_c;
+  
+  puStack_10 = param_3;
+  local_c = param_4;
+  iVar1 = FUN_0825e0c6(param_1,param_2,&puStack_10);
+  if (iVar1 != -1) {
+    *param_3 = local_c;
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08268f44 FUN_08268f44 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_08268f44(int param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 *puVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  
+  *(undefined4 *)(param_1 + 0x10) = 0;
+  *(undefined4 *)(param_1 + 0x14) = 0;
+  *(undefined4 *)(param_1 + 0x18) = 0;
+  *(undefined4 *)(param_1 + 0xc) = param_3;
+  *(undefined4 *)(param_1 + 8) = param_2;
+  *(undefined1 *)(param_1 + 0x1c) = 0;
+  FUN_08192c5c();
+  *(int *)(param_1 + 0x10) = *(int *)(param_1 + 0xc) * *(int *)(param_1 + 8);
+  puVar1 = (undefined4 *)FUN_0818eb44();
+  *(undefined4 **)(param_1 + 0x14) = puVar1;
+  for (uVar2 = 0; uVar2 < *(int *)(param_1 + 0xc) - 1U; uVar2 = uVar2 + 1) {
+    puVar3 = (undefined4 *)(*(int *)(param_1 + 8) + (int)puVar1);
+    *puVar1 = puVar3;
+    puVar1 = puVar3;
+  }
+  *puVar1 = 0;
+  *(undefined4 *)(param_1 + 0x18) = *(undefined4 *)(param_1 + 0x14);
+  return param_1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08261f58 FUN_08261f58 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_08261f58(undefined4 *param_1)
+
+{
+  *param_1 = DAT_08261f60;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0819a100 FUN_0819a100 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_0819a100(int *param_1,int param_2,int param_3,int param_4,undefined4 param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 local_38 [3];
+  int local_2c;
+  int *local_28;
+  int *piStack_24;
+  int iStack_20;
+  int local_1c;
+  int iStack_18;
+  
+  iVar2 = *(int *)(*(int *)(*(int *)(param_2 + 0x10) + 0xc) + 0x1c);
+  piStack_24 = param_1;
+  iStack_20 = param_2;
+  local_1c = param_3;
+  iStack_18 = param_4;
+  if (param_4 == 0) {
+    iVar1 = FUN_081a52d4(0);
+    param_4 = *(int *)(iVar1 + 0x1c);
+    if (param_4 == 0) goto LAB_0819a14c;
+  }
+  if (iVar2 != 0) {
+    local_38[0] = DAT_0819a160;
+    local_2c = param_2;
+    local_28 = param_1;
+    if (local_1c == 0) {
+      iVar2 = FUN_0825374a(param_4,iVar2,local_38,param_5);
+    }
+    else {
+      iVar2 = FUN_081aa618();
+    }
+    if (iVar2 != 0) {
+      return iVar2;
+    }
+  }
+LAB_0819a14c:
+  if (param_1 != (int *)0x0) {
+    (**(code **)(*param_1 + 4))(param_1);
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08272a22 FUN_08272a22 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_08272a22(int *param_1,int *param_2)
+
+{
+  bool bVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  undefined1 auStack_2c [20];
+  int *local_18;
+  
+  iVar4 = 0;
+  iVar2 = FUN_082602f4();
+  if (iVar2 == 0) {
+LAB_08272a68:
+    if (param_2 == (int *)0x0) {
+      piVar3 = (int *)FUN_082334ac();
+      if ((param_1 == (int *)0x0) ||
+         (iVar2 = (**(code **)(*param_1 + 0x14))(param_1,0xa00), iVar2 == 0)) {
+        bVar1 = false;
+      }
+      else {
+        bVar1 = true;
+      }
+      while ((piVar3 != (int *)0x0 && (iVar4 == 0))) {
+        if ((bVar1) &&
+           ((*(int *)(piVar3[3] + 0xc) != 0 && (iVar2 = FUN_082a866c(param_1), iVar2 == 0)))) {
+          iVar4 = 0;
+        }
+        else {
+          iVar4 = (**(code **)(*piVar3 + 0x3c))(piVar3,param_1);
+          if (iVar4 != 0) break;
+        }
+        if (piVar3[3] == 0) break;
+        piVar3 = (int *)(**(code **)(*piVar3 + 0x28))(piVar3);
+      }
+    }
+    else {
+      iVar4 = (**(code **)(*param_2 + 0x3c))(param_2,param_1);
+    }
+  }
+  else {
+    FUN_0819cbe4(auStack_2c,iVar2,0xfffffffe);
+    do {
+      iVar2 = FUN_0819cc0a(auStack_2c,&local_18);
+      if (iVar2 == 0) {
+        FUN_0819cc24(auStack_2c);
+        goto LAB_08272a68;
+      }
+      iVar4 = (**(code **)(*local_18 + 0x40))(local_18,param_1);
+    } while (iVar4 == 0);
+    FUN_0819cc24(auStack_2c);
+  }
+  if (param_1 != (int *)0x0) {
+    (**(code **)(*param_1 + 4))(param_1);
+  }
+  return iVar4;
+}
+
+ (GhidraScript)  

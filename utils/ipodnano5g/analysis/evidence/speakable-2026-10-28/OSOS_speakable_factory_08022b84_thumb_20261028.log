@@ -1,0 +1,65 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08022b70 <.data+0x22b70>:
+ 8022b70:	2800      	cmp	r0, #0
+ 8022b72:	d002      	beq.n	0x8022b7a
+ 8022b74:	6801      	ldr	r1, [r0, #0]
+ 8022b76:	6849      	ldr	r1, [r1, #4]
+ 8022b78:	4788      	blx	r1
+ 8022b7a:	2000      	movs	r0, #0
+ 8022b7c:	f170 f956 	bl	0x8192e2c
+ 8022b80:	64e0      	str	r0, [r4, #76]	@ 0x4c
+ 8022b82:	bd70      	pop	{r4, r5, r6, pc}
+ 8022b84:	b5f3      	push	{r0, r1, r4, r5, r6, r7, lr}
+ 8022b86:	2100      	movs	r1, #0
+ 8022b88:	2201      	movs	r2, #1
+ 8022b8a:	b083      	sub	sp, #12
+ 8022b8c:	460b      	mov	r3, r1
+ 8022b8e:	f184 f9d7 	bl	0x81a6f40
+ 8022b92:	49d7      	ldr	r1, [pc, #860]	@ (0x8022ef0)
+ 8022b94:	6001      	str	r1, [r0, #0]
+ 8022b96:	31f4      	adds	r1, #244	@ 0xf4
+ 8022b98:	61c1      	str	r1, [r0, #28]
+ 8022b9a:	310c      	adds	r1, #12
+ 8022b9c:	6341      	str	r1, [r0, #52]	@ 0x34
+ 8022b9e:	3050      	adds	r0, #80	@ 0x50
+ 8022ba0:	f170 f884 	bl	0x8192cac
+ 8022ba4:	49d3      	ldr	r1, [pc, #844]	@ (0x8022ef4)
+ 8022ba6:	3850      	subs	r0, #80	@ 0x50
+ 8022ba8:	4bd2      	ldr	r3, [pc, #840]	@ (0x8022ef4)
+ 8022baa:	1840      	adds	r0, r0, r1
+ 8022bac:	4249      	negs	r1, r1
+ 8022bae:	1840      	adds	r0, r0, r1
+ 8022bb0:	2149      	movs	r1, #73	@ 0x49
+ 8022bb2:	3370      	adds	r3, #112	@ 0x70
+ 8022bb4:	0109      	lsls	r1, r1, #4
+ 8022bb6:	1840      	adds	r0, r0, r1
+ 8022bb8:	1a40      	subs	r0, r0, r1
+ 8022bba:	18c0      	adds	r0, r0, r3
+ 8022bbc:	23ff      	movs	r3, #255	@ 0xff
+ 8022bbe:	2201      	movs	r2, #1
+ 8022bc0:	2105      	movs	r1, #5
+ 8022bc2:	335f      	adds	r3, #95	@ 0x5f
+ 8022bc4:	f186 fde4 	bl	0x81a9790
+ 8022bc8:	49cb      	ldr	r1, [pc, #812]	@ (0x8022ef8)
+ 8022bca:	1840      	adds	r0, r0, r1
+ 8022bcc:	21a9      	movs	r1, #169	@ 0xa9
+ 8022bce:	00c9      	lsls	r1, r1, #3
+ 8022bd0:	1840      	adds	r0, r0, r1
+ 8022bd2:	f173 fce9 	bl	0x81965a8
+ 8022bd6:	21a9      	movs	r1, #169	@ 0xa9
+ 8022bd8:	00c9      	lsls	r1, r1, #3
+ 8022bda:	1a40      	subs	r0, r0, r1
+ 8022bdc:	49c7      	ldr	r1, [pc, #796]	@ (0x8022efc)
+ 8022bde:	1840      	adds	r0, r0, r1
+ 8022be0:	f173 fce2 	bl	0x81965a8
+ 8022be4:	49c5      	ldr	r1, [pc, #788]	@ (0x8022efc)
+ 8022be6:	4bc5      	ldr	r3, [pc, #788]	@ (0x8022efc)
+ 8022be8:	2201      	movs	r2, #1
+ 8022bea:	4249      	negs	r1, r1
+ 8022bec:	1840      	adds	r0, r0, r1
+ 8022bee:	33c8      	adds	r3, #200	@ 0xc8

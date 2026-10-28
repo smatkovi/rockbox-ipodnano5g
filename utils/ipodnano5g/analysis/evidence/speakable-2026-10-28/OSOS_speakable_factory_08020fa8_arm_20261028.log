@@ -1,0 +1,43 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08020fa0 <.data+0x20fa0>:
+ 8020fa0:	08535e60 	ldmdaeq	r3, {r5, r6, r9, sl, fp, ip, lr}^
+ 8020fa4:	08532d48 	ldmdaeq	r3, {r3, r6, r8, sl, fp, sp}^
+ 8020fa8:	2201b5fe 	andcs	fp, r1, #1065353216	@ 0x3f800000
+ 8020fac:	f1852300 			@ <UNDEFINED> instruction: 0xf1852300
+ 8020fb0:	4965ffc7 	stmdbmi	r5!, {r0, r1, r2, r6, r7, r8, r9, sl, fp, ip, sp, lr, pc}^
+ 8020fb4:	27014604 	strcs	r4, [r1, -r4, lsl #12]
+ 8020fb8:	31ff6001 	mvnscc	r6, r1
+ 8020fbc:	61c13145 	bicvs	r3, r1, r5, asr #2
+ 8020fc0:	6341310c 	movtvs	r3, #4364	@ 0x110c
+ 8020fc4:	90013040 	andls	r3, r1, r0, asr #32
+ 8020fc8:	30704620 	rsbscc	r4, r0, r0, lsr #12
+ 8020fcc:	20fc9000 	rscscs	r9, ip, r0
+ 8020fd0:	46252165 	strtmi	r2, [r5], -r5, ror #2
+ 8020fd4:	55074626 	strpl	r4, [r7, #-1574]	@ 0xfffff9da
+ 8020fd8:	36cc35a0 	strbcc	r3, [ip], r0, lsr #11
+ 8020fdc:	462001c9 	strtmi	r0, [r0], -r9, asr #3
+ 8020fe0:	ffd6f185 			@ <UNDEFINED> instruction: 0xffd6f185
+ 8020fe4:	70074859 	andvc	r4, r7, r9, asr r8
+ 8020fe8:	f1874859 			@ <UNDEFINED> instruction: 0xf1874859
+ 8020fec:	4620f94d 	strtmi	pc, [r0], -sp, asr #18
+ 8020ff0:	210030c0 	smlabtcs	r0, r0, r0, r3
+ 8020ff4:	63814607 	orrvs	r4, r1, #7340032	@ 0x700000
+ 8020ff8:	30184854 	andscc	r4, r8, r4, asr r8
+ 8020ffc:	fd34f000 	ldc2	0, cr15, [r4, #-0]
+ 8021000:	30f84620 	rscscc	r4, r8, r0, lsr #12
+ 8021004:	fc90f000 	ldc2	0, cr15, [r0], {0}
+ 8021008:	f16d4852 			@ <UNDEFINED> instruction: 0xf16d4852
+ 802100c:	4952fd9b 	ldmdbmi	r2, {r0, r1, r3, r4, r7, r8, sl, fp, ip, sp, lr, pc}^
+ 8021010:	fdb8f001 	ldc2	0, cr15, [r8, #4]!
+ 8021014:	6bb963a0 	blvs	0x6e79e9c
+ 8021018:	fd76f001 	ldc2l	0, cr15, [r6, #-4]!
+ 802101c:	f89af186 			@ <UNDEFINED> instruction: 0xf89af186
+ 8021020:	f93ef187 			@ <UNDEFINED> instruction: 0xf93ef187
+ 8021024:	f94cf187 			@ <UNDEFINED> instruction: 0xf94cf187
+ 8021028:	f958f187 			@ <UNDEFINED> instruction: 0xf958f187
+ 802102c:	fee4f184 	cdp2	1, 14, cr15, cr4, cr4, {4}

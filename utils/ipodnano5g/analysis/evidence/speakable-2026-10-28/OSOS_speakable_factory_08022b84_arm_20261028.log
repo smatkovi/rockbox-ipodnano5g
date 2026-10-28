@@ -1,0 +1,39 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08022b70 <.data+0x22b70>:
+ 8022b70:	d0022800 	andle	r2, r2, r0, lsl #16
+ 8022b74:	68496801 	stmdavs	r9, {r0, fp, sp, lr}^
+ 8022b78:	20004788 	andcs	r4, r0, r8, lsl #15
+ 8022b7c:	f956f170 			@ <UNDEFINED> instruction: 0xf956f170
+ 8022b80:	bd7064e0 	ldcllt	4, cr6, [r0, #-896]!	@ 0xfffffc80
+ 8022b84:	2100b5f3 	strdcs	fp, [r0, -r3]
+ 8022b88:	b0832201 	addlt	r2, r3, r1, lsl #4
+ 8022b8c:	f184460b 			@ <UNDEFINED> instruction: 0xf184460b
+ 8022b90:	49d7f9d7 	ldmibmi	r7, {r0, r1, r2, r4, r6, r7, r8, fp, ip, sp, lr, pc}^
+ 8022b94:	31f46001 	mvnscc	r6, r1
+ 8022b98:	310c61c1 	smlabtcc	ip, r1, r1, r6
+ 8022b9c:	30506341 	subscc	r6, r0, r1, asr #6
+ 8022ba0:	f884f170 			@ <UNDEFINED> instruction: 0xf884f170
+ 8022ba4:	385049d3 	ldmdacc	r0, {r0, r1, r4, r6, r7, r8, fp, lr}^
+ 8022ba8:	18404bd2 	stmdane	r0, {r1, r4, r6, r7, r8, r9, fp, lr}^
+ 8022bac:	18404249 	stmdane	r0, {r0, r3, r6, r9, lr}^
+ 8022bb0:	33702149 	cmncc	r0, #1073741842	@ 0x40000012
+ 8022bb4:	18400109 	stmdane	r0, {r0, r3, r8}^
+ 8022bb8:	18c01a40 	stmiane	r0, {r6, r9, fp, ip}^
+ 8022bbc:	220123ff 	andcs	r2, r1, #-67108861	@ 0xfc000003
+ 8022bc0:	335f2105 	cmpcc	pc, #1073741825	@ 0x40000001
+ 8022bc4:	fde4f186 	stc2l	1, cr15, [r4, #536]!	@ 0x218
+ 8022bc8:	184049cb 	stmdane	r0, {r0, r1, r3, r6, r7, r8, fp, lr}^
+ 8022bcc:	00c921a9 	sbceq	r2, r9, r9, lsr #3
+ 8022bd0:	f1731840 			@ <UNDEFINED> instruction: 0xf1731840
+ 8022bd4:	21a9fce9 			@ <UNDEFINED> instruction: 0x21a9fce9
+ 8022bd8:	1a4000c9 	bne	0x9022f04
+ 8022bdc:	184049c7 	stmdane	r0, {r0, r1, r2, r6, r7, r8, fp, lr}^
+ 8022be0:	fce2f173 	stc2l	1, cr15, [r2], #460	@ 0x1cc
+ 8022be4:	4bc549c5 	blmi	0x7175300
+ 8022be8:	42492201 	submi	r2, r9, #268435456	@ 0x10000000
+ 8022bec:	33c81840 	biccc	r1, r8, #64, 16	@ 0x400000

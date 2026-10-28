@@ -1,0 +1,539 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (720 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1367 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x085354d8' '24'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 085354d8  0818ebc1  function=FUN_0818ebc0@0818ebc0 data=null (GhidraScript)  
+INFO  DumpWords.java> 085354dc  0812e3f1  function=- data=?? B5h (GhidraScript)  
+INFO  DumpWords.java> 085354e0  080a1cc1  function=FUN_080a1cc0@080a1cc0 data=null (GhidraScript)  
+INFO  DumpWords.java> 085354e4  081ada61  function=FUN_081ada60@081ada60 data=null (GhidraScript)  
+INFO  DumpWords.java> 085354e8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085354ec  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085354f0  081249f5  function=FUN_081249f4@081249f4 data=null (GhidraScript)  
+INFO  DumpWords.java> 085354f4  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 085354f8  08198b07  function=FUN_08198b06@08198b06 data=null (GhidraScript)  
+INFO  DumpWords.java> 085354fc  0801ce65  function=FUN_0801ce64@0801ce64 data=null (GhidraScript)  
+INFO  DumpWords.java> 08535500  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535504  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535508  08124a69  function=FUN_08124a68@08124a68 data=null (GhidraScript)  
+INFO  DumpWords.java> 0853550c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535510  08199039  function=FUN_08199038@08199038 data=null (GhidraScript)  
+INFO  DumpWords.java> 08535514  0801cee9  function=- data=?? B5h (GhidraScript)  
+INFO  DumpWords.java> 08535518  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0853551c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535520  08124add  function=FUN_08124adc@08124adc data=null (GhidraScript)  
+INFO  DumpWords.java> 08535524  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535528  081991f9  function=FUN_081991f8@081991f8 data=null (GhidraScript)  
+INFO  DumpWords.java> 0853552c  0801cf6d  function=- data=?? B5h (GhidraScript)  
+INFO  DumpWords.java> 08535530  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08535534  00000000  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: QueryOsosRefs.java '0x085354d8'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/QueryOsosRefs.java (HeadlessAnalyzer)  
+INFO  QueryOsosRefs.java> TARGET 085354d8 function=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0828b032 type=DATA caller=FUN_0828b018@0828b018 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805307a type=DATA caller=FUN_08053048@08053048 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0815b122 type=DATA caller=FUN_0815b0d4@0815b0d4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0815b180 type=DATA caller=FUN_0815b0d4@0815b0d4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0810b206 type=DATA caller=FUN_0810b1dc@0810b1dc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08133286 type=DATA caller=FUN_0813327c@0813327c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082332f0 type=DATA caller=FUN_082332a4@082332a4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805334c type=DATA caller=FUN_08053340@08053340 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0800b3de type=DATA caller=FUN_0800b3d8@0800b3d8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825b538 type=DATA caller=FUN_0825b4f4@0825b4f4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a35b6 type=DATA caller=FUN_081a35ac@081a35ac (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081936ca type=DATA caller=FUN_081936c0@081936c0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830b826 type=DATA caller=FUN_0830b810@0830b810 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830b832 type=DATA caller=FUN_0830b810@0830b810 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083139c0 type=DATA caller=FUN_08313998@08313998 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08313d7a type=DATA caller=FUN_08313998@08313998 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825b9fa type=DATA caller=FUN_0825b9f0@0825b9f0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08243b06 type=DATA caller=FUN_08243aa0@08243aa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08243b36 type=DATA caller=FUN_08243aa0@08243aa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08243b00 type=PARAM caller=FUN_08243aa0@08243aa0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08193bb4 type=DATA caller=FUN_08193ba8@08193ba8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08193c3c type=DATA caller=FUN_08193c30@08193c30 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0829bece type=DATA caller=FUN_0829beb4@0829beb4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08084010 type=DATA caller=FUN_08083fd8@08083fd8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08084008 type=PARAM caller=FUN_08083fd8@08083fd8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08302118 type=DATA caller=FUN_08302090@08302090 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080ea0ea type=DATA caller=FUN_080ea0e0@080ea0e0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809a21a type=DATA caller=FUN_0809a20c@0809a20c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809a212 type=PARAM caller=FUN_0809a20c@0809a20c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08202a50 type=DATA caller=FUN_08202838@08202838 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0810286a type=DATA caller=FUN_08102814@08102814 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808a8d6 type=DATA caller=FUN_0808a8ac@0808a8ac (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808a956 type=DATA caller=FUN_0808a8ac@0808a8ac (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808a9f2 type=DATA caller=FUN_0808a9d8@0808a9d8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808aa46 type=DATA caller=FUN_0808a9d8@0808a9d8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08252a3c type=DATA caller=FUN_08252a00@08252a00 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825ab4e type=DATA caller=FUN_0825ab18@0825ab18 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813ac26 type=DATA caller=FUN_0813abf4@0813abf4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813ac5c type=DATA caller=FUN_0813abf4@0813abf4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813ac74 type=DATA caller=FUN_0813abf4@0813abf4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08102c48 type=DATA caller=FUN_08102c3c@08102c3c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0822af2c type=DATA caller=FUN_0822ad48@0822ad48 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080393b0 type=DATA caller=FUN_08039388@08039388 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08029592 type=DATA caller=FUN_08029574@08029574 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080b15de type=DATA caller=FUN_080b1588@080b1588 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080b169c type=DATA caller=FUN_080b1588@080b1588 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081e16dc type=DATA caller=FUN_081e16d0@081e16d0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081e16d8 type=PARAM caller=FUN_081e16d0@081e16d0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08119836 type=DATA caller=FUN_08119764@08119764 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081198a0 type=DATA caller=FUN_08119764@08119764 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081c17d6 type=DATA caller=FUN_081c1774@081c1774 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082c97c0 type=DATA caller=FUN_082c97a8@082c97a8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082c9824 type=DATA caller=FUN_082c97a8@082c97a8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082c98a6 type=DATA caller=FUN_082c97a8@082c97a8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08221c1c type=DATA caller=FUN_08221c14@08221c14 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08059e04 type=DATA caller=FUN_08059dfc@08059dfc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08141f7a type=DATA caller=FUN_08141f6c@08141f6c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08141f86 type=DATA caller=FUN_08141f6c@08141f6c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080800b6 type=DATA caller=FUN_0808007c@0808007c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080800b0 type=PARAM caller=FUN_0808007c@0808007c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081401c2 type=DATA caller=FUN_081401b4@081401b4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081401ce type=DATA caller=FUN_081401b4@081401b4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0816836a type=DATA caller=FUN_08168328@08168328 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0816836c type=DATA caller=FUN_08168328@08168328 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081683d2 type=DATA caller=FUN_08168328@08168328 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083203a0 type=DATA caller=FUN_08320360@08320360 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0832039a type=PARAM caller=FUN_08320360@08320360 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080e06d6 type=DATA caller=FUN_080e06cc@080e06cc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080e06d2 type=PARAM caller=FUN_080e06cc@080e06cc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08198776 type=DATA caller=FUN_08198770@08198770 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080e07c0 type=DATA caller=FUN_080e07b0@080e07b0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08270916 type=DATA caller=FUN_08270900@08270900 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08270910 type=PARAM caller=FUN_08270900@08270900 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a89a8 type=DATA caller=FUN_081a8950@081a8950 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08120aa2 type=DATA caller=FUN_081209c8@081209c8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08220d68 type=DATA caller=FUN_08220cdc@08220cdc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08220d7a type=DATA caller=FUN_08220cdc@08220cdc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08258d8a type=DATA caller=FUN_08258d7c@08258d7c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08258da0 type=DATA caller=FUN_08258d7c@08258d7c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082571fc type=DATA caller=FUN_082571e8@082571e8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082571f8 type=PARAM caller=FUN_082571e8@082571e8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0822733a type=DATA caller=FUN_08227248@08227248 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809f284 type=DATA caller=FUN_0809f268@0809f268 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809f282 type=PARAM caller=FUN_0809f268@0809f268 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a756c type=DATA caller=FUN_081a7514@081a7514 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a75b4 type=DATA caller=FUN_081a7514@081a7514 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a75c2 type=DATA caller=FUN_081a7514@081a7514 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0812771e type=DATA caller=FUN_081276fc@081276fc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08027d9e type=DATA caller=FUN_08027d5c@08027d5c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08237da4 type=DATA caller=FUN_08237d90@08237d90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808ff24 type=DATA caller=FUN_0808feb4@0808feb4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0831ff74 type=DATA caller=FUN_0831ff48@0831ff48 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081d003c type=DATA caller=FUN_081cffd8@081cffd8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08286092 type=DATA caller=FUN_0828607c@0828607c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825e0fe type=DATA caller=FUN_0825e0f8@0825e0f8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081b63c2 type=DATA caller=FUN_081b63bc@081b63bc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081b63bc type=PARAM caller=FUN_081b63bc@081b63bc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805e5fc type=DATA caller=FUN_0805e5d8@0805e5d8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08006650 type=DATA caller=FUN_08006640@08006640 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0818eb64 type=DATA caller=FUN_0818eb5c@0818eb5c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0818ebc6 type=DATA caller=FUN_0818ebc0@0818ebc0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08196bf2 type=DATA caller=FUN_08196bf0@08196bf0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0832ecba type=DATA caller=FUN_0832ec90@0832ec90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0803ed68 type=DATA caller=FUN_0803ed28@0803ed28 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08186d4a type=DATA caller=FUN_08186d30@08186d30 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080eef2e type=DATA caller=FUN_080eef24@080eef24 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0803ef72 type=DATA caller=FUN_0803ef5c@0803ef5c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0803ef62 type=PARAM caller=FUN_0803ef5c@0803ef5c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081c5048 type=DATA caller=FUN_081c5040@081c5040 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081c5042 type=PARAM caller=FUN_081c5040@081c5040 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081950f2 type=DATA caller=FUN_081950e0@081950e0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0819510a type=DATA caller=FUN_081950e0@081950e0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825d4c0 type=DATA caller=FUN_0825d434@0825d434 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825d538 type=DATA caller=FUN_0825d434@0825d434 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0807d53a type=DATA caller=FUN_0807d44c@0807d44c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0827d46c type=DATA caller=FUN_0827d464@0827d464 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081ed4f4 type=DATA caller=FUN_081ed4ec@081ed4ec (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08255624 type=DATA caller=FUN_082555f4@082555f4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809d6a8 type=DATA caller=FUN_0809d620@0809d620 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809d6a2 type=PARAM caller=FUN_0809d620@0809d620 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081357e2 type=DATA caller=FUN_081357d8@081357d8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081cd9e0 type=DATA caller=FUN_081cd974@081cd974 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081cd9ee type=DATA caller=FUN_081cd974@081cd974 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081ad99a type=DATA caller=FUN_081ad994@081ad994 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08255a76 type=DATA caller=FUN_082559f4@082559f4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830da4e type=DATA caller=FUN_0830da24@0830da24 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080d5b46 type=DATA caller=FUN_080d5a50@080d5a50 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080d5b34 type=DATA caller=FUN_080d5a50@080d5a50 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08195a7a type=DATA caller=FUN_08195a54@08195a54 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08255aa0 type=DATA caller=FUN_08255a90@08255a90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08255adc type=DATA caller=FUN_08255a90@08255a90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081c5b94 type=DATA caller=FUN_081c5b34@081c5b34 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080bddb4 type=DATA caller=FUN_080bdd90@080bdd90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08174098 type=DATA caller=FUN_08174068@08174068 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082bc10a type=DATA caller=FUN_082bc08c@082bc08c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809c12a type=DATA caller=FUN_0809c10c@0809c10c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0809c14a type=DATA caller=FUN_0809c10c@0809c10c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0825c1b6 type=DATA caller=FUN_0825c1b0@0825c1b0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082ec2ce type=DATA caller=FUN_082ec218@082ec218 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0802c514 type=DATA caller=FUN_0802c3c4@0802c3c4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08114564 type=DATA caller=FUN_0811453c@0811453c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08314934 type=DATA caller=FUN_0831490c@0831490c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08314988 type=DATA caller=FUN_0831490c@0831490c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0806497a type=DATA caller=FUN_08064950@08064950 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0811caaa type=DATA caller=FUN_0811ca4c@0811ca4c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082b60d8 type=DATA caller=FUN_082b60a4@082b60a4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08154ee2 type=DATA caller=FUN_08154edc@08154edc (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08017378 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08028930 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08029404 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080298a8 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0804e344 type=DATA caller=FUN_0804e330@0804e330 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0802b36c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0803059c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08030a24 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0803995c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08060088 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08082c9c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08089260 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080ee668 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08111c44 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0816da20 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0818cb10 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830a154 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830b330 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08320154 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081a4022 type=DATA caller=FUN_081a4010@081a4010 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08263f7c type=DATA caller=FUN_08263f4c@08263f4c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08028912 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080293ac type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08309e48 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0802988a type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08176570 type=DATA caller=FUN_0817654c@0817654c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080cf02c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080cf134 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082dd86c type=DATA caller=FUN_082dd850@082dd850 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805a01a type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805a0c0 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082e27c2 type=DATA caller=FUN_082e27a4@082e27a4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0802b1f6 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080f9b78 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0816d752 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08102c96 type=DATA caller=FUN_08102c8c@08102c8c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0829c972 type=DATA caller=FUN_0829c95c@0829c95c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808080e type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080bc210 type=DATA caller=FUN_080bc1e4@080bc1e4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08114446 type=DATA caller=FUN_08114440@08114440 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08082c10 type=DATA caller=FUN_08082bec@08082bec (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080ee4b2 type=DATA caller=FUN_080ee48c@080ee48c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0830b238 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0805fe6c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080858c8 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0812c894 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08186e3c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08087a98 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08087ff4 type=DATA caller=FUN_08087fc8@08087fc8 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808b61a type=DATA caller=FUN_0808b5f0@0808b5f0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0808b69a type=DATA caller=FUN_0808b5f0@0808b5f0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0818904c type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08089244 type=DATA caller=FUN_08089218@08089218 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08089242 type=PARAM caller=FUN_08089218@08089218 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083291b6 type=DATA caller=FUN_08329184@08329184 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083291ae type=PARAM caller=FUN_08329184@08329184 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0816827a type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081682ae type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0801bb98 type=DATA caller=FUN_0801bb90@0801bb90 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08030514 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08325cae type=DATA caller=FUN_08325c84@08325c84 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=083204f0 type=DATA caller=FUN_083204e0@083204e0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082f75a2 type=DATA caller=FUN_082f7594@082f7594 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082f759a type=PARAM caller=FUN_082f7594@082f7594 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=082ca29a type=DATA caller=FUN_082ca284@082ca284 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080397ce type=DATA caller=FUN_080397a4@080397a4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0800d0ba type=DATA caller=FUN_0800d0b0@0800d0b0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0828cada type=DATA caller=FUN_0828cac4@0828cac4 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08031434 type=DATA caller=FUN_08031314@08031314 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08031684 type=DATA caller=FUN_08031314@08031314 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08031564 type=DATA caller=FUN_08031314@08031314 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08031430 type=PARAM caller=FUN_08031314@08031314 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080a1a1c type=DATA caller=FUN_080a1a14@080a1a14 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080a1a16 type=PARAM caller=FUN_080a1a14@080a1a14 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080506ca type=DATA caller=FUN_080506b0@080506b0 (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=080263a2 type=DATA caller=FUN_0802638c@0802638c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08100d4a type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08100db6 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08100b32 type=DATA caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=08100b2c type=PARAM caller=<none> (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813d294 type=DATA caller=FUN_0813d20c@0813d20c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813d2f6 type=DATA caller=FUN_0813d20c@0813d20c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=0813d326 type=DATA caller=FUN_0813d20c@0813d20c (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081414b8 type=DATA caller=FUN_081414ac@081414ac (GhidraScript)  
+INFO  QueryOsosRefs.java>   ref=081414c0 type=DATA caller=FUN_081414ac@081414ac (GhidraScript)  
+INFO  QueryOsosRefs.java> MEMORY BLOCKS (GhidraScript)  
+INFO  QueryOsosRefs.java>   ram 08000000-086c43a7 read=true write=true execute=true (GhidraScript)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x0802beec' '0x0802beec'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 0802beec FUN_0802beec ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int * FUN_0802beec(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
+
+{
+  undefined4 uVar1;
+  int *piVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  undefined1 auStack_80 [8];
+  undefined1 auStack_78 [68];
+  undefined1 auStack_34 [4];
+  undefined1 local_30;
+  undefined1 local_2f;
+  undefined4 local_2c;
+  undefined1 local_28 [4];
+  undefined1 local_24;
+  undefined1 local_23;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  
+  if (*(int *)(param_4 + 0x5c) == 0) {
+    FUN_0803d4e0(param_4,auStack_78);
+    uVar1 = FUN_0818eb44(0x1a0);
+    piVar2 = (int *)FUN_0824e8bc(uVar1,0,param_2,param_3,auStack_78);
+  }
+  else {
+    FUN_0803d50c(param_4,auStack_80);
+    uVar1 = FUN_0818eb44(0x1e8);
+    piVar2 = (int *)FUN_082031c0(uVar1,0,param_2,param_3,auStack_80);
+  }
+  if (*(char *)(param_4 + 0x78) == '\x01') {
+    piVar2[0xc] = piVar2[0xc] | 0x4000000;
+  }
+  (**(code **)(*piVar2 + 0x148))(piVar2,*(undefined1 *)(param_4 + 0x79));
+  piVar3 = (int *)FUN_081a9af4(0x80);
+  local_18 = 0;
+  if (piVar3 != (int *)0x0) {
+    local_18 = (**(code **)(*piVar3 + 0x14))(piVar3,5);
+  }
+  if ((*(int *)(param_4 + 0x50) != 0) &&
+     (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+    FUN_081b2100(&local_1c,*puVar4);
+    iVar5 = FUN_08043098(&local_1c,DAT_0802c0e0);
+    if (iVar5 == 0) {
+      iVar5 = FUN_08043098(&local_1c,DAT_0802c0e4);
+      uVar6 = piVar2[0xc];
+      if (iVar5 == 0) {
+        uVar7 = 0x38000;
+      }
+      else {
+        uVar7 = 0x8000;
+      }
+    }
+    else {
+      uVar6 = piVar2[0xc];
+      uVar7 = 0x10000;
+    }
+    piVar2[0xc] = uVar6 | uVar7;
+    FUN_081b2110(piVar2 + 0x1f,&local_1c);
+  }
+  if ((*(int *)(param_4 + 0x54) != 0) &&
+     (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+    FUN_081b2100(&local_1c,*puVar4);
+    (**(code **)(*piVar2 + 0x140))(piVar2,&local_1c);
+  }
+  uVar6 = 0;
+  if (*(char *)(param_4 + 0x58) == '\x02') {
+    uVar6 = 0x40000000;
+  }
+  if (*(char *)(param_4 + 0x59) == '\x02') {
+    uVar6 = uVar6 | 0x80000000;
+  }
+  if (uVar6 == 0xc0000000) {
+    uVar6 = 0x2000000;
+  }
+  if ((int)(uVar6 << 6) < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x2000000;
+  }
+  if ((int)(uVar6 << 1) < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x40000000;
+  }
+  if ((int)uVar6 < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x80000000;
+  }
+  if (*(char *)(param_4 + 0x5b) == '\x01') {
+    piVar2[0xc] = piVar2[0xc] | 0x8000000;
+  }
+  else if (*(char *)(param_4 + 0x5b) == '\x02') {
+    local_1c = 1;
+    *(undefined1 *)(piVar2 + 0x23) = 1;
+  }
+  if (0 < *(int *)(param_4 + 0x6c)) {
+    local_2f = *(undefined1 *)(param_4 + 0x68);
+    local_2c = *(undefined4 *)(param_4 + 0x6c);
+    local_30 = *(char *)(param_4 + 0x69) == '\x01';
+    FUN_081b2110(local_28,DAT_0802c0e4);
+    if ((*(int *)(param_4 + 0x70) != 0) &&
+       (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+      uVar1 = FUN_081b2100(auStack_34,*puVar4);
+      FUN_081b2110(local_28,uVar1);
+    }
+    local_24 = local_30;
+    local_23 = local_2f;
+    local_20 = local_2c;
+    (**(code **)(*piVar2 + 0x144))(piVar2,&local_24);
+  }
+  return piVar2;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0802beec FUN_0802beec ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int * FUN_0802beec(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
+
+{
+  undefined4 uVar1;
+  int *piVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  undefined1 auStack_80 [8];
+  undefined1 auStack_78 [68];
+  undefined1 auStack_34 [4];
+  undefined1 local_30;
+  undefined1 local_2f;
+  undefined4 local_2c;
+  undefined1 local_28 [4];
+  undefined1 local_24;
+  undefined1 local_23;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  
+  if (*(int *)(param_4 + 0x5c) == 0) {
+    FUN_0803d4e0(param_4,auStack_78);
+    uVar1 = FUN_0818eb44(0x1a0);
+    piVar2 = (int *)FUN_0824e8bc(uVar1,0,param_2,param_3,auStack_78);
+  }
+  else {
+    FUN_0803d50c(param_4,auStack_80);
+    uVar1 = FUN_0818eb44(0x1e8);
+    piVar2 = (int *)FUN_082031c0(uVar1,0,param_2,param_3,auStack_80);
+  }
+  if (*(char *)(param_4 + 0x78) == '\x01') {
+    piVar2[0xc] = piVar2[0xc] | 0x4000000;
+  }
+  (**(code **)(*piVar2 + 0x148))(piVar2,*(undefined1 *)(param_4 + 0x79));
+  piVar3 = (int *)FUN_081a9af4(0x80);
+  local_18 = 0;
+  if (piVar3 != (int *)0x0) {
+    local_18 = (**(code **)(*piVar3 + 0x14))(piVar3,5);
+  }
+  if ((*(int *)(param_4 + 0x50) != 0) &&
+     (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+    FUN_081b2100(&local_1c,*puVar4);
+    iVar5 = FUN_08043098(&local_1c,DAT_0802c0e0);
+    if (iVar5 == 0) {
+      iVar5 = FUN_08043098(&local_1c,DAT_0802c0e4);
+      uVar6 = piVar2[0xc];
+      if (iVar5 == 0) {
+        uVar7 = 0x38000;
+      }
+      else {
+        uVar7 = 0x8000;
+      }
+    }
+    else {
+      uVar6 = piVar2[0xc];
+      uVar7 = 0x10000;
+    }
+    piVar2[0xc] = uVar6 | uVar7;
+    FUN_081b2110(piVar2 + 0x1f,&local_1c);
+  }
+  if ((*(int *)(param_4 + 0x54) != 0) &&
+     (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+    FUN_081b2100(&local_1c,*puVar4);
+    (**(code **)(*piVar2 + 0x140))(piVar2,&local_1c);
+  }
+  uVar6 = 0;
+  if (*(char *)(param_4 + 0x58) == '\x02') {
+    uVar6 = 0x40000000;
+  }
+  if (*(char *)(param_4 + 0x59) == '\x02') {
+    uVar6 = uVar6 | 0x80000000;
+  }
+  if (uVar6 == 0xc0000000) {
+    uVar6 = 0x2000000;
+  }
+  if ((int)(uVar6 << 6) < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x2000000;
+  }
+  if ((int)(uVar6 << 1) < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x40000000;
+  }
+  if ((int)uVar6 < 0) {
+    piVar2[0xc] = piVar2[0xc] | 0x80000000;
+  }
+  if (*(char *)(param_4 + 0x5b) == '\x01') {
+    piVar2[0xc] = piVar2[0xc] | 0x8000000;
+  }
+  else if (*(char *)(param_4 + 0x5b) == '\x02') {
+    local_1c = 1;
+    *(undefined1 *)(piVar2 + 0x23) = 1;
+  }
+  if (0 < *(int *)(param_4 + 0x6c)) {
+    local_2f = *(undefined1 *)(param_4 + 0x68);
+    local_2c = *(undefined4 *)(param_4 + 0x6c);
+    local_30 = *(char *)(param_4 + 0x69) == '\x01';
+    FUN_081b2110(local_28,DAT_0802c0e4);
+    if ((*(int *)(param_4 + 0x70) != 0) &&
+       (puVar4 = (undefined4 *)FUN_081a3f86(local_18,DAT_0802c0dc), puVar4 != (undefined4 *)0x0)) {
+      uVar1 = FUN_081b2100(auStack_34,*puVar4);
+      FUN_081b2110(local_28,uVar1);
+    }
+    local_24 = local_30;
+    local_23 = local_2f;
+    local_20 = local_2c;
+    (**(code **)(*piVar2 + 0x144))(piVar2,&local_24);
+  }
+  return piVar2;
+}
+
+ (GhidraScript)  

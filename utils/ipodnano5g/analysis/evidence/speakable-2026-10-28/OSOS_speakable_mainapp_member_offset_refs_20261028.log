@@ -1,0 +1,69 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (624 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1277 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: FindScalarValues.java '0x8d0' '0x8d4' '0x424' '0x8e0' '0x8e4'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/FindScalarValues.java (HeadlessAnalyzer)  
+INFO  FindScalarValues.java> 0837c394 str r0,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 0837de3c ldr r0,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 0837de54 str r1,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 0837df14 ldr r0,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 0837df28 str r1,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 0837fa84 ldr r1,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 083823bc str r0,[sp,#0x424] op1=0x424 function=FUN_0837bf5c@0837bf5c (GhidraScript)  
+INFO  FindScalarValues.java> 083ba498 str r12,[sp,#0x424] op1=0x424 function=FUN_083ba3d8@083ba3d8 (GhidraScript)  
+INFO  FindScalarValues.java> 083ba4c4 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083ba3d8@083ba3d8 (GhidraScript)  
+INFO  FindScalarValues.java> 083ba888 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083ba3d8@083ba3d8 (GhidraScript)  
+INFO  FindScalarValues.java> 083d0fc4 str r2,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1048 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1080 str r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d10e4 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d111c ldr r1,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1134 ldr r1,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1158 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1178 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1288 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 083d1420 ldr r0,[sp,#0x424] op1=0x424 function=FUN_083d0fb0@083d0fb0 (GhidraScript)  
+INFO  FindScalarValues.java> 0840c1d4 str r0,[sp,#0x424] op1=0x424 function=FUN_0840c110@0840c110 (GhidraScript)  
+INFO  FindScalarValues.java> 0840ddd4 ldr r0,[sp,#0x424] op1=0x424 function=FUN_0840c110@0840c110 (GhidraScript)  
+INFO  FindScalarValues.java> 0840e33c str r2,[sp,#0x424] op1=0x424 function=FUN_0840c110@0840c110 (GhidraScript)  

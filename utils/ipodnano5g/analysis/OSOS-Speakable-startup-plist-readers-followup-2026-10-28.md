@@ -614,3 +614,77 @@ komprimiert archiviert und mit einer Warnnotiz in der gleichnamigen `.log`
 gekennzeichnet; die gezielten, gültigen Folgeabfragen stehen in der oben
 genannten Beleggruppe. Alle neuen Belege und Skripte liegen auf dem
 persistenten Dateisystem im Repository; `/tmp` wurde dafür nicht verwendet.
+
+### Nachtrag 2026-10-28: Nebenwirkungen der Vorbereitungsaufrufe
+
+Die Objektzuordnung in `FUN_08076810` wurde korrigiert und die vor dem
+Speakable-Parser ausgeführten virtuellen Aufrufe wurden weiterverfolgt:
+
+- Der Parameter ist der Now-Playing-Untercontroller mit VTable `0x084f7558`.
+  Sein Slot `+0x64` zeigt auf `FUN_08136c96`. Diese Methode erstellt über
+  `FUN_08270714` eine 16-Byte-Nachricht: Feld `+4` ist `0x16`, die beiden
+  Nutzwerte liegen bei `+8` und `+0xc`, und die VTable ist `0x08506ba8`.
+  `FUN_081a5904` reicht sie an `FUN_082761d8` weiter, das registrierte
+  Empfänger nach Task-ID aufruft.
+- `FUN_08038d38` liest die Nachrichtenart aus `message+4`. Typ `0x16` ist
+  nicht der Speakable-Zweig für Typ `0x12`; er fällt in den generischen
+  Weiterleitungspfad `FUN_081af70a`. Der dafür verwendete Parent-Getter der
+  VTable `0x084f7558` liefert `this+0x30`. Die Objektinitialisierung kann
+  diesen Parent über `FUN_0826beec` an den aktuellen Task-Kontext binden.
+  Der VTable-Slot `+0x3c` des von der Factory angelegten äußeren Objekts
+  (`0x08536230`) zeigt auf `FUN_08030d70`; dieser Handler leitet Nachrichten
+  außer Typ `0x12` ebenfalls generisch weiter. Der untersuchte Typ-`0x16`-
+  Aufruf löst daher selbst den Speakable-Zweig nicht aus.
+- Der separate Aufruf `(**(code **)(param_1[0x234] + 0xc))()` an Offset
+  `0x8d0` wurde aufgelöst: Das Member hat VTable `0x085354d8`, Slot `+0xc`
+  ist `FUN_081ada60`. Die Methode gibt bei gesetztem Member `+4` eine
+  Referenz mit Typkennung `0x34` frei und setzt das Feld auf null. Die
+  konkrete Freigabe läuft über einen weiteren virtuellen Destruktoraufruf;
+  dessen klassenspezifische Nebenwirkungen sind aus dem Dump nicht ableitbar.
+- Der vorangehende Aufruf über `FUN_081a7c88` bleibt offen. Er fragt den
+  Laufzeit-Registry nach Schlüssel `0xa700`; `DAT_081a9b08` verweist auf
+  `0x087644fc`, außerhalb des erfassten Speicherblocks `0x08000000–0x086c43a7`.
+  Damit sind sowohl das konkrete Serviceobjekt als auch sein VTable-Slot
+  `+0x1a8` aus diesem Abbild nicht bestimmbar. Eine mögliche indirekte
+  Nebenwirkung dieses Services ist nicht ausgeschlossen.
+- Die erneute XRef-Abfrage bestätigt: Für `[5]` (`0x08553cec`) ist der
+  einzige direkte Schreibzugriff im erfassten Code der frühe Defaultschreiber
+  `FUN_0802daf4`; `[6]` und `[7]` (`0x08553cf0/0x08553cf4`) werden direkt nur
+  vom frühen Initialisierer beschrieben. Das schließt Änderungen durch den
+  ungelösten Service oder durch dynamische Destruktoren nicht aus.
+
+Damit bleibt der Parser-/Dispatch-Zweig ein statisch kontrollierbarer
+indirekter Sprungkandidat, aber noch kein Nachweis für zuverlässig
+erreichbare beliebige Codeausführung: Der konkrete Service-Slot, die
+Laufzeitwerte der Event- und Zustandsbedingungen sowie ein ausführbarer
+Handoff sind offen. Es gab in dieser Runde keinen Geräte-, USB-, DFU- oder
+Flashzugriff.
+
+Die neuen, persistent abgelegten Belege für diesen Nachtrag sind:
+
+- `OSOS_speakable_action_enqueue_and_dispatch_helpers_20261028.log`
+- `OSOS_speakable_action_queue_service_paths_20261028.log`
+- `OSOS_speakable_action_message_type_20261028.log`
+- `OSOS_speakable_action_payload_and_subscriber_vtable_20261028.log`
+- `OSOS_speakable_generic_message_methods_20261028.log`
+- `OSOS_speakable_generic_forward_parent_resolution_20261028.log`
+- `OSOS_speakable_object_base_init_and_forwarding_20261028.log`
+- `OSOS_speakable_parent_registration_references_20261028.log`
+- `OSOS_speakable_forwarded_action_parent_handler_20261028.log`
+- `OSOS_speakable_context_owner_registration_20261028.log`
+- `OSOS_speakable_preparser_member_vtable_20261028.log`
+- `OSOS_speakable_offset8d0_callback_target_20261028.log`
+- `OSOS_speakable_offset8d0_callback_effect_20261028.log`
+- `OSOS_speakable_auxiliary_reference_release_20261028.log`
+- `OSOS_speakable_service_type_raw_scan_20261028.log`
+- `OSOS_speakable_service_registry_lookup_20261028.log`
+- `OSOS_speakable_service_registry_raw_context_20261028.log`
+- `OSOS_speakable_event_and_service_constants_20261028.log`
+- `OSOS_speakable_final_side_effect_crosscheck_20261028.log`
+- `OSOS_speakable_context_parent_gate_20261028.log`
+
+Als nächste statische Schritte bleiben die Ermittlung des Registrierers für
+Service `0xa700` und seines Slots `+0x1a8` sowie die Rückverfolgung der
+Erzeuger für Eventtyp `0x12` und dessen Senderwert. Ein Gerätetest ist für
+diese offenen Laufzeitbedingungen erst nötig, wenn das Gerät dafür wieder
+verfügbar ist.
