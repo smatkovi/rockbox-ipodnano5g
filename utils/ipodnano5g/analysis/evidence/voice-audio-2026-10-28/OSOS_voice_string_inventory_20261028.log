@@ -1,0 +1,181 @@
+  29300 LocalizedVoicePrompts
+  29324 NikeVoiceKitVersion
+  29668 iPodVoices
+  29920 VoiceMemosSupported
+  29940 VoiceMemoFormats
+  30544 AIFF
+ 111124 aiff
+ 175860 TCVoiceMemos
+ 175884 TCVoiceMemosIdle
+ 175912 TCVoiceMemosMainMenu
+ 175944 TCVoiceMemosContextMenu
+ 175976 TCVoiceMemosLabelSelectMenu
+ 176012 TCVoiceMemosLoading
+ 176040 TCVoiceMemosTimedStatus
+ 207032 Resources/Sounds/clicker.wav
+ 359452 Resources/Sounds/camera.wav
+ 563772 ToggleSetting_VoiceFeedback
+ 728704 elifNew Voice Memos
+ 735880 HandleVoiceMemosSelected
+ 800748 HandleVoiceMemosHilited
+ 800772 HandleVoiceMemosSelected
+ 873784 HandleVoiceOverPlaylistSelected
+ 873816 HandleVoiceOverPodcastSelected
+ 873848 HandleVoiceOverAudiobookSelected
+ 873904 HandleVoiceCommand
+ 873924 HandleVoiceArtist
+ 873944 HandleVoiceAlbum
+ 980896 Channel VoiceRecording
+1226308 Resources/Sounds/volumebeep.wav
+1390208 aiff
+1390216 aifc
+1390884 AIFF
+1596708 HandleChooseVoicePrompts
+2429724 Resources/Sounds/shake.wav
+2435660 Voice Memos
+2525332 Resources/Sounds/marimba.wav
+2609564 VoiceOver
+2766628 voiceoverMenu.
+3278864 iPod_Control:Device:voices:
+3278892 Resources:Voices:
+3329244 iMAPhraseDict
+3329436 iMAPhraseDict::LoadClipData [%s]
+4414392 TCVoiceMemosIdle
+4414412 TCVoiceMemos
+4414428 TCVoiceMemosContextMenu
+4414452 TCVoiceMemosLabelSelectMenu
+4414480 TCVoiceMemosMainMenu
+4414504 TCVoiceMemosLoading
+4414524 TCVoiceMemosTimedStatus
+4512332 TCVoiceMemosIdle
+4512352 TCVoiceMemos
+4512368 TCVoiceMemosContextMenu
+4512392 TCVoiceMemosLabelSelectMenu
+4512420 TCVoiceMemosMainMenu
+4512444 TCVoiceMemosLoading
+4512464 TCVoiceMemosTimedStatus
+5167826 12TCVoiceMemos
+5168909 14TVoiceMemosApp
+5169776 16TCVoiceMemosIdle
+5170118 16TVoiceMemosModel
+5170819 17TVoiceOverContext
+5171563 19TCVoiceMemosLoading
+5172253 20TCVoiceMemosMainMenu
+5173978 23TCVoiceMemosContextMenu
+5174004 23TCVoiceMemosTimedStatus
+5174498 23TVoiceMemosModel_Import
+5174602 24IProvideVoiceOverContent
+5176261 27TCVoiceMemosLabelSelectMenu
+5177118 27TSilverCntlrTransitionAddonI12TCVoiceMemosE
+5178177 27TSilverCntlrTransitionAddonI16TCVoiceMemosIdleE
+5178897 27TSilverCntlrTransitionAddonI19TCVoiceMemosLoadingE
+5179537 27TSilverCntlrTransitionAddonI20TCVoiceMemosMainMenuE
+5180977 27TSilverCntlrTransitionAddonI23TCVoiceMemosContextMenuE
+5181034 27TSilverCntlrTransitionAddonI23TCVoiceMemosTimedStatusE
+5183094 27TSilverCntlrTransitionAddonI27TCVoiceMemosLabelSelectMenuE
+5193853 N3ISL12iMAVoiceDataE
+5194760 N3ISL18iMAVoiceFileParserE
+5195215 N3ISL21TSportsVoicePromptMgrE
+5195369 N3ISL24IPodSportsVoicePromptMgrE
+5195537 N3ISL27iMAAudioPromptPhraseIDDescrE
+5493937 Trainer.VoiceFeedback
+5494138 voice
+5494546 aifc
+5498568 is_voice_memo
+5501796 VoiceMemos_Screen_InsufficientDiskSpace2
+5503136 VoiceMemos_Screen_MicrophoneRequired
+5503266 VoiceMemos_Menu_Screen_Paused
+5503363 VoiceMemos_Screen_MicrophoneDisconnected
+5503404 VoiceMemos_Status_Screen_Inserted
+5503438 VoiceMemos_Screen_Recording_ChapterInserted
+5503572 VoiceMemos_Screen_InsufficientDiskSpace
+5503923 VoiceMemos_Screen_Idle
+5505436 VoiceMemos_Context_Menu_Screen_PlayDelete
+5505631 VoiceMemos_Screen_Recording
+5506110 VoiceMemos_Screen_Saving
+5506770 VoiceMemos_Screen_DeleteAsk
+5506798 VoiceMemos_Screen_DeleteAllAsk
+5508246 VoiceMemos_Context_PlayDelete_Screen
+5511732 VoiceMemos_Screen
+5512498 VoiceMemos_Status_Screen
+5512549 VoiceMemos_Label_Select_Screen
+5512794 VoiceMemos_No_Content_Screen
+5513363 VoiceMemos_Main_Menu_Screen
+5513449 VoiceMemos_RecordingList_Menu_Screen
+5513486 VoiceMemos_Context_Menu_Screen
+5514236 VoiceMemos_LoadScreen
+5517025 MainMenus_Main_Screen_VoiceMemos
+5518364 VoiceMemos_Screen_InsufficientDiskSpace2_Default
+5518413 VoiceMemos_Screen_MicrophoneRequired_Default
+5518458 VoiceMemos_Screen_MicrophoneDisconnected_Default
+5518558 VoiceMemos_Screen_InsufficientDiskSpace_Default
+5518651 VoiceMemos_Screen_Idle_Default
+5518944 VoiceMemos_Screen_DeleteAsk_Default
+5518980 VoiceMemos_Screen_DeleteAllAsk_Default
+5523121 VoiceMemos_Label_Select_Screen_Default
+5523935 VoiceMemos_Menu_Screen_Default
+5523966 VoiceMemos_RecordingList_Menu_Screen_Default
+5524630 VoiceMemos_LoadScreen_Default
+5551798 id-it-revPassphrase
+5833464 TCVoiceMemosMainMenu
+5833488 TCVoiceMemosIdle
+5833508 TCVoiceMemos
+5833548 TCVoiceMemosMainMenu
+5833572 TCVoiceMemosContextMenu
+5833596 TCVoiceMemosLabelSelectMenu
+5833624 TCVoiceMemosMainMenu
+5833648 TCVoiceMemosMainMenu
+5833672 TCVoiceMemosMainMenu
+5833696 TCVoiceMemosMainMenu
+5833720 TCVoiceMemosMainMenu
+5833744 TCVoiceMemosMainMenu
+5833768 TCVoiceMemosLoading
+5833788 TCVoiceMemosTimedStatus
+6266404 Voice Memos
+6267508 Playback speed will not affect the pitch of the voice in audiobook playback.
+6269316 Please sync with iTunes for Correct Voice Over and Spoken Menu Content.
+6284996 ACELP is either registered trademark or trademark of VoiceAge Corporation in the United States and/or other countries and used under license from VoiceAge Corporation. The ACELP.net codec in this product is used under licensed from VoiceAge Corporation. Portions Copyright 
+6285271  2002 VoiceAge Corporation. All rights reserved.
+6309644 Voice Memos
+6309656 Voice Memos
+6309668 Voice Memos
+6310016 No Voice Memos on this iPod.
+6315804 voiceoverMenu.audiobook.selected
+6315840 HandleVoiceOverAudiobookSelected
+6315876 voiceoverMenu.playlist.selected
+6315908 HandleVoiceOverPlaylistSelected
+6315940 voiceoverMenu.podcast.selected
+6315972 HandleVoiceOverPodcastSelected
+6317744 HandleVoiceMemosSelected
+6330356 HandleVoiceMemosHilited
+6330380 MainMenus_Main_Screen_VoiceMemos
+6355180 ToggleSetting_VoiceFeedback
+6364832 HandleChooseVoicePrompts
+6375300 VoiceMemos_LoadScreen
+6375324 VoiceMemos_LoadScreen_Default
+6375388 VoiceMemos_RecordingList_Menu_Screen
+6375428 VoiceMemos_RecordingList_Menu_Screen_Default
+6375512 VoiceMemos_No_Content_Screen
+6375824 VoiceMemos_Main_Menu_Screen
+6375888 VoiceMemos_Screen_Recording
+6375948 VoiceMemos_Status_Screen
+6375976 VoiceMemos_Status_Screen_Inserted
+6376044 VoiceMemos_Context_Menu_Screen
+6376076 VoiceMemos_Menu_Screen_Paused
+6376140 VoiceMemos_Screen_Saving
+6376364 VoiceMemos_Screen_DeleteAllAsk
+6376396 VoiceMemos_Screen_DeleteAllAsk_Default
+6376460 VoiceMemos_Context_PlayDelete_Screen
+6376500 VoiceMemos_Context_Menu_Screen_PlayDelete
+6376688 VoiceMemos_Label_Select_Screen
+6376720 VoiceMemos_Label_Select_Screen_Default
+7020803 Voice
+7020827 VoiceVersion
+7020851 VoiceType
+7020875 VoiceName
+7020899 VoiceLanguage
+7020923 Phrases
+7020947 Phrase
+7020971 PhraseID
+7020995 PhraseString
+7021019 PhraseClips

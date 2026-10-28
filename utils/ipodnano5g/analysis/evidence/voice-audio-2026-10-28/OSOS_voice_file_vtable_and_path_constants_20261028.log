@@ -1,0 +1,95 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (722 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1388 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x08537e74' '16'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 08537e74  08330d29  function=FUN_08330d28@08330d28 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e78  0832f489  function=FUN_0832f488@0832f488 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e7c  0832f479  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e80  0832f3a5  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e84  0832f3b3  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e88  0832f45d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e8c  0832f46b  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e90  0832f397  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e94  0832f3c1  function=FUN_0832f3c0@0832f3c0 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e98  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537e9c  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ea0  083207b5  function=FUN_083207b4@083207b4 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ea4  0832ce93  function=FUN_0832ce92@0832ce92 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ea8  0832cddd  function=FUN_0832cddc@0832cddc data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eac  0832ce79  function=FUN_0832ce78@0832ce78 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eb0  0832cdf1  function=FUN_0832cdf0@0832cdf0 data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x08537ea0' '12'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 08537ea0  083207b5  function=FUN_083207b4@083207b4 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ea4  0832ce93  function=FUN_0832ce92@0832ce92 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ea8  0832cddd  function=FUN_0832cddc@0832cddc data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eac  0832ce79  function=FUN_0832ce78@0832ce78 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eb0  0832cdf1  function=FUN_0832cdf0@0832cdf0 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eb4  0832ce1d  function=FUN_0832ce1c@0832ce1c data=null (GhidraScript)  
+INFO  DumpWords.java> 08537eb8  0832ce65  function=FUN_0832ce64@0832ce64 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ebc  0832cdc9  function=FUN_0832cdc8@0832cdc8 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ec0  0832ce05  function=FUN_0832ce04@0832ce04 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ec4  0831c3a7  function=FUN_0831c3a6@0831c3a6 data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ec8  0831c3bb  function=FUN_0831c3ba@0831c3ba data=null (GhidraScript)  
+INFO  DumpWords.java> 08537ecc  08325c6d  function=FUN_08325c6c@08325c6c data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x08329550' '1'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 08329550  08537e74  function=- data=?? 29h    ) (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x0832cdc4' '1'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 0832cdc4  08535664  function=- data=addr 0827f28d (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x0832cdc0' '1'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 0832cdc0  08e51e40  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x0832cd9c' '8'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 0832cd9c  50414d69  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cda0  73617268  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cda4  63694465  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cda8  4c3a3a74  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cdac  4364616f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cdb0  4470696c  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cdb4  20617461  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0832cdb8  5d73255b  function=- data=null (GhidraScript)  

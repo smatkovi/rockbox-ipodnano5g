@@ -1,0 +1,100 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (740 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1387 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWindow.java '0x0832cc4c' '0x0832cc90'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWindow.java (HeadlessAnalyzer)  
+INFO  DumpWindow.java> 0832cc4c  add r0,sp,#0x8 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc4e  bl 0x0823b790 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc52  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc54  beq 0x0832cc94 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc56  ldr r0,[sp,#0x8] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc58  movs r1,#0x1 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc5a  ldr r6,[r0,#0x14] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc5c  movs r0,#0x38 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc5e  str r1,[sp,#0x0] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc60  str r7,[sp,#0x4] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc62  ldrsb r3,[r0,r4] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc64  ldr r1,[sp,#0xc] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc66  mov r2,r6 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc68  mov r0,r4 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc6a  bl 0x08325be4 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc6e  mov r7,r0 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc70  bl 0x0823b79c (GhidraScript)  
+INFO  DumpWindow.java> 0832cc74  lsls r0,r0,#0x1f (GhidraScript)  
+INFO  DumpWindow.java> 0832cc76  beq 0x0832cc90 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc78  cmp r6,#0x0 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc7a  beq 0x0832cc84 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc7c  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc7e  ldr r1,[r0,#0x4] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc80  mov r0,r6 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc82  blx r1 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc84  ldr r0,[sp,#0x8] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc86  add r1,sp,#0x4 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc88  str r0,[sp,#0x4] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc8a  ldr r0,[r4,#0x3c] (GhidraScript)  
+INFO  DumpWindow.java> 0832cc8c  bl 0x08326762 (GhidraScript)  
+INFO  DumpWindow.java> 0832cc90  cmp r7,#0x0 (GhidraScript)  
+INFO  REPORT: Execute script: DumpWindow.java '0x08325c10' '0x08325c40'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/voice-audio-2026-10-28/scripts/DumpWindow.java (HeadlessAnalyzer)  
+INFO  DumpWindow.java> 08325c10  movs r1,#0x2f (GhidraScript)  
+INFO  DumpWindow.java> 08325c12  add r0,sp,#0x4 (GhidraScript)  
+INFO  DumpWindow.java> 08325c14  bl 0x0826aa44 (GhidraScript)  
+INFO  DumpWindow.java> 08325c18  add r0,sp,#0x4 (GhidraScript)  
+INFO  DumpWindow.java> 08325c1a  bl 0x081909a4 (GhidraScript)  
+INFO  DumpWindow.java> 08325c1e  ldr r1,[sp,#0xc] (GhidraScript)  
+INFO  DumpWindow.java> 08325c20  ldr r2,[r1,#0x4] (GhidraScript)  
+INFO  DumpWindow.java> 08325c22  ldr r1,[sp,#0x18] (GhidraScript)  
+INFO  DumpWindow.java> 08325c24  bl 0x0832950c (GhidraScript)  
+INFO  DumpWindow.java> 08325c28  movs r4,r0 (GhidraScript)  
+INFO  DumpWindow.java> 08325c2a  beq 0x08325c54 (GhidraScript)  
+INFO  DumpWindow.java> 08325c2c  cmp r7,#0x0 (GhidraScript)  
+INFO  DumpWindow.java> 08325c2e  beq 0x08325c3a (GhidraScript)  
+INFO  DumpWindow.java> 08325c30  mov r1,r4 (GhidraScript)  
+INFO  DumpWindow.java> 08325c32  mov r0,r7 (GhidraScript)  
+INFO  DumpWindow.java> 08325c34  bl 0x08329266 (GhidraScript)  
+INFO  DumpWindow.java> 08325c38  b 0x08325c56 (GhidraScript)  
+INFO  DumpWindow.java> 08325c3a  ldr r1,[sp,#0x10] (GhidraScript)  
+INFO  DumpWindow.java> 08325c3c  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  DumpWindow.java> 08325c3e  mov r3,r6 (GhidraScript)  
+INFO  DumpWindow.java> 08325c40  mov r2,r4 (GhidraScript)  
