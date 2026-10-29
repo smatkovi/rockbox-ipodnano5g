@@ -1,0 +1,223 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (673 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1336 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x080bb0c0' '0x080fcc9c' '0x080eb748' '0x080eb730' '0x080bb110' '0x0803eb80' '0x0802d724' '0x083390b2'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 080bb0c0 FUN_080bb0c0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 *
+FUN_080bb0c0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined4 uStack_10;
+  undefined4 uStack_c;
+  
+  uStack_10 = param_3;
+  uStack_c = param_4;
+  uVar1 = FUN_08198770(&uStack_10,s_TMusicLoadingTask_080bb0f8,param_3,param_4,param_1,param_2);
+  puVar2 = (undefined4 *)FUN_082772a0(param_1,uVar1,8,0x20000,1,0x28);
+  FUN_0818ebc0(&uStack_10);
+  *puVar2 = DAT_080bb10c;
+  *(undefined1 *)(puVar2 + 10) = 0;
+  return puVar2;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 080fcc9c FUN_080fcc9c ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_080fcc9c(undefined4 *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = DAT_080fccb4;
+  *param_1 = DAT_080fccb0;
+  *(undefined4 *)(iVar1 + 0x10) = 0;
+  FUN_08270900();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 080eb748 FUN_080eb748 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_080eb748(undefined4 param_1)
+
+{
+  FUN_080fcc9c();
+  FUN_08191cdc(param_1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 080eb730 FUN_080eb730 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_080eb730(void)
+
+{
+  if (*(int *)(*(int *)(DAT_080eb744 + 0x14) + 0x48) != 0) {
+    FUN_081ac420();
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 080bb110 FUN_080bb110 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_080bb110(undefined4 param_1,int param_2)
+
+{
+  if (param_2 != DAT_080bb120) {
+    FUN_0826d010();
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0803eb80 FUN_0803eb80 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 * FUN_0803eb80(undefined4 *param_1)
+
+{
+  *param_1 = DAT_0803eb9c;
+  if (param_1[3] != 0) {
+    FUN_0819af00(param_1[3],0x27);
+    param_1[3] = 0;
+  }
+  return param_1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0802d724 FUN_0802d724 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0802d724(undefined4 param_1)
+
+{
+  FUN_0803eb80();
+  FUN_08191cdc(param_1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 083390b2 <none> ===== (GhidraScript)  
+
+local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+080bb0c0 <.data+0xbb0c0>:
+ 80bb0c0:	b51f      	push	{r0, r1, r2, r3, r4, lr}
+ 80bb0c2:	a10d      	add	r1, pc, #52	@ (adr r1, 0x80bb0f8)
+ 80bb0c4:	4604      	mov	r4, r0
+ 80bb0c6:	a802      	add	r0, sp, #8
+ 80bb0c8:	f0dd fb52 	bl	0x8198770
+ 80bb0cc:	2228      	movs	r2, #40	@ 0x28
+ 80bb0ce:	2101      	movs	r1, #1
+ 80bb0d0:	9201      	str	r2, [sp, #4]
+ 80bb0d2:	2208      	movs	r2, #8
+ 80bb0d4:	9100      	str	r1, [sp, #0]
+ 80bb0d6:	4601      	mov	r1, r0
+ 80bb0d8:	0393      	lsls	r3, r2, #14
+ 80bb0da:	4620      	mov	r0, r4
+ 80bb0dc:	f1bc f8e0 	bl	0x82772a0
+ 80bb0e0:	4604      	mov	r4, r0
+ 80bb0e2:	a802      	add	r0, sp, #8
+ 80bb0e4:	f0d3 fd6c 	bl	0x818ebc0
+ 80bb0e8:	4908      	ldr	r1, [pc, #32]	@ (0x80bb10c)
+ 80bb0ea:	2200      	movs	r2, #0
+ 80bb0ec:	2028      	movs	r0, #40	@ 0x28
+ 80bb0ee:	6021      	str	r1, [r4, #0]
+ 80bb0f0:	5502      	strb	r2, [r0, r4]
+ 80bb0f2:	b004      	add	sp, #16
+ 80bb0f4:	4620      	mov	r0, r4
+ 80bb0f6:	bd10      	pop	{r4, pc}
+ 80bb0f8:	4d54      	ldr	r5, [pc, #336]	@ (0x80bb24c)
+ 80bb0fa:	7375      	strb	r5, [r6, #13]
+ 80bb0fc:	6369      	str	r1, [r5, #52]	@ 0x34
+ 80bb0fe:	6f4c      	ldr	r4, [r1, #116]	@ 0x74
+ 80bb100:	6461      	str	r1, [r4, #68]	@ 0x44
+ 80bb102:	6e69      	ldr	r1, [r5, #100]	@ 0x64
+ 80bb104:	5467      	strb	r7, [r4, r1]
+ 80bb106:	7361      	strb	r1, [r4, #13]
+ 80bb108:	006b      	lsls	r3, r5, #1
+ 80bb10a:	0000      	movs	r0, r0
+ 80bb10c:	4b0c      	ldr	r3, [pc, #48]	@ (0x80bb140)
+ 80bb10e:	0850      	lsrs	r0, r2, #1
+ 80bb110:	4a03      	ldr	r2, [pc, #12]	@ (0x80bb120)
+ 80bb112:	b510      	push	{r4, lr}
+ 80bb114:	4291      	cmp	r1, r2
+ 80bb116:	d001      	beq.n	0x80bb11c
+ 80bb118:	f1b1 ff7a 	bl	0x826d010
+ 80bb11c:	bd10      	pop	{r4, pc}
+ 80bb11e:	0000      	movs	r0, r0
+ 80bb120:	8480      	strh	r0, [r0, #36]	@ 0x24
+ 80bb122:	0000      	movs	r0, r0
+ 80bb124:	b57c      	push	{r2, r3, r4, r5, r6, lr}
+ 80bb126:	4604      	mov	r4, r0
+ 80bb128:	4d16      	ldr	r5, [pc, #88]	@ (0x80bb184)
+ 80bb12a:	6868      	ldr	r0, [r5, #4]
+ 80bb12c:	2800      	cmp	r0, #0
+ 80bb12e:	d102      	bne.n	0x80bb136
+ 80bb130:	1e40      	subs	r0, r0, #1
+ 80bb132:	f0d8 efde 	blx	0x81940f0
+ 80bb136:	6868      	ldr	r0, [r5, #4]
+ 80bb138:	f18f fe19 	bl	0x824ad6e
+ 80bb13c:	2801      	cmp	r0, #1
+ 80bb13e:	d020      	beq.n	0x80bb182
+ 80bb140:	f0f0 fa76 	bl	0x81ab630
+ 80bb144:	f1a5 fa66 	bl	0x8260614
+ 80bb148:	285a      	cmp	r0, #90	@ 0x5a
+ 80bb14a:	d003      	beq.n	0x80bb154
+ 80bb14c:	4601      	mov	r1, r0
+ 80bb14e:	39ff      	subs	r1, #255	@ 0xff
+ 80bb150:	390f      	subs	r1, #15
+ 80bb152:	d102      	bne.n	0x80bb15a
+ 80bb154:	466a      	mov	r2, sp
+ 80bb156:	a10c      	add	r1, pc, #48	@ (adr r1, 0x80bb188)
+ 80bb158:	e001      	b.n	0x80bb15e
+ 80bb15a:	466a      	mov	r2, sp
+ 80bb15c:	a10e      	add	r1, pc, #56	@ (adr r1, 0x80bb198)
+ 80bb15e:	a801      	add	r0, sp, #4

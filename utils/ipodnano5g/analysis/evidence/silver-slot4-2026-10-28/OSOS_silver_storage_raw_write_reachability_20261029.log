@@ -1,0 +1,112 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (617 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1267 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x0819ae24' '0x0833a7b0' '0x0833a7c2'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 0819ae24 FUN_0819ae24 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_0819ae24(uint param_1)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int iVar3;
+  undefined4 uVar4;
+  
+  piVar1 = DAT_0819ae64;
+  if (*DAT_0819ae64 == 0) {
+    iVar3 = FUN_0818eb44(0xc);
+    FUN_0819d908();
+    *piVar1 = iVar3;
+  }
+  piVar2 = DAT_0819ae64;
+  if (param_1 < 2) {
+    iVar3 = DAT_0819ae64[param_1 + 1];
+    if (iVar3 == 0) {
+      uVar4 = FUN_0818eb44(0x20);
+      iVar3 = FUN_0833a5e0(uVar4,param_1,*piVar1);
+      piVar2[param_1 + 1] = iVar3;
+      return iVar3;
+    }
+  }
+  else {
+    iVar3 = 0;
+  }
+  return iVar3;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0833a7b0 FUN_0833a7b0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0833a7b0(int *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5)
+
+{
+  (**(code **)(*param_1 + 0x14))(param_1,param_2,param_3,param_4,param_5);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0833a7c2 FUN_0833a7c2 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0833a7c2(int *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5)
+
+{
+  (**(code **)(*param_1 + 0x1c))(param_1,param_2,param_3,param_4,param_5);
+  return;
+}
+
+ (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x0833a9f4' '0x0833a9f8'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> RANGE 0833a9f4-0833a9f8 INCOMING=0 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x084fd570' '0x084fd574'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 084fd570 FROM 0833a5ee TYPE DATA FUNCTION FUN_0833a5e0@0833a5e0 INSTRUCTION str r1,[r0,#0x0] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 084fd570 FROM 0833a5ea TYPE PARAM FUNCTION FUN_0833a5e0@0833a5e0 INSTRUCTION ldr r1,[0x0833a660] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 084fd570-084fd574 INCOMING=2 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x084fd59c' '0x084fd5a0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> RANGE 084fd59c-084fd5a0 INCOMING=0 (GhidraScript)  

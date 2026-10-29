@@ -1,0 +1,82 @@
+
+local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08022ae0 <.data+0x22ae0>:
+ 8022ae0:	ff64 6802 	vsub.i32	d22, d4, d2
+ 8022ae4:	21ff      	movs	r1, #255	@ 0xff
+ 8022ae6:	3111      	adds	r1, #17
+ 8022ae8:	6852      	ldr	r2, [r2, #4]
+ 8022aea:	5909      	ldr	r1, [r1, r4]
+ 8022aec:	4790      	blx	r2
+ 8022aee:	2800      	cmp	r0, #0
+ 8022af0:	d003      	beq.n	0x8022afa
+ 8022af2:	4601      	mov	r1, r0
+ 8022af4:	4620      	mov	r0, r4
+ 8022af6:	f186 fe35 	bl	0x81a9764
+ 8022afa:	732e      	strb	r6, [r5, #12]
+ 8022afc:	736e      	strb	r6, [r5, #13]
+ 8022afe:	4620      	mov	r0, r4
+ 8022b00:	73ae      	strb	r6, [r5, #14]
+ 8022b02:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+ 8022b04:	56b4      	ldrsb	r4, [r6, r2]
+ 8022b06:	0851      	lsrs	r1, r2, #1
+ 8022b08:	b570      	push	{r4, r5, r6, lr}
+ 8022b0a:	4604      	mov	r4, r0
+ 8022b0c:	460d      	mov	r5, r1
+ 8022b0e:	f003 f837 	bl	0x8025b80
+ 8022b12:	4621      	mov	r1, r4
+ 8022b14:	3148      	adds	r1, #72	@ 0x48
+ 8022b16:	4628      	mov	r0, r5
+ 8022b18:	f002 fc6c 	bl	0x80253f4
+ 8022b1c:	f173 fa58 	bl	0x8195fd0
+ 8022b20:	2111      	movs	r1, #17
+ 8022b22:	01c9      	lsls	r1, r1, #7
+ 8022b24:	1861      	adds	r1, r4, r1
+ 8022b26:	6248      	str	r0, [r1, #36]	@ 0x24
+ 8022b28:	211d      	movs	r1, #29
+ 8022b2a:	2000      	movs	r0, #0
+ 8022b2c:	0189      	lsls	r1, r1, #6
+ 8022b2e:	1861      	adds	r1, r4, r1
+ 8022b30:	43c0      	mvns	r0, r0
+ 8022b32:	6108      	str	r0, [r1, #16]
+ 8022b34:	6ca0      	ldr	r0, [r4, #72]	@ 0x48
+ 8022b36:	f002 ffe5 	bl	0x8025b04
+ 8022b3a:	f186 fe23 	bl	0x81a9784
+ 8022b3e:	2800      	cmp	r0, #0
+ 8022b40:	d002      	beq.n	0x8022b48
+ 8022b42:	6ca1      	ldr	r1, [r4, #72]	@ 0x48
+ 8022b44:	f009 fc3b 	bl	0x802c3be
+ 8022b48:	20b0      	movs	r0, #176	@ 0xb0
+ 8022b4a:	f16b fffb 	bl	0x818eb44
+ 8022b4e:	4621      	mov	r1, r4
+ 8022b50:	f00b fb60 	bl	0x802e214
+ 8022b54:	2107      	movs	r1, #7
+ 8022b56:	0209      	lsls	r1, r1, #8
+ 8022b58:	1861      	adds	r1, r4, r1
+ 8022b5a:	63c8      	str	r0, [r1, #60]	@ 0x3c
+ 8022b5c:	6821      	ldr	r1, [r4, #0]
+ 8022b5e:	698a      	ldr	r2, [r1, #24]
+ 8022b60:	4601      	mov	r1, r0
+ 8022b62:	4620      	mov	r0, r4
+ 8022b64:	4790      	blx	r2
+ 8022b66:	f171 fedf 	bl	0x8194928
+ 8022b6a:	f009 fc2b 	bl	0x802c3c4
+ 8022b6e:	6ce0      	ldr	r0, [r4, #76]	@ 0x4c
+ 8022b70:	2800      	cmp	r0, #0
+ 8022b72:	d002      	beq.n	0x8022b7a
+ 8022b74:	6801      	ldr	r1, [r0, #0]
+ 8022b76:	6849      	ldr	r1, [r1, #4]
+ 8022b78:	4788      	blx	r1
+ 8022b7a:	2000      	movs	r0, #0
+ 8022b7c:	f170 f956 	bl	0x8192e2c
+ 8022b80:	64e0      	str	r0, [r4, #76]	@ 0x4c
+ 8022b82:	bd70      	pop	{r4, r5, r6, pc}
+ 8022b84:	b5f3      	push	{r0, r1, r4, r5, r6, r7, lr}
+ 8022b86:	2100      	movs	r1, #0
+ 8022b88:	2201      	movs	r2, #1
+ 8022b8a:	b083      	sub	sp, #12
+ 8022b8c:	460b      	mov	r3, r1
+ 8022b8e:	f184  	bl	0x81a6f40

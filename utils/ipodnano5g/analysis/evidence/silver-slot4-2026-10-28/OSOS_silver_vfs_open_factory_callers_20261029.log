@@ -1,0 +1,78 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (673 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1325 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x0827f35c' '0x0827f360'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080b20aa TYPE UNCONDITIONAL_CALL FUNCTION FUN_080b1e94@080b1e94 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080bbc5c TYPE UNCONDITIONAL_CALL FUNCTION FUN_080bbc1c@080bbc1c INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080d7220 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080d71b8@080d71b8 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080d7288 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080d71b8@080d71b8 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 081fcd9a TYPE UNCONDITIONAL_CALL FUNCTION FUN_081fcd7c@081fcd7c INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08231c4a TYPE UNCONDITIONAL_CALL FUNCTION FUN_08231bc0@08231bc0 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08264eac TYPE UNCONDITIONAL_CALL FUNCTION FUN_08264e74@08264e74 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080c7c2e TYPE UNCONDITIONAL_CALL FUNCTION FUN_080c7b88@080c7b88 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 082572b6 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08257298@08257298 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0826755a TYPE UNCONDITIONAL_CALL FUNCTION FUN_08267368@08267368 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0830c6ee TYPE UNCONDITIONAL_CALL FUNCTION FUN_0830c694@0830c694 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0832d0ce TYPE UNCONDITIONAL_CALL FUNCTION FUN_0832d0a8@0832d0a8 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0804a9b8 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0804a994@0804a994 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0804ac66 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0804ac30@0804ac30 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0827cf24 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0827ccfc@0827ccfc INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080cb96c TYPE UNCONDITIONAL_CALL FUNCTION FUN_080cb838@080cb838 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0823ff42 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0823ff24@0823ff24 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08312c6a TYPE UNCONDITIONAL_CALL FUNCTION FUN_08312ab4@08312ab4 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08312c7e TYPE UNCONDITIONAL_CALL FUNCTION FUN_08312ab4@08312ab4 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08312ce2 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08312ab4@08312ab4 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 082682e6 TYPE UNCONDITIONAL_CALL FUNCTION FUN_082682ac@082682ac INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 080ed8fc TYPE UNCONDITIONAL_CALL FUNCTION FUN_080ed8c0@080ed8c0 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 081068a0 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08106838@08106838 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08266f64 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08266eac@08266eac INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 08266dcc TYPE UNCONDITIONAL_CALL FUNCTION FUN_08266d50@08266d50 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 081c16fe TYPE UNCONDITIONAL_CALL FUNCTION FUN_081c16ca@081c16ca INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 082658bc TYPE UNCONDITIONAL_CALL FUNCTION FUN_0826588c@0826588c INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0823e390 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0823e360@0823e360 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 082596b0 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08259674@08259674 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0812c1e2 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0812c196@0812c196 INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f35c FROM 0828b494 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0828b46e@0828b46e INSTRUCTION bl 0x0827f35c (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 0827f35c-0827f360 INCOMING=31 (GhidraScript)  

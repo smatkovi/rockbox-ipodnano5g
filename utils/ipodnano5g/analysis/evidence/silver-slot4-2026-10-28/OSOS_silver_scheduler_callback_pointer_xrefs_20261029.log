@@ -1,0 +1,63 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (616 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1282 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x081a832c' '6'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 081a832c  f7ee4620  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 081a8330  bd10f9c1  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 081a8334  72756e20  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 081a8338  4615b5f8  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 081a833c  f8e0f087  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 081a8340  60014924  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x081a8334' '0x081a8338'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 081a8334 FROM 081a8328 TYPE READ FUNCTION FUN_081a8320@081a8320 INSTRUCTION ldr r0,[0x081a8334] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 081a8338 FROM 080212aa TYPE UNCONDITIONAL_CALL FUNCTION FUN_08021294@08021294 INSTRUCTION bl 0x081a8338 (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 081a8338 FROM 08098286 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08098276@08098276 INSTRUCTION bl 0x081a8338 (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 081a8338 FROM 080b7fae TYPE UNCONDITIONAL_CALL FUNCTION FUN_080b7f9c@080b7f9c INSTRUCTION bl 0x081a8338 (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 081a8334-081a8338 INCOMING=4 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x0827f9e6' '0x0827f9ea'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/silver-slot4-2026-10-28/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 0827f9e6 FROM 0819673e TYPE UNCONDITIONAL_CALL FUNCTION FUN_08196734@08196734 INSTRUCTION bl 0x0827f9e6 (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 0827f9e6-0827f9ea INCOMING=1 (GhidraScript)  
