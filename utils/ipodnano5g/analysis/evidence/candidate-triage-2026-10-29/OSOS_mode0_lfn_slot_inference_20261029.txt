@@ -1,0 +1,112 @@
+OSOS path-open LFN slot inference — 2026-10-29
+
+Purpose
+-------
+Narrow the existing uncertainty around automatic opens of
+iPod_Control/Device/iPodSettings.xml and
+iPod_Control/Device/accessories.reg, using only already-preserved artifacts.
+This is a conditional inference, not a physical-slot dump or runtime result.
+
+Static resolver facts already established
+-----------------------------------------
+The normal path-open uses resolver mode 0. On an LFN record, the resolver
+stores that mode in the LFN state. FUN_08159128 later forms its source as
+cache_base + 0x18 + (state[1] * 0x20). Thus mode 0 reads record index 0 of the
+cached block. A valid reconstruction requires the target LFN record to be at
+that cache-local index, with the expected LFN sequence/checksum.
+
+Raw-instruction review qualifies the cross-block case. Directory sectors in a
+FAT data cluster use FUN_0816a970 and the divider FUN_0818e65c when advancing
+between sectors. FUN_081f7f9c stores the current r2 again for each LFN record.
+The divider leaves quotient bits in r2 and the final quotient bit in r0; for
+quotient 1, r2 therefore remains 0. FUN_0821959c preserves that value.
+
+FUN_0822641e maps cluster c >= 2 to data_start + ((c - 2) << cluster_shift).
+For a directory starting in cluster 3, transitions between its sectors have
+quotient 1, so a mode-0 LFN split at slots 15/16 or 47/48 can retain r2=0,
+provided all relevant entries stay within that cluster. The cluster must have
+at least four sectors to hold the illustrative Device layout through slot 49.
+Starting in cluster 4 yields quotient 2 and r2=1, which does not meet the
+mode-0 condition. The actual Device cluster and sectors-per-cluster value are
+not present in the preserved artifacts; this is a conditional construction,
+not a result for the current volume.
+
+Offline QEMU follow-up
+---------------------
+The original sector-advance functions passed two synthetic register checks:
+relative next-sector positions 7 and 9 returned the expected next LBA and
+r2 values 0 and 1 with four sectors per cluster.
+
+A separate rehost called original FUN_081f7f9c for previous/current keys 0x22
+and 0x11 with r2=0; it formed count=2, mode=0 and saved the previous key.
+Original FUN_081f8164 returned checksum 0x08 for ROCKBO~1BIN. FUN_08159128
+and FUN_08160828 then reconstructed the 26-character name
+ABCDEFGHIJKLMNOPQRSTUVWXYZ from sequence 0x42 at previous cache index 15
+and sequence 0x01 at current index 0. A following short entry
+ROCKBO~1BIN has the matching VFAT checksum 0x08. The harness output and NUL
+terminator matched. Cache lookup/release and UTF conversion were stubs, so this
+confirms only the resolver's copying and joining for the synthetic state. It
+does not verify the real directory scan, complete checksum validation, OSOS
+file open, or device slots. Rehost sources and traces are in
+../lfn-resolution-2026-10-28/rehost/cluster-mode0-20261029/.
+
+The preserved FAT cache analysis identifies an entry stride of 0x218 bytes:
+0x18 bytes of cache metadata plus 0x200 bytes of sector data. At 0x20 bytes
+per FAT directory entry, one cached data block contains 16 directory entries.
+
+Recorded directory order and arithmetic
+---------------------------------------
+The preserved Linux READDIR_BOTH snapshot lists iPod_Control as the first
+visible Volume-Root entry, Device as the first visible entry in iPod_Control,
+and the Device entries in this order:
+
+  SysInfo, Radio, iPodSettings.xml, clock, Trainer, Preferences, HashInfo,
+  SysInfoExtended, _unlocked, timer, Accessories, alarms, accessories.reg
+
+Device is an 8.3 name and does not need LFN reconstruction. iPodSettings.xml
+has 16 characters, so it needs two VFAT LFN records (13 UTF-16 code units per
+record). In the compact order represented by the visible entries, its first
+LFN record follows the two preceding short entries, at cache-local index 2
+(or index 4 if on-disk dot and dot-dot entries are counted). Either value is
+different from mode 0's required index 0.
+
+For accessories.reg (15 characters, two LFN records), the compact order has
+19 directory records before its first LFN record, giving index 3 in a
+16-record/512-byte block (or index 5 if dot and dot-dot are counted). That is
+also not index 0.
+
+Interpretation and limits
+-------------------------
+For a normally packed directory with the recorded order, neither file's LFN
+starts at the location mode 0 reconstructs. This strengthens the existing
+concern that the two automatic reads may fail before their parser bugs are
+reached. The root iPod_Control entry is different: it is the first visible
+entry, so its LFN could start at index 0 if there are no preceding deleted or
+hidden records.
+
+READDIR_BOTH preserves names and order, not physical slot numbers. Deleted
+entries can shift the LFN records; a shift could put a later name at index 0
+of a subsequent cache block. The cluster-dependent mode described above must
+also match. The artifact does not establish whether
+the firmware's directory scan sees or skips every special entry in precisely
+the assumed order. Therefore this does not prove that either file-open fails.
+
+The workspace contains no raw FAT-directory-sector image from this snapshot.
+The local device-backup tree contains only a 69-byte accessories.reg file,
+not the directory sectors. No device, USB, DFU, boot, NAND, NOR, filesystem
+write, or flash operation was performed for this inference.
+
+Sources
+-------
+* ../lfn-resolution-2026-10-28/README.md
+* ../lfn-resolution-2026-10-28/OSOS_live_vfat_dir_ioctl_20261026.txt
+* ../lfn-resolution-2026-10-28/OSOS_lfn_compare_decomp_20261028.log
+* ../lfn-resolution-2026-10-28/OSOS_lfn_component_call_context_20261028.log
+* ../lfn-resolution-2026-10-28/OSOS_lfn_iterator_helpers_raw_20261029.log
+* ../lfn-resolution-2026-10-28/OSOS_lfn_blockkey_origin_decomp_20261029.log
+* ../lfn-resolution-2026-10-28/OSOS_lfn_block_advance_raw_20261029.log
+* ../lfn-resolution-2026-10-28/OSOS_lfn_sector_advance_divmod_window_20261029.log
+* ../../OSOS-FAT-LFN-rehost-impact-followup-2026-10-28.md
+* ../../OSOS-FAT-LFN-index-taint-audit-2026-10-26.md
+* ../../OSOS-iPodSettings-VFS-provider-reachability-followup-2026-10-27.md
+* ../../OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md

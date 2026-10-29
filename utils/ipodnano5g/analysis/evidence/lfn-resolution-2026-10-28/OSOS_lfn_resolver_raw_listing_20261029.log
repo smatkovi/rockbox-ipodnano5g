@@ -1,0 +1,108 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (728 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1407 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpFunctionListing.java '0x08159128'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpFunctionListing.java (HeadlessAnalyzer)  
+INFO  DumpFunctionListing.java> ===== 08159128 FUN_08159128 ===== (GhidraScript)  
+INFO  DumpFunctionListing.java> body=[[08159128, 081591a7]] signature=undefined FUN_08159128(void) (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159128: push {r0,r1,r2,r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815912a: movs r0,#0x0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815912c: mov r4,r1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815912e: mov r7,r2 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159130: strb r0,[r2,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159132: ldr r0,[r1,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159134: cmp r0,#0x0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159136: beq 0x081591a4 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159138: ldr r1,[r4,#0xc] (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815913a: ldr r0,[sp,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815913c: bl 0x0821959c (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159140: movs r6,r0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159142: beq 0x081591a4 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159144: ldr r5,[r4,#0x4] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159146: mov r0,r6 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159148: adds r0,#0x18 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815914a: lsls r1,r5,#0x5 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815914c: adds r2,r1,r0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815914e: ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159150: adds r1,r5,#0x1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159152: cmp r0,r1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159154: ble 0x0815915a (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159156: adds r5,r5,#0x1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159158: b 0x0815915c (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815915a: mov r5,r0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815915c: movs r1,#0xff (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815915e: adds r1,#0x1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159160: mov r3,r5 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159162: mov r0,r7 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159164: bl 0x08160828 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159168: movs r1,#0x0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815916a: mov r0,r6 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815916c: bl 0x082195ee (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159170: ldr r1,[r4,#0x10] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159172: cmp r1,#0x0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159174: beq 0x081591a4 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159176: ldr r0,[sp,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159178: bl 0x0821959c (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815917c: movs r6,r0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815917e: beq 0x081591a4 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159180: ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159182: movs r1,#0xff (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159184: adds r1,#0x1 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159186: subs r4,r0,r5 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159188: movs r0,#0xd (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815918a: mov r2,r6 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815918c: muls r0,r5 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815918e: adds r2,#0xff (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159190: adds r2,#0xf9 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159192: subs r1,r1,r0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159194: adds r0,r0,r7 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159196: mov r3,r4 (GhidraScript)  
+INFO  DumpFunctionListing.java> 08159198: bl 0x08160828 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815919c: movs r1,#0x0 (GhidraScript)  
+INFO  DumpFunctionListing.java> 0815919e: mov r0,r6 (GhidraScript)  
+INFO  DumpFunctionListing.java> 081591a0: bl 0x082195ee (GhidraScript)  
+INFO  DumpFunctionListing.java> 081591a4: mov r0,r7 (GhidraScript)  
+INFO  DumpFunctionListing.java> 081591a6: pop {r1,r2,r3,r4,r5,r6,r7,pc} (GhidraScript)  
+INFO  DumpFunctionListing.java> XREF 08158bf8 bl 0x08159128 (GhidraScript)  
+INFO  DumpFunctionListing.java> XREF 08143d48 bl 0x08159128 (GhidraScript)  
