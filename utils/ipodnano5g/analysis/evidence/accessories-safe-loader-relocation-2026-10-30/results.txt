@@ -1,0 +1,54 @@
+Relokierter Accessories-Kandidatenpfad: Offline-Ergebnisse
+=========================================================
+
+Build
+-----
+
+Der N5G-Bootloader wurde frisch aus dem bestehenden Buildverzeichnis gelinkt
+und anschließend mit einem separaten Linkerskript erneut bei 0x0bf00000
+gelinkt. Beide Raw-Binaries haben Größe 69.504 Byte (0x10f80).
+
+Relokiertes ELF:
+- Entry: 0x0bf00000
+- LOAD 1: 0x0bf00000, FileSiz 0x10f80, MemSiz 0x13780
+- Code/Stack-Ende: 0x0bf13780
+- BSS: 0x0bf20000..0x0bfbfd00 (Größe 0x9fd00)
+- konservative obere Linkgrenze: 0x0bffc000; Abstand zum BSS-Ende: 0x300
+
+ROP-Kopiervariante
+-----------------
+
+Die getrennte 704-Byte-Kopie candidate_accessories_reg_topram_unexecuted.bin
+ändert genau drei Little-Endian-Wörter 0x09000000 auf 0x0bf00000. Das
+Original candidate_accessories_reg_unexecuted.bin bleibt unverändert.
+
+ARM1176-Rehost
+--------------
+
+Der Rehost verwendet weiterhin den im Live-FAT-Capture belegten
+EOC-Eintrag für Cluster 179788 und die bereits vorhandene lokale FAT-/Parser-
+Modellierung. QEMU endet mit Exitcode 0 und stdout `PASS\n`. Der Trace zeigt
+den Schlussaufruf bei PC 0x0bf00000 mit Read-Länge 0x10f80 und anschließend
+den Loader-Sentinel bei 0x0bf00000 -> 0x0bf00100.
+
+Der Read-Callback ist ein Prüf-Stub. Er kopiert keine Bytes aus
+bootloader-safe.bin; die Bytes bei 0x0bf00000 stammen im Rehost vom
+vorgelinkten Sentinel. Daher beweist der Lauf weder Ausführung des echten
+Bootloaders noch eine echte FAT-Öffnung, reale OSOS-I/O, Geräte-Erreichbarkeit
+oder Rockbox-Boot.
+
+Erzeugte Binärbelege
+--------------------
+
+- boot-safe.link — abgeleitetes Linkerskript
+- bootloader-safe.elf / bootloader-safe.map.gz — relokierter Offline-Link
+- bootloader-safe.bin — 69.504-Byte-Raw-Abbild, SHA-256
+  ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2
+- candidate_accessories_reg_topram_unexecuted.bin — isolierte, nicht
+  installierte Kandidatenkopie
+- OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.{S,ld,elf}
+- OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.qemu-trace.log.gz
+- OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.stdout.bin
+
+Die Prüfsummen stehen in SHA256SUMS. Kein USB-/DFU-/Gerätezugriff und keine
+NAND-/NOR-/Firmware-Schreib-, Lösch- oder Flashoperation wurde ausgeführt.
