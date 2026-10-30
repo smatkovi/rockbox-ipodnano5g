@@ -125,6 +125,40 @@ ein Read in den Loaderzielbereich mit realem OSOS-Heapzustand ist also offen.
 Beleg: `evidence/accessories-rop-2026-10-29/OSOS_accessories_loader_heap_threshold_20261029.txt`
 und `OSOS_accessories_fat_read_deep_decompile_20261029.log`.
 
+## Direktes Laden von `rockbox.ipod` ist kein einfacher Ersatz
+
+Als Alternative wurde geprüft, ob der Overflow den bereits vorhandenen
+`/.rockbox/rockbox.ipod`-Inhalt statt `BOOT.BIN` laden und direkt starten kann.
+Das Rockbox-Format beginnt mit dem acht Byte großen `scramble -add`-Header
+(Prüfsumme und Modellkennung `nn5g`). `load_firmware_filename()` zieht diese
+acht Byte ab, lädt anschließend den Firmwarekörper an den übergebenen Puffer
+und verifiziert seine Prüfsumme. Der Nano-5G-Bootloader übergibt dafür
+`DRAM_ORIG` (`0x08000000`). Ein einfacher OSOS-ROP-Read mit Sprungziel
+`0x09000000` wäre kein gültiger Start des Imagekörpers: Das Image ist für
+`0x08000000` gebaut und enthält absolute Zeiger in diesen Adressbereich. Ein
+Read direkt nach `0x08000000` würde dagegen das dort liegende OSOS-Abbild
+überschreiben, darunter Teile der aktiven ROP-Gadgets. Für den Übergang nach
+einem solchen Read ist bisher kein erhaltener Sprungpfad nachgewiesen. Dafür
+wäre ein separater zweiter Schritt oder Relokator nötig; der vorhandene
+Bootloader ist der passende Zwischenschritt und bleibt der einfachere
+Kandidat. Er lädt vor dem Rockbox-Sprung außerdem die separate 8-MiB-Datei
+`n5g-ramdisk.img` nach `0x0a000000`; ein direkter Image-Sprung müsste diesen
+Startzustand ebenfalls bereitstellen.
+
+Die aufgezeichnete read-only-Geräteaufnahme vom 24.10. führt für
+`/.rockbox/rockbox.ipod` SHA-256
+`65276d4bf5b88af3c2ff5701a21fa6cd6654e24b4f147d7e7c31395a7023ec16` an; der
+gleich große lokale Build `build-n5g/rockbox.ipod` hat denselben Hash. Die
+separat abgelegte Datei
+`/home/sebastian/ipod-re/device-backup-20261024/.rockbox/rockbox.ipod` ist
+ebenfalls 1.079.128 Byte groß, hat aber Hash
+`455ffdf189de446a47d2cd92805ea43eacc98c4fdecd2c21a729e3a9df966210`.
+Diese beiden lokalen Provenienzstände stimmen also nicht überein; sie dürfen
+nicht als dieselbe Datei behandelt werden. Der physische Dateistand ist daraus
+heute nicht ableitbar. Belege: `firmware/common/rb-loader.c`,
+`firmware/export/s5l87xx.h`, `utils/ipodnano5g/README.md` und die beiden
+genannten Dateien.
+
 ## Eingabe- und Dateizustand der gespeicherten Aufnahmen
 
 Der read-only FAT-Dump vom 29.10. zeigt `accessories.reg` bei Directory-Slot
@@ -159,11 +193,14 @@ keine davon belegt den aktuellen Gerätezustand.
 2. Den Root-Scan für `/BOOT.BIN` mit einem synthetischen FAT-Verzeichniseintrag
    und dem echten `bootloader.bin` verbinden; prüfen, ob der vollständige Read
    den Eintritt bei `0x09000000` erreicht. Das bleibt ein Emulatorbefund.
-3. Für den bestätigten Heap-Überlappungsbereich `0x09000000..0x09013780` den
+3. Die abweichenden lokalen `rockbox.ipod`-Kopien gegen die
+   read-only-Aufnahmeprovenienz abgleichen; keine davon belegt den heutigen
+   Gerätestand.
+4. Für den bestätigten Heap-Überlappungsbereich `0x09000000..0x09013780` den
    Teilreadablauf mit einem realistischen OSOS-Allocator-/Cachezustand
    rehosten. Zusätzlich prüfen, welche OSOS-Heapbereiche der Loader beim
    BSS-Init `0x09100000..0x0919fd00` überschreibt. Die bisherige
    Allocatorrechnung verrät keine Live-Belegung.
-4. Erst wenn die Offlinekette ohne Loader-/Open-Stubs trägt, den reversiblen
+5. Erst wenn die Offlinekette ohne Loader-/Open-Stubs trägt, den reversiblen
    Test auf dem FAT-Datenvolume planen. Dieser Bericht veranlasst keine
    Geräte- oder Flashaktion.
