@@ -1,0 +1,54 @@
+OSOS Runtime: ATA-Worker und DeviceDiscovery Queue 4
+Datum: 2026-10-30
+Methode: read-only Ghidra-Abfragen auf dem vorhandenen Runtime-Projekt; keine
+Geräte-, USB-, DFU-, NAND-, NOR-, Schreib-, Boot- oder Flashaktion.
+
+Neue gezielte Abfrage
+- `FUN_08193934` ist ein Dezimalstring-Parser: optionales Minuszeichen,
+  Ziffernakkumulation zur Basis 10, dann Rückgabe des vorzeichenbehafteten
+  Werts. Der Code enthält keine Queue-/Semaphoreoperation.
+- `FUN_0833c4b0` ruft `FUN_08193934(*(param_2 + 4))` auf und verwirft den
+  Rückgabewert. Im sichtbaren Worker-Einstieg ist dieser Aufruf daher kein
+  Ready-/Wait-Gate; anschließend wird `FUN_0833cc58` aufgerufen.
+- `FUN_0833c118` fordert `ATAWorkLoopTask` (Priorität `0x18`) und
+  `ATAWorkLoopIRQTask` (Priorität `0xc0`) über den OS-Taskhelper an.
+- `FUN_0833cc58` postet vor seiner Worker-Schleife den Record
+  `DAT_0833ccd0` an Queue 4. Im bedingten Reset werden Recordfelder bei
+  `+0`, `+4`, `+8`, `+0xc` und Byte `+0x11` beschrieben, nicht das
+  Eventbyte `+0x10`.
+- Die frühere Byteprüfung ordnet `DAT_0833ccd0` dem DRAM-Record `0x08e51d7c`
+  zu. Das Eventbyte `+0x10` liegt bei `0x08e51d8c`; es befindet sich im durch
+  `FUN_08005fec` vor BootTask genullten DRAM-Bereich. DeviceDiscovery wartet
+  auf Queue 4 und behandelt Eventbyte 0 mit `FUN_08000a10(r5, 0)`, dem
+  Slot-0-MBR-/Provider-Registrierungspfad.
+- Ein read-only-Xref-Lauf fand für Runtime-Pointerliteral `0x0833ccd0` zwei
+  Referenzen, beide Lesezugriffe in `FUN_0833cc58`; für `0x0833cccc` drei
+  Lesezugriffe in derselben Funktion. Das schließt keine Laufzeit- oder
+  indirekten DRAM-Schreibzugriffe aus.
+
+Bewertung
+Die statische Kette stützt nun einen initialen Queue-4-Event-0-Pfad aus dem
+ATA-Worker und reduziert die frühere Unsicherheit, ob Slot 0 nur durch ein
+späteres externes Ereignis angefordert wird. Zusammen mit dem statisch
+zugeordneten MBR/FAT-Provider ist der automatische `accessories.reg`-Pfad
+plausibel bis zum Provideraufbau. Nicht belegt sind Task-Scheduling und
+Queuezustellung zur Laufzeit, erfolgreicher LBA-0-Read und MBR-Parse,
+erfolgreicher Slot-0-Eintrag, echter VFS-Open/Read, Ausführung des
+überlangen Parserinputs, kontrollierte Codeausführung oder Rockbox-Handoff.
+
+Reproduzierbare Rohbelege
+- `ghidra_ata_worker_gate_followup_20261030.application.log`
+- `ghidra_ata_queue_record_xrefs_20261030.application.log`
+- `ghidra_ata_queue_context_followup_20261030.application.log`
+- `OSOS_runtime_queue4_event_type_initialization_20261029.txt`
+- `OSOS_runtime_slot0_provider_provenance_20261029.txt`
+- `OSOS_runtime_task_priorities_and_queue4_20261029.log`
+
+Nächster sinnvoller Schritt
+Den echten VFS-Open-Pfad vom `FUN_082721f0`-Wrapper über Slot-0-Lookup,
+`FUN_0812a870` und `FUN_081382c2` bis zum gelesenen `accessories.reg`-Handle
+im Offline-Rehost weiter integrieren. Die derzeitige 69-Byte-Kontrolle
+initialisiert Stream und Handle vorab; sie führt den VFS-Open nicht aus.
+Anschließend muss der Kandidatenlauf ohne Parser-/Loader-Stubs und schließlich
+am Gerät geprüft werden. Der aktuelle Bestand ist weiter nur als 69-Byte-
+Kontrolldatei belegt; der Payload wurde nicht geschrieben.

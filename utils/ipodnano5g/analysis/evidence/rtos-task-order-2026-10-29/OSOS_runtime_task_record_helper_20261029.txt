@@ -1,0 +1,14 @@
+
+local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0819dcbc <.data+0x19dcbc>:
+ 819dcbc:	b530      	push	{r4, r5, lr}
+ 819dcbe:	2500      	movs	r5, #0
+ 819dcc0:	9c03      	ldr	r4, [sp, #12]
+ 819dcc2:	6005      	str	r5, [r0, #0]
+ 819dcc4:	1d05      	adds	r5, r0, #4
+ 819dcc6:	c51e      	stmia	r5!, {r1, r2, r3, r4}
+ 819dcc8:	bd30      	pop	{r4, r5, pc}

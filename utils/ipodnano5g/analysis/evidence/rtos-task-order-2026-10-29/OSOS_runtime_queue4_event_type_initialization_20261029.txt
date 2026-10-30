@@ -1,0 +1,53 @@
+OSOS Runtime queue-4 initial-event byte audit
+Date: 2026-10-29
+Mode: offline/read-only; no device, USB, DFU, reboot, NAND, NOR, or flash access.
+
+Runtime input
+  local-analysis/inputs/osos_runtime_dram_20261025.bin
+  size   7095208 bytes
+  SHA256 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Raw bytes (Runtime VA -> file offset VA-0x08000000)
+  0x0833cccc -> 0x33cccc: 54 d0 6b 08 7c 1d e5 08 ...
+  0x0833ccd0 -> 0x33ccd0: 7c 1d e5 08 ...
+
+The literal at 0x0833ccd0 is the pointer 0x08e51d7c. The queue record is
+therefore in writable DRAM outside the file-backed Runtime image. The byte
+read as the event type by DeviceDiscovery is at
+0x08e51d7c + 0x10 = 0x08e51d8c.
+
+Startup zeroing
+  Full-Body FUN_08005058 calls FUN_08005fec before creating BootTask.
+  The fourth range descriptor consumed by FUN_08005fec is:
+    start 0x086c43a8, length 0x00790aa4, exclusive end 0x08e54e4c.
+  The queue record's event byte 0x08e51d8c is inside this cleared range,
+  at offset 0x0078d9e4. BootTask subsequently creates/starts the 20 static
+  task records before requesting MainAppTask.
+
+Worker and consumer
+  Runtime FUN_0833c4b0 calls FUN_0833cc58. The worker queues the record via
+  service 4 (queue post) with queue ID 4. In the conditional reset branch,
+  FUN_0833cc58 clears record bytes +4 and +0x11 and words at +0, +4, +8,
+  and +0xc. It does NOT directly write the event-type byte at +0x10.
+  The initial zero value at +0x10 instead follows from FUN_08005fec's broad
+  DRAM clear. This corrects older notes that attributed an explicit +0x10
+  store to FUN_0833cc58.
+
+  Runtime FUN_08010c98 (DeviceDiscovery) posts a wait on queue 4, reads the
+  returned event byte with LDRB [r4,#0x10], and on value 0 calls
+  FUN_08000a10(r5,0), requesting VFS/provider slot 0.
+
+Evidence inputs
+  utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/
+    OSOS_body_kernel_scheduler_ready_list_20261029.log
+    OSOS_runtime_task_priorities_and_queue4_20261029.log
+    OSOS_runtime_pcf_entry_20261029.txt
+  utils/ipodnano5g/analysis/OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md
+
+Inference boundary
+  The initial event byte is statically zeroed before task startup. The ATA
+  worker's queue post and DeviceDiscovery's case-0 consumer are statically
+  connected. This does not dynamically prove successful provider creation,
+  queue delivery, slot-0 FAT service, a successful file Open/Read, parser
+  execution, or Rockbox handoff. Runtime-computed/external writes to the
+  record are not excluded by this local instruction audit.

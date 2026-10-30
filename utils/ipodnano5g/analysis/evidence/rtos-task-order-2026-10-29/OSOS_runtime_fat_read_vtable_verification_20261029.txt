@@ -1,0 +1,23 @@
+FAT provider Open/Read VTable cross-check
+Date: 2026-10-29
+Mode: existing runtime image only; no device or storage access.
+
+Input: local-analysis/inputs/osos_runtime_dram_20261025.bin
+SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Runtime VA base: 0x08000000; file offset = VA - 0x08000000.
+
+The FAT provider VTable starts at Runtime VA 0x085056b0 (file offset 0x5056b0).
+A raw little-endian word read gives:
+  VTable +0x14 = 0x0812a871 -> Thumb function entry 0x0812a870 (Open).
+  VTable +0x1c = 0x0812ac01 -> Thumb function entry 0x0812ac00 (Read).
+
+A unique-address Ghidra export is in OSOS_runtime_fat_open_read_entries_20261029.log.
+It decompiles 0x0812ac00 as the file-read routine and 0x0812ac80 separately as a
+different function. Raw Thumb disassembly at 0x0812ac00 begins with the read
+routine prologue and calls FUN_0821aa3c, FUN_0822c0d0, and FUN_081384b0.
+
+Caveat: OSOS_runtime_accessories_stream_open_read_20261029.log includes an
+earlier batch invocation that requested 0x0812ac00 twice. The second repeated
+label contains the decompilation of 0x0812ac80, not a second body for the same
+address. Do not use that repeated block as evidence. The unique-address export
+and raw runtime bytes resolve the label ambiguity.

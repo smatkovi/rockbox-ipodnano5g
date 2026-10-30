@@ -1,0 +1,48 @@
+OSOS Runtime static provenance of the slot-0 filesystem provider
+Date: 2026-10-29
+Mode: offline/read-only Ghidra decompilation of the existing Runtime project.
+No device, USB, DFU, reboot, NAND, NOR, filesystem-write, or flash action.
+
+Input
+  local-analysis/inputs/osos_runtime_dram_20261025.bin
+  size   7095208 bytes
+  SHA256 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Static call/data flow
+1. DeviceDiscovery's event-0 branch calls FUN_08000a10(r5, 0).
+2. FUN_08000a10 calls FUN_0800196c with the ATA/block-provider object and
+   requested registry slot 0. FUN_0800196c reads LBA 0 through the object's
+   VTable read method at +0x0c.
+3. FUN_0800196c classifies a sector whose MBR signature word at +0x1fe is
+   0xaa55 as format kind 2. It calls FUN_0800124c to validate/parse the four
+   primary partition entries. The parser accepts partition IDs 0x01, 0x04,
+   0x06, 0x0b, 0x0c, and 0x0e, checks nonzero start/count and bounds count by
+   the block device's reported size, then returns the selected start LBA/count.
+4. On successful detection, FUN_08000a10 calls FUN_0818e998 with slot ID 0,
+   format kind 2, and the parsed partition values. The generic constructor
+   path (`param_9 == 0`) enters FUN_0823d468. Its `param_3 == 2` branch calls
+   FUN_08110e30, the FAT-provider constructor, and FUN_0818e998 stores the
+   resulting service pointer at registry[0].
+5. The `FUN_08110e30` VTable has the file-open method at slot +0x14 pointing
+   to FUN_0812a870. MainApp's stream path obtains registry slot 0 and
+   dispatches Open through the provider interface; the complete path and
+   scanner inputs are separately documented in
+   `utils/ipodnano5g/analysis/OSOS-accessories-full-path-reachability-followup-2026-10-29.md`.
+
+Relevant exports in this directory
+  OSOS_runtime_slot0_provider_chain_20261029.log
+    FUN_08000a10, FUN_0818e998, FUN_0823d468, lookup, stream-open dispatch
+  OSOS_runtime_slot0_type_discriminator_20261029.log
+    FUN_0800196c, FAT/HFS provider constructors
+  OSOS_runtime_slot0_mbr_type_paths_20261029.log
+    MBR partition validation and FAT-provider constructor
+
+Conclusion and limits
+  This statically resolves the previously unknown provider class: if the
+  DeviceDiscovery queue event reaches case 0 and LBA 0 passes MBR/partition
+  validation, slot 0 is populated with a FAT provider. A prior archived-volume
+  analysis records an 0xaa55 MBR and the type-2 path. This does not observe the
+  queue delivery, successful registration on the device, live filesystem
+  state, Open/Read of `accessories.reg` or `/BOOT.BIN`, parser execution, or
+  Rockbox handoff. The status/return-value behavior of all lower ATA services
+  is not dynamically tested here.

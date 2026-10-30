@@ -1,0 +1,31 @@
+
+local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08013eb6 <.data+0x13eb6>:
+ 8013eb6:	483e      	ldr	r0, [pc, #248]	@ (0x8013fb0)
+ 8013eb8:	a26f      	add	r2, pc, #444	@ (adr r2, 0x8014078)
+ 8013eba:	9200      	str	r2, [sp, #0]
+ 8013ebc:	4a32      	ldr	r2, [pc, #200]	@ (0x8013f88)
+ 8013ebe:	4b72      	ldr	r3, [pc, #456]	@ (0x8014088)
+ 8013ec0:	2109      	movs	r1, #9
+ 8013ec2:	30f0      	adds	r0, #240	@ 0xf0
+ 8013ec4:	f189 fefa 	bl	0x819dcbc
+ 8013ec8:	a270      	add	r2, pc, #448	@ (adr r2, 0x801408c)
+ 8013eca:	9200      	str	r2, [sp, #0]
+ 8013ecc:	4a28      	ldr	r2, [pc, #160]	@ (0x8013f70)
+ 8013ece:	4872      	ldr	r0, [pc, #456]	@ (0x8014098)
+ 8013ed0:	4b72      	ldr	r3, [pc, #456]	@ (0x801409c)
+ 8013ed2:	210a      	movs	r1, #10
+ 8013ed4:	f189 fef2 	bl	0x819dcbc
+
+Literal- und Tabellenwerte (little-endian):
+file+0x13fb0 VA=0x08013fb0: 0x087600c0
+file+0x13f88 VA=0x08013f88: 0x2200b0d8
+file+0x14088 VA=0x08014088: 0x08010c99
+file+0x14078 VA=0x08014078: 0x69766544
+file+0x1408c VA=0x0801408c: 0x50464350
+Row base 0x087600c0 + 0xf0 = 0x087601b0 (record index 12 at stride 0x14).
+Constructor call sets r1=9; r3 is loaded from file+0x14088 = 0x08010c99 (Thumb). The stack argument points at 0x08014078, whose bytes spell DeviceDiscovery. Together these fields identify record index 12 as DeviceDiscovery, whose entry at 0x08010c98 contains the Queue-4/slot-0 path. The following record starts at 0x087601c4 (index 13), uses priority 10, entry 0x0801845d from file+0x1409c, and name pointer 0x0801408c (PCFPowerMgr).

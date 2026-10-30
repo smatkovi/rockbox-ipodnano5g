@@ -1,0 +1,49 @@
+
+local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08010c98 <.data+0x10c98>:
+ 8010c98:	b570      	push	{r4, r5, r6, lr}
+ 8010c9a:	2001      	movs	r0, #1
+ 8010c9c:	f18a f8c2 	bl	0x819ae24
+ 8010ca0:	4605      	mov	r5, r0
+ 8010ca2:	f18a f8e1 	bl	0x819ae68
+ 8010ca6:	2100      	movs	r1, #0
+ 8010ca8:	2004      	movs	r0, #4
+ 8010caa:	f1f3 eec4 	blx	0x8204a34
+ 8010cae:	0004      	movs	r4, r0
+ 8010cb0:	d0f9      	beq.n	0x8010ca6
+ 8010cb2:	7c23      	ldrb	r3, [r4, #16]
+ 8010cb4:	f17e ead8 	blx	0x818f268
+ 8010cb8:	0405      	lsls	r5, r0, #16
+ 8010cba:	0d09      	lsrs	r1, r1, #20
+ 8010cbc:	1611      	asrs	r1, r2, #24
+ 8010cbe:	0019      	movs	r1, r3
+ 8010cc0:	2100      	movs	r1, #0
+ 8010cc2:	4628      	mov	r0, r5
+ 8010cc4:	f7ef fea4 	bl	0x8000a10
+ 8010cc8:	e00f      	b.n	0x8010cea
+ 8010cca:	4628      	mov	r0, r5
+ 8010ccc:	f18a f8cc 	bl	0x819ae68
+ 8010cd0:	e00b      	b.n	0x8010cea
+ 8010cd2:	4628      	mov	r0, r5
+ 8010cd4:	f7f6 f848 	bl	0x8006d68
+ 8010cd8:	e007      	b.n	0x8010cea
+ 8010cda:	6828      	ldr	r0, [r5, #0]
+ 8010cdc:	6c41      	ldr	r1, [r0, #68]	@ 0x44
+ 8010cde:	4628      	mov	r0, r5
+ 8010ce0:	4788      	blx	r1
+ 8010ce2:	e002      	b.n	0x8010cea
+ 8010ce4:	4628      	mov	r0, r5
+ 8010ce6:	f7f6 f855 	bl	0x8006d94
+ 8010cea:	4620      	mov	r0, r4
+ 8010cec:	f1f3 eec2 	blx	0x8204a74
+ 8010cf0:	7c60      	ldrb	r0, [r4, #17]
+ 8010cf2:	2800      	cmp	r0, #0
+ 8010cf4:	d0d7      	beq.n	0x8010ca6
+ 8010cf6:	4620      	mov	r0, r4
+ 8010cf8:	f180 fff0 	bl	0x8191cdc
+ 8010cfc:	e7d3      	b.n	0x8010ca6
+	...
