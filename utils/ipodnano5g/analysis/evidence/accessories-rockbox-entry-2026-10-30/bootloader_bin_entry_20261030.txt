@@ -1,0 +1,31 @@
+
+build-n5g-blramdisk/bootloader.bin:     file format binary
+
+
+Disassembly of section .data:
+
+09000000 <.data>:
+ 9000000:	ea00000d 	b	0x900003c
+ 9000004:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000020
+ 9000008:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000024
+ 900000c:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000028
+ 9000010:	e59ff014 	ldr	pc, [pc, #20]	@ 0x900002c
+ 9000014:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000030
+ 9000018:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000034
+ 900001c:	e59ff014 	ldr	pc, [pc, #20]	@ 0x9000038
+ 9000020:	09004ab4 	stmdbeq	r0, {r2, r4, r5, r7, r9, fp, lr}
+ 9000024:	09004a90 	stmdbeq	r0, {r4, r7, r9, fp, lr}
+ 9000028:	09004aa8 	stmdbeq	r0, {r3, r5, r7, r9, fp, lr}
+ 900002c:	09004a84 	stmdbeq	r0, {r2, r7, r9, fp, lr}
+ 9000030:	09004a9c 	stmdbeq	r0, {r2, r3, r4, r7, r9, fp, lr}
+ 9000034:	090056c8 	stmdbeq	r0, {r3, r6, r7, r9, sl, ip, lr}
+ 9000038:	09005788 	stmdbeq	r0, {r3, r7, r8, r9, sl, ip, lr}
+ 900003c:	e321f0d3 	msr	CPSR_c, #211	@ 0xd3
+ 9000040:	e24fb008 	sub	fp, pc, #8
+ 9000044:	e24bb040 	sub	fp, fp, #64	@ 0x40
+ 9000048:	e59f1084 	ldr	r1, [pc, #132]	@ 0x90000d4
+ 900004c:	e59f2084 	ldr	r2, [pc, #132]	@ 0x90000d8
+ 9000050:	e0413002 	sub	r3, r1, r2
+ 9000054:	e08b0003 	add	r0, fp, r3
+ 9000058:	e93007f8 	ldmdb	r0!, {r3, r4, r5, r6, r7, r8, r9, sl}
+ 900005c:	e92107f8 	stmdb	r1!, {r3, r4, r5, r6, r7, r8, r9, sl}

@@ -1,0 +1,4 @@
+CC bootloader/ipodnano4g.c
+LD bootloader.elf
+OC bootloader.bin
+Build bootloader file

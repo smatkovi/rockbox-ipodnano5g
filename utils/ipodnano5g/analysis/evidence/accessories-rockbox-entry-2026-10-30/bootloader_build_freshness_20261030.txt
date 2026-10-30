@@ -1,0 +1,18 @@
+Read-only build-state check; no compiler/linker/firmware-packaging command was run.
+
+Observed mtimes:
+2026-10-26 14:18:07 +0100 bootloader/ipodnano4g.c
+2026-10-25 09:45:56 +0100 build-n5g-blramdisk/bootloader/ipodnano4g.o
+2026-10-26 00:26:42 +0100 build-n5g-blramdisk/bootloader.elf
+2026-10-26 00:26:42 +0100 build-n5g-blramdisk/bootloader.bin
+
+Dry-run command: make -n -C build-n5g-blramdisk -j1
+Relevant planned targets:
+CC bootloader/ipodnano4g.c
+LD bootloader.elf
+OC bootloader.bin
+Build bootloader file
+
+The existing artifact is therefore older than the source/object dependency state and a current build would refresh it. This mtime check does not establish which individual source edits are present in the old ELF; its no-FAT fallback is separately verified by disassembly.
+
+The make variables for this directory set TARGET=-DIPOD_NANO5G, BINARY=bootloader-ipodnano5g.ipod and EXTRA_DEFINES=-DBOOTLOADER (without N5G_OSOS_REACHABILITY_TEST).

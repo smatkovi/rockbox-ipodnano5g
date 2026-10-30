@@ -1,0 +1,21 @@
+build-n5g-blramdisk/bootloader.bin: data
+build-n5g-blramdisk/bootloader.elf: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, not stripped
+build-n5g-blramdisk/bootloader.bin 69504 bytes
+build-n5g-blramdisk/bootloader.elf 171700 bytes
+09b2dc3ff4940855b175508ce817c5f913798f3d7b2ba7669edef3427e224d03  build-n5g-blramdisk/bootloader.bin
+Target: ipodnano5g
+Target id: 128
+Target define: -DIPOD_NANO5G
+Memory: 32
+CPU: arm
+Manufacturer: s5l8702
+Version: c74249b4d4-261025
+Binary: bootloader-ipodnano5g.ipod
+Binary size: 69512
+Voice format: 
+Actual size: 69504
+RAM usage: 152698112
+gcc: arm-elf-eabi-gcc (GCC) 9.5.0
+ld: GNU ld (GNU Binutils) 2.38
+Host gcc: gcc (GCC) 16.2.1 20260810
+Host system: Linux

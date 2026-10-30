@@ -1,0 +1,189 @@
+
+build-n5g-blramdisk/bootloader.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+09000d88 <main>:
+ 9000d88:	e92d4070 	push	{r4, r5, r6, lr}
+ 9000d8c:	eb00133b 	bl	9005a80 <usec_timer_init>
+ 9000d90:	e3a00000 	mov	r0, #0
+ 9000d94:	eb0010c7 	bl	90050b8 <i2c_preinit>
+ 9000d98:	eb0012b3 	bl	900586c <system_preinit>
+ 9000d9c:	eb00129a 	bl	900580c <memory_init>
+ 9000da0:	ebfffd08 	bl	90001c8 <bss_init>
+ 9000da4:	e59f2250 	ldr	r2, [pc, #592]	@ 9000ffc <main+0x274>
+ 9000da8:	e59f3250 	ldr	r3, [pc, #592]	@ 9001000 <main+0x278>
+ 9000dac:	e59f1250 	ldr	r1, [pc, #592]	@ 9001004 <main+0x27c>
+ 9000db0:	e4930004 	ldr	r0, [r3], #4
+ 9000db4:	e1530001 	cmp	r3, r1
+ 9000db8:	e4820004 	str	r0, [r2], #4
+ 9000dbc:	1afffffb 	bne	9000db0 <main+0x28>
+ 9000dc0:	e59f3240 	ldr	r3, [pc, #576]	@ 9001008 <main+0x280>
+ 9000dc4:	e5932000 	ldr	r2, [r3]
+ 9000dc8:	e59f323c 	ldr	r3, [pc, #572]	@ 900100c <main+0x284>
+ 9000dcc:	e5832000 	str	r2, [r3]
+ 9000dd0:	eb00126e 	bl	9005790 <system_init>
+ 9000dd4:	eb0022a4 	bl	900986c <init_threads>
+ 9000dd8:	eb002154 	bl	9009330 <init_queues>
+ 9000ddc:	eb002340 	bl	9009ae4 <init_tick>
+ 9000de0:	eb001039 	bl	9004ecc <i2c_init>
+ 9000de4:	eb0013ed 	bl	9005da0 <power_init>
+ 9000de8:	f1080080 	cpsie	i
+ 9000dec:	eb000e82 	bl	90047fc <button_init>
+ 9000df0:	e59f0218 	ldr	r0, [pc, #536]	@ 9001010 <main+0x288>
+ 9000df4:	ebfffe65 	bl	9000790 <read_apple_boot_combo>
+ 9000df8:	e1a04000 	mov	r4, r0
+ 9000dfc:	eb000d18 	bl	9004264 <lcd_init>
+ 9000e00:	e59f020c 	ldr	r0, [pc, #524]	@ 9001014 <main+0x28c>
+ 9000e04:	eb000c60 	bl	9003f8c <lcd_set_foreground>
+ 9000e08:	e3a00000 	mov	r0, #0
+ 9000e0c:	eb000c63 	bl	9003fa0 <lcd_set_background>
+ 9000e10:	eb000d09 	bl	900423c <lcd_clear_display>
+ 9000e14:	eb000ba1 	bl	9003ca0 <font_init>
+ 9000e18:	e3e00000 	mvn	r0, #0
+ 9000e1c:	eb000c84 	bl	9004034 <lcd_setfont>
+ 9000e20:	eb003d79 	bl	901040c <lcd_update>
+ 9000e24:	e3a00002 	mov	r0, #2
+ 9000e28:	eb0022fe 	bl	9009a28 <sleep>
+ 9000e2c:	e3a02001 	mov	r2, #1
+ 9000e30:	e59f31e0 	ldr	r3, [pc, #480]	@ 9001018 <main+0x290>
+ 9000e34:	e59f01e0 	ldr	r0, [pc, #480]	@ 900101c <main+0x294>
+ 9000e38:	e5c32000 	strb	r2, [r3]
+ 9000e3c:	ebfffcfb 	bl	9000230 <printf>
+ 9000e40:	e59f11d8 	ldr	r1, [pc, #472]	@ 9001020 <main+0x298>
+ 9000e44:	e59f01d8 	ldr	r0, [pc, #472]	@ 9001024 <main+0x29c>
+ 9000e48:	ebfffcf8 	bl	9000230 <printf>
+ 9000e4c:	eb000081 	bl	9001058 <backlight_init>
+ 9000e50:	eb001406 	bl	9005e70 <pmu_holdswitch_locked>
+ 9000e54:	e3500000 	cmp	r0, #0
+ 9000e58:	0a000005 	beq	9000e74 <main+0xec>
+ 9000e5c:	eb0017a8 	bl	9006d04 <nand_init>
+ 9000e60:	e2501000 	subs	r1, r0, #0
+ 9000e64:	0a00002c 	beq	9000f1c <main+0x194>
+ 9000e68:	e59f01b8 	ldr	r0, [pc, #440]	@ 9001028 <main+0x2a0>
+ 9000e6c:	ebfffcef 	bl	9000230 <printf>
+ 9000e70:	ea00002b 	b	9000f24 <main+0x19c>
+ 9000e74:	eb000eaa 	bl	9004924 <storage_init>
+ 9000e78:	e2501000 	subs	r1, r0, #0
+ 9000e7c:	0a000005 	beq	9000e98 <main+0x110>
+ 9000e80:	e59f01a4 	ldr	r0, [pc, #420]	@ 900102c <main+0x2a4>
+ 9000e84:	ebfffce9 	bl	9000230 <printf>
+ 9000e88:	eb0013f8 	bl	9005e70 <pmu_holdswitch_locked>
+ 9000e8c:	e3500000 	cmp	r0, #0
+ 9000e90:	0a000023 	beq	9000f24 <main+0x19c>
+ 9000e94:	eafffff0 	b	9000e5c <main+0xd4>
+ 9000e98:	e3540000 	cmp	r4, #0
+ 9000e9c:	1a000002 	bne	9000eac <main+0x124>
+ 9000ea0:	e59f0188 	ldr	r0, [pc, #392]	@ 9001030 <main+0x2a8>
+ 9000ea4:	ebfffe39 	bl	9000790 <read_apple_boot_combo>
+ 9000ea8:	e1a04000 	mov	r4, r0
+ 9000eac:	eb0013ef 	bl	9005e70 <pmu_holdswitch_locked>
+ 9000eb0:	e3500000 	cmp	r0, #0
+ 9000eb4:	1a000018 	bne	9000f1c <main+0x194>
+ 9000eb8:	e3540000 	cmp	r4, #0
+ 9000ebc:	0a000004 	beq	9000ed4 <main+0x14c>
+ 9000ec0:	e59f316c 	ldr	r3, [pc, #364]	@ 9001034 <main+0x2ac>
+ 9000ec4:	e3540041 	cmp	r4, #65	@ 0x41
+ 9000ec8:	e59f0168 	ldr	r0, [pc, #360]	@ 9001038 <main+0x2b0>
+ 9000ecc:	01a00003 	moveq	r0, r3
+ 9000ed0:	ea000012 	b	9000f20 <main+0x198>
+ 9000ed4:	eb000625 	bl	9002770 <filesystem_init>
+ 9000ed8:	eb0007dd 	bl	9002e54 <disk_mount_all>
+ 9000edc:	e3500000 	cmp	r0, #0
+ 9000ee0:	d59f0154 	ldrle	r0, [pc, #340]	@ 900103c <main+0x2b4>
+ 9000ee4:	da00001b 	ble	9000f58 <main+0x1d0>
+ 9000ee8:	e59f0150 	ldr	r0, [pc, #336]	@ 9001040 <main+0x2b8>
+ 9000eec:	ebfffccf 	bl	9000230 <printf>
+ 9000ef0:	e3a02502 	mov	r2, #8388608	@ 0x800000
+ 9000ef4:	e3a00302 	mov	r0, #134217728	@ 0x8000000
+ 9000ef8:	e59f1144 	ldr	r1, [pc, #324]	@ 9001044 <main+0x2bc>
+ 9000efc:	eb00008f 	bl	9001140 <load_firmware>
+ 9000f00:	e3500000 	cmp	r0, #0
+ 9000f04:	ca000007 	bgt	9000f28 <main+0x1a0>
+ 9000f08:	e6af0070 	sxtb	r0, r0
+ 9000f0c:	eb0000ac 	bl	90011c4 <loader_strerror>
+ 9000f10:	e1a01000 	mov	r1, r0
+ 9000f14:	e59f012c 	ldr	r0, [pc, #300]	@ 9001048 <main+0x2c0>
+ 9000f18:	ebfffcc4 	bl	9000230 <printf>
+ 9000f1c:	e59f0114 	ldr	r0, [pc, #276]	@ 9001038 <main+0x2b0>
+ 9000f20:	ebfffe49 	bl	900084c <launch_apple>
+ 9000f24:	ebffff83 	bl	9000d38 <boot_error>
+ 9000f28:	e1a01004 	mov	r1, r4
+ 9000f2c:	e59f0118 	ldr	r0, [pc, #280]	@ 900104c <main+0x2c4>
+ 9000f30:	eb0003ba 	bl	9001e20 <rbfs_open>
+ 9000f34:	e2504000 	subs	r4, r0, #0
+ 9000f38:	ba000005 	blt	9000f54 <main+0x1cc>
+ 9000f3c:	eb00040e 	bl	9001f7c <rbfs_ffilesize>
+ 9000f40:	e3500502 	cmp	r0, #8388608	@ 0x800000
+ 9000f44:	e1a02000 	mov	r2, r0
+ 9000f48:	0a000004 	beq	9000f60 <main+0x1d8>
+ 9000f4c:	e1a00004 	mov	r0, r4
+ 9000f50:	eb0002ff 	bl	9001b54 <rbfs_close>
+ 9000f54:	e59f00f4 	ldr	r0, [pc, #244]	@ 9001050 <main+0x2c8>
+ 9000f58:	ebfffcb4 	bl	9000230 <printf>
+ 9000f5c:	eaffffee 	b	9000f1c <main+0x194>
+ 9000f60:	e3a0140a 	mov	r1, #167772160	@ 0xa000000
+ 9000f64:	e1a00004 	mov	r0, r4
+ 9000f68:	eb0003b8 	bl	9001e50 <rbfs_read>
+ 9000f6c:	e1a05000 	mov	r5, r0
+ 9000f70:	e1a00004 	mov	r0, r4
+ 9000f74:	eb0002f6 	bl	9001b54 <rbfs_close>
+ 9000f78:	e3550502 	cmp	r5, #8388608	@ 0x800000
+ 9000f7c:	1afffff4 	bne	9000f54 <main+0x1cc>
+ 9000f80:	e59f30cc 	ldr	r3, [pc, #204]	@ 9001054 <main+0x2cc>
+ 9000f84:	e5d320fe 	ldrb	r2, [r3, #254]	@ 0xfe
+ 9000f88:	e3520055 	cmp	r2, #85	@ 0x55
+ 9000f8c:	1afffff0 	bne	9000f54 <main+0x1cc>
+ 9000f90:	e5d330ff 	ldrb	r3, [r3, #255]	@ 0xff
+ 9000f94:	e35300aa 	cmp	r3, #170	@ 0xaa
+ 9000f98:	1affffed 	bne	9000f54 <main+0x1cc>
+ 9000f9c:	e3a0340a 	mov	r3, #167772160	@ 0xa000000
+ 9000fa0:	e5d3200b 	ldrb	r2, [r3, #11]
+ 9000fa4:	e3520000 	cmp	r2, #0
+ 9000fa8:	1affffe9 	bne	9000f54 <main+0x1cc>
+ 9000fac:	e5d3200c 	ldrb	r2, [r3, #12]
+ 9000fb0:	e3520002 	cmp	r2, #2
+ 9000fb4:	1affffe6 	bne	9000f54 <main+0x1cc>
+ 9000fb8:	e5d3200d 	ldrb	r2, [r3, #13]
+ 9000fbc:	e3520002 	cmp	r2, #2
+ 9000fc0:	1affffe3 	bne	9000f54 <main+0x1cc>
+ 9000fc4:	e5d32010 	ldrb	r2, [r3, #16]
+ 9000fc8:	e3520002 	cmp	r2, #2
+ 9000fcc:	1affffe0 	bne	9000f54 <main+0x1cc>
+ 9000fd0:	e5d32013 	ldrb	r2, [r3, #19]
+ 9000fd4:	e3520000 	cmp	r2, #0
+ 9000fd8:	1affffdd 	bne	9000f54 <main+0x1cc>
+ 9000fdc:	e5d33014 	ldrb	r3, [r3, #20]
+ 9000fe0:	e3530040 	cmp	r3, #64	@ 0x40
+ 9000fe4:	1affffda 	bne	9000f54 <main+0x1cc>
+ 9000fe8:	f10c0080 	cpsid	i
+ 9000fec:	eb003bec 	bl	900ffa4 <commit_discard_idcache>
+ 9000ff0:	e3a03302 	mov	r3, #134217728	@ 0x8000000
+ 9000ff4:	e12fff33 	blx	r3
+ 9000ff8:	eafffffe 	b	9000ff8 <main+0x270>
+ 9000ffc:	09102240 	.word	0x09102240
+ 9001000:	3c500000 	.word	0x3c500000
+ 9001004:	3c500080 	.word	0x3c500080
+ 9001008:	38501000 	.word	0x38501000
+ 900100c:	091022c0 	.word	0x091022c0
+ 9001010:	000f4240 	.word	0x000f4240
+ 9001014:	0000ffff 	.word	0x0000ffff
+ 9001018:	09100104 	.word	0x09100104
+ 900101c:	0900d30d 	.word	0x0900d30d
+ 9001020:	0900d3e8 	.word	0x0900d3e8
+ 9001024:	0900d321 	.word	0x0900d321
+ 9001028:	0900d32d 	.word	0x0900d32d
+ 900102c:	0900d34f 	.word	0x0900d34f
+ 9001030:	00061a80 	.word	0x00061a80
+ 9001034:	0900d2d9 	.word	0x0900d2d9
+ 9001038:	0900d308 	.word	0x0900d308
+ 900103c:	0900d361 	.word	0x0900d361
+ 9001040:	0900d378 	.word	0x0900d378
+ 9001044:	0900d38b 	.word	0x0900d38b
+ 9001048:	0900d398 	.word	0x0900d398
+ 900104c:	0900d3c1 	.word	0x0900d3c1
+ 9001050:	0900d3b5 	.word	0x0900d3b5
+ 9001054:	0a000100 	.word	0x0a000100
+
+Disassembly of section .data:
