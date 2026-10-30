@@ -41,6 +41,18 @@ Ready-Liste. Diese wird anhand `TCB+0x24` aufsteigend sortiert. Das belegt die
 Sortierreihenfolge, aber die Rohbilder allein belegen keinen vollständigen
 Kaltstart-Trace der jeweils zuerst restaurierten Task.
 
+Ein zweiter Body-Veneer trennt die Prioritätsverwaltung klarer vom
+Kontextwechsel: `0x08003990` lädt über sein Literal bei `0x08003994` das
+Runtime-Ziel `0x083531f8`. Dieses Ziel schreibt den übergebenen Wert nach
+`[TCB+0x24]` und entfernt/verkettet den TCB abhängig von seinem Listenstatus
+neu. Der bedingte Pfad bei gesetzten Statusbits `0xaa` verzweigt zu
+`0x08354cb0`; dessen Folgeroutine vergleicht ebenfalls Prioritätsfelder bei
+`TCB+0x24` und sortiert einen weiteren doppelt verketteten Pfad um. Das passt
+zu Prioritäts-/Wartelistenpflege. Der Helper restauriert selbst keinen
+Registerkontext; ein dynamischer Beleg, dass diese Operation unmittelbar
+`MainAppTask` verdrängt, liegt nicht vor. Body-Literal, Ghidra-Veneerexport
+und Runtime-Disassembly sind als Rohbelege gespeichert.
+
 ## Bedeutung für Slot 0 und `accessories.reg`
 
 Die bekannten TCB-Werte sind:
@@ -89,6 +101,10 @@ Unter `analysis/evidence/rtos-task-order-2026-10-29/`:
 
 - `OSOS_runtime_scheduler_domain_helper_ARM_20261030.disasm.txt` — Runtime-
   Instruktionen des CP15-Helpers an `0x08365104`.
+- `OSOS_body_priority_vector_literals_20261030.txt`,
+  `OSOS_body_priority_preemption_helper_20261030.log` und
+  `OSOS_runtime_priority_list_helper_083531f8_20261030.disasm.txt` — getrennte
+  Priority-Veneer-Literalauflösung, Ghidra-Export und Runtime-Zielcode.
 - `OSOS_runtime_scheduler_vector_xrefs_20261030.log` — Body-Trampolin,
   Literalziel und direkte Aufrufer.
 - `OSOS_runtime_scheduler_selected_task_followup_20261030.log` — read-only

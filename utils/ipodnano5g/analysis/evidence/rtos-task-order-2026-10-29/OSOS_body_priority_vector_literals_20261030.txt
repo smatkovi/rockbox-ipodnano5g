@@ -1,0 +1,6 @@
+Source bodies and pointer literal proof; no project or device modification.
+osos_body.bin bytes at file offset 0x3990 map to VA 0x08003990 (base 0x08000000):
+01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec  /home/sebastian/ipod-re/nano5g/osos_decrypted/osos_body.bin
+1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03  /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin
+00003990: 04f01fe5 f8313508 04f01fe5 19972508  .....15.......%.
+000039a0: 04f01fe5 04422708 04f01fe5 19bf2708  .....B'.......'.

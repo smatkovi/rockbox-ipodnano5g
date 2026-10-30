@@ -1,0 +1,127 @@
+Runtime-OSOS-Helper bei 0x083531f8; Quelle osos_runtime_dram_20261025.bin, Dateioffset = virtuelle Adresse - 0x08000000. Das Bootprefix-Literal bei 0x08003994 zeigt auf diesen Helper. ARM-Modus (Pointerbit 0).
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+083531f8 <.data+0x3531f8>:
+ 83531f8:	e59f3094 	ldr	r3, [pc, #148]	@ 0x8353294
+ 83531fc:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+ 8353200:	e5801024 	str	r1, [r0, #36]	@ 0x24
+ 8353204:	e590e020 	ldr	lr, [r0, #32]
+ 8353208:	e5932004 	ldr	r2, [r3, #4]
+ 835320c:	e592c020 	ldr	ip, [r2, #32]
+ 8353210:	e15c000e 	cmp	ip, lr
+ 8353214:	1a000008 	bne	0x835323c
+ 8353218:	e590c000 	ldr	ip, [r0]
+ 835321c:	e59cc024 	ldr	ip, [ip, #36]	@ 0x24
+ 8353220:	e151000c 	cmp	r1, ip
+ 8353224:	d49df004 	pople	{pc}		@ (ldrle pc, [sp], #4)
+ 8353228:	e5921000 	ldr	r1, [r2]
+ 835322c:	e59f2064 	ldr	r2, [pc, #100]	@ 0x8353298
+ 8353230:	e5831004 	str	r1, [r3, #4]
+ 8353234:	e5812004 	str	r2, [r1, #4]
+ 8353238:	ea00000d 	b	0x8353274
+ 835323c:	e590201c 	ldr	r2, [r0, #28]
+ 8353240:	e3520000 	cmp	r2, #0
+ 8353244:	1a00000e 	bne	0x8353284
+ 8353248:	e5902004 	ldr	r2, [r0, #4]
+ 835324c:	e592c024 	ldr	ip, [r2, #36]	@ 0x24
+ 8353250:	e15c0001 	cmp	ip, r1
+ 8353254:	d590c000 	ldrle	ip, [r0]
+ 8353258:	d59cc024 	ldrle	ip, [ip, #36]	@ 0x24
+ 835325c:	d151000c 	cmple	r1, ip
+ 8353260:	d49df004 	pople	{pc}		@ (ldrle pc, [sp], #4)
+ 8353264:	e5901000 	ldr	r1, [r0]
+ 8353268:	e5812004 	str	r2, [r1, #4]
+ 835326c:	e8900006 	ldm	r0, {r1, r2}
+ 8353270:	e5821000 	str	r1, [r2]
+ 8353274:	e5931008 	ldr	r1, [r3, #8]
+ 8353278:	e5801000 	str	r1, [r0]
+ 835327c:	e5830008 	str	r0, [r3, #8]
+ 8353280:	e49df004 	pop	{pc}		@ (ldr pc, [sp], #4)
+ 8353284:	e31200aa 	tst	r2, #170	@ 0xaa
+ 8353288:	149de004 	popne	{lr}		@ (ldrne lr, [sp], #4)
+ 835328c:	1a000687 	bne	0x8354cb0
+ 8353290:	e49df004 	pop	{pc}		@ (ldr pc, [sp], #4)
+ 8353294:	22009244 	andcs	r9, r0, #68, 4	@ 0x40000004
+ 8353298:	22009248 	andcs	r9, r0, #72, 4	@ 0x80000004
+
+Conditional tail target 0x08354cb0 (reached when helper field mask 0xaa is nonzero); surrounding insertion routine at 0x08354c0c also compares TCB+0x24 while unlinking/relinking a doubly linked list:
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08354c0c <.data+0x354c0c>:
+ 8354c0c:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+ 8354c10:	e8900006 	ldm	r0, {r1, r2}
+ 8354c14:	e590c024 	ldr	ip, [r0, #36]	@ 0x24
+ 8354c18:	e3510000 	cmp	r1, #0
+ 8354c1c:	e5821000 	str	r1, [r2]
+ 8354c20:	15903000 	ldrne	r3, [r0]
+ 8354c24:	15901004 	ldrne	r1, [r0, #4]
+ 8354c28:	15831004 	strne	r1, [r3, #4]
+ 8354c2c:	e5921004 	ldr	r1, [r2, #4]
+ 8354c30:	ea000001 	b	0x8354c3c
+ 8354c34:	e1a02001 	mov	r2, r1
+ 8354c38:	e1a01003 	mov	r1, r3
+ 8354c3c:	e5913004 	ldr	r3, [r1, #4]
+ 8354c40:	e3530000 	cmp	r3, #0
+ 8354c44:	1591e024 	ldrne	lr, [r1, #36]	@ 0x24
+ 8354c48:	115e000c 	cmpne	lr, ip
+ 8354c4c:	cafffff8 	bgt	0x8354c34
+ 8354c50:	e5820004 	str	r0, [r2, #4]
+ 8354c54:	e5801004 	str	r1, [r0, #4]
+ 8354c58:	e5802000 	str	r2, [r0]
+ 8354c5c:	e5810000 	str	r0, [r1]
+ 8354c60:	e49df004 	pop	{pc}		@ (ldr pc, [sp], #4)
+ 8354c64:	e5902000 	ldr	r2, [r0]
+ 8354c68:	e5901004 	ldr	r1, [r0, #4]
+ 8354c6c:	e5903024 	ldr	r3, [r0, #36]	@ 0x24
+ 8354c70:	e5821004 	str	r1, [r2, #4]
+ 8354c74:	e8901002 	ldm	r0, {r1, ip}
+ 8354c78:	e58c1000 	str	r1, [ip]
+ 8354c7c:	ea000000 	b	0x8354c84
+ 8354c80:	e1a02001 	mov	r2, r1
+ 8354c84:	e5921000 	ldr	r1, [r2]
+ 8354c88:	e3510000 	cmp	r1, #0
+ 8354c8c:	0a000002 	beq	0x8354c9c
+ 8354c90:	e591c024 	ldr	ip, [r1, #36]	@ 0x24
+ 8354c94:	e15c0003 	cmp	ip, r3
+ 8354c98:	dafffff8 	ble	0x8354c80
+ 8354c9c:	e5820000 	str	r0, [r2]
+ 8354ca0:	e8800006 	stm	r0, {r1, r2}
+ 8354ca4:	e3510000 	cmp	r1, #0
+ 8354ca8:	15810004 	strne	r0, [r1, #4]
+ 8354cac:	e12fff1e 	bx	lr
+ 8354cb0:	e5902004 	ldr	r2, [r0, #4]
+ 8354cb4:	e5901000 	ldr	r1, [r0]
+ 8354cb8:	e5923004 	ldr	r3, [r2, #4]
+ 8354cbc:	e3530000 	cmp	r3, #0
+ 8354cc0:	1a000005 	bne	0x8354cdc
+ 8354cc4:	e3510000 	cmp	r1, #0
+ 8354cc8:	15902024 	ldrne	r2, [r0, #36]	@ 0x24
+ 8354ccc:	15911024 	ldrne	r1, [r1, #36]	@ 0x24
+ 8354cd0:	11520001 	cmpne	r2, r1
+ 8354cd4:	d12fff1e 	bxle	lr
+ 8354cd8:	ea00000f 	b	0x8354d1c
+ 8354cdc:	e3510000 	cmp	r1, #0
+ 8354ce0:	1a000004 	bne	0x8354cf8
+ 8354ce4:	e5921024 	ldr	r1, [r2, #36]	@ 0x24
+ 8354ce8:	e5902024 	ldr	r2, [r0, #36]	@ 0x24
+ 8354cec:	e1510002 	cmp	r1, r2
+ 8354cf0:	d12fff1e 	bxle	lr
+ 8354cf4:	ea000007 	b	0x8354d18
+ 8354cf8:	e5923024 	ldr	r3, [r2, #36]	@ 0x24
+ 8354cfc:	e5902024 	ldr	r2, [r0, #36]	@ 0x24
+ 8354d00:	e1530002 	cmp	r3, r2
+ 8354d04:	d5911024 	ldrle	r1, [r1, #36]	@ 0x24
+ 8354d08:	d1520001 	cmple	r2, r1
+ 8354d0c:	d12fff1e 	bxle	lr
+ 8354d10:	e1520003 	cmp	r2, r3
+ 8354d14:	aa000000 	bge	0x8354d1c
+ 8354d18:	eaffffbb 	b	0x8354c0c
+ 8354d1c:	eaffffd0 	b	0x8354c64

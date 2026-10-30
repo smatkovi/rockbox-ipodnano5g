@@ -1,0 +1,129 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (651 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1253 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_OSOS_RTOS (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_OSOS_RTOS (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_body.bin (HeadlessAnalyzer)  
+INFO  ANALYZING all memory and code: /osos_body.bin (HeadlessAnalyzer)  
+WARN  Decompiling 083f1818: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083f1818: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083f1818: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 08285bba, pcode error at 08285bd6: Unable to resolve constructor at 08285bd6 (DecompileCallback)  
+INFO  Packed database cache: /var/tmp/sebastian-ghidra/packed-db-cache (PackedDatabaseCache)  
+INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ARM Constant Reference Analyzer           16.823 secs
+    ARM Symbol                                 0.074 secs
+    ASCII Strings                              0.548 secs
+    Apply Data Archives                        0.336 secs
+    Call Convention ID                         0.130 secs
+    Call-Fixup Installer                       0.075 secs
+    Create Address Tables                      0.968 secs
+    Create Function                            0.032 secs
+    Data Reference                             2.945 secs
+    Decompiler Switch Analysis                 5.678 secs
+    Demangler GNU                              0.033 secs
+    Disassemble                                0.127 secs
+    Disassemble Entry Points                   0.518 secs
+    Embedded Media                             0.048 secs
+    External Entry References                  0.000 secs
+    Function ID                                0.014 secs
+    Function Start Pre Search                  0.116 secs
+    Function Start Search                      1.843 secs
+    Function Start Search After Code           1.480 secs
+    Function Start Search After Data           1.327 secs
+    Function Start Search delayed - One Time   0.014 secs
+    Non-Returning Functions - Discovered       2.804 secs
+    Reference                                  3.751 secs
+    Shared Return Calls                        0.628 secs
+    Stack                                      5.017 secs
+    Subroutine References                      1.334 secs
+    Subroutine References - One Time           0.005 secs
+-----------------------------------------------------
+     Total Time   46 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: /osos_body.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpContainingFunctions.java '0x08003984' '0x08003990' '0x080039a0' '0x080039b0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpContainingFunctions.java (HeadlessAnalyzer)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 08003984 FUNCTION <none> ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 08003990 FUNCTION FUN_08003990@08003990 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_08003990(void)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x08003990. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*DAT_08003994)();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08003990 ldr pc,[0x8003994] (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 080039a0 FUNCTION FUN_080039a0@080039a0 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_080039a0(void)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x080039a0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*DAT_080039a4)();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080039a0 ldr pc,[0x80039a4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 080039b0 FUNCTION FUN_080039b0@080039b0 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_080039b0(void)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x080039b0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*DAT_080039b4)();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080039b0 ldr pc,[0x80039b4] (GhidraScript)  
+INFO  ANALYZING changes made by post scripts: /osos_body.bin (HeadlessAnalyzer)  
+INFO  REPORT: Post-analysis succeeded for file: /osos_body.bin (HeadlessAnalyzer)  
+INFO  REPORT: Discarding changes to the following read-only file: /osos_body.bin (HeadlessAnalyzer)  
