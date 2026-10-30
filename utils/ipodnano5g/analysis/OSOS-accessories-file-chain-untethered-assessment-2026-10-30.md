@@ -90,6 +90,41 @@ echten File-Objekts bleiben daher das entscheidende dynamische Loch. Für den
 zweiten ROP-Open ist `/BOOT.BIN` ein kurzer Root-Pfad ohne LFN; der
 gespeicherte Root-Dump enthält diesen Eintrag nicht.
 
+## Rootziel und RAM-Überlappung
+
+Die absolute Pfadauflösung ist statisch nachvollziehbar: `FUN_081fdb38`
+erkennt `/` als Wurzelpräfix und holt den Root-Directory-Handle über
+`FUN_082014b6` direkt vom FAT-Provider. Danach wird `BOOT.BIN` als letzte
+Komponente im Root-Verzeichnis gesucht. Der ROP-Open hängt damit nicht vom
+aktuellen Arbeitsverzeichnis ab, benötigt aber einen tatsächlich vorhandenen
+Root-Eintrag; in der gespeicherten Root-Seite vom 29.10. fehlt er.
+
+Zusätzlich liegt das geplante Loadziel im von OSOS verwalteten Heap. Die
+vorhandene Heaprechnung setzt dessen Bereich auf
+`0x08e54e4c..0x0bba5ee0`; das Bootloader-LOAD-Segment belegt
+`0x09000000..0x09013780`, und die separat genullte BSS liegt bei
+`0x09100000..0x0919fd00`. Die Adressen sind schreibbar und ausführbar, aber
+keine freie Reservierung: ein Dateiread dorthin kann lebende OSOS-Heapobjekte
+überschreiben. Ob dabei der aktive FAT-Provider, Cache oder File-Handle
+getroffen wird, ist aus dem Heapgrenzennachweis nicht abzuleiten. Ein
+Einweg-Sprung könnte nur funktionieren, wenn der gesamte Read bis zum Ende
+überlebt und der Loader danach keine beschädigten OSOS-Strukturen mehr nutzt.
+Belege: `OSOS-heap-and-rockbox-handoff-2026-10-25.md` und
+`evidence/accessories-rockbox-entry-2026-10-30/bootloader_elf_layout_20261030.txt`.
+
+Die alte Allocatoranalyse grenzt das Risiko ein, beseitigt es aber nicht: Der
+Allocator zerlegt einen freien Block von dessen hoher Adresse her. Unter dem
+vereinfachten Modell einer einzigen unverfragmentierten Region müsste er etwa
+42,0 MiB vergeben haben, bevor die Loader-BSS-Endadresse erreicht wird, und
+43,6 MiB, bevor die Code-/Stackregion erreicht wird. Daraus folgt keine
+Live-Belegung und kein Sicherheitsnachweis. Der echte FAT-Datei-Read wird über
+`FUN_0812ac00` in begrenzte Teilreads zerlegt und `FUN_0814346c` kopiert die
+Cachebytes jeweils direkt in den caller-supplied Zielpuffer. Der alte
+Stream/FAT-Rehost hat diese Daten-/Cache- und ATA-Abhängigkeiten noch gestubbt;
+ein Read in den Loaderzielbereich mit realem OSOS-Heapzustand ist also offen.
+Beleg: `evidence/accessories-rop-2026-10-29/OSOS_accessories_loader_heap_threshold_20261029.txt`
+und `OSOS_accessories_fat_read_deep_decompile_20261029.log`.
+
 ## Eingabe- und Dateizustand der gespeicherten Aufnahmen
 
 Der read-only FAT-Dump vom 29.10. zeigt `accessories.reg` bei Directory-Slot
@@ -124,10 +159,11 @@ keine davon belegt den aktuellen Gerätezustand.
 2. Den Root-Scan für `/BOOT.BIN` mit einem synthetischen FAT-Verzeichniseintrag
    und dem echten `bootloader.bin` verbinden; prüfen, ob der vollständige Read
    den Eintritt bei `0x09000000` erreicht. Das bleibt ein Emulatorbefund.
-3. Den Überlappungsbereich `0x09000000..0x09113780` gegen den beim OSOS-Start
-   belegten Heap und aktive Objekte abgleichen. Die vorhandene
-   Allocatorrechnung setzt eine vereinfachte zusammenhängende Free-Region
-   voraus und reicht dafür nicht.
+3. Für den bestätigten Heap-Überlappungsbereich `0x09000000..0x09013780` den
+   Teilreadablauf mit einem realistischen OSOS-Allocator-/Cachezustand
+   rehosten. Zusätzlich prüfen, welche OSOS-Heapbereiche der Loader beim
+   BSS-Init `0x09100000..0x0919fd00` überschreibt. Die bisherige
+   Allocatorrechnung verrät keine Live-Belegung.
 4. Erst wenn die Offlinekette ohne Loader-/Open-Stubs trägt, den reversiblen
    Test auf dem FAT-Datenvolume planen. Dieser Bericht veranlasst keine
    Geräte- oder Flashaktion.
