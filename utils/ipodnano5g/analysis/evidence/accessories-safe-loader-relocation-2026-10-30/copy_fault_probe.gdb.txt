@@ -1,0 +1,309 @@
+The target architecture is set to "arm".
+Reading symbols from /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf...
+(No debugging symbols found in /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf)
+0x08010000 in _start ()
+
+Program received signal SIGSEGV, Segmentation fault.
+0x08268c6a in read_gate ()
+00010000-08003000 ---p 00000000 00:00 0
+08003000-08004000 r--p 00033000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08004000-08005000 ---p 00000000 00:00 0
+08005000-08007000 r--p 00045000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08007000-08008000 r--p 00027000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08008000-08010000 ---p 00000000 00:00 0
+08010000-08014000 r--p 00010000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08014000-0802c000 ---p 00000000 00:00 0
+0802c000-0802d000 r--p 0001c000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0802d000-08030000 ---p 00000000 00:00 0
+08030000-08031000 r--p 00050000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08031000-08039000 ---p 00000000 00:00 0
+08039000-0803a000 r--p 00019000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0803a000-0805b000 ---p 00000000 00:00 0
+0805b000-0805c000 r--p 0005b000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0805c000-0809c000 ---p 00000000 00:00 0
+0809c000-0809d000 r--p 0004c000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0809d000-080f8000 ---p 00000000 00:00 0
+080f8000-080f9000 r--p 00078000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+080f9000-0812a000 ---p 00000000 00:00 0
+0812a000-0812b000 r--p 0010a000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0812b000-08138000 ---p 00000000 00:00 0
+08138000-08139000 r--p 00118000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08139000-08143000 ---p 00000000 00:00 0
+08143000-08144000 r--p 00123000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08144000-0814e000 ---p 00000000 00:00 0
+0814e000-0814f000 r--p 0013e000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0814f000-08158000 ---p 00000000 00:00 0
+08158000-08159000 r--p 00128000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08159000-08160000 ---p 00000000 00:00 0
+08160000-08161000 r--p 00130000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08161000-0818a000 ---p 00000000 00:00 0
+0818a000-08190000 r--p 0007a000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08190000-08191000 r--p 00040000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08191000-08193000 ---p 00000000 00:00 0
+08193000-08194000 r--p 00083000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08194000-08196000 ---p 00000000 00:00 0
+08196000-08197000 r--p 00096000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08197000-08198000 ---p 00000000 00:00 0
+08198000-08199000 r--p 000c8000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08199000-0819e000 ---p 00000000 00:00 0
+0819e000-0819f000 r--p 0008e000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0819f000-081a3000 ---p 00000000 00:00 0
+081a3000-081a4000 r--p 000a3000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081a4000-081ad000 ---p 00000000 00:00 0
+081ad000-081ae000 r--p 000bd000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081ae000-081b8000 ---p 00000000 00:00 0
+081b8000-081b9000 r--p 001b8000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081b9000-081d7000 ---p 00000000 00:00 0
+081d7000-081d8000 r--p 00147000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081d8000-081df000 ---p 00000000 00:00 0
+081df000-081e0000 r--p 0006f000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081e0000-081e1000 ---p 00000000 00:00 0
+081e1000-081e2000 r--p 00161000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081e2000-081f1000 ---p 00000000 00:00 0
+081f1000-081f2000 r--p 00131000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081f2000-081fd000 ---p 00000000 00:00 0
+081fd000-081fe000 r--p 0014d000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+081fe000-08200000 ---p 00000000 00:00 0
+08200000-08201000 r--p 001b0000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08201000-08202000 r--p 00151000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08202000-0820c000 ---p 00000000 00:00 0
+0820c000-0820d000 r--p 001bc000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0820d000-08213000 ---p 00000000 00:00 0
+08213000-08214000 r--p 00173000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08214000-08219000 ---p 00000000 00:00 0
+08219000-0821a000 r--p 00179000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0821a000-0821b000 r--p 0018a000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0821b000-08226000 ---p 00000000 00:00 0
+08226000-08227000 r--p 00196000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08227000-0822c000 ---p 00000000 00:00 0
+0822c000-0822d000 r--p 0019c000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0822d000-0822e000 ---p 00000000 00:00 0
+0822e000-0822f000 r--p 0017e000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0822f000-08230000 r--p 0015f000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08230000-08235000 ---p 00000000 00:00 0
+08235000-08236000 r--p 00165000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08236000-0823c000 ---p 00000000 00:00 0
+0823c000-0823d000 r--p 001cc000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0823d000-0823f000 ---p 00000000 00:00 0
+0823f000-08240000 r--p 000cf000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08240000-08241000 r--p 001a0000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08241000-08262000 ---p 00000000 00:00 0
+08262000-08263000 r--p 00062000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08263000-08268000 ---p 00000000 00:00 0
+08268000-08269000 r--p 000f8000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08269000-0826a000 ---p 00000000 00:00 0
+0826a000-0826b000 r--p 000ca000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0826b000-0826d000 ---p 00000000 00:00 0
+0826d000-0826e000 r--p 000fd000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0826e000-08270000 ---p 00000000 00:00 0
+08270000-08271000 r--p 001a0000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08271000-08272000 ---p 00000000 00:00 0
+08272000-08273000 r--p 000f2000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08273000-08274000 r--p 001a3000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08274000-08278000 ---p 00000000 00:00 0
+08278000-08279000 r--p 001d8000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08279000-0827a000 r--p 001a9000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0827a000-0827d000 ---p 00000000 00:00 0
+0827d000-0827e000 r--p 001ad000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0827e000-0827f000 r--p 000ae000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0827f000-082a2000 ---p 00000000 00:00 0
+082a2000-082a3000 r--p 001e2000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+082a3000-084f5000 ---p 00000000 00:00 0
+084f5000-084f6000 r--p 00215000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+084f6000-08535000 ---p 00000000 00:00 0
+08535000-08536000 r--p 000d5000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08536000-0866c000 ---p 00000000 00:00 0
+0866c000-0866d000 r--p 000dc000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0866d000-086b7000 ---p 00000000 00:00 0
+086b7000-086b8000 rw-p 000e7000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+086b8000-08e54000 ---p 00000000 00:00 0
+08e54000-08e58000 rw-p 00000000 00:00 0
+08e58000-08e59000 rw-p 00228000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e59000-08e5a000 ---p 00000000 00:00 0
+08e5a000-08e5e000 rw-p 0022a000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e5e000-08e60000 ---p 00000000 00:00 0
+08e60000-08e61000 rw-p 00000000 00:00 0
+08e61000-08e62000 r--p 00231000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e62000-08e64000 ---p 00000000 00:00 0
+08e64000-08e65000 rw-p 00234000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e65000-08e70000 ---p 00000000 00:00 0
+08e70000-08e78000 rw-p 00240000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e78000-08e80000 ---p 00000000 00:00 0
+08e80000-08e91000 rw-p 00250000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+08e91000-0bf00000 ---p 00000000 00:00 0
+0bf00000-0bf01000 rw-p 001f0000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0bf01000-0bfde000 ---p 00000000 00:00 0
+0bfde000-0bfef000 r--p 001fe000 103:08 18646388                          /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+0bfef000-40000000 ---p 00000000 00:00 0
+40000000-40001000 ---p 00000000 00:00 0
+40001000-40801000 rw-p 00000000 00:00 0
+40801000-40802000 r--p 00000000 00:00 0
+40802000-ffff0000 ---p 00000000 00:00 0
+ffff0000-ffff1000 r--p 00000000 00:00 0
+ffff1000-100000000 ---p 00000000 00:00 0
+1456cc000000-1456d3fff000 rwxp 00000000 00:00 0
+1456d3fff000-1456d4000000 ---p 00000000 00:00 0
+1456d4000000-1456d4021000 rw-p 00000000 00:00 0
+1456d4021000-1456d8000000 ---p 00000000 00:00 0
+1456d9b7e000-1456d9c00000 rw-p 00000000 00:00 0
+1456d9c00000-1456d9e63000 rw-p 00000000 103:08 18646388                  /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf
+1456d9e94000-1456d9f15000 rw-p 00000000 00:00 0
+1456d9f15000-1456da116000 rw-p 00000000 00:00 0
+1456da116000-1456da127000 r--p 00000000 103:08 4467802                   /usr/lib/libgmp.so.10.5.0
+1456da127000-1456da1a5000 r-xp 00011000 103:08 4467802                   /usr/lib/libgmp.so.10.5.0
+1456da1a5000-1456da1ba000 r--p 0008f000 103:08 4467802                   /usr/lib/libgmp.so.10.5.0
+1456da1ba000-1456da1bc000 r--p 000a3000 103:08 4467802                   /usr/lib/libgmp.so.10.5.0
+1456da1bc000-1456da1bd000 rw-p 000a5000 103:08 4467802                   /usr/lib/libgmp.so.10.5.0
+1456da1bd000-1456da1cb000 r--p 00000000 103:08 4468084                   /usr/lib/libnettle.so.9.0
+1456da1cb000-1456da1fd000 r-xp 0000e000 103:08 4468084                   /usr/lib/libnettle.so.9.0
+1456da1fd000-1456da215000 r--p 00040000 103:08 4468084                   /usr/lib/libnettle.so.9.0
+1456da215000-1456da218000 r--p 00057000 103:08 4468084                   /usr/lib/libnettle.so.9.0
+1456da218000-1456da219000 rw-p 0005a000 103:08 4468084                   /usr/lib/libnettle.so.9.0
+1456da219000-1456da228000 r--p 00000000 103:08 4485679                   /usr/lib/libunistring.so.5.2.1
+1456da228000-1456da26c000 r-xp 0000f000 103:08 4485679                   /usr/lib/libunistring.so.5.2.1
+1456da26c000-1456da3fb000 r--p 00053000 103:08 4485679                   /usr/lib/libunistring.so.5.2.1
+1456da3fb000-1456da3ff000 r--p 001e2000 103:08 4485679                   /usr/lib/libunistring.so.5.2.1
+1456da3ff000-1456da400000 rw-p 001e6000 103:08 4485679                   /usr/lib/libunistring.so.5.2.1
+1456da400000-1456da41b000 r--p 00000000 103:08 4485697                   /usr/lib/libleancrypto.so.1.9.1
+1456da41b000-1456da57e000 r-xp 0001b000 103:08 4485697                   /usr/lib/libleancrypto.so.1.9.1
+1456da57e000-1456da6af000 r--p 0017e000 103:08 4485697                   /usr/lib/libleancrypto.so.1.9.1
+1456da6af000-1456da6b5000 r--p 002af000 103:08 4485697                   /usr/lib/libleancrypto.so.1.9.1
+1456da6b5000-1456da6b7000 rw-p 002b5000 103:08 4485697                   /usr/lib/libleancrypto.so.1.9.1
+1456da6c5000-1456da6cc000 r--p 00000000 103:08 4485523                   /usr/lib/libp11-kit.so.0.4.11
+1456da6cc000-1456da7b5000 r-xp 00007000 103:08 4485523                   /usr/lib/libp11-kit.so.0.4.11
+1456da7b5000-1456da847000 r--p 000f0000 103:08 4485523                   /usr/lib/libp11-kit.so.0.4.11
+1456da847000-1456da858000 r--p 00181000 103:08 4485523                   /usr/lib/libp11-kit.so.0.4.11
+1456da858000-1456da867000 rw-p 00192000 103:08 4485523                   /usr/lib/libp11-kit.so.0.4.11
+1456da867000-1456da86a000 r--p 00000000 103:08 4480503                   /usr/lib/libpcre2-8.so.0.16.1
+1456da86a000-1456da8ec000 r-xp 00003000 103:08 4480503                   /usr/lib/libpcre2-8.so.0.16.1
+1456da8ec000-1456da918000 r--p 00085000 103:08 4480503                   /usr/lib/libpcre2-8.so.0.16.1
+1456da918000-1456da919000 r--p 000b0000 103:08 4480503                   /usr/lib/libpcre2-8.so.0.16.1
+1456da919000-1456da91a000 rw-p 000b1000 103:08 4480503                   /usr/lib/libpcre2-8.so.0.16.1
+1456da91a000-1456da926000 r--p 00000000 103:08 4481336                   /usr/lib/libzstd.so.1.5.7
+1456da926000-1456da9ed000 r-xp 0000c000 103:08 4481336                   /usr/lib/libzstd.so.1.5.7
+1456da9ed000-1456da9fe000 r--p 000d3000 103:08 4481336                   /usr/lib/libzstd.so.1.5.7
+1456da9fe000-1456da9ff000 r--p 000e4000 103:08 4481336                   /usr/lib/libzstd.so.1.5.7
+1456da9ff000-1456daa00000 rw-p 000e5000 103:08 4481336                   /usr/lib/libzstd.so.1.5.7
+1456daa00000-1456daa24000 r--p 00000000 103:08 4475143                   /usr/lib/libc.so.6
+1456daa24000-1456dab9f000 r-xp 00024000 103:08 4475143                   /usr/lib/libc.so.6
+1456dab9f000-1456dac15000 r--p 0019f000 103:08 4475143                   /usr/lib/libc.so.6
+1456dac15000-1456dac19000 r--p 00214000 103:08 4475143                   /usr/lib/libc.so.6
+1456dac19000-1456dac1b000 rw-p 00218000 103:08 4475143                   /usr/lib/libc.so.6
+1456dac1b000-1456dac23000 rw-p 00000000 00:00 0
+1456dac3c000-1456dac3e000 r--p 00000000 103:08 4481235                   /usr/lib/libffi.so.8.5.0
+1456dac3e000-1456dac46000 r-xp 00002000 103:08 4481235                   /usr/lib/libffi.so.8.5.0
+1456dac46000-1456dac48000 r--p 0000a000 103:08 4481235                   /usr/lib/libffi.so.8.5.0
+1456dac48000-1456dac49000 r--p 0000b000 103:08 4481235                   /usr/lib/libffi.so.8.5.0
+1456dac49000-1456dac4a000 rw-p 0000c000 103:08 4481235                   /usr/lib/libffi.so.8.5.0
+1456dac4a000-1456dac52000 r--p 00000000 103:08 4465378                   /usr/lib/libhogweed.so.7.0
+1456dac52000-1456dac65000 r-xp 00008000 103:08 4465378                   /usr/lib/libhogweed.so.7.0
+1456dac65000-1456dac8e000 r--p 0001b000 103:08 4465378                   /usr/lib/libhogweed.so.7.0
+1456dac8e000-1456dac90000 r--p 00043000 103:08 4465378                   /usr/lib/libhogweed.so.7.0
+1456dac90000-1456dac91000 rw-p 00045000 103:08 4465378                   /usr/lib/libhogweed.so.7.0
+1456dac91000-1456dac93000 r--p 00000000 103:08 4485525                   /usr/lib/libtasn1.so.6.6.5
+1456dac93000-1456daca2000 r-xp 00002000 103:08 4485525                   /usr/lib/libtasn1.so.6.6.5
+1456daca2000-1456daca5000 r--p 00011000 103:08 4485525                   /usr/lib/libtasn1.so.6.6.5
+1456daca5000-1456daca6000 r--p 00014000 103:08 4485525                   /usr/lib/libtasn1.so.6.6.5
+1456daca6000-1456daca7000 rw-p 00015000 103:08 4485525                   /usr/lib/libtasn1.so.6.6.5
+1456daca7000-1456daca9000 r--p 00000000 103:08 4485334                   /usr/lib/libidn2.so.0.4.0
+1456daca9000-1456dacad000 r-xp 00002000 103:08 4485334                   /usr/lib/libidn2.so.0.4.0
+1456dacad000-1456dacc7000 r--p 00006000 103:08 4485334                   /usr/lib/libidn2.so.0.4.0
+1456dacc7000-1456dacc8000 r--p 0001f000 103:08 4485334                   /usr/lib/libidn2.so.0.4.0
+1456dacc8000-1456dacc9000 rw-p 00020000 103:08 4485334                   /usr/lib/libidn2.so.0.4.0
+1456dacc9000-1456dacd9000 r--p 00000000 103:08 4475153                   /usr/lib/libm.so.6
+1456dacd9000-1456dad75000 r-xp 00010000 103:08 4475153                   /usr/lib/libm.so.6
+1456dad75000-1456dadfe000 r--p 000ac000 103:08 4475153                   /usr/lib/libm.so.6
+1456dadfe000-1456dadff000 r--p 00134000 103:08 4475153                   /usr/lib/libm.so.6
+1456dadff000-1456dae00000 rw-p 00135000 103:08 4475153                   /usr/lib/libm.so.6
+1456dae00000-1456dae25000 r--p 00000000 103:08 4482401                   /usr/lib/libgnutls.so.30.42.0
+1456dae25000-1456daf8b000 r-xp 00025000 103:08 4482401                   /usr/lib/libgnutls.so.30.42.0
+1456daf8b000-1456db012000 r--p 0018b000 103:08 4482401                   /usr/lib/libgnutls.so.30.42.0
+1456db012000-1456db024000 r--p 00212000 103:08 4482401                   /usr/lib/libgnutls.so.30.42.0
+1456db024000-1456db027000 rw-p 00224000 103:08 4482401                   /usr/lib/libgnutls.so.30.42.0
+1456db027000-1456db02a000 rw-p 00000000 00:00 0
+1456db02d000-1456db02e000 rw-p 00000000 00:00 0
+1456db02e000-1456db02f000 rw-p 00000000 00:00 0
+1456db02f000-1456db034000 rw-p 00000000 00:00 0
+1456db034000-1456db036000 r--p 00000000 103:08 4469923                   /usr/lib/libbz2.so.1.0.8
+1456db036000-1456db043000 r-xp 00002000 103:08 4469923                   /usr/lib/libbz2.so.1.0.8
+1456db043000-1456db045000 r--p 0000f000 103:08 4469923                   /usr/lib/libbz2.so.1.0.8
+1456db045000-1456db046000 r--p 00010000 103:08 4469923                   /usr/lib/libbz2.so.1.0.8
+1456db046000-1456db047000 rw-p 00011000 103:08 4469923                   /usr/lib/libbz2.so.1.0.8
+1456db047000-1456db04b000 r--p 00000000 103:08 4481335                   /usr/lib/liblzma.so.5.8.4
+1456db04b000-1456db06f000 r-xp 00004000 103:08 4481335                   /usr/lib/liblzma.so.5.8.4
+1456db06f000-1456db07b000 r--p 00028000 103:08 4481335                   /usr/lib/liblzma.so.5.8.4
+1456db07b000-1456db07c000 r--p 00034000 103:08 4481335                   /usr/lib/liblzma.so.5.8.4
+1456db07c000-1456db07d000 rw-p 00035000 103:08 4481335                   /usr/lib/liblzma.so.5.8.4
+1456db07d000-1456db080000 r--p 00000000 103:08 4482929                   /usr/lib/libelf-0.196.so
+1456db080000-1456db094000 r-xp 00003000 103:08 4482929                   /usr/lib/libelf-0.196.so
+1456db094000-1456db099000 r--p 00017000 103:08 4482929                   /usr/lib/libelf-0.196.so
+1456db099000-1456db09a000 r--p 0001b000 103:08 4482929                   /usr/lib/libelf-0.196.so
+1456db09a000-1456db09b000 rw-p 0001c000 103:08 4482929                   /usr/lib/libelf-0.196.so
+1456db09b000-1456db0b9000 r--p 00000000 103:08 4481177                   /usr/lib/libglib-2.0.so.0.9000.1
+1456db0b9000-1456db168000 r-xp 0001e000 103:08 4481177                   /usr/lib/libglib-2.0.so.0.9000.1
+1456db168000-1456db1fd000 r--p 000cd000 103:08 4481177                   /usr/lib/libglib-2.0.so.0.9000.1
+1456db1fd000-1456db1fe000 r--p 00162000 103:08 4481177                   /usr/lib/libglib-2.0.so.0.9000.1
+1456db1fe000-1456db1ff000 rw-p 00163000 103:08 4481177                   /usr/lib/libglib-2.0.so.0.9000.1
+1456db1ff000-1456db200000 rw-p 00000000 00:00 0
+1456db200000-1456db207000 r--p 00000000 103:08 4487279                   /usr/lib/libcapstone.so.5
+1456db207000-1456db2f3000 r-xp 00007000 103:08 4487279                   /usr/lib/libcapstone.so.5
+1456db2f3000-1456db7cf000 r--p 000f3000 103:08 4487279                   /usr/lib/libcapstone.so.5
+1456db7cf000-1456db911000 r--p 005cf000 103:08 4487279                   /usr/lib/libcapstone.so.5
+1456db911000-1456db912000 rw-p 00711000 103:08 4487279                   /usr/lib/libcapstone.so.5
+1456db912000-1456db91a000 rw-p 00000000 00:00 0
+1456db91a000-1456db91e000 r--p 00000000 103:08 4475198                   /usr/lib/libgcc_s.so.1
+1456db91e000-1456db941000 r-xp 00004000 103:08 4475198                   /usr/lib/libgcc_s.so.1
+1456db941000-1456db945000 r--p 00027000 103:08 4475198                   /usr/lib/libgcc_s.so.1
+1456db945000-1456db946000 r--p 0002b000 103:08 4475198                   /usr/lib/libgcc_s.so.1
+1456db946000-1456db947000 rw-p 0002c000 103:08 4475198                   /usr/lib/libgcc_s.so.1
+1456db947000-1456db949000 r--p 00000000 103:08 4481270                   /usr/lib/libgmodule-2.0.so.0.9000.1
+1456db949000-1456db94b000 r-xp 00002000 103:08 4481270                   /usr/lib/libgmodule-2.0.so.0.9000.1
+1456db94b000-1456db94c000 r--p 00004000 103:08 4481270                   /usr/lib/libgmodule-2.0.so.0.9000.1
+1456db94c000-1456db94d000 r--p 00004000 103:08 4481270                   /usr/lib/libgmodule-2.0.so.0.9000.1
+1456db94d000-1456db94e000 rw-p 00005000 103:08 4481270                   /usr/lib/libgmodule-2.0.so.0.9000.1
+1456db94e000-1456db950000 rw-p 00000000 00:00 0
+1456db950000-1456db952000 r--p 00000000 103:08 4486186                   /usr/lib/liburing.so.2.15
+1456db952000-1456db955000 r-xp 00002000 103:08 4486186                   /usr/lib/liburing.so.2.15
+1456db955000-1456db956000 r--p 00005000 103:08 4486186                   /usr/lib/liburing.so.2.15
+1456db956000-1456db957000 r--p 00005000 103:08 4486186                   /usr/lib/liburing.so.2.15
+1456db957000-1456db95b000 r--p 00000000 103:08 4487297                   /usr/lib/libnuma.so.1.0.0
+1456db95b000-1456db961000 r-xp 00004000 103:08 4487297                   /usr/lib/libnuma.so.1.0.0
+1456db961000-1456db963000 r--p 0000a000 103:08 4487297                   /usr/lib/libnuma.so.1.0.0
+1456db963000-1456db964000 r--p 0000c000 103:08 4487297                   /usr/lib/libnuma.so.1.0.0
+1456db964000-1456db965000 rw-p 0000d000 103:08 4487297                   /usr/lib/libnuma.so.1.0.0
+1456db965000-1456db96d000 r--p 00000000 103:08 4469867                   /usr/lib/libdw-0.196.so
+1456db96d000-1456db9cd000 r-xp 00008000 103:08 4469867                   /usr/lib/libdw-0.196.so
+1456db9cd000-1456db9fd000 r--p 00068000 103:08 4469867                   /usr/lib/libdw-0.196.so
+1456db9fd000-1456dba06000 r--p 00098000 103:08 4469867                   /usr/lib/libdw-0.196.so
+1456dba06000-1456dba07000 rw-p 000a1000 103:08 4469867                   /usr/lib/libdw-0.196.so
+1456dba07000-1456dba0a000 r--p 00000000 103:08 4481237                   /usr/lib/libz.so.1.3.2
+1456dba0a000-1456dba1a000 r-xp 00003000 103:08 4481237                   /usr/lib/libz.so.1.3.2
+1456dba1a000-1456dba20000 r--p 00013000 103:08 4481237                   /usr/lib/libz.so.1.3.2
+1456dba20000-1456dba21000 r--p 00019000 103:08 4481237                   /usr/lib/libz.so.1.3.2
+1456dba21000-1456dba22000 rw-p 0001a000 103:08 4481237                   /usr/lib/libz.so.1.3.2
+1456dba22000-1456dba24000 rw-p 00000000 00:00 0
+1456dba24000-1456dba5c000 r--p 00000000 103:08 23644709                  /etc/ld.so.cache
+1456dba5c000-1456dba60000 r--p 00000000 00:00 0                          [vvar]
+1456dba60000-1456dba62000 r--p 00000000 00:00 0                          [vvar_vclock]
+1456dba62000-1456dba64000 r-xp 00000000 00:00 0                          [vdso]
+1456dba64000-1456dba65000 r--p 00000000 103:08 4470660                   /usr/lib/ld-linux-x86-64.so.2
+1456dba65000-1456dba92000 r-xp 00001000 103:08 4470660                   /usr/lib/ld-linux-x86-64.so.2
+1456dba92000-1456dbaa1000 r--p 0002e000 103:08 4470660                   /usr/lib/ld-linux-x86-64.so.2
+1456dbaa1000-1456dbaa3000 r--p 0003d000 103:08 4470660                   /usr/lib/ld-linux-x86-64.so.2
+1456dbaa3000-1456dbaa4000 rw-p 0003f000 103:08 4470660                   /usr/lib/ld-linux-x86-64.so.2
+1456dbaa4000-1456dbaa5000 rw-p 00000000 00:00 0
+56463ef52000-56463efcb000 r--p 00000000 103:08 4490248                   /usr/bin/qemu-arm
+56463efcb000-56463f1e8000 r-xp 00079000 103:08 4490248                   /usr/bin/qemu-arm
+56463f1e8000-56463f2b2000 r--p 00296000 103:08 4490248                   /usr/bin/qemu-arm
+56463f2b2000-56463f2d9000 r--p 0035f000 103:08 4490248                   /usr/bin/qemu-arm
+56463f2d9000-56463f30f000 rw-p 00386000 103:08 4490248                   /usr/bin/qemu-arm
+56463f30f000-56463f33b000 rw-p 00000000 00:00 0
+56466554f000-5646656ed000 rw-p 00000000 00:00 0                          [heap]
+7fff669aa000-7fff669cc000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+pc             0x8268c6a           0x8268c6a <read_gate+46>
+r2             0xbf01000           200282112
+r3             0xbfdf000           201191424
+r4             0xff80              65408
+Kill the program being debugged? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 2891097) killed]

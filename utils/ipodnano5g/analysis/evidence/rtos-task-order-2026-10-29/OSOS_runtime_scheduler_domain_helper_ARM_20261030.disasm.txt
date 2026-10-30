@@ -1,0 +1,55 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08365080 <.data+0x365080>:
+ 8365080:	e1a0100c 	mov	r1, ip
+ 8365084:	fbfb3011 	blx	0x82310d2
+ 8365088:	e8bd80f8 	pop	{r3, r4, r5, r6, r7, pc}
+ 836508c:	ee112f50 	mrc	15, 0, r2, cr1, cr0, {2}
+ 8365090:	e382260f 	orr	r2, r2, #15728640	@ 0xf00000
+ 8365094:	ee012f50 	mcr	15, 0, r2, cr1, cr0, {2}
+ 8365098:	e3300000 	teq	r0, #0
+ 836509c:	0a00000b 	beq	0x83650d0
+ 83650a0:	eef82a10 	vmrs	r2, fpexc
+ 83650a4:	e3822101 	orr	r2, r2, #1073741824	@ 0x40000000
+ 83650a8:	eee82a10 	vmsr	fpexc, r2
+ 83650ac:	e5802004 	str	r2, [r0, #4]
+ 83650b0:	eef12a10 	vmrs	r2, fpscr
+ 83650b4:	e5802008 	str	r2, [r0, #8]
+ 83650b8:	eef92a10 	vmrs	r2, fpinst	@ Impl def
+ 83650bc:	e580200c 	str	r2, [r0, #12]
+ 83650c0:	eefa2a10 	vmrs	r2, fpinst2	@ Impl def
+ 83650c4:	e5802010 	str	r2, [r0, #16]
+ 83650c8:	e2800014 	add	r0, r0, #20
+ 83650cc:	ec800b20 	vstmia	r0, {d0-d15}
+ 83650d0:	e3310000 	teq	r1, #0
+ 83650d4:	0a000009 	beq	0x8365100
+ 83650d8:	e5912004 	ldr	r2, [r1, #4]
+ 83650dc:	eee82a10 	vmsr	fpexc, r2
+ 83650e0:	e5912008 	ldr	r2, [r1, #8]
+ 83650e4:	eee12a10 	vmsr	fpscr, r2
+ 83650e8:	e591200c 	ldr	r2, [r1, #12]
+ 83650ec:	eee92a10 	vmsr	fpinst, r2	@ Impl def
+ 83650f0:	e5912010 	ldr	r2, [r1, #16]
+ 83650f4:	eeea2a10 	vmsr	fpinst2, r2	@ Impl def
+ 83650f8:	e2811014 	add	r1, r1, #20
+ 83650fc:	ec910b20 	vldmia	r1, {d0-d15}
+ 8365100:	e12fff1e 	bx	lr
+ 8365104:	ee112f50 	mrc	15, 0, r2, cr1, cr0, {2}
+ 8365108:	e3300000 	teq	r0, #0
+ 836510c:	03c2260f 	biceq	r2, r2, #15728640	@ 0xf00000
+ 8365110:	1382260f 	orrne	r2, r2, #15728640	@ 0xf00000
+ 8365114:	ee012f50 	mcr	15, 0, r2, cr1, cr0, {2}
+ 8365118:	e12fff1e 	bx	lr
+ 836511c:	e59f1040 	ldr	r1, [pc, #64]	@ 0x8365164
+ 8365120:	e92d4010 	push	{r4, lr}
+ 8365124:	e2804901 	add	r4, r0, #16384	@ 0x4000
+ 8365128:	e28440ac 	add	r4, r4, #172	@ 0xac
+ 836512c:	e5801000 	str	r1, [r0]
+ 8365130:	ea000001 	b	0x836513c
+ 8365134:	e1a00004 	mov	r0, r4
+ 8365138:	eb0170a4 	bl	0x83c13d0
+ 836513c:	e1a00004 	mov	r0, r4

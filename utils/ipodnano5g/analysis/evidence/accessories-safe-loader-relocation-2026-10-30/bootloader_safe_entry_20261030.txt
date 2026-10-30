@@ -1,0 +1,170 @@
+
+utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/bootloader-safe.elf:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0bf00000 <start>:
+ bf00000: ea00000d     	b	0xbf0003c <_newstart>   @ imm = #0x34
+ bf00004: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00020 <start+0x20>
+ bf00008: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00024 <start+0x24>
+ bf0000c: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00028 <start+0x28>
+ bf00010: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf0002c <start+0x2c>
+ bf00014: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00030 <start+0x30>
+ bf00018: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00034 <start+0x34>
+ bf0001c: e59ff014     	ldr	pc, [pc, #0x14]         @ 0xbf00038 <start+0x38>
+ bf00020: b4 4a f0 0b  	.word	0x0bf04ab4
+ bf00024: 90 4a f0 0b  	.word	0x0bf04a90
+ bf00028: a8 4a f0 0b  	.word	0x0bf04aa8
+ bf0002c: 84 4a f0 0b  	.word	0x0bf04a84
+ bf00030: 9c 4a f0 0b  	.word	0x0bf04a9c
+ bf00034: c8 56 f0 0b  	.word	0x0bf056c8
+ bf00038: 88 57 f0 0b  	.word	0x0bf05788
+
+0bf0003c <_newstart>:
+ bf0003c: e321f0d3     	msr	CPSR_c, #211
+
+0bf00040 <_rtpc>:
+ bf00040: e24fb008     	sub	r11, pc, #8
+ bf00044: e24bb040     	sub	r11, r11, #64
+ bf00048: e59f1084     	ldr	r1, [pc, #0x84]         @ 0xbf000d4 <_rtpc+0x94>
+ bf0004c: e59f2084     	ldr	r2, [pc, #0x84]         @ 0xbf000d8 <_rtpc+0x98>
+ bf00050: e0413002     	sub	r3, r1, r2
+ bf00054: e08b0003     	add	r0, r11, r3
+ bf00058: e93007f8     	ldmdb	r0!, {r3, r4, r5, r6, r7, r8, r9, r10}
+ bf0005c: e92107f8     	stmdb	r1!, {r3, r4, r5, r6, r7, r8, r9, r10}
+ bf00060: e1520001     	cmp	r2, r1
+ bf00064: bafffffb     	blt	0xbf00058 <_rtpc+0x18>  @ imm = #-0x14
+ bf00068: e1a0000b     	mov	r0, r11
+ bf0006c: e3a01422     	mov	r1, #570425344
+ bf00070: e281203c     	add	r2, r1, #60
+ bf00074: e8b007f8     	ldm	r0!, {r3, r4, r5, r6, r7, r8, r9, r10}
+ bf00078: e8a107f8     	stm	r1!, {r3, r4, r5, r6, r7, r8, r9, r10}
+ bf0007c: e1510002     	cmp	r1, r2
+ bf00080: bafffffb     	blt	0xbf00074 <_rtpc+0x34>  @ imm = #-0x14
+ bf00084: e3a00000     	mov	r0, #0
+ bf00088: ee070f1e     	mcr	p15, #0x0, r0, c7, c14, #0x0
+ bf0008c: ee070f9a     	mcr	p15, #0x0, r0, c7, c10, #0x4
+ bf00090: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf00094: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf00098: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf0009c: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf000a0: e320f000     	nop
+ bf000a4: e320f000     	nop
+ bf000a8: e320f000     	nop
+ bf000ac: e320f000     	nop
+ bf000b0: e320f000     	nop
+ bf000b4: e320f000     	nop
+ bf000b8: e320f000     	nop
+ bf000bc: e320f000     	nop
+ bf000c0: e320f000     	nop
+ bf000c4: e320f000     	nop
+ bf000c8: e320f000     	nop
+ bf000cc: ee070f95     	mcr	p15, #0x0, r0, c7, c5, #0x4
+ bf000d0: e59ff004     	ldr	pc, [pc, #0x4]          @ 0xbf000dc <_rtpc+0x9c>
+ bf000d4: 80 0f f1 0b  	.word	0x0bf10f80
+ bf000d8: 00 00 f0 0b  	.word	0x0bf00000
+ bf000dc: e0 00 f0 0b  	.word	0x0bf000e0
+
+0bf000e0 <start_loc>:
+ bf000e0: ee110f10     	mrc	p15, #0x0, r0, c1, c0, #0x0
+ bf000e4: e3c00a01     	bic	r0, r0, #4096
+ bf000e8: e3c00005     	bic	r0, r0, #5
+ bf000ec: ee010f10     	mcr	p15, #0x0, r0, c1, c0, #0x0
+ bf000f0: e3a00000     	mov	r0, #0
+ bf000f4: ee070f1e     	mcr	p15, #0x0, r0, c7, c14, #0x0
+ bf000f8: ee070f9a     	mcr	p15, #0x0, r0, c7, c10, #0x4
+ bf000fc: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf00100: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf00104: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf00108: ee070f15     	mcr	p15, #0x0, r0, c7, c5, #0x0
+ bf0010c: e320f000     	nop
+ bf00110: e320f000     	nop
+ bf00114: e320f000     	nop
+ bf00118: e320f000     	nop
+ bf0011c: e320f000     	nop
+ bf00120: e320f000     	nop
+ bf00124: e320f000     	nop
+ bf00128: e320f000     	nop
+ bf0012c: e320f000     	nop
+ bf00130: e320f000     	nop
+ bf00134: e320f000     	nop
+ bf00138: ee070f95     	mcr	p15, #0x0, r0, c7, c5, #0x4
+ bf0013c: ee080f17     	mcr	p15, #0x0, r0, c8, c7, #0x0
+ bf00140: ee0d0f10     	mcr	p15, #0x0, r0, c13, c0, #0x0
+ bf00144: e59f10c4     	ldr	r1, [pc, #0xc4]         @ 0xbf00210 <bss_init+0x48>
+ bf00148: e2812a01     	add	r2, r1, #4096
+ bf0014c: e2813a02     	add	r3, r1, #8192
+ bf00150: e2404001     	sub	r4, r0, #1
+ bf00154: e5814014     	str	r4, [r1, #0x14]
+ bf00158: e5824014     	str	r4, [r2, #0x14]
+ bf0015c: e5814f00     	str	r4, [r1, #0xf00]
+ bf00160: e5824f00     	str	r4, [r2, #0xf00]
+ bf00164: e5834008     	str	r4, [r3, #0x8]
+ bf00168: e583400c     	str	r4, [r3, #0xc]
+ bf0016c: e5810014     	str	r0, [r1, #0x14]
+ bf00170: e5820014     	str	r0, [r2, #0x14]
+ bf00174: ee110f10     	mrc	p15, #0x0, r0, c1, c0, #0x0
+ bf00178: e3800a01     	orr	r0, r0, #4096
+ bf0017c: ee010f10     	mcr	p15, #0x0, r0, c1, c0, #0x0
+ bf00180: e321f0d2     	msr	CPSR_c, #210
+ bf00184: e59fd088     	ldr	sp, [pc, #0x88]         @ 0xbf00214 <bss_init+0x4c>
+ bf00188: e321f0d1     	msr	CPSR_c, #209
+ bf0018c: e59fd084     	ldr	sp, [pc, #0x84]         @ 0xbf00218 <bss_init+0x50>
+ bf00190: e321f0d3     	msr	CPSR_c, #211
+ bf00194: e59fd078     	ldr	sp, [pc, #0x78]         @ 0xbf00214 <bss_init+0x4c>
+ bf00198: e321f0d7     	msr	CPSR_c, #215
+ bf0019c: e59fd070     	ldr	sp, [pc, #0x70]         @ 0xbf00214 <bss_init+0x4c>
+ bf001a0: e321f0db     	msr	CPSR_c, #219
+ bf001a4: e59fd068     	ldr	sp, [pc, #0x68]         @ 0xbf00214 <bss_init+0x4c>
+ bf001a8: e321f0df     	msr	CPSR_c, #223
+ bf001ac: e59fd068     	ldr	sp, [pc, #0x68]         @ 0xbf0021c <bss_init+0x54>
+ bf001b0: e59f2068     	ldr	r2, [pc, #0x68]         @ 0xbf00220 <bss_init+0x58>
+ bf001b4: e59f3068     	ldr	r3, [pc, #0x68]         @ 0xbf00224 <bss_init+0x5c>
+ bf001b8: e15d0002     	cmp	sp, r2
+ bf001bc: 84823004     	strhi	r3, [r2], #4
+ bf001c0: 8afffffc     	bhi	0xbf001b8 <start_loc+0xd8> @ imm = #-0x10
+ bf001c4: ea0002ef     	b	0xbf00d88 <main>        @ imm = #0xbbc
+
+0bf001c8 <bss_init>:
+ bf001c8: e92d43f0     	push	{r4, r5, r6, r7, r8, r9, lr}
+ bf001cc: e59f0054     	ldr	r0, [pc, #0x54]         @ 0xbf00228 <bss_init+0x60>
+ bf001d0: e59f1054     	ldr	r1, [pc, #0x54]         @ 0xbf0022c <bss_init+0x64>
+ bf001d4: e3a02000     	mov	r2, #0
+ bf001d8: e3a03000     	mov	r3, #0
+ bf001dc: e3a04000     	mov	r4, #0
+ bf001e0: e3a05000     	mov	r5, #0
+ bf001e4: e3a06000     	mov	r6, #0
+ bf001e8: e3a07000     	mov	r7, #0
+ bf001ec: e3a08000     	mov	r8, #0
+ bf001f0: e3a09000     	mov	r9, #0
+ bf001f4: ea000002     	b	0xbf00204 <bss_init+0x3c> @ imm = #0x8
+ bf001f8: e320f000     	nop
+ bf001fc: e320f000     	nop
+ bf00200: e8a003fc     	stm	r0!, {r2, r3, r4, r5, r6, r7, r8, r9}
+ bf00204: e1500001     	cmp	r0, r1
+ bf00208: bafffffc     	blt	0xbf00200 <bss_init+0x38> @ imm = #-0x10
+ bf0020c: e8bd83f0     	pop	{r4, r5, r6, r7, r8, r9, pc}
+ bf00210: 00 00 e0 38  	.word	0x38e00000
+ bf00214: 80 33 f1 0b  	.word	0x0bf13380
+ bf00218: 80 37 f1 0b  	.word	0x0bf13780
+ bf0021c: 80 2f f1 0b  	.word	0x0bf12f80
+ bf00220: 80 0f f1 0b  	.word	0x0bf10f80
+ bf00224: ef be ad de  	.word	0xdeadbeef
+ bf00228: 00 00 f2 0b  	.word	0x0bf20000
+ bf0022c: 00 fd fb 0b  	.word	0x0bfbfd00
+0bf00000 A _movestart
+0bf0003c T _newstart
+0bf00040 t _rtpc
+0bf000e0 T start_loc
+0bf001c8 T bss_init
+0bf0f700 T _datastart
+0bf10f80 T _dataend
+0bf10f80 A _moveend
+0bf10f80 B _stackbegin
+0bf12f80 B _irqstackbegin
+0bf12f80 B _stackend
+0bf13380 B _fiqstackbegin
+0bf13380 B _irqstackend
+0bf13780 B _fiqstackend
+0bf20000 B _edata
+0bfbfd00 B _end

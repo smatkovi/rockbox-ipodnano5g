@@ -31,11 +31,46 @@ Modellierung. QEMU endet mit Exitcode 0 und stdout `PASS\n`. Der Trace zeigt
 den Schlussaufruf bei PC 0x0bf00000 mit Read-Länge 0x10f80 und anschließend
 den Loader-Sentinel bei 0x0bf00000 -> 0x0bf00100.
 
-Der Read-Callback ist ein Prüf-Stub. Er kopiert keine Bytes aus
-bootloader-safe.bin; die Bytes bei 0x0bf00000 stammen im Rehost vom
-vorgelinkten Sentinel. Daher beweist der Lauf weder Ausführung des echten
-Bootloaders noch eine echte FAT-Öffnung, reale OSOS-I/O, Geräte-Erreichbarkeit
-oder Rockbox-Boot.
+Der ursprüngliche Argument-Rehost verwendet am Schluss weiterhin einen
+Sentinel. Ein zweiter Rehost kopiert als modellierten erfolgreichen Read die
+echten 69.504 Byte aus bootloader-safe.bin nach 0x0bf00000. GDB hält beim
+Eintritt an diesem Ziel an, bevor der erste Loader-Befehl läuft. Der Dump
+bootloader-copy-postcleanup.bin ist genau 0x10f80 Byte groß und bytegleich
+mit bootloader-safe.bin; beide SHA-256 sind
+ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2.
+
+Die GDB-Zeitaufnahme marker_timeline.gdb.txt zeigt am Eintritt des
+Loader-Read-Callbacks den Wert 0x00 an Adresse 0x0bf00040 und unmittelbar
+vor dem Loader-Entry dort 0x08, wie im Originalabbild. Der Nullmarker des
+alten Sentinel-Rehosts wird also vor dem Read beobachtet; der Datei-Read
+stellt das Originalbyte wieder her. Er ist kein Beleg für eine Beschädigung
+des fertigen Loaders.
+
+Der neue Read-Callback kopiert aus einem eingebetteten lokalen Abbild. Er
+führt keinen echten VFS-/FAT-/ATA-Datei-Read aus. Der Lauf belegt weder freie
+Live-SDRAM-Belegung, Geräte-Erreichbarkeit, den privilegierten MMU-/Cache-
+Übergang, Loaderausführung noch Rockbox-Boot.
+
+Der erste QEMU-Kopierversuch brach bei 0x0bf01000 ab, weil der ELF-Rehost am
+Ziel nur eine 4-KiB-Seite gemappt hatte. Nach Erweiterung des gemappten
+NOLOAD-Zielbereichs auf die vollständige Loadergröße lief die Kopie bis zum
+Entry-Breakpoint. Das war eine Rehost-Begrenzung, kein Geräte- oder Loaderfehler.
+
+Die Entry-Disassemblierung bestätigt, dass start bei 0x0bf00000 zu
+_newstart bei 0x0bf0003c verzweigt; dort setzt der Loader CPSR auf 0xd3
+(SVC, IRQ/FIQ maskiert), bevor die frühe MMU-/Cache-Initialisierung läuft.
+Der OSOS-Taskkontext ist laut separater Analyse ebenfalls SVC-privilegiert.
+Das ist architektonisch konsistent, aber der konkrete Laufzeit-Handoff bleibt
+unbewiesen.
+
+Die statische CRT-/Main-Prüfung findet eine zu beachtende Überlappung:
+`MEMORYSIZE=32` setzt `TTB_BASE_ADDR` auf 0x09ffc000; der 16-KiB-Bereich liegt
+im alten OSOS-Heap. `main()` ruft `memory_init()` vor `bss_init()` auf und
+schreibt dort Rockbox-Seitentabellen, bevor es die BSS
+0x0bf20000..0x0bfbfd00 leert. Der Loader-Übergang muss deshalb endgültig sein;
+eine Rückkehr in OSOS wäre nach dieser Initialisierung nicht tragfähig.
+`system_preinit()` kehrt für Nano 5G laut Quellcode sofort zurück und
+initialisiert SDRAM nicht erneut.
 
 Erzeugte Binärbelege
 --------------------
@@ -49,6 +84,11 @@ Erzeugte Binärbelege
 - OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.{S,ld,elf}
 - OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.qemu-trace.log.gz
 - OSOS_accessories_parser_real_fat_entry_topram_rehost_20261030.stdout.bin
+- OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.{S,ld,elf}
+- bootloader-copy-postcleanup.bin und marker_timeline.gdb.txt
+- bootloader_safe_entry_20261030.txt
+- loader_copy.gdb.txt und loader_copy.qemu.log.gz
+- copy_fault_probe.gdb.txt und copy_fault_probe.qemu.log.gz (QEMU-Map-Fehlversuch)
 
 Die Prüfsummen stehen in SHA256SUMS. Kein USB-/DFU-/Gerätezugriff und keine
 NAND-/NOR-/Firmware-Schreib-, Lösch- oder Flashoperation wurde ausgeführt.

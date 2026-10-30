@@ -1,0 +1,18 @@
+The target architecture is set to "arm".
+Reading symbols from /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf...
+(No debugging symbols found in /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf)
+0x08010000 in _start ()
+Breakpoint 1 at 0xbf00000
+
+Breakpoint 1, 0x0bf00000 in loader_stub ()
+pc             0xbf00000           0xbf00000 <loader_stub>
+r0             0x0                 0
+r1             0x10f80             69504
+r2             0xbf10f80           200347520
+r3             0xbf00000           200278016
+r4             0x0                 0
+0xbf00000 <loader_stub>:	0x0d	0x00	0x00	0xea	0x14	0xf0	0x9f	0xe5
+0xbf00008:	0x14	0xf0	0x9f	0xe5	0x14	0xf0	0x9f	0xe5
+0xbf00010:	0x14	0xf0	0x9f	0xe5
+Kill the program being debugged? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 2895667) killed]

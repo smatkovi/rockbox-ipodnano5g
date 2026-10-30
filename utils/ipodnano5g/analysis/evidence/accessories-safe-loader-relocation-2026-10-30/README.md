@@ -1,9 +1,10 @@
 # Safe loader relocation evidence
 
 This directory holds a separate 64-MiB SDRAM link of the current Rockbox
-bootloader and an ARM1176 rehost with the Accessories candidate's final target
-changed to that link address. The rehost still ends at a loader sentinel; it
-does not load or execute the bootloader bytes.
+bootloader and two ARM1176 rehosts with the Accessories candidate's final
+target changed to that link address. The original argument-only rehost ends at
+a sentinel. A second rehost copies the embedded real loader bytes to the
+target and stops under GDB at the loader entry before executing them.
 
 See the German analysis report
 [`OSOS-accessories-safe-loader-relocation-followup-2026-10-30.md`](../../OSOS-accessories-safe-loader-relocation-followup-2026-10-30.md)
@@ -63,3 +64,45 @@ gzip -n -9 \
 The candidate copy is made by replacing exactly the three occurrences of the
 little-endian word `0x09000000` with `0x0bf00000` in the original 704-byte
 input. Neither candidate was written to the device.
+
+## Full loader-copy rehost
+
+`OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.S` and
+`.ld` extend the argument-only rehost. Its successful loader-read stub copies
+all `0x10f80` bytes from `bootloader-safe.bin` to `0x0bf00000`. A NOLOAD span
+keeps the complete destination mapped writable in QEMU. The run is stopped by
+GDB at `0x0bf00000`; `bootloader-copy-postcleanup.bin` is the memory dump from
+that breakpoint. It compares byte-for-byte equal to `bootloader-safe.bin`.
+`marker_timeline.gdb.txt` records byte `0x00` at `0x0bf00040` immediately
+before the read and byte `0x08` after the copy, showing that the old sentinel
+marker was an earlier parser state.
+
+The file-read callback is still a harness stub backed by an embedded image;
+the genuine FAT/VFS/ATA path, live DRAM occupancy, bootloader execution and
+hardware handoff are not tested. `bootloader_safe_entry_20261030.txt` records
+the relocated entry disassembly and relevant linker symbols. The first
+failed copy attempt is retained in `copy_fault_probe.gdb.txt` and
+`copy_fault_probe.qemu.log.gz`; the maps show the harness originally mapped
+only one writable page at the target.
+
+The linked startup later installs a 16-KiB translation table at
+`0x09ffc000..0x0a000000` because this build keeps `MEMORYSIZE=32`; that range
+overlaps the calculated OSOS heap. The bootloader clears its relocated BSS at
+`0x0bf20000..0x0bfbfd00`. The table overlap is only consistent with a
+one-way handoff that abandons OSOS. These writes are not exercised by the
+GDB-stopped copy rehost.
+
+Build the extended copy rehost from `rb-n5g/` with:
+
+```sh
+clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie \
+  -fno-pie -fuse-ld=lld \
+  -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.ld \
+  -Wl,--build-id=none \
+  -o utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.elf \
+  utils/ipodnano5g/analysis/evidence/accessories-safe-loader-relocation-2026-10-30/OSOS_accessories_parser_real_fat_entry_topram_copy_rehost_20261030.S
+```
+
+`loader_copy.gdb.txt` records the GDB breakpoint and dump command; the
+matching compressed QEMU instruction trace is `loader_copy.qemu.log.gz`.
+`marker_timeline.gdb.txt` records the pre-read marker and final entry byte.
