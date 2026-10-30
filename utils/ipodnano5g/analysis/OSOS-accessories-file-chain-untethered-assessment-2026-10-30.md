@@ -82,13 +82,49 @@ Die Ghidra-Listings schließen für diesen Aufruf die Übergabeparameter enger:
 
 Damit ist der statische Open-Dispatch ein Read-Open über Slot 0. Der
 `FUN_0814f238`-Scanner-Rehost bestätigt die betreffenden Eintragsnamen; die
-separaten FAT-Rehosts bestätigen den EOC-Eintrag und die Daten-LBA. Diese
-Bausteine wurden noch nicht in einem Lauf mit dem echten
-`FUN_082721f0`→Provider-Open→Handle-Aufbau verbunden. Die Bedingungen in
-`FUN_081382c2` für einen aktiven Mount/Directory-Handle und die Übergabe eines
-echten File-Objekts bleiben daher das entscheidende dynamische Loch. Für den
-zweiten ROP-Open ist `/BOOT.BIN` ein kurzer Root-Pfad ohne LFN; der
-gespeicherte Root-Dump enthält diesen Eintrag nicht.
+separaten FAT-Rehosts bestätigen den EOC-Eintrag und die Daten-LBA. Neue
+read-only-Ghidra-Abfragen präzisieren den zuvor offenen Mount-/Root-Zustand:
+Ein frisch angelegter Taskkontext ist genullt und verwendet Volumeindex 0.
+`FUN_081fdd06` ruft `FUN_0814e76c(volume, 1, 0)` auf und verlangt anschließend
+ein gültiges Volumeobjekt über `FUN_08240974`. Obwohl Ghidra
+`FUN_0814e76c` als `void` deklariert, lässt der Thumb-Code den Status aus
+`FUN_0816039c` in `r0` für diesen Guard stehen. Bei fehlendem
+Volumezustand kann `FUN_0816039c` `FUN_08158f90` und damit
+`FUN_0814ef74` auslösen: Diese Funktion liest über `FUN_08158dd0` den
+Volume-Bootsektor, übernimmt und prüft BPB-Felder und initialisiert danach
+den FAT-Zustand. Der BPB-Read läuft über `FUN_082192c4` →
+`FUN_08160a3a` → `FUN_0816a928`; im Standard-Read-Modus führt der letzte
+Schritt indirekt den Geräte-VTable-Callback `+0x0c` aus. Damit ist auch der
+statische I/O-Dispatch eingegrenzt, sein Erfolg bleibt aber dynamisch.
+Ein vorab im Harness gesetzter Mount ist für diesen statischen Pfad daher
+nicht als Voraussetzung belegt.
+
+Auch ein vorausgefüllter Directory-Handle ist nicht nötig: Bei `/` fordert
+`FUN_081fdb38` den Root-Handle mit `FUN_082014b6` vom Provider an; wenn der
+Rootknoten noch nicht registriert ist, erstellt `FUN_082014b6` ihn über
+`FUN_081f8458`. Für relative Pfade legt `FUN_0814f1d8` den Root-Handle
+tasklokal bei Bedarf an. `FUN_081382c2` reserviert zusätzlich dynamisch einen
+Datei-Handleplatz über `FUN_08143974`; der Platz muss in der festen Tabelle
+verfügbar sein. Die Open-Kette ist trotzdem nicht als Ganzes ausgeführt:
+Providerregistrierung, reale Blockreads, Objekt-/Handlezustand und ein
+erfolgreicher Open samt anschließendem Read sind weiterhin nicht dynamisch
+bestätigt. Für den zweiten ROP-Open ist `/BOOT.BIN` ein kurzer Root-Pfad ohne
+LFN; der gespeicherte Root-Dump enthält diesen Eintrag nicht.
+
+Die beiden numerischen Nullen in diesem Pfad bezeichnen unterschiedliche
+Tabellen: `FUN_082721f0(..., 0)` wählt den VFS-Service-Slot; der Taskkontext
+liefert Volumeindex 0 für den FAT-Volumezustand und die zugehörige Block-I/O-
+Tabelle. Dass beide Indizes 0 sind, beweist nicht, dass es derselbe Registry-
+Eintrag oder dass die Laufzeitregistrierung erfolgreich war.
+
+Rohbelege für die Guard-, Mount- und Root-Analyse liegen unter
+`evidence/accessories-slot0-open-2026-10-30/`; insbesondere
+`ghidra_accessories_open_prerequisites_20261030.application.log`,
+`ghidra_vfs_volume_guard_callers_20261030.application.log`,
+`ghidra_vfs_volume_guard_lifecycle_20261030.application.log` und
+`ghidra_vfs_volume_mount_inputs_20261030.application.log` sowie
+`ghidra_vfs_volume_mount_io_dispatch_20261030.application.log` und
+`ghidra_vfs_volume_worker_dispatch_20261030.application.log`.
 
 ## Rootziel und RAM-Überlappung
 
@@ -187,9 +223,11 @@ keine davon belegt den aktuellen Gerätezustand.
 
 ## Nächste Offline-Schritte
 
-1. Den in `FUN_081382c2` offenen Mount-/Directory-Handlezustand mit dem
+1. Den in `FUN_081382c2` jetzt eingegrenzten Mount-/Root-/Handle-Aufbau mit dem
    Startup-Provider verbinden und den Openpfad ohne vorgefüllte
-   Stream-/Handlefelder rehosten.
+   Stream-/Handlefelder rehosten. Insbesondere müssen Provider-Slot 0,
+   BPB-Read, echter File-Eintrag und die Dateihandle-Tabelle im selben Lauf
+   zusammenkommen.
 2. Den Root-Scan für `/BOOT.BIN` mit einem synthetischen FAT-Verzeichniseintrag
    und dem echten `bootloader.bin` verbinden; prüfen, ob der vollständige Read
    den Eintritt bei `0x09000000` erreicht. Das bleibt ein Emulatorbefund.
