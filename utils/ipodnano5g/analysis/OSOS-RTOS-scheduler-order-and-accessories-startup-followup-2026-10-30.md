@@ -53,6 +53,22 @@ Registerkontext; ein dynamischer Beleg, dass diese Operation unmittelbar
 `MainAppTask` verdrängt, liegt nicht vor. Body-Literal, Ghidra-Veneerexport
 und Runtime-Disassembly sind als Rohbelege gespeichert.
 
+Die Queue-Übergabe ist jetzt ebenfalls konkreter: `ATAWorkLoopTask` ruft den
+QueuePost-Alias `0x220058b4` mit Dienst 4, Queue-ID 4 und dem statischen
+Typ-0-Record auf. `DeviceDiscovery` verwendet den QueueGet-Dienst 5 für
+Queue 4. Ist die Queue leer und ein Wait angefordert, trägt der Dispatcher den
+Empfänger als wartend ein (Status 5/Flag `0x20`). Der Dienst-4-Pfad nimmt beim
+Post einen vorhandenen Waiter aus der Queue-Warteliste und entfernt dessen
+Warteflag; der freigegebene TCB wird anschließend vom Scheduler in die
+prioritätssortierte Ready-Liste übernommen. Der gemeinsame SVC-Abschluss
+verarbeitet diese Freigaben und ruft danach den Kontext-Restore auf. Damit ist
+der statische Queue-4-Übergang von „wartet“ zu „bereit“ nachvollziehbar.
+Offen bleibt, ob und wann dieser konkrete Dispatcher nach dem Post den Kopf
+der Ready-Liste statt des aktuellen ATA-Tasks restauriert; ein dynamischer
+Kaltstart-Trace fehlt weiterhin. Zusätzlich ist `FUN_0800073c` kein
+Taskselektor, sondern fügt zeitbegrenzte Warteobjekte anhand ihrer Frist in
+eine separate Timerliste ein.
+
 ## Bedeutung für Slot 0 und `accessories.reg`
 
 Die bekannten TCB-Werte sind:
@@ -128,6 +144,8 @@ Unter `analysis/evidence/rtos-task-order-2026-10-29/`:
   `OSOS_runtime_queue4_event_type_initialization_20261029.txt` und
   `OSOS_runtime_slot0_provider_provenance_20261029.txt` — Taskwerte,
   Queue-4-Ereignis und Slot-0-FAT-Aufbau.
+- `OSOS_body_queue_post_wakeup_dispatch_followup_20261030.log` — Timerlisten-
+  Helper `FUN_0800073c`, QueueGet-Wrapper und zugehöriger Dispatchkontext.
 - `../lfn-resolution-2026-10-28/OSOS_accessories_open_chain_20261029.log` —
   Open-Fehlerpfad des automatischen Parsers.
 
