@@ -1,0 +1,26 @@
+IMG1 body size=0x6f2624 sha256=01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec
+IMG1 header cross-check: saved header report says entry offset=0;
+local RetailOS layout documentation says the second-stage loader loads it into DRAM.
+entry_branch=0xea001c0c initial_target=0x08007038 relocated_target=0x22007038
+stack_stub_branch=0xeafff803 initial_target=0x08005058 relocated_target=0x22005058
+relocation_delta_symbol=0x22007060 current_symbol=0x08007060 delta=0x1a000000
+reloc_table[0x5fa0]=0x22000000
+reloc_table[0x5fa4]=0x0000e27c
+reloc_table[0x5fa8]=0x2200e27c
+reloc_table[0x5fac]=0x00000bc4
+reloc_table[0x5fb0]=0x22030000
+reloc_table[0x5fb4]=0x00020000
+reloc_table[0x5fb8]=0x22050000
+reloc_table[0x5fbc]=0x00000000
+reloc_table[0x5fc0]=0x08000000
+reloc_table[0x5fc4]=0x006c3768
+reloc_table[0x5fc8]=0x086c3768
+reloc_table[0x5fcc]=0x00000c40
+section sram.text: source=0x08000000 body_fileoff=0x0 destination=0x22000000 size=0xe27c
+section relocator.zero_fill: zero-fill destination=0x2200e27c size=0xbc4
+section sram.bss+data_payload: source=0x0800e27c body_fileoff=0xe27c destination=0x22030000 size=0x20000
+section optional.zero_fill: zero-fill destination=0x22050000 size=0x0
+section dram.textdata: source=0x0802e27c body_fileoff=0x2e27c destination=0x08000000 size=0x6c3768
+section dram.frameworks: source=0x086f19e4 body_fileoff=0x6f19e4 destination=0x086c3768 size=0xc40
+assertions=PASS; static section-copy destinations and IMG1 body ranges are internally consistent
+scope=static bytes plus local OSOS layout documentation; no live RAM/MMU/TTBR state was read

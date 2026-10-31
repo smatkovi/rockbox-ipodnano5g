@@ -1,0 +1,195 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1126 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1995 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Apple_N33_Bootloader (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Apple_N33_Bootloader (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /n5g-bootloader-decrypted-cache.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpContainingFunctions.java '0x2200a28c' '0x2200a29c' '0x2200a2b4' '0x2200a2d0' '0x2200a35c' '0x2202257c' '0x22022648' '0x22022654'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/DumpContainingFunctions.java (HeadlessAnalyzer)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2200a28c FUNCTION FUN_2200a28c@2200a28c ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+uint FUN_2200a28c(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar1 & 0xfffffffe);
+  return uVar1 & 0xfffffffe;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a28c mrc p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a290 bic r0,r0,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a294 mcr p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a298 bx lr (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2200a29c FUNCTION FUN_2200a29c@2200a29c ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+uint FUN_2200a29c(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar1 | 1);
+  return uVar1 | 1;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a29c mrc p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2a0 orr r0,r0,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2a4 mcr p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2a8 bx lr (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2200a2b4 FUNCTION FUN_2200a2b4@2200a2b4 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+uint FUN_2200a2b4(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar1 & 0xffffefff);
+  return uVar1 & 0xffffefff;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2b4 mov r1,#0x1000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2b8 mrc p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2bc bic r0,r0,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2c0 mcr p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2c4 bx lr (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2200a2d0 FUNCTION FUN_2200a2d0@2200a2d0 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+uint FUN_2200a2d0(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar1 | 0x1000);
+  return uVar1 | 0x1000;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2d0 mov r1,#0x1000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2d4 mrc p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2d8 orr r0,r0,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2dc mcr p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a2e0 bx lr (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2200a35c FUNCTION FUN_2200a35c@2200a35c ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+uint FUN_2200a35c(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar1 & 0xff7fffff);
+  return uVar1 & 0xff7fffff;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a35c mov r1,#0x800000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a360 mrc p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a364 bic r0,r0,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a368 mcr p15,0x0,r0,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2200a36c bx lr (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 2202257c FUNCTION FUN_2202257c@2202257c ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_2202257c(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  undefined4 in_cr7;
+  
+  iVar1 = DAT_220226ac;
+  coproc_movefrom_Peripherial_Port_Memory_Remap();
+  _DAT_3c500048 = _DAT_3c500048 & 0xffff7fff;
+  uVar2 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar2 & ~DAT_22022698);
+  coprocessor_moveto(0xf,0,0,0,in_cr7,in_cr7);
+  coproc_movefrom_Translation_table_base_0();
+  coproc_moveto_Invalidate_unified_TLB_unlocked(0);
+  coproc_movefrom_Translation_table_base_0();
+  coproc_moveto_Data_Synchronization(0);
+  coproc_movefrom_Translation_table_base_0();
+  uVar2 = coproc_movefrom_Auxiliary_Control();
+  coproc_moveto_Auxiliary_Control(uVar2 | 1);
+  coproc_movefrom_Translation_table_base_0();
+  uVar2 = coproc_movefrom_Control();
+  coproc_moveto_Control(uVar2 & 0xffbfffff | 0x802);
+  uVar2 = coproc_movefrom_Auxiliary_Control();
+  coproc_moveto_Auxiliary_Control(uVar2 | 7);
+  coproc_moveto_FCSE_PID(0);
+  *(undefined4 *)(DAT_220226ac + -4) = 1;
+  *(undefined4 *)(iVar1 + -8) = 0;
+  thumb_220226cc(0x4000,*(undefined4 *)(DAT_22000020 + 0x21fffffc),
+                 *(undefined4 *)(DAT_22000020 + 0x21ffffc0));
+  thumb_220226b0();
+  do {
+                    /* WARNING: Do nothing block with infinite loop */
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2202257c mov r1,#0x38000000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022580 orr r1,r1,#0x12 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022584 mrc p15,0x0,r1,cr15,cr2,0x4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022588 mov r1,#0x3c000000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2202258c orr r1,r1,#0x500000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022590 ldr r2,[r1,#0x48] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022594 bic r2,r2,#0x8000 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 22022598 str r2,[r1,#0x48] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 2202259c mrc p15,0x0,r1,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225a0 ldr r2,[0x22022698] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225a4 mvn r2,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225a8 and r1,r1,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225ac mcr p15,0x0,r1,cr1,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225b0 mov r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225b4 mcr p15,0x0,r0,cr7,cr7,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225b8 mrc p15,0x0,r1,cr2,cr0,0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225bc cpy r1,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 220225c0 adr pc,0x220225c4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 22022648 FUNCTION <none> ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 22022654 FUNCTION <none> ===== (GhidraScript)  

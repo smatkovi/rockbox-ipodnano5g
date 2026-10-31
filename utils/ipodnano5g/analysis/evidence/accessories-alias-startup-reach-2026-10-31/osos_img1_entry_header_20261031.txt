@@ -1,0 +1,27 @@
+Local IMG1/body entry cross-check (read-only)
+Date: 2026-10-31
+
+Container: /home/sebastian/ipod-re/nano5g/nano5g_ipsw_extracted/extracted_proper/osos
+Container size: 7288979 bytes
+Container SHA-256: ea9fb351d2ef97dfbe1d522bbc67668173d18bf15c5e809d7ef073b087475b73
+Header bytes [0x00,0x18):
+  38 37 33 30 32 2e 30 03 00 00 00 00 24 26 6f 00
+  93 32 6f 00 b0 26 6f 00
+
+Fields per firmware/target/arm/s5l8702/ipodnano4g/applefw.c:29-30:
+  +0x00 fourcc:       "8730"
+  +0x07 format:       3 (encrypted IMG1)
+  +0x08 entry offset: 0x00000000
+  +0x0c body length:  0x006f2624 (7284260 bytes)
+  +0x10 data length:  0x006f3293
+
+Decrypted body: /home/sebastian/ipod-re/nano5g/osos_decrypted/osos_body.bin
+Body size: 7284260 bytes (exactly IMG1 body length)
+Body SHA-256: 01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec
+Ghidra image base: 0x08000000
+First four body bytes: 0c 1c 00 ea; decoded first instruction: b 0x08007038
+
+Static reachability recorded in OSOS_body_img1_entry_to_mmu_reach_20261031.application.log:
+  0x08000000 -> 0x08007038
+  0x08007044 -> 0x08005058
+  0x080050c8 -> 0x08005d3c

@@ -1,0 +1,12 @@
+set architecture arm
+set confirm off
+file utils/ipodnano5g/analysis/evidence/accessories-alias-parser-rehost-2026-10-31/OSOS_accessories_parser_real_fat_entry_alias_copy_rehost_20261031.elf
+target remote :23459
+break *0x8bf00000
+continue
+info registers pc r0 r1 r2 r3 r4 sp lr cpsr
+x/16bx 0x8bf00000
+dump binary memory utils/ipodnano5g/analysis/evidence/accessories-alias-parser-rehost-2026-10-31/loader-alias-postread.bin 0x8bf00000 0x8bf10f80
+x/32wx 0x08e64000
+kill
+quit

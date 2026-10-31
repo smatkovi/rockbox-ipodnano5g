@@ -1,0 +1,174 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (660 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1281 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpContainingFunctions.java '0x081a5d48'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/DumpContainingFunctions.java (HeadlessAnalyzer)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 081a5d48 FUNCTION FUN_081a5d48@081a5d48 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_081a5d48(int *param_1)
+
+{
+  undefined4 uVar1;
+  
+  if (param_1[2] != 0) {
+    uVar1 = thunk_EXT_FUN_22002348();
+    thunk_EXT_FUN_22004914();
+    FUN_080e3e84(*param_1,*param_1 + param_1[2] + -1,param_1[1],DAT_081a5d74);
+    thunk_EXT_FUN_2200235c(uVar1);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d48 push {r4,r5,r6,lr} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d4a mov r4,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d4c ldr r0,[r0,#0x8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d4e cmp r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d50 beq 0x081a5d72 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d52 blx 0x0821881c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d56 mov r5,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d58 blx 0x082185dc (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d5c ldr r1,[r4,#0x8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d5e ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d60 ldr r3,[0x081a5d74] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d62 ldr r2,[r4,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d64 adds r1,r0,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d66 subs r1,r1,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d68 bl 0x080e3e84 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d6c mov r0,r5 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d6e blx 0x08218824 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 081a5d72 pop {r4,r5,r6,pc} (GhidraScript)  
+INFO  REPORT: Execute script: DumpListingWindow.java '0x081a5d40' '0x081a5de0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/DumpListingWindow.java (HeadlessAnalyzer)  
+INFO  DumpListingWindow.java> WINDOW 081a5d40..081a5de0 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d40  vmov r0,r1,d0  function=FUN_081a5d38@081a5d38 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d44  bx lr  function=FUN_081a5d38@081a5d38 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d48  push {r4,r5,r6,lr}  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d4a  mov r4,r0  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d4c  ldr r0,[r0,#0x8]  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d4e  cmp r0,#0x0  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d50  beq 0x081a5d72  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 081a5d72 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d52  blx 0x0821881c  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 0821881c (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d56  mov r5,r0  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d58  blx 0x082185dc  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 082185dc (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d5c  ldr r1,[r4,#0x8]  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d5e  ldr r0,[r4,#0x0]  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d60  ldr r3,[0x081a5d74]  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF READ -> 081a5d74 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d62  ldr r2,[r4,#0x4]  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d64  adds r1,r0,r1  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d66  subs r1,r1,#0x1  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d68  bl 0x080e3e84  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 080e3e84 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d6c  mov r0,r5  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d6e  blx 0x08218824  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 08218824 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d72  pop {r4,r5,r6,pc}  function=FUN_081a5d48@081a5d48 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d78  push {r0,r1,r2,r3,r4,r5,r6,lr}  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d7a  movs r4,#0xb  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d7c  mov r5,r0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d7e  movs r0,#0xb9  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d80  lsls r0,r0,#0x2  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d82  adds r1,r5,r0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d84  add r0,sp,#0xc  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d86  bl 0x0827f420  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 0827f420 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d8a  ldr r0,[r5,#0x4]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d8c  bl 0x08218dbe  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 08218dbe (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d90  cmp r0,#0x0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d92  beq 0x081a5dca  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 081a5dca (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d94  lsls r0,r4,#0x6  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d96  adds r4,r5,r0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d98  ldr r0,[r4,#0x1c]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d9a  ldr r1,[r0,#0x0]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d9c  ldr r1,[r1,#0xc]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5d9e  blx r1  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5da0  movs r2,#0x0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5da2  str r2,[sp,#0x4]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF WRITE -> Stack[-0x1c] (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5da4  str r2,[sp,#0x8]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF WRITE -> Stack[-0x18] (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5da6  str r0,[sp,#0x0]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF WRITE -> Stack[-0x20] (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5da8  ldr r0,[r4,#0x1c]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5daa  movs r2,#0x7  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dac  movs r1,#0x0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dae  movs r3,#0x1  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5db0  bl 0x081a559e  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 081a559e (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5db4  cmp r0,#0x0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5db6  beq 0x081a5dc8  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 081a5dc8 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5db8  mov r1,r0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dba  movs r2,#0x1  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dbc  movs r3,#0xc8  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dbe  mov r0,r5  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dc0  bl 0x081ecdbe  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 081ecdbe (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dc4  mov r4,r0  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dc6  b 0x081a5dca  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_JUMP -> 081a5dca (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dc8  movs r4,#0x1c  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dca  ldr r0,[sp,#0xc]  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF READ -> Stack[-0x14] (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dcc  bl 0x081a7bd2  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 081a7bd2 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dd0  add sp,#0x10  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dd2  mov r0,r4  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dd4  pop {r4,r5,r6,pc}  function=FUN_081a5d78@081a5d78 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dd8  push {r4,lr}  function=FUN_081a5dd8@081a5dd8 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dda  ldr r4,[0x081a5df4]  function=FUN_081a5dd8@081a5dd8 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF READ -> 081a5df4 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5ddc  ldr r0,[r4,#0x4]  function=FUN_081a5dd8@081a5dd8 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF READ -> 08553934 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5dde  cmp r0,#0x0  function=FUN_081a5dd8@081a5dd8 (GhidraScript)  
+INFO  DumpListingWindow.java> 081a5de0  bne 0x081a5df0  function=FUN_081a5dd8@081a5dd8 (GhidraScript)  
+INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 081a5df0 (GhidraScript)  
+INFO  DumpListingWindow.java> XREFS TO 081a5d40 (GhidraScript)  
+INFO  DumpListingWindow.java> XREFS TO 081a5de0 (GhidraScript)  

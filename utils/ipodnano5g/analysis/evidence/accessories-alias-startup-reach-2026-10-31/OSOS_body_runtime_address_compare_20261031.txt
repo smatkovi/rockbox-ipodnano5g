@@ -1,0 +1,9 @@
+Offline OSOS section-map comparison; not a live RAM capture.
+body size=0x6f2624 sha256=01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec
+dram mapping size=0x6c43a8 sha256=1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+SRAM prefix: body file offset 0 -> VA 0x22000000.
+DRAM section: body file offset 0x2e27c -> VA 0x08000000.
+DRAM text section start: runtime=0x08000000 body_file=0x2e27c flat_body_project=0x0802e27c
+  equal=True body=68696265 mapped=68696265
+section mapper and TTBR literal: runtime=0x080e3e84 body_file=0x112100 flat_body_project=0x08112100
+  equal=True body=30b5000d074d8400090d6419091a0020120d04e015182d051d43401c20c48842f8dd30bd00c06d08 mapped=30b5000d074d8400090d6419091a0020120d04e015182d051d43401c20c48842f8dd30bd00c06d08

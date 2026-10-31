@@ -1,0 +1,130 @@
+2026-10-31 12:48:13 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-10-31 12:48:13 INFO  (LoggingInitialization) Using log file: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/OSOS_body_boot_entry_chain_20261031.application.log  
+2026-10-31 12:48:13 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter  
+2026-10-31 12:48:13 INFO  (Preferences) Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences  
+2026-10-31 12:48:13 INFO  (Preferences) Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences  
+2026-10-31 12:48:13 INFO  (ClassSearcher) Searching for classes...  
+2026-10-31 12:48:14 INFO  (ClassSearcher) Class search complete (662 ms)  
+2026-10-31 12:48:14 INFO  (DefaultSSLContextInitializer) Initializing SSL Context  
+2026-10-31 12:48:14 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-10-31 12:48:14 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2026-10-31 12:48:14 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-10-31 12:48:14 INFO  (AnalyzeHeadless) Headless startup complete (1280 ms)  
+2026-10-31 12:48:14 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) HEADLESS: execution starts  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_body_full_20261031/N5G_OSOS_body_full  
+2026-10-31 12:48:15 INFO  (HeadlessProject) Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_body_full_20261031/N5G_OSOS_body_full  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) REPORT: Processing read-only project file: /osos_body.bin  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) REPORT: Execute script: DumpListingWindow.java '0x08006ff0' '0x08007080'   
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpListingWindow.java  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> WINDOW 08006ff0..08007080  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007008  ldr r0,[0x8007030]  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 08007030  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800700c  ldr r0,[r0,#0x0]  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 22009248  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007010  ldr r0,[r0,#0x14]  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007014  cmp r0,#0x0  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007018  ldrne r0,[r0,#0x0]  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800701c  ldrne r1,[0x8007034]  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 08007034  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007020  cmpne r0,r1  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007024  mvnne r0,#0x1  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007028  bne 0x080039c0  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 080039c0  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800702c  bx lr  function=FUN_08007008@08007008  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007038  ldr sp,[0x8007048]  function=<none>  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 08007048  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800703c  cmp sp,#0x0  function=<none>  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007040  ldreq sp,[0x800708c]  function=<none>  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 0800708c  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007044  b 0x08005058  function=<none>  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF UNCONDITIONAL_JUMP -> 08005058  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800704c  msr cpsr_c,r0  function=FUN_0800704c@0800704c  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007050  bx lr  function=FUN_0800704c@0800704c  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007054  mrs r0,cpsr  function=FUN_08007054@08007054  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007058  msr cpsr_c,#0x93  function=FUN_08007054@08007054  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800705c  bx lr  function=FUN_08007054@08007054  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007060  adr r0,0x8007060  function=FUN_08007060@08007060  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007064  ldr r1,[0x8007078]  function=FUN_08007060@08007060  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java>     REF READ -> 08007078  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007068  sub r0,r1,r0  function=FUN_08007060@08007060  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 0800706c  bx lr  function=FUN_08007060@08007060  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007070  add lr,lr,r0  function=FUN_08007070@08007070  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> 08007074  bx lr  function=FUN_08007070@08007070  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> XREFS TO 08006ff0  
+2026-10-31 12:48:15 INFO  (GhidraScript) DumpListingWindow.java> XREFS TO 08007080  
+2026-10-31 12:48:15 INFO  (HeadlessAnalyzer) REPORT: Execute script: FindIncomingReferencesInRange.java '0x08007000' '0x08007080'   
+2026-10-31 12:48:16 INFO  (HeadlessAnalyzer) SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005b6c TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005b48@08005b48 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005b98 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005b84@08005b84 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080057e0 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0800573c@0800573c INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005aa4 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005210 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005200@08005200 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005274 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005248@08005248 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080052ac TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005310 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080052f8@080052f8 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005388 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005324@08005324 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080053dc TYPE UNCONDITIONAL_CALL FUNCTION FUN_080053c0@080053c0 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005414 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005450 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080054ac TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005488@08005488 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080054e8 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005590 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005574@08005574 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080055e8 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005638 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005720 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005670@08005670 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005810 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080057fc@080057fc INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 0800589c TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005878@08005878 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080058dc TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005920 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005950 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005988 TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080059bc TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005a04 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080059f4@080059f4 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 08005b08 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005ae8@08005ae8 INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 080051e8 TYPE UNCONDITIONAL_CALL FUNCTION FUN_080051dc@080051dc INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007008 FROM 0800550c TYPE UNCONDITIONAL_CALL FUNCTION FUN_080054fc@080054fc INSTRUCTION bl 0x08007008  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007038 FROM 08000000 TYPE UNCONDITIONAL_JUMP FUNCTION <none> INSTRUCTION b 0x08007038  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 08005780 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0800573c@0800573c INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080057b4 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0800573c@0800573c INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080057c0 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0800573c@0800573c INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 08005a40 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 08005a64 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 08005a88 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 08005a94 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080056b8 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005670@08005670 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080056ec TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005670@08005670 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080056f8 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005670@08005670 INSTRUCTION bl 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 0800704c FROM 080021e8 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08002198@08002198 INSTRUCTION b 0x0800704c  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007054 FROM 08005750 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0800573c@0800573c INSTRUCTION bl 0x08007054  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007054 FROM 08005a28 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08003020@08003020 INSTRUCTION bl 0x08007054  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007054 FROM 08005688 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005670@08005670 INSTRUCTION bl 0x08007054  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007054 FROM 080021a0 TYPE UNCONDITIONAL_CALL FUNCTION FUN_08002198@08002198 INSTRUCTION bl 0x08007054  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007060 FROM 0800505c TYPE UNCONDITIONAL_CALL FUNCTION <none> INSTRUCTION bl 0x08007060  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> TARGET 08007070 FROM 08005f3c TYPE UNCONDITIONAL_CALL FUNCTION FUN_08005ec8@08005ec8 INSTRUCTION bl 0x08007070  
+2026-10-31 12:48:16 INFO  (GhidraScript) FindIncomingReferencesInRange.java> RANGE 08007000-08007080 INCOMING=47  

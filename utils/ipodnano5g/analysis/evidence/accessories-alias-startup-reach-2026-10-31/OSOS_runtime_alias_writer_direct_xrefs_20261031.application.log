@@ -1,0 +1,61 @@
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> WINDOW 080e3e84..080e3eae  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e84  push {r4,r5,lr}  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e86  lsrs r0,r0,#0x14  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e88  ldr r5,[0x080e3ea8]  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF READ -> 080e3ea8  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e8a  lsls r4,r0,#0x2  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e8c  lsrs r1,r1,#0x14  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e8e  adds r4,r4,r5  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e90  subs r1,r1,r0  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e92  movs r0,#0x0  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e94  lsrs r2,r2,#0x14  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e96  b 0x080e3ea2  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_JUMP -> 080e3ea2  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e98  adds r5,r2,r0  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e9a  lsls r5,r5,#0x14  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e9c  orrs r5,r3  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3e9e  adds r0,r0,#0x1  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3ea0  stmia r4!,{r5}  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3ea2  cmp r0,r1  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3ea4  ble 0x080e3e98  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 080e3e98  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3ea6  pop {r4,r5,pc}  function=FUN_080e3e84@080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3eac  push {r4,lr}  function=FUN_080e3eac@080e3eac  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 080e3eae  bl 0x0819adec  function=FUN_080e3eac@080e3eac  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 0819adec  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> XREFS TO 080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     081a5d68 UNCONDITIONAL_CALL function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> XREFS TO 080e3eae  
+2026-10-31 13:20:34 INFO  FindIncomingReferencesInRange.java> TARGET 080e3e84 FROM 081a5d68 TYPE UNCONDITIONAL_CALL FUNCTION FUN_081a5d48@081a5d48 INSTRUCTION bl 0x080e3e84  
+2026-10-31 13:20:34 INFO  FindIncomingReferencesInRange.java> RANGE 080e3e84-080e3e87 INCOMING=1  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> WINDOW 081a5d48..081a5d74  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d48  push {r4,r5,r6,lr}  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d4a  mov r4,r0  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d4c  ldr r0,[r0,#0x8]  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d4e  cmp r0,#0x0  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d50  beq 0x081a5d72  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 081a5d72  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d52  blx 0x0821881c  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 0821881c  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d56  mov r5,r0  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d58  blx 0x082185dc  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 082185dc  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d5c  ldr r1,[r4,#0x8]  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d5e  ldr r0,[r4,#0x0]  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d60  ldr r3,[0x081a5d74]  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF READ -> 081a5d74  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d62  ldr r2,[r4,#0x4]  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d64  adds r1,r0,r1  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d66  subs r1,r1,#0x1  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d68  bl 0x080e3e84  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 080e3e84  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d6c  mov r0,r5  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d6e  blx 0x08218824  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 08218824  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> 081a5d72  pop {r4,r5,r6,pc}  function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> XREFS TO 081a5d48  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     0801e158 UNCONDITIONAL_CALL function=FUN_0801e0d8@0801e0d8  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java> XREFS TO 081a5d74  
+2026-10-31 13:20:34 INFO  DumpListingWindow.java>     081a5d60 READ function=FUN_081a5d48@081a5d48  
+2026-10-31 13:20:34 INFO  FindIncomingReferencesInRange.java> TARGET 081a5d48 FROM 0801e158 TYPE UNCONDITIONAL_CALL FUNCTION FUN_0801e0d8@0801e0d8 INSTRUCTION bl 0x081a5d48  
+2026-10-31 13:20:34 INFO  FindIncomingReferencesInRange.java> RANGE 081a5d48-081a5d4b INCOMING=1  

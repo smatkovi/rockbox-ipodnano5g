@@ -1,0 +1,63 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (526 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1168 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_body_full_20261031/N5G_OSOS_body_full (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_body_full_20261031/N5G_OSOS_body_full (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_body.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: ScanCp15Mcr.java  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/ScanCp15Mcr.java (HeadlessAnalyzer)  
+INFO  ScanCp15Mcr.java> 0800490c mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004900@08004900 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004918 mcr p15,0x0,r0,cr8,cr7,0x0 function=FUN_08004914@08004914 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 080049a8 mcr p15,0x0,r0,cr2,cr0,0x0 function=FUN_080049a8@080049a8 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 080049b0 mcr p15,0x0,r0,cr3,cr0,0x0 function=FUN_080049b0@080049b0 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 080049b8 mcr p15,0x0,r0,cr13,cr0,0x0 function=FUN_080049b8@080049b8 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004a00 mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004a00@08004a00 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004a10 mcr p15,0x0,r0,cr1,cr0,0x1 function=FUN_08005d3c@08005d3c (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004a3c mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004a28@08004a28 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004a8c mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004a80@08004a80 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004aa0 mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004a94@08004a94 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004ab4 mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004aa8@08004aa8 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004ac8 mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004abc@08004abc (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004ae0 mcr p15,0x0,r0,cr1,cr0,0x0 function=FUN_08004ad4@08004ad4 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004aec mcr p15,0x0,r0,cr7,cr5,0x0 function=FUN_08004ae8@08004ae8 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004af4 mcr p15,0x0,r0,cr7,cr10,0x4 function=FUN_08004ae8@08004ae8 (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004b00 mcr p15,0x0,r0,cr7,cr6,0x0 function=FUN_08004afc@08004afc (GhidraScript)  
+INFO  ScanCp15Mcr.java> 08004b08 mcr p15,0x0,r0,cr7,cr10,0x4 function=FUN_08004afc@08004afc (GhidraScript)  

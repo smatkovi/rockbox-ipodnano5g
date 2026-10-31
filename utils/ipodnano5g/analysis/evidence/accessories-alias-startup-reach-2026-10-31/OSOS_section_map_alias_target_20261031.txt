@@ -1,0 +1,25 @@
+IMG1 body: path=/home/sebastian/ipod-re/nano5g/osos_decrypted/osos_body.bin size=0x6f2624 sha256=01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec
+SRAM prefix extraction: path=/home/sebastian/ipod-re/local-analysis/inputs/osos_bootprefix_22000000_20261031.bin size=0xe27c sha256=0b01c47e51b562523ddce4747529bd9f41b14840337e76ede54af60a809f54e2
+offline DRAM suffix mapping (not a live RAM capture): path=/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin size=0x6c43a8 sha256=1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Section map: body file [0,0xe27c) -> SRAM VA 0x22000000;
+            body file [0x2e27c,end) -> DRAM VA 0x08000000.
+prefix_size_matches_0xe27c=True
+prefix_matches_body_start=True
+dram_suffix_size_matches=True
+dram_mapping_mismatch_count=2267
+dram_mapping_mismatch_range=0x6c3768..0x6c43a7
+entry_instruction=0xea001c0c target=0x22007038
+startup_branch_fileoff=0x7044 instruction=0xeafff803 target=0x22005058
+mmu_call_fileoff=0x50c8 instruction=0xeb00031b target=0x22005d3c
+sram_mapper_thunk_va=0x22003970 instruction=0xe51ff004 literal=0x080e3e85
+mapper_runtime_va=0x080e3e84
+mapper_source_body_fileoff=0x112100 source_full_body_va=0x08112100
+mapper_code_length=0x24 exact_match=True
+mapper_ttbr_literal_runtime=0x086dc000 body=0x086dc000
+alias_setup_literals_attr=0x00004c02 ttbr=0x086dc000
+alias_call_instruction_window=0223a0e31d13e0e32203a0e3ebf6ffeb
+alias_descriptor_count=64
+loader_alias_descriptor_va=0x8bf00000 address=0x086de2fc value=0x0bf04c02
+ttbr_literal_occurrences_sram_prefix=0x5e40
+ttbr_literal_occurrences_dram_suffix=0xe3ea8
+No statement here depends on a live device capture or runtime overlay.

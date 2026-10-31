@@ -1,0 +1,317 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (687 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1288 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: PrintProgramMetadata.java  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/PrintProgramMetadata.java (HeadlessAnalyzer)  
+INFO  PrintProgramMetadata.java> PROGRAM=osos_runtime_dram_20261025.bin (GhidraScript)  
+INFO  PrintProgramMetadata.java> LANGUAGE=ARM:LE:32:v6 (GhidraScript)  
+INFO  PrintProgramMetadata.java> COMPILER=default (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=ram 08000000-086c43a7 initialized=true (GhidraScript)  
+INFO  REPORT: Execute script: DumpContainingFunctions.java '0x08004900' '0x080e3e84'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/DumpContainingFunctions.java (HeadlessAnalyzer)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 08004900 FUNCTION FUN_080048f8@080048f8 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_080048f8(undefined4 param_1,undefined4 *param_2,int *param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 local_64;
+  undefined4 uStack_60;
+  undefined4 uStack_5c;
+  undefined1 local_58;
+  int local_54;
+  undefined4 local_50;
+  undefined4 uStack_4c;
+  undefined4 uStack_48;
+  undefined1 local_44;
+  undefined4 local_40;
+  uint local_3c;
+  int local_38;
+  undefined4 local_34;
+  undefined4 uStack_30;
+  undefined4 uStack_2c;
+  undefined1 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  
+  FUN_08190a94(param_1,0,0,0);
+  FUN_0819156e(&local_34);
+  uVar1 = FUN_0818eb44(0x10);
+  uVar2 = (**(code **)(*(int *)*param_2 + 0x28))();
+  iVar3 = FUN_081917b4(uVar1,uVar2,3);
+  local_20 = *(undefined4 *)(iVar3 + 8);
+  local_24 = *(undefined4 *)(iVar3 + 4);
+  thunk_EXT_FUN_220000b4(&local_34,&local_24,0xe);
+  local_40 = (**(code **)(*param_3 + 8))(param_3);
+  iVar4 = FUN_08190f06(&local_40,2);
+  (**(code **)(*(int *)*param_2 + 0x20))();
+  if (*(char *)(param_2 + 0xda) != '\0') {
+    FUN_081914da(param_2);
+    FUN_08191514(param_2);
+  }
+  uVar1 = (**(code **)(*(int *)*param_2 + 0x28))();
+  uVar1 = FUN_0818e65c(iVar4 << 10,uVar1);
+  FUN_08192398(uVar1,&local_38,&local_3c);
+  if (local_3c != 0) {
+    uVar1 = FUN_0818eb44(0x10);
+    iVar4 = (**(code **)(*(int *)*param_2 + 0x28))();
+    local_54 = FUN_081917b4(uVar1,iVar4 << 4,3);
+    iVar4 = (**(code **)(*(int *)*param_2 + 0x28))();
+    thunk_EXT_FUN_22000074(*(undefined4 *)(local_54 + 4),iVar4 << 4);
+    for (; 0x10 < local_3c; local_3c = local_3c - 0x10) {
+      local_64 = local_34;
+      uStack_60 = uStack_30;
+      uStack_5c = uStack_2c;
+      local_58 = local_28;
+      (**(code **)(*(int *)*param_2 + 4))((int *)*param_2,&local_64,local_38,0x10,1);
+      local_38 = local_38 + 0x10;
+    }
+    local_50 = local_34;
+    uStack_4c = uStack_30;
+    uStack_48 = uStack_2c;
+    local_44 = local_28;
+    (**(code **)(*(int *)*param_2 + 4))((int *)*param_2,&local_50,local_38,local_3c & 0xffff,1);
+    if (local_54 != 0) {
+      FUN_08191818();
+      FUN_08191cdc();
+    }
+  }
+  *(undefined1 *)(param_2 + 0x1d) = 1;
+  if (iVar3 != 0) {
+    FUN_08191818(iVar3);
+    FUN_08191cdc();
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080048f8 push {r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080048fa mov r6,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080048fc movs r2,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080048fe mov r4,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004900 sub sp,#0x54 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004902 mov r1,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004904 mov r3,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004906 bl 0x08190a94 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800490a add r0,sp,#0x34 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800490c bl 0x0819156e (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004910 movs r0,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004912 bl 0x0818eb44 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004916 mov r5,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004918 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800491a ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800491c ldr r1,[r1,#0x28] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800491e blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004920 mov r1,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004922 movs r2,#0x3 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004924 mov r0,r5 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004926 bl 0x081917b4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800492a ldr r1,[r0,#0x8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800492c mov r5,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800492e ldr r0,[r0,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004930 str r1,[sp,#0x48] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004932 movs r2,#0xe (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004934 str r0,[sp,#0x44] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004936 add r1,sp,#0x44 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004938 add r0,sp,#0x34 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800493a blx 0x082002c4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800493e ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004940 ldr r1,[r0,#0x8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004942 mov r0,r6 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004944 blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004946 str r0,[sp,#0x28] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004948 movs r1,#0x2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800494a add r0,sp,#0x28 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800494c bl 0x08190f06 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004950 mov r6,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004952 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004954 ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004956 ldr r1,[r1,#0x20] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004958 blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800495a movs r0,#0x1b (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800495c lsls r0,r0,#0x5 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800495e adds r0,r4,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004960 ldrb r0,[r0,#0x8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004962 cmp r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004964 beq 0x08004972 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004966 mov r0,r4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004968 bl 0x081914da (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800496c mov r0,r4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800496e bl 0x08191514 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004972 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004974 ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004976 ldr r1,[r1,#0x28] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004978 blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800497a lsls r2,r6,#0xa (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800497c mov r1,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800497e mov r0,r2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004980 blx 0x0818e65c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004984 add r2,sp,#0x2c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004986 add r1,sp,#0x30 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004988 bl 0x08192398 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800498c ldr r0,[sp,#0x2c] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800498e cmp r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004990 beq 0x08004a2c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004992 movs r0,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004994 bl 0x0818eb44 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004998 mov r6,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800499a ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800499c ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 0800499e ldr r1,[r1,#0x28] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049a0 blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049a2 lsls r1,r0,#0x4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049a4 movs r2,#0x3 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049a6 mov r0,r6 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049a8 bl 0x081917b4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ac str r0,[sp,#0x14] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ae ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049b0 ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049b2 ldr r1,[r1,#0x28] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049b4 blx r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049b6 lsls r1,r0,#0x4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049b8 ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ba ldr r0,[r0,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049bc blx 0x0820262c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049c0 ldr r0,[sp,#0x2c] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049c2 add r7,sp,#0x4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049c4 b 0x080049f4 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049c6 add r1,sp,#0x34 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049c8 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ca ldmia r1!,{r2,r3,r6} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049cc stmia r7!,{r2,r3,r6} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ce add r3,sp,#0x40 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049d0 movs r2,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049d2 ldrb r1,[r3,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049d4 mov r3,sp (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049d6 subs r7,#0xc (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049d8 strb r1,[r3,#0x10] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049da str r2,[sp,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049dc ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049de ldr r2,[sp,#0x30] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049e0 movs r3,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049e2 ldr r6,[r1,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049e4 mov r1,r7 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049e6 blx r6 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049e8 ldr r0,[sp,#0x30] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ea adds r0,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ec str r0,[sp,#0x30] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049ee ldr r0,[sp,#0x2c] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049f0 subs r0,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049f2 str r0,[sp,#0x2c] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049f4 cmp r0,#0x10 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049f6 bhi 0x080049c6 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049f8 add r1,sp,#0x34 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049fa add r7,sp,#0x18 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049fc ldmia r1!,{r2,r3,r6} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080049fe ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a00 stmia r7!,{r2,r3,r6} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a02 add r3,sp,#0x40 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a04 subs r7,#0xc (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a06 ldrb r1,[r3,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a08 add r3,sp,#0x20 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a0a movs r2,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a0c strb r1,[r3,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a0e ldr r1,[sp,#0x2c] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a10 str r2,[sp,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a12 ldr r2,[sp,#0x30] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a14 uxth r3,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a16 ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a18 ldr r6,[r1,#0x4] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a1a mov r1,r7 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a1c blx r6 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a1e ldr r0,[sp,#0x14] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a20 cmp r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a22 beq 0x08004a2c (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a24 bl 0x08191818 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a28 bl 0x08191cdc (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a2c movs r0,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a2e adds r4,#0x60 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a30 cmp r5,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a32 strb r0,[r4,#0x14] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a34 beq 0x08004a40 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a36 mov r0,r5 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a38 bl 0x08191818 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a3c bl 0x08191cdc (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a40 add sp,#0x54 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 08004a42 pop {r4,r5,r6,r7,pc} (GhidraScript)  
+INFO  DumpContainingFunctions.java> ===== ADDRESS 080e3e84 FUNCTION FUN_080e3e84@080e3e84 ===== (GhidraScript)  
+INFO  DumpContainingFunctions.java> 
+void FUN_080e3e84(uint param_1,uint param_2,uint param_3,uint param_4)
+
+{
+  int iVar1;
+  uint *puVar2;
+  
+  puVar2 = (uint *)((param_1 >> 0x14) * 4 + DAT_080e3ea8);
+  for (iVar1 = 0; iVar1 <= (int)((param_2 >> 0x14) - (param_1 >> 0x14)); iVar1 = iVar1 + 1) {
+    *puVar2 = ((param_3 >> 0x14) + iVar1) * 0x100000 | param_4;
+    puVar2 = puVar2 + 1;
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e84 push {r4,r5,lr} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e86 lsrs r0,r0,#0x14 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e88 ldr r5,[0x080e3ea8] (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e8a lsls r4,r0,#0x2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e8c lsrs r1,r1,#0x14 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e8e adds r4,r4,r5 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e90 subs r1,r1,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e92 movs r0,#0x0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e94 lsrs r2,r2,#0x14 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e96 b 0x080e3ea2 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e98 adds r5,r2,r0 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e9a lsls r5,r5,#0x14 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e9c orrs r5,r3 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3e9e adds r0,r0,#0x1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3ea0 stmia r4!,{r5} (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3ea2 cmp r0,r1 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3ea4 ble 0x080e3e98 (GhidraScript)  
+INFO  DumpContainingFunctions.java> 080e3ea6 pop {r4,r5,pc} (GhidraScript)  
+INFO  REPORT: Execute script: ScanCp15C1Writes.java  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/ScanCp15C1Writes.java (HeadlessAnalyzer)  

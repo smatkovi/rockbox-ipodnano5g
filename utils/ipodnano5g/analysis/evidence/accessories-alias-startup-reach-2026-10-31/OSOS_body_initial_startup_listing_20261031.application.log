@@ -1,0 +1,74 @@
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> WINDOW 08007030..08007090  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007038  ldr sp,[0x8007048]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08007048  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800703c  cmp sp,#0x0  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007040  ldreq sp,[0x800708c]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 0800708c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007044  b 0x08005058  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_JUMP -> 08005058  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800704c  msr cpsr_c,r0  function=FUN_0800704c@0800704c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007050  bx lr  function=FUN_0800704c@0800704c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007054  mrs r0,cpsr  function=FUN_08007054@08007054  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007058  msr cpsr_c,#0x93  function=FUN_08007054@08007054  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800705c  bx lr  function=FUN_08007054@08007054  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007060  adr r0,0x8007060  function=FUN_08007060@08007060  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007064  ldr r1,[0x8007078]  function=FUN_08007060@08007060  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08007078  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007068  sub r0,r1,r0  function=FUN_08007060@08007060  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800706c  bx lr  function=FUN_08007060@08007060  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007070  add lr,lr,r0  function=FUN_08007070@08007070  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08007074  bx lr  function=FUN_08007070@08007070  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> XREFS TO 08007030  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     08007008 READ function=FUN_08007008@08007008  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> XREFS TO 08007090  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> WINDOW 08005058..080050b8  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005058  stmdb sp!,{r3,r4,r5,lr}  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 2200ffd8  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 2200ffd4  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 2200ffd0  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 2200ffcc  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800505c  bl 0x08007060  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF UNCONDITIONAL_CALL -> 08007060  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005060  ldr r1,[0x800516c]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 0800516c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005064  ldr r2,[0x8005168]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08005168  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005068  ldr r4,[0x8005164]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08005164  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800506c  str r2,[r1,#0x104]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 3ff00104  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005070  mov r2,#0xff  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005074  str r2,[r1,#0x77c]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 3ff0077c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005078  ldr r2,[r1,#0x77c]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 3ff0077c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800507c  tst r2,#0xff  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005080  bne 0x08005078  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 08005078  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005084  ldr r2,[0x8005170]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08005170  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005088  str r2,[r1,#0x220]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 3ff00220  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800508c  mov r2,#0x0  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005090  str r2,[r1,#0x100]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 3ff00100  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005094  ldr r2,[r1,#0x100]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 3ff00100  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 08005098  tst r2,#0x1  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 0800509c  bne 0x08005094  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF CONDITIONAL_JUMP -> 08005094  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050a0  ldr r2,[0x8005174]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08005174  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050a4  mov r1,#0x1  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050a8  str r1,[r2,#0x8c]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 3810008c  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050ac  cmp r0,#0x0  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050b0  blne 0x08005ec8  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF CONDITIONAL_CALL -> 08005ec8  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050b4  ldr r0,[0x8005178]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF READ -> 08005178  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> 080050b8  str r0,[r4,#0x0]  function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     REF WRITE -> 22000000  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> XREFS TO 08005058  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java>     08007044 UNCONDITIONAL_JUMP function=<none>  
+2026-10-31 13:17:00 INFO  DumpListingWindow.java> XREFS TO 080050b8  

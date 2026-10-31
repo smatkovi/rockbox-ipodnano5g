@@ -1,0 +1,78 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (614 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1215 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Apple_N33_Bootloader (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Apple_N33_Bootloader (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /n5g-bootloader-decrypted-cache.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x22022680' '32'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 22022680  e5142040  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 22022684  fa000010  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 22022688  fa000008  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 2202268c  eafffffe  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 22022690  e12fff1e  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 22022694  2202ef00  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 22022698  04001805  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 2202269c  2202ff00  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226a0  2202fb00  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226a4  2202f700  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226a8  2202f300  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226ac  2202ef00  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226b0  20a52179  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226b4  600805c9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226b8  61084903  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226bc  46c046c0  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226c0  46c046c0  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226c4  0000e7fa  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226c8  3c500040  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226cc  9100b51f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226d0  90014904  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226d4  90022000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226d8  60089003  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226dc  47904668  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226e0  0000bd1f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226e4  220226e8  function=- data=undefined4 80000003h (GhidraScript)  
+INFO  DumpWords.java> 220226e8  80000003  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226ec  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226f0  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226f4  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226f8  00000000  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 220226fc  00000000  function=- data=null (GhidraScript)  
