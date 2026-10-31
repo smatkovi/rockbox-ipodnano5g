@@ -1,0 +1,65 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (649 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1240 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpPointerTableContext.java '0x084f5260' '16'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts/DumpPointerTableContext.java (HeadlessAnalyzer)  
+INFO  DumpPointerTableContext.java> ===== TABLE_CONTEXT 084f5260 words=16 ===== (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5260 value=08153a15 function=FUN_08153a14@08153a14 target_data=null word_data=addr 08153a15 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5264 value=08162e79 function=FUN_08162e78@08162e78 target_data=null word_data=addr 08162e79 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5268 value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f526c value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5270 value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java>   XREF from=0833a712 type=DATA owner=FUN_0833a6e8@0833a6e8 (GhidraScript)  
+INFO  DumpPointerTableContext.java>   XREF from=0833a710 type=PARAM owner=FUN_0833a6e8@0833a6e8 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5274 value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5278 value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f527c value=00000000 function=- target_data=null word_data=?? 00h (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5280 value=0833bced function=- target_data=null word_data=addr 0833bced (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5284 value=0833ba45 function=FUN_0833ba44@0833ba44 target_data=null word_data=addr 0833ba45 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5288 value=0833bc53 function=FUN_0833bc52@0833bc52 target_data=null word_data=addr 0833bc53 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f528c value=0833be0f function=- target_data=null word_data=addr 0833be0f (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5290 value=0833bb41 function=- target_data=null word_data=addr 0833bb41 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5294 value=0833bd65 function=FUN_0833bd64@0833bd64 target_data=null word_data=addr 0833bd65 (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f5298 value=0833c1bd function=FUN_0833c1bc@0833c1bc target_data=null word_data=addr 0833c1bd (GhidraScript)  
+INFO  DumpPointerTableContext.java> WORD at=084f529c value=0833b8ed function=- target_data=null word_data=addr 0833b8ed (GhidraScript)  

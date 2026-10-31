@@ -1,0 +1,758 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (714 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1317 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpTargetFunctions.java '0x0818edd4' '0x081e2554'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts/DumpTargetFunctions.java (HeadlessAnalyzer)  
+INFO  DumpTargetFunctions.java> ===== TARGET 0818edd4 ===== (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_0818edd4 [[0818edd4, 0818edff]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0818edd4(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  if (((*DAT_0818ee00 & 1) == 0) && (iVar1 = FUN_08192adc(DAT_0818ee00), iVar1 != 0)) {
+    uVar2 = FUN_0808feb4(DAT_0818ee04);
+    FUN_08192aee(uVar2,DAT_0818ee0c,DAT_0818ee08);
+  }
+  return DAT_0818ee04;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800cdb4 type=UNCONDITIONAL_CALL caller=FUN_0800cd80@0800cd80 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800cd80 [[0800cd80, 0800ce05]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0800cd80(int *param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int local_1c;
+  int *local_18;
+  
+  iVar7 = 0;
+  local_18 = param_1;
+  iVar2 = FUN_0819867c(&local_1c);
+  iVar1 = DAT_0800ce08;
+  if (iVar2 < 3) {
+    *local_18 = 0;
+    for (iVar5 = 0; iVar5 < iVar2; iVar5 = iVar5 + 1) {
+      iVar6 = iVar5 * 0x14;
+      if ((*(int *)(iVar6 + local_1c + 0x10) != 0) &&
+         ((*(uint *)(local_1c + iVar6) & 0x7fffffff) >> 0x1d != 0)) {
+        iVar3 = FUN_0818edd4();
+        uVar4 = *(undefined4 *)(local_1c + iVar6);
+        if (*(char *)(iVar3 + 0x2e9) != '\0') {
+          uVar4 = FUN_08198694();
+        }
+        *(undefined4 *)(iVar5 * 0x10 + iVar1 + 4) = uVar4;
+        *(undefined4 *)(iVar1 + iVar5 * 0x10) = *(undefined4 *)(iVar6 + local_1c + 4);
+        iVar3 = iVar5 * 0x10 + iVar1;
+        *(undefined4 *)(iVar3 + 8) = *(undefined4 *)(iVar6 + local_1c + 0xc);
+        iVar7 = iVar7 + 1;
+        *(undefined4 *)(iVar3 + 0xc) = 0;
+      }
+    }
+    if (0 < iVar7) {
+      *local_18 = iVar1;
+    }
+    if (iVar7 == 2) {
+      *(int *)(iVar1 + 0xc) = DAT_0800ce08 + 0x10;
+    }
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800f1a4 type=UNCONDITIONAL_CALL caller=FUN_0800f19e@0800f19e (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800f19e [[0800f19e, 0800f1c3]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0800f19e(undefined4 param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = FUN_0818edd4();
+  if (*(int *)(iVar1 + 0x2c8) != 0) {
+    FUN_0800aac0(*(int *)(iVar1 + 0x2c8),param_1,param_2,1,1);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080cc38c type=UNCONDITIONAL_CALL caller=FUN_080cc388@080cc388 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080cc388 [[080cc388, 080cc3a3]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_080cc388(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_0818edd4();
+  FUN_080f1028();
+  FUN_0824932a(uVar1);
+  FUN_082492fa(param_1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081b03d6 type=UNCONDITIONAL_CALL caller=FUN_081b0380@081b0380 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081b0380 [[081b0380, 081b0407]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_081b0380(int param_1)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined1 auStack_28 [8];
+  undefined1 auStack_20 [8];
+  int local_18;
+  
+  local_18 = param_1 + 0x34;
+  iVar2 = FUN_08192ab8(local_18,*(undefined4 *)(param_1 + 0x98));
+  FUN_0818eb5c(auStack_28,iVar2 + 0x14);
+  iVar2 = FUN_08192ab8(local_18,*(undefined4 *)(param_1 + 0x98));
+  uVar3 = *(uint *)(iVar2 + 0x34);
+  iVar2 = FUN_08192ab8(local_18,*(undefined4 *)(param_1 + 0x98));
+  uVar4 = *(uint *)(iVar2 + 0x38);
+  iVar2 = FUN_08192ab8(local_18,*(undefined4 *)(param_1 + 0x98));
+  uVar1 = *(undefined1 *)(iVar2 + 0x30);
+  uVar5 = FUN_081a9ab8();
+  FUN_081b04c4(uVar5,1);
+  uVar5 = FUN_0818eb5c(auStack_20,auStack_28);
+  uVar6 = FUN_0818edd4();
+  FUN_080644e6(uVar6,uVar5,uVar1,uVar3 & 0xff,uVar4 & 0xff,*(undefined4 *)(param_1 + 0x254),
+               DAT_081b0408);
+  FUN_0818ebc0(auStack_20);
+  FUN_0818ebc0(auStack_28);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08245f2a type=UNCONDITIONAL_CALL caller=FUN_08245f1c@08245f1c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08245f1c [[08245f1c, 08245f63]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_08245f1c(int param_1)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  if (*(char *)(param_1 + 0x111) != '\0') {
+    uVar1 = FUN_0818edd4();
+    FUN_0808fdac(uVar1,1);
+    iVar2 = FUN_0808fe66(uVar1);
+    if (iVar2 != 0) {
+      FUN_081b04c8(param_1);
+      FUN_0808fdf4(uVar1);
+    }
+    FUN_0808fe26(uVar1);
+    FUN_0824932a(uVar1);
+    FUN_082492fa(param_1);
+    *(undefined1 *)(param_1 + 0x111) = 0;
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080e5dd4 type=UNCONDITIONAL_CALL caller=FUN_080e5dd0@080e5dd0 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080e5dd0 [[080e5dd0, 080e5e19]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_080e5dd0(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 uStack_18;
+  undefined4 uStack_14;
+  
+  uStack_18 = param_3;
+  uStack_14 = param_4;
+  uVar1 = FUN_0818edd4();
+  *(undefined1 *)(param_1 + 0x111) = 1;
+  FUN_082525a4();
+  FUN_0810302c(uVar1);
+  iVar2 = FUN_08192ab8(param_1 + 0x34,*(undefined4 *)(param_1 + 0x98));
+  FUN_0818eb5c(&uStack_18,iVar2 + 0x14);
+  FUN_080fceb2(param_1 + 0x7c,&uStack_18);
+  FUN_080f5c84(param_1);
+  FUN_0818ebc0(&uStack_18);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0813f182 type=UNCONDITIONAL_CALL caller=FUN_0813f17e@0813f17e (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0813f17e [[0813f17e, 0813f18d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0813f17e(undefined4 param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_0818edd4();
+  FUN_0814e0b8(uVar1,*param_2);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080a2650 type=UNCONDITIONAL_CALL caller=FUN_080a262c@080a262c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080a262c [[080a262c, 080a2659]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_080a262c(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = FUN_081aa984();
+  if ((iVar1 != 0) && (iVar2 = FUN_081a3f7c(), iVar2 == 0)) {
+    uVar3 = FUN_0818eb44(0x48);
+    FUN_081aa99c(uVar3,DAT_080a265c,iVar1);
+    FUN_081aa9cc();
+  }
+  FUN_0818edd4();
+  FUN_080c9460();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081b0434 type=UNCONDITIONAL_CALL caller=FUN_081b0420@081b0420 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081b0420 [[081b0420, 081b04bb]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_081b0420(int param_1)
+
+{
+  char cVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  
+  if (*(char *)(param_1 + 0x111) == '\0') {
+    return;
+  }
+  FUN_08245f1c(param_1);
+  iVar2 = FUN_0818edd4();
+  iVar4 = DAT_081b04bc;
+  cVar1 = *(char *)(iVar2 + 0x245);
+  if (cVar1 == '\x04') {
+    uVar3 = FUN_08195e5e(0xc);
+    iVar4 = DAT_081b04bc + 6;
+  }
+  else {
+    if (cVar1 != '\x05') {
+      if (cVar1 == '\x06') {
+        iVar2 = FUN_081ab630();
+        *(undefined2 *)(iVar2 + 0x25c) = 6;
+        uVar3 = FUN_08195e5e(0xc);
+        uVar3 = FUN_081aa378(uVar3,iVar4,0);
+        FUN_081a5904(param_1,uVar3,0);
+        FUN_08197d9c();
+        FUN_0825fcf4();
+        return;
+      }
+      if ((cVar1 != '\a') && (iVar2 = FUN_081b040c(*DAT_081b04c0), iVar2 != 0)) {
+        FUN_081a8320(param_1 + 0xcc);
+        return;
+      }
+    }
+    uVar3 = FUN_08195e5e(0xc);
+  }
+  uVar3 = FUN_081aa378(uVar3,iVar4,0);
+  FUN_081a5904(param_1,uVar3,0);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b3f16 type=UNCONDITIONAL_CALL caller=FUN_080b3f14@080b3f14 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b3f14 [[080b3f14, 080b3f25]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b3f14(void)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_0818edd4();
+  FUN_081e6d48(uVar1,7,0);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b3f38 type=UNCONDITIONAL_CALL caller=FUN_080b3f28@080b3f28 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b3f28 [[080b3f28, 080b3f47]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b3f28(undefined4 param_1,int *param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  
+  iVar1 = 0;
+  if (param_2 != (int *)0x0) {
+    iVar1 = (**(code **)(*param_2 + 0x14))(param_2,DAT_080b3f48);
+  }
+  uVar3 = *(undefined4 *)(iVar1 + 0xc);
+  uVar2 = FUN_0818edd4();
+  FUN_081e6d48(uVar2,8,uVar3);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b3f66 type=UNCONDITIONAL_CALL caller=FUN_080b3f4c@080b3f4c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b3f4c [[080b3f4c, 080b3f75]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b3f4c(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  
+  FUN_081ab630();
+  iVar1 = FUN_08260614();
+  uVar3 = 3;
+  if ((iVar1 != 0x10e) && (iVar1 == 0x5a)) {
+    uVar3 = 4;
+  }
+  uVar2 = FUN_0818edd4();
+  FUN_081e6d48(uVar2,uVar3,0);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b3f78 type=UNCONDITIONAL_CALL caller=FUN_080b3f76@080b3f76 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b3f76 [[080b3f76, 080b3f87]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b3f76(void)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_0818edd4();
+  FUN_081e6d48(uVar1,1,0);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b3fa2 type=UNCONDITIONAL_CALL caller=FUN_080b3f88@080b3f88 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b3f88 [[080b3f88, 080b3fb1]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b3f88(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  
+  FUN_081ab630();
+  iVar1 = FUN_08260614();
+  uVar3 = 3;
+  if ((iVar1 != 0x10e) && (iVar1 == 0x5a)) {
+    uVar3 = 4;
+  }
+  uVar2 = FUN_0818edd4();
+  FUN_081e6d48(uVar2,uVar3,0);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b613e type=UNCONDITIONAL_CALL caller=FUN_080b6124@080b6124 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b6124 [[080b6124, 080b6189]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_080b6124(int *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  undefined4 uStack_10;
+  undefined4 uStack_c;
+  
+  uStack_10 = param_3;
+  uStack_c = param_4;
+  FUN_081ab630();
+  iVar1 = FUN_08260614();
+  if (iVar1 == 0x5a) {
+    uVar2 = FUN_081ab630();
+    FUN_0826fa18(uVar2,0);
+    uVar2 = FUN_0818edd4();
+    FUN_081e6d48(uVar2,4,0);
+    pcVar3 = s_LeftLandscape_080b618c;
+  }
+  else {
+    uVar2 = FUN_081ab630();
+    FUN_0826fa18(uVar2,1);
+    uVar2 = FUN_0818edd4();
+    FUN_081e6d48(uVar2,3,0);
+    pcVar3 = s_RightLandscape_080b619c;
+  }
+  uVar2 = FUN_0819d8bc(&uStack_c,pcVar3,&uStack_10);
+  (**(code **)(*param_1 + 0x15c))(param_1,uVar2,0);
+  FUN_081a7f38(&uStack_c);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b615a type=UNCONDITIONAL_CALL caller=FUN_080b6124@080b6124 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08005876 type=UNCONDITIONAL_CALL caller=FUN_08005828@08005828 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08005828 [[08005828, 08005883]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_08005828(int param_1,int param_2,int param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 uStack_18;
+  
+  local_20 = 0;
+  local_1c = 0;
+  if (param_2 != 0x59) {
+    if (param_2 < 0x5a) {
+      if (((param_2 != 0x10) && (param_2 != 0x1c)) && ((param_2 != 0x1d && (param_2 != 0x1e)))) {
+        return;
+      }
+    }
+    else if (((param_2 != 0x5a) && (param_2 != 0x6e)) && (param_2 != 0x6f)) {
+      return;
+    }
+  }
+  uStack_18 = param_4;
+  uVar1 = FUN_081929c2(0x14);
+  uVar2 = 6;
+  if (param_3 == 0) {
+    uVar2 = 0xf;
+  }
+  uVar1 = FUN_081929d4(uVar1,uVar2,&local_20,param_2);
+  uVar2 = FUN_0818edd4();
+  FUN_0800c3f4(uVar2,*(undefined4 *)(param_1 + 0x114),uVar1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800c8e8 type=UNCONDITIONAL_CALL caller=FUN_0800c8e4@0800c8e4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800c8e4 [[0800c8e4, 0800c8f7]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0800c8e4(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  
+  FUN_0818edd4();
+  uVar1 = FUN_081984d4();
+  FUN_0800ac78(uVar1,param_1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800d0c0 type=UNCONDITIONAL_CALL caller=FUN_0800d0b0@0800d0b0 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800d0b0 [[0800d0b0, 0800d153]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+int FUN_0800d0b0(undefined4 param_1,int param_2,int *param_3,undefined4 param_4)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined1 auStack_34 [8];
+  undefined4 uStack_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  int local_20;
+  int *piStack_1c;
+  undefined4 local_18;
+  
+  local_3c = DAT_0800d154;
+  local_38 = 0;
+  local_24 = param_1;
+  local_20 = param_2;
+  piStack_1c = param_3;
+  local_18 = param_4;
+  iVar2 = FUN_0818edd4();
+  uVar1 = *(undefined1 *)(iVar2 + 0x254);
+  iVar2 = FUN_0818edd4();
+  FUN_0818eb5c(auStack_34,iVar2 + 0x24c);
+  FUN_08193c30(&uStack_2c,local_24,auStack_34,uVar1,local_18);
+  if (&local_3c != &uStack_2c) {
+    FUN_081936ec(&local_3c,local_28);
+  }
+  FUN_0818ebc0(&uStack_2c);
+  FUN_0818ebc0(auStack_34);
+  FUN_081909a4(&local_3c);
+  iVar2 = FUN_08190a2c();
+  iVar4 = -1;
+  if (*param_3 < iVar2) {
+    FUN_0818ebc0(&local_3c);
+  }
+  else {
+    if (local_20 == 0) {
+      *param_3 = -1;
+    }
+    else {
+      uVar3 = FUN_081909a4(&local_3c);
+      FUN_081909b4(local_20,uVar3,*param_3);
+      iVar2 = FUN_08190a2c();
+      *param_3 = iVar2;
+    }
+    iVar4 = *param_3;
+    FUN_0818ebc0(&local_3c);
+  }
+  return iVar4;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800d0ce type=UNCONDITIONAL_CALL caller=FUN_0800d0b0@0800d0b0 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800c902 type=UNCONDITIONAL_CALL caller=FUN_0800c8f8@0800c8f8 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800c8f8 [[0800c8f8, 0800c917]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0800c8f8(undefined1 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  
+  FUN_0818edd4();
+  uVar1 = FUN_081984d4();
+  FUN_0800ac02(uVar1,param_1,param_2,param_3,param_4);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08006938 type=UNCONDITIONAL_CALL caller=FUN_08006926@08006926 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08006926 [[08006926, 08006a0b]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_08006926(int param_1,int param_2,undefined1 *param_3,int *param_4)
+
+{
+  undefined1 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  undefined1 *local_38;
+  undefined1 auStack_34 [4];
+  undefined4 local_30;
+  undefined1 auStack_2c [8];
+  int iStack_24;
+  int iStack_20;
+  undefined1 *local_1c;
+  int *piStack_18;
+  
+  if (param_2 == 0) {
+    uVar2 = 0x15;
+  }
+  else {
+    iStack_24 = param_1;
+    iStack_20 = param_2;
+    local_1c = param_3;
+    piStack_18 = param_4;
+    iVar3 = FUN_0818edd4();
+    uVar1 = *(undefined1 *)(iVar3 + 0x254);
+    local_38 = auStack_2c;
+    iVar3 = FUN_0818edd4();
+    FUN_0818eb5c(local_38,iVar3 + 0x24c);
+    local_38 = local_1c;
+    FUN_08193c30(auStack_34,param_2,auStack_2c,uVar1);
+    FUN_0818ebc0(auStack_2c);
+    iVar3 = 0;
+    do {
+      iVar5 = iVar3 * 0x24 + param_1;
+      FUN_08193be0(&local_38,iVar5 + 0x1c);
+      uVar2 = FUN_081909a4(auStack_34);
+      iVar5 = FUN_08193d0c(*(undefined4 *)(iVar5 + 4),uVar2);
+      if (iVar5 == 0) {
+        param_1 = iVar3 * 0x24 + param_1;
+        *(int *)(param_1 + 0x14) = *(int *)(param_1 + 0x14) + 1;
+        goto LAB_080069e4;
+      }
+      thunk_EXT_FUN_22003052(local_38);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 4);
+    iVar3 = 0;
+    do {
+      iVar5 = iVar3 * 0x24 + param_1;
+      FUN_08193be0(&local_38,iVar5 + 0x1c);
+      iVar5 = FUN_08193bf0(iVar5);
+      if (iVar5 == 0) {
+        puVar4 = (undefined1 *)(iVar3 * 0x24 + param_1);
+        if (puVar4 != auStack_34) {
+          FUN_081936ec(puVar4,local_30);
+        }
+        *(int *)(puVar4 + 0x14) = *(int *)(puVar4 + 0x14) + 1;
+LAB_080069e4:
+        *param_4 = iVar3;
+        thunk_EXT_FUN_22003052(local_38);
+        FUN_0818ebc0(auStack_34);
+        return 0;
+      }
+      thunk_EXT_FUN_22003052(local_38);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 4);
+    FUN_0818ebc0(auStack_34);
+    uVar2 = 0x19;
+  }
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08006948 type=UNCONDITIONAL_CALL caller=FUN_08006926@08006926 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0800c920 type=UNCONDITIONAL_CALL caller=FUN_0800c918@0800c918 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0800c918 [[0800c918, 0800c933]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0800c918(undefined1 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 uVar1;
+  
+  FUN_0818edd4();
+  uVar1 = FUN_081984d4();
+  FUN_0800ad3e(uVar1,param_1,param_2,param_3);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> ===== TARGET 081e2554 ===== (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_081e2554 [[081e2554, 081e257f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_081e2554(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  if (((*DAT_081e2580 & 1) == 0) && (iVar1 = FUN_08192adc(DAT_081e2580), iVar1 != 0)) {
+    uVar2 = FUN_0833c3c2(DAT_081e2584);
+    FUN_08192aee(uVar2,DAT_081e258c,DAT_081e2588);
+  }
+  return DAT_081e2584;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833c11e type=UNCONDITIONAL_CALL caller=FUN_0833c118@0833c118 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833c118 [[0833c118, 0833c169]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0833c118(int param_1)
+
+{
+  undefined4 uVar1;
+  undefined1 auStack_28 [32];
+  
+  uVar1 = FUN_081e2554();
+  *(undefined4 *)(param_1 + 8) = uVar1;
+  thunk_EXT_FUN_22000198(auStack_28,0x20);
+  FUN_08195634(auStack_28,&DAT_0833c16c,param_1);
+  thumb_8193984(s_ATAWorkLoopTask_0833c174,DAT_0833c170,auStack_28,0x18,0x1000,0,0);
+  thumb_8193984(s_ATAWorkLoopIRQTask_0833c188,DAT_0833c184,auStack_28,0xc0,0x800,0,0);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd44 type=UNCONDITIONAL_CALL caller=FUN_0833cd3c@0833cd3c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833cd3c [[0833cd3c, 0833cd5d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0833cd3c(int param_1)
+
+{
+  undefined4 uVar1;
+  
+  *(undefined4 *)(param_1 + 8) = DAT_0833cd60;
+  uVar1 = FUN_081e2554();
+  FUN_0833ce28(uVar1,*(undefined4 *)(param_1 + 0xc));
+  FUN_081e2554();
+  FUN_0833cdf8();
+  uVar1 = thunk_EXT_FUN_220023c0();
+  *(undefined4 *)(param_1 + 4) = uVar1;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd4e type=UNCONDITIONAL_CALL caller=FUN_0833cd3c@0833cd3c (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833c56a type=UNCONDITIONAL_CALL caller=FUN_0833c504@0833c504 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833c504 [[0833c504, 0833c575]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0833c504(int *param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  if ((param_3 != 0) && (param_2 != 0)) {
+    FUN_0833cd10(param_3,1);
+    *(undefined4 *)(param_3 + 0x58) = 0;
+    if ((param_1[5] == DAT_0833c578) &&
+       ((param_1[6] == DAT_0833c57c && (param_1[7] == DAT_0833c580)))) {
+      param_1[4] = param_3;
+      (**(code **)(*param_1 + 0x14))(param_1);
+    }
+    else {
+      iVar2 = param_1[3];
+      iVar1 = FUN_0818eb44(8);
+      *(int *)(iVar1 + 4) = param_3;
+      thunk_EXT_FUN_22003048();
+      thunk_EXT_FUN_22003032(iVar2,iVar1);
+      thunk_EXT_FUN_22003052(iVar2 + 8);
+      FUN_081e2554();
+      FUN_0833cbbe();
+    }
+    return 0;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd6a type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)  
