@@ -53,9 +53,9 @@ For the other ELFs, replace `-DNAME_TAIL4=0x30303030` and
 - `N82_tail_BB`: `-DNAME_TAIL4=0x42424141 -DEXPECTED_HEADER_WORD=0x4242`
 
 The runner scripts invoke `qemu-arm -cpu arm1176 -d in_asm,cpu` and preserve
-the stdout/status and instruction/register trace. The compiler may warn that
-the host Rehost ELF has an RWX load segment; this is a property of the local
-test image.
+the stdout/status and instruction/register trace locally. The compiler may
+warn that the host Rehost ELF has an RWX load segment; this is a property of
+the local test image.
 
 ## Grenzen
 
@@ -67,5 +67,9 @@ Streamcleanup `FUN_081d0ff0`/`FUN_08191cdc`. `MODEL_STREAM_SLOT` bildet nur
 den Hilfsvektoraufbau/-destruktor nach. Kein Dateisystem auf dem Gerät wurde
 verändert.
 
-`SHA256SUMS` deckt diese README sowie die drei ELFs, Runlogs, Traces und
-Runner-Skripte ab.
+Das Evidenzverzeichnis enthält die fünf kompakten QEMU-Ausgabelogs sowie die
+zugehörigen ELFs und vollständigen Instruktionsspuren. Die ELFs sind bereits
+im Repository-Verlauf enthalten und jeweils etwa 6,9 MB groß; jedes bindet das
+OSOS-Runtime-Abbild ein. `SHA256SUMS` prüft die Dateien dieses Verzeichnisses.
+Für einen Neuaufbau aus der Rehost-Quelle werden `arm-none-eabi-gcc`, QEMU und
+das lokale Runtime-Abbild benötigt; das Abbild wird nicht separat verteilt.
