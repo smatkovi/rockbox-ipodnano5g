@@ -1,0 +1,1 @@
+2026-10-31 16:55:45 INFO  ScanHoldBranchGadgets.java> SUMMARY defined-instructions=1375826 cmp-r0-zero=34917 cbz-cbnz-r0=0 paired-stack-returns=1965 comparable-no-call-returns=663 different-net-sp=0
