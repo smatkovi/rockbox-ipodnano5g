@@ -11,4 +11,8 @@ Rücklesen nach Schreiben: beide Hashes stimmen.
 SCSI eject meldete Erfolg und setzte /dev/sdb auf 0 Byte; sg_start --load stellte das Medium wieder mit 14.9 GiB bereit.
 sg_reset --device --no-escalate änderte den USB-LUN-Zustand nicht zu einem CPU-Neustart.
 Rücklesen nach diesen SCSI-Kommandos: beide Hashes stimmen weiterhin.
-Boottrigger noch ausstehend. Kein Rockbox- oder Fehlerbildschirm beobachtet.
+19:54:01 USB-Link nach normalem Neustart getrennt; 19:55:02 enumerierte 05ac:1265 erneut. Kernel meldete Manufacturer: Rockbox.org, Ramdisk 8 MiB, iPod-LUN 14.9 GiB, FTL-LUN 15.1 GiB und ttyACM1. Nutzer bestätigte Rockbox-Menü am Display.
+
+Schreibgeschütztes Rücklesen nach Rockbox-Start: accessories.reg 736 Byte, b19180df8a20ef7e5496885bf227827623d6c3115adef0e4d47ed2efe2e6f78e; /BOOT.BIN 69504 Byte, ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2.
+
+Dieser erfolgreiche Start erfolgte mit weiterhin angeschlossenem USB-Kabel; während des Bootens wurde kein Code vom PC übertragen. Vollständiger Kaltstart mit physisch getrenntem USB-Kabel steht noch aus.

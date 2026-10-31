@@ -1,8 +1,8 @@
 # Zubehör-ROP: Vorbereitung des ersten echten Kaltstarttests
 
-Stand 31.10.2026. Der Prüfkandidat und sein Rockbox-Zwischenloader sind auf
-dem internen FAT-Volume abgelegt. Der iPod wurde seit dem Schreiben noch nicht
-kalt gestartet; ein Bootergebnis liegt daher noch nicht vor.
+Stand 31.10.2026. Der Prüfkandidat und sein Rockbox-Zwischenloader liegen auf
+dem internen FAT-Volume. Nach einem normalen Neustart zeigte der iPod Rockbox;
+der vollständige Test ohne angeschlossenes USB-Kabel steht noch aus.
 
 ## Vorheriger Inhalt und Sicherung
 
@@ -31,13 +31,25 @@ Laden des Mediums und einem SCSI-LUN-Reset. Der LUN-Reset war kein CPU-Kaltstart
 
 ## Auslösen und Beobachtung
 
-Der OSOS-MainApp-Startpfad ruft den Zubehörparser auf; der Kandidat braucht
-also einen echten Neustart des iPods. Ein SCSI-Auswurf und ein SCSI-Gerätereset
-haben den Prozessor nicht neu gestartet. Der aktuelle Zustand bleibt USB-
-Massenspeicher `05ac:1265` mit den Testdateien. Für den Bootversuch ist ein
-normaler Neustart per Menu+Center nötig: beide Tasten bis zum schwarzen
-Display halten und dann loslassen. Nicht weiter bis zum DFU-Modus halten.
-Danach USB-ID, Display und Rockbox-Menü beobachten.
+Der OSOS-MainApp-Startpfad ruft den Zubehörparser auf. Nach dem Schreiben
+wurde der Prozessor mit Menu+Center neu gestartet. Der USB-Link trennte sich
+um 19:54:01; um 19:55:02 enumerierte das Gerät wieder mit `05ac:1265` und
+`Manufacturer: Rockbox.org`. Der Host erkannte danach drei SCSI-LUNs: 8-MiB-
+Ramdisk, 14,9-GiB-iPod-Volume und 15,1-GiB-FTL. Der Nutzer bestätigte das
+Rockbox-Menü auf dem Display.
+
+Nach dem Rockbox-Start wurden beide Dateien über das schreibgeschützt
+gemeldete iPod-Volume erneut gelesen. `accessories.reg` blieb 736 Byte mit
+SHA-256 `b19180df8a20ef7e5496885bf227827623d6c3115adef0e4d47ed2efe2e6f78e`;
+`BOOT.BIN` blieb 69.504 Byte mit SHA-256
+`ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2`.
+
+Damit ist ein automatischer Boot aus dem internen Speicher über den
+`accessories.reg`-Kandidaten bis ins Rockbox-Menü beobachtet. Bei diesem Lauf
+war das USB-Kabel noch angeschlossen; es wurde nach dem Neustart kein Code
+vom PC übertragen. Für den strengen Nachweis ohne USB-Verbindung muss das
+Kabel abgezogen und derselbe normale Kaltstart wiederholt werden. Ein SCSI-
+Auswurf oder LUN-Reset ersetzt diesen Neustart nicht.
 
 ## Rückrollen
 
