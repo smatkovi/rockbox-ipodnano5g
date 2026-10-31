@@ -55,6 +55,9 @@ für `FUN_0812a9ca`:
 | `OSOS_runtime_all_runtime_list_add_callers_20261031.application.log` | Decompilierung aller 12 direkten Anfüge-Aufrufstellen; keine davon ist bislang der konkreten MBR-Managerqueue zugeordnet |
 | `OSOS_runtime_partition_manager_constructor_20261031.application.log` | Aufbau des 7-Slot-Partitionsmanagers und Initialisierer `FUN_08020448` |
 | `OSOS_runtime_partition_manager_queue_semantics_20261031.application.log` | Queueinitialisierung, Sperr-/Kopf-/Endfelder, Entnahme und Weitergabe von Knotenfeld `+4` |
+| `OSOS_runtime_partition_manager_singleton_all_callers_20261031.application.log` | Decompilierung aller 12 eindeutigen direkten Aufrufer des Partitionsmanager-Singletons |
+| `OSOS_runtime_partition_manager_init_stub_20261031.application.log` | Startup-Kette; `FUN_08029e80` ist ein `bx lr`-Stub, Queue-Drain und Manageraufrufer |
+| `OSOS_runtime_partition_manager_startup_refs_20261031.application.log` | Xrefs: Startup ruft den Stub als einzigen Caller; `FUN_0819039e` hat zwei direkte Caller |
 | `OSOS_body_oscall_22005934_dispatch_20261031.application.log` | Korrekt zugeordneter OSOS-Body: `0x08005934` baut SVC-Befehl 2; der Handler indiziert `0x2200980c` und ruft keinen Funktionszeiger auf |
 | `OSOS_body_prefix_table_pointer_20261031.application.log` | Direkter Ghidra-Speicherwert von `DAT_08001640`: `0x2200980c` |
 | `OSOS_body_list_helpers_20261031.disasm.txt` | Rohdisassemblierung des korrekt adressierten Body-Listenhelfers `0x080030bc` |
@@ -73,7 +76,10 @@ Der SVC-Handler liest damit aus `0x2200980c`; er ruft den Wert nicht als
 Callback auf. Konstruktor und Aufruferabfrage belegen die Queueform und ihren
 leeren Anfangszustand. Ein Produzent, der Einträge in genau diese
 Partitionsmanagerqueue schreibt, ist in den direkten Listen-Aufrufstellen
-noch nicht identifiziert.
+noch nicht identifiziert. Die direkte Manageraufruferliste zeigt außerdem,
+dass der Startup-Aufruf nach dem Singletonzugriff nur den `bx lr`-Stub
+`FUN_08029e80` erreicht; für `FUN_0819039e` sind nur MBR-Registrierung und
+Fehlerpfad als direkte Caller gefunden.
 
 Diese Abfragen zeigen, dass `FUN_081352fc` und `FUN_0816a928` dieselbe
 Vierer-Tabelle benutzen. Sie schließen nicht die Kante vom MBR-Partitionsadapter

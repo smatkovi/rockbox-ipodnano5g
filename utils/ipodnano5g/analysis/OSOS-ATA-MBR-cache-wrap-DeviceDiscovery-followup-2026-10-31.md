@@ -232,10 +232,30 @@ zum Argument des SVC-Befehls 2 vorhanden. Ebenso bleibt offen, welche
 Laufzeitgröße die Tabelle ab `0x2200980c` hat. Eine kontrollierbare
 Out-of-bounds-Auswirkung ist deshalb nicht nachgewiesen.
 
+### Zusatzrunde: direkte Aufrufer und Startup-Registrierung
+
+Die 12 eindeutigen direkten Aufrufer von `FUN_0818e934` wurden dekompiliert.
+Der Startup-Pfad ist `FUN_080202d8` → `FUN_08021d08` → Managerzugriff und
+`FUN_08029e80`; der letzte Eintrag ist im Runtime-Abbild nur `bx lr`. Für
+`FUN_08021d08` und `FUN_08029e80` gibt es jeweils genau eine direkte
+Code-Referenz. Damit richtet dieser Startup-Pfad keine sichtbaren Queue-
+Einträge ein. `FUN_0819039e` hat genau zwei direkte Code-Aufrufer:
+`FUN_0818e998` nach MBR-Registrierung und `FUN_080029de` im Fehlerpfad.
+
+Zusätzlich wurden alle direkten Aufrufstellen des Präfix-Listen-Anfügers
+dekompiliert (12 Callsites in 11 Funktionen). Keine davon ließ sich der
+Queue bei `Manager + 0x34` zuordnen. Das ist eine Eingrenzung des sichtbaren
+Runtime-Codes, kein Beweis, dass keine indirekte oder außerhalb des Abbilds
+liegende Registrierung existiert. Für den MBR-Pfad ist weiterhin kein
+konkreter Queue-Knoten belegt; der SVC-Befehl 2 ist daher an dieser Stelle
+noch nicht als tatsächlich ausgeführter Pfad nachgewiesen.
+
 ## Nächste Schritte
 
 - Den Produzenten der Queue bei `Manager + 0x34` finden und die Herkunft sowie
-  den Wertebereich von Knotenfeld `+4` bis zum SVC-Befehl 2 nachweisen.
+  den Wertebereich von Knotenfeld `+4` bis zum SVC-Befehl 2 nachweisen; die
+  direkten Runtime-Anfüger sind bereits abgearbeitet, daher als Nächstes
+  indirekte Registrierung und externe Queueverwaltung prüfen.
 - Die Größe und Laufzeitinitialisierung der Präfixtabelle ab `0x2200980c`
   klären; der sichtbare Handler prüft den Index vor dem Zugriff nicht.
 - Den Erzeuger der VTable-Instanz bei `0x085056d0` finden. Die VTable hat im

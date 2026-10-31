@@ -1,0 +1,251 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (667 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1278 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/lfn-resolution-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpTransientFunctions.java '0x080202d8' '0x08021d08' '0x08029e80' '0x0819039e' '0x0819f508'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/lfn-resolution-2026-10-28/scripts/DumpTransientFunctions.java (HeadlessAnalyzer)  
+INFO  DumpTransientFunctions.java> ===== TRANSIENT FUNCTION 080202d8 created=false ===== (GhidraScript)  
+INFO  DumpTransientFunctions.java> 
+void FUN_080202d8(void)
+
+{
+  undefined4 uVar1;
+  int *piVar2;
+  int iVar3;
+  
+  FUN_081a5288();
+  FUN_08021c20();
+  FUN_08023850();
+  FUN_081a74ac();
+  FUN_08251340();
+  FUN_08021d08();
+  FUN_081a74c4();
+  FUN_08023f64();
+  *DAT_08020388 = 1;
+  FUN_08023fa0();
+  uVar1 = FUN_08023cb4();
+  FUN_081a7514(uVar1,DAT_0802038c);
+  FUN_08023ca4();
+  FUN_08023ec4();
+  FUN_08023e90();
+  uVar1 = FUN_0818eb44(0xa4);
+  piVar2 = (int *)FUN_08023670(uVar1,0,1);
+  (**(code **)(*piVar2 + 0x16c))();
+  *DAT_08020390 = 500;
+  uVar1 = FUN_08022fee();
+  FUN_08022fec(uVar1,DAT_08020394,7);
+  FUN_08022140();
+  FUN_08197514(DAT_08020388 + 4);
+  iVar3 = FUN_081a77c8();
+  if (iVar3 != 0) {
+    uVar1 = FUN_081a77e0();
+    uVar1 = FUN_081a7824(uVar1,0xc);
+    uVar1 = FUN_08195e70(uVar1,DAT_08020398,0,0);
+    FUN_0819a100(uVar1,*DAT_0802039c,1,0,0);
+  }
+  FUN_08025154();
+  FUN_081a78b4();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202d8 push {r3,lr} (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202da bl 0x081a5288 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202de bl 0x08021c20 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202e2 bl 0x08023850 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202e6 bl 0x081a74ac (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202ea bl 0x08251340 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202ee bl 0x08021d08 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202f2 bl 0x081a74c4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202f6 bl 0x08023f64 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202fa ldr r1,[0x08020388] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202fc movs r0,#0x1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 080202fe strb r0,[r1,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020300 bl 0x08023fa0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020304 bl 0x08023cb4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020308 ldr r1,[0x0802038c] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802030a bl 0x081a7514 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802030e bl 0x08023ca4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020312 bl 0x08023ec4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020316 bl 0x08023e90 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802031a movs r0,#0xa4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802031c bl 0x0818eb44 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020320 movs r2,#0x1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020322 movs r1,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020324 bl 0x08023670 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020328 ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802032a adds r1,#0xff (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802032c adds r1,#0x41 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802032e ldr r1,[r1,#0x2c] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020330 blx r1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020332 ldr r1,[0x08020390] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020334 movs r0,#0xff (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020336 adds r0,#0xf5 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020338 str r0,[r1,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802033a bl 0x08022fee (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802033e ldr r1,[0x08020394] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020340 movs r2,#0x7 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020342 bl 0x08022fec (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020346 bl 0x08022140 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802034a ldr r0,[0x08020388] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802034c adds r0,r0,#0x4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802034e bl 0x08197514 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020352 bl 0x081a77c8 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020356 cmp r0,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020358 beq 0x0802037e (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802035a bl 0x081a77e0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802035e movs r1,#0xc (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020360 bl 0x081a7824 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020364 movs r2,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020366 ldr r1,[0x08020398] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020368 mov r3,r2 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802036a bl 0x08195e70 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802036e ldr r1,[0x0802039c] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020370 movs r2,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020372 movs r3,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020374 ldr r1,[r1,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020376 str r2,[sp,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020378 movs r2,#0x1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802037a bl 0x0819a100 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0802037e bl 0x08025154 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020382 bl 0x081a78b4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08020386 pop {r3,pc} (GhidraScript)  
+INFO  DumpTransientFunctions.java> ===== TRANSIENT FUNCTION 08021d08 created=false ===== (GhidraScript)  
+INFO  DumpTransientFunctions.java> 
+void FUN_08021d08(void)
+
+{
+  FUN_0818e934();
+  FUN_08029e80();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08021d08 push {r4,lr} (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08021d0a bl 0x0818e934 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08021d0e bl 0x08029e80 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08021d12 pop {r4,pc} (GhidraScript)  
+INFO  DumpTransientFunctions.java> ===== TRANSIENT FUNCTION 08029e80 created=false ===== (GhidraScript)  
+INFO  DumpTransientFunctions.java> 
+void FUN_08029e80(void)
+
+{
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTransientFunctions.java> 08029e80 bx lr (GhidraScript)  
+INFO  DumpTransientFunctions.java> ===== TRANSIENT FUNCTION 0819039e created=false ===== (GhidraScript)  
+INFO  DumpTransientFunctions.java> 
+void FUN_0819039e(int param_1)
+
+{
+  thunk_EXT_FUN_22003048();
+  *(undefined1 *)(param_1 + 0x28) = 1;
+  FUN_0819f508(param_1 + 0x34);
+  thunk_EXT_FUN_22003052(param_1 + 0x2c);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819039e push {r3,r4,r5,lr} (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903a0 mov r4,r0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903a2 adds r0,#0x2c (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903a4 str r0,[sp,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903a6 blx 0x08202de8 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903aa movs r0,#0x28 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903ac movs r1,#0x1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903ae strb r1,[r0,r4] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903b0 mov r0,r4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903b2 adds r0,#0x34 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903b4 bl 0x0819f508 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903b8 ldr r0,[sp,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903ba blx 0x08202df0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 081903be pop {r3,r4,r5,pc} (GhidraScript)  
+INFO  DumpTransientFunctions.java> ===== TRANSIENT FUNCTION 0819f508 created=false ===== (GhidraScript)  
+INFO  DumpTransientFunctions.java> 
+void FUN_0819f508(int *param_1)
+
+{
+  bool bVar1;
+  int iVar2;
+  
+  bVar1 = false;
+  iVar2 = FUN_081a5288();
+  if (iVar2 != *(int *)(*param_1 + 4)) {
+    thunk_EXT_FUN_22003048();
+    bVar1 = true;
+  }
+  while (iVar2 = thunk_EXT_FUN_220030bc(param_1 + 1), iVar2 != 0) {
+    FUN_081933f8(*(undefined4 *)(iVar2 + 4));
+  }
+  if (bVar1) {
+    thunk_EXT_FUN_22003052(*param_1);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f508 push {r4,r5,r6,lr} (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f50a movs r5,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f50c mov r4,r0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f50e bl 0x081a5288 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f512 mov r1,r0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f514 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f516 ldr r2,[r0,#0x4] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f518 cmp r1,r2 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f51a beq 0x0819f52a (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f51c blx 0x08202de8 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f520 movs r5,#0x1 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f522 b 0x0819f52a (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f524 ldr r0,[r0,#0x4] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f526 bl 0x081933f8 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f52a adds r0,r4,#0x4 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f52c blx 0x08211b24 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f530 cmp r0,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f532 bne 0x0819f524 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f534 cmp r5,#0x0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f536 beq 0x0819f53e (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f538 ldr r0,[r4,#0x0] (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f53a blx 0x08202df0 (GhidraScript)  
+INFO  DumpTransientFunctions.java> 0819f53e pop {r4,r5,r6,pc} (GhidraScript)  
