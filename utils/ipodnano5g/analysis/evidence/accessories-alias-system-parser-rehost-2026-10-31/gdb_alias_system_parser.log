@@ -1,0 +1,73 @@
+The target architecture is set to "arm".
+0x0bfc0000 in system_start ()
+Breakpoint 1 at 0xbfc1000
+Breakpoint 2 at 0x8011000
+Breakpoint 3 at 0x802c3c4
+Hardware assisted breakpoint 4 at 0x83531c0
+Hardware assisted breakpoint 5 at 0x8bf001c8
+Hardware assisted breakpoint 6 at 0x8bf00000
+Breakpoint 7 at 0x68
+Hardware assisted breakpoint 8 at 0x8010020
+Hardware assisted breakpoint 9 at 0x8010000
+
+Breakpoint 1, 0x0bfc1000 in initialize_mmu ()
+STOP_BEFORE_MMU_SETUP
+pc             0xbfc1000           0xbfc1000 <initialize_mmu>
+cpsr           0x400001d3          1073742291
+
+Breakpoint 2, 0x08011000 in combined_setup ()
+STOP_AFTER_MMU_SETUP_AT_HARNESS
+pc             0x8011000           0x8011000 <combined_setup>
+cpsr           0x600001d3          1610613203
+
+Breakpoint 3, 0x0802c3c4 in ?? ()
+STOP_AT_ORIGINAL_ACCESSORIES_PARSER_ENTRY
+pc             0x802c3c4           0x802c3c4
+r0             0x8e58000           149258240
+r1             0x802c3c5           134398917
+r2             0x8e5a2b0           149267120
+r3             0x4                 4
+sp             0x8e55140           0x8e55140
+lr             0x801001c           134283292
+cpsr           0x600001f3          1610613235
+
+Breakpoint 4, 0x083531c0 in ?? ()
+STOP_AT_REAL_OSOS_DSB_HELPER
+pc             0x83531c0           0x83531c0
+r0             0x0                 0
+r1             0x10f80             69504
+r2             0x8bf10f80          -1947136128
+r3             0x83531c0           137703872
+sp             0x8e55288           0x8e55288
+lr             0x8030cbf           134417599
+cpsr           0x600001d3          1610613203
+
+Breakpoint 5, 0x8bf001c8 in ?? ()
+STOP_AT_LOADER_BSS_INIT_THROUGH_ALIAS
+pc             0x8bf001c8          0x8bf001c8
+r0             0x0                 0
+r1             0x10f80             69504
+r2             0x8bf10f80          -1947136128
+r3             0x8bf001c8          -1947205176
+sp             0x8e55298           0x8e55298
+lr             0x8030cbf           134417599
+cpsr           0x600001d3          1610613203
+
+Breakpoint 6, 0x8bf00000 in ?? ()
+STOP_AT_LOADER_ENTRY_THROUGH_ALIAS_BEFORE_FIRST_INSTRUCTION
+pc             0x8bf00000          0x8bf00000
+r0             0xbfbfd00           201063680
+r1             0xbfbfd00           201063680
+r2             0x0                 0
+r3             0x8bf00000          -1947205632
+sp             0x8e552a8           0x8e552a8
+lr             0x8030cbf           134417599
+cpsr           0x600001d3          1610613203
+ALIAS_AND_IDENTITY_L1_DESCRIPTORS
+0xbfd02fc:	0x0bf07c0e
+0xbfd22fc:	0x0bf04c02
+BSS_MARKERS_AFTER_REAL_LOADER_BSS_INIT
+0xbf20000:	0x00000000
+0xbf70000:	0x00000000
+0xbfbfcfc:	0x00000000
+[Inferior 1 (process 1) killed]
