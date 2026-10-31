@@ -1,0 +1,96 @@
+# ATA-/MBR-Reachability-Belege, 31.10.2026
+
+Die Dateien dokumentieren read-only Ghidra-Abfragen am Projekt
+`/home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime`
+und rohe Hexdumps aus
+`/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin`.
+Das Runtime-Abbild hat SHA-256
+`1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03`.
+
+| Beleg | Inhalt |
+| --- | --- |
+| `OSOS_runtime_partition_registration_dispatch_20261031.application.log` | MBR-Parsing, `FUN_0818e998`-Registrierung und Aufruf von `FUN_0819039e` |
+| `OSOS_runtime_partition_callback_notify_20261031.application.log` | Listener-Verteilung über `FUN_0819f508` und externen Callback |
+| `OSOS_runtime_partition_manager_singleton_20261031.application.log` | Manager-Singleton, Slotbelegung, dynamischer Read-Dispatch |
+| `OSOS_runtime_VFS_mount_first_sector_20261031.application.log` | VFS-Open, Mount-Einstieg und Laufwerkszugriff |
+| `OSOS_runtime_volume_mount_state_machine_20261031.application.log` | Mountzustand und Übergang zum FAT/BPB-Parser |
+| `OSOS_runtime_BPB_mount_read_chain_20261031.application.log` | BPB-Parser und Aufruf von `FUN_08158dd0` |
+| `OSOS_runtime_BPB_sector_fetch_20261031.application.log` | Ein-Sektor-Read des BPB-Pfads und Folgeaufrufer |
+| `OSOS_runtime_memory_DAT_0816a96c_20261031.log` | Ghidra-Wert der dynamischen Tabellenbasis |
+| `OSOS_runtime_memory_candidate_table_0833503c_20261031.log` | Ghidra-Speicherbytes an der Rohbyte-Kandidatenadresse |
+| `OSOS_runtime_memory_candidate_table_0883503c_20261031.log` | Nicht abgebildeter, von Ghidra interpretierter Tabellenbereich |
+| `OSOS_runtime_memory_vtable_084fd570_20261031.log` | Ghidra-Speicherstatus der Provider-VTable |
+| `OSOS_runtime_provider_vtable_084fd570_20261031.hex.txt` | Rohbytes der Provider-VTable aus dem Runtime-Abbild |
+| `OSOS_runtime_partition_adapter_vtable_08536a78_20261031.hex.txt` | Rohbytes der MBR-Partitionsadapter-VTable |
+| `OSOS_runtime_partition_adapter_getters_20261031.application.log` | Methoden der Partitionsadapter-VTable und Leseimplementierung |
+| `OSOS_runtime_partition_adapter_slots_20261031.log` | Instruktionsfenster zu Adapter-VTable-Slots |
+| `OSOS_runtime_partition_io_callers_20261031.application.log` | Decompilierung der Wrapper-/I/O-Einstiege |
+
+## Ergänzung: gemeinsame I/O-Tabelle und Mountmethode
+
+Die folgenden zusätzlichen read-only-Abfragen verifizieren die globale
+Vierer-Tabelle, deren Registrier-/Freigabepfade und den Tabellenmethoden-Eintrag
+für `FUN_0812a9ca`:
+
+| Beleg | Inhalt |
+| --- | --- |
+| `OSOS_runtime_table_pointer_xrefs_20261031.application.log` | Raw-Wortreferenzen auf `0x0883503c`; drei Zeigerzellen `08110e2c`, `08135320`, `0816a96c` |
+| `OSOS_runtime_shared_table_registration_20261031.application.log` | Registrierung `FUN_081352fc`, Freigabe `FUN_08110e14`; zeigt auch, dass `081353fc` ein anderes Codeobjekt ist |
+| `OSOS_runtime_table_registration_xrefs_20261031.application.log` | Direkte Aufrufer von Registrierer, Freigabe, Mount- und Listenerfunktionen |
+| `OSOS_runtime_device_slot_registration_origin_20261031.application.log` | `FUN_0812a9ca` trägt ein Objekt ein, ruft den Mountpfad auf und markiert Erfolg |
+| `OSOS_runtime_table_slot_index_semantics_20261031.application.log` | Kleinbuchstaben-Normalisierung, BPB-Parser-Rückgabe und Open-Flag |
+| `OSOS_runtime_slot_exhaustion_mount_path_20261031.application.log` | Voller Tabellenslot → Index `-65`; `FUN_08200c32` stoppt den BPB-State-Zugriff, Fehlerstatus 2 wird danach als Open-Erfolg behandelt |
+| `OSOS_runtime_drive_vtable_slot_method_xrefs_20261031.application.log` | Referenzen auf die Methoden der Mount-VTable; die Treffer sind deren VTable-Wörter |
+| `OSOS_runtime_mount_method_table_20261031.application.log` | VTable-Wörter um `0x085056d0`, Mountmethode `0x0812a9cb` bei `+0x28`, Cleanup `0x0811ee71` bei `+0x2c` |
+| `OSOS_runtime_mount_callback_pointer_scan_20261031.application.log` | Wortscan findet den Methodenzeiger in der VTable |
+| `OSOS_runtime_mount_registration_xrefs_20261031.application.log` | Kein direkter Codeaufrufer für `FUN_0812a9ca`; die Funktion wird als VTable-Wort referenziert |
+| `OSOS_runtime_mount_vtable_incoming_refs_20261031.application.log` | Keine im Runtime-Abbild erkannten eingehenden Referenzen auf die VTable-Region |
+| `OSOS_runtime_mount_class_vtable_xrefs_20261031.application.log` | Kein roher Wortverweis auf die VTable-Basis oder die benachbarten Slots |
+| `OSOS_runtime_dispatch_callbacks_20261031.application.log` | Decompilierungen von Managerregistrierung, Ereignisverteilung, Listenerqueue und I/O-Dispatcher |
+| `OSOS_runtime_dispatch_xrefs_20261031.application.log` | Direkte Xrefs für Registrierungsereignis, Listenerverteilung und Dispatch-Tabelle |
+| `OSOS_runtime_listener_callback_abi_20261031.application.log` | Listenerfeld `+4` fließt unverändert über `FUN_081933f8` in den OS-Trampolin |
+| `OSOS_runtime_listener_oscall_thunk_20261031.application.log` | `0x08201220` springt über `0x08201224` zum externen Dienst `0x22005934` |
+| `OSOS_runtime_listener_callback_callers_20261031.application.log` | Xrefs und Argumentquellen der weiteren Aufrufer des Listener-Trampolins |
+| `OSOS_runtime_partition_wrapper_entrypoints_20261031.application.log` | Wrapper `FUN_082154b8`, Registrierung `FUN_0818e998` und deren Aufrufer |
+| `OSOS_runtime_partition_wrapper_upstream_callers_20261031.application.log` | Aufrufer und Argumentaufbau der Wrapperpfade über `FUN_080b4e00` und `FUN_080ce8b0` |
+| `OSOS_runtime_partition_subclass_cache_adapter_20261031.application.log` | Cache-Untertypkonstruktor, VTable-Zuweisung und Startup-Aufrufer |
+| `OSOS_runtime_subclass_vtable_constants_20261031.application.log` | Ghidra-Speicherwerte für Cache-Untertyp- und Basisadapter-VTable-Zeiger |
+| `OSOS_runtime_cache_subclass_vtable_20261031.application.log` | Wörter der Cache-Untertyp-VTable bei `0x0850b254` |
+| `OSOS_runtime_partition_manager_slot_guard_20261031.application.log` | unsigned Slotgrenze `< 7` und Leerplatzbedingung in `FUN_0826384c` |
+| `OSOS_runtime_partition_slot_release_20261031.application.log` | `FUN_0821545a` ruft den Slotabbau auf; `FUN_080e7e70` nullt den Managerslot und zerstört das Objekt |
+| `OSOS_runtime_partition_startup_reachability_20261031.application.log` | Direkte Runtime-Xrefs der Cache-Registrierungsaufrufer |
+
+Diese Abfragen zeigen, dass `FUN_081352fc` und `FUN_0816a928` dieselbe
+Vierer-Tabelle benutzen. Sie schließen nicht die Kante vom MBR-Partitionsadapter
+zum Objekt, das `FUN_0812a9ca` registriert. Der Adapter und das Tabellenobjekt
+verwenden `+0x10` für unterschiedliche Werte. Die MBR-Cache-Wrap-Auswirkung
+bleibt deshalb bedingt.
+
+Der wortweise Abgleich an `DAT_0816a96c` stimmt: `3c 50 83 08` ist
+little-endian `0x0883503c`. `0x0833503c` ist eine andere Snapshot-Adresse und
+war zuvor irrtümlich mit dem Tabellenzeiger verwechselt worden.
+
+Die Dateien `OSOS_body_*` in diesem Verzeichnis sind verworfene
+Explorationsabfragen und absichtlich nicht im SHA-256-Manifest. Eine
+Body-Ghidra-Projektfassung war mit falschem Start geladen; eine zweite hatte
+den für die Thumb-Funktionen nötigen `TMode`-Kontext nicht übernommen. Keine
+Schlussfolgerung im Bericht stützt sich auf diese Body-Xrefs. Ebenso
+ausgeschlossen sind unvollständige Singleton-/Tabellen-Suchen und die
+allgemeinen Slot-`0x28`-Scans: Sie belegen keinen konkreten Aufrufpfad. Die
+gültigen Runtime-Abfragen wurden mit dem bestehenden Projekt und
+`-readOnly -noanalysis` ausgeführt.
+
+`OSOS_runtime_vtable_slot28_calls_20261031.application.log` und
+`OSOS_runtime_slot28_candidate_callers_20261031.application.log` sind nicht
+Teil des Manifests: Der allgemeine `ldr [object,#0x28]`/`blx`-Suchlauf ergab
+viele nicht klassifizierte Feldzugriffe und keinen belastbaren
+VTable-Aufrufpfad. Die beiden Dateien bleiben als verworfene Suchprotokolle
+im Verzeichnis, sind aber keine Belege für die Schlussfolgerungen.
+
+Die beiden Ghidra-Abfragen, die beim Aufruf ohne Programmauswahl beziehungsweise
+mit falscher Argumentzahl abbrachen, sind ebenfalls ausgeschlossen; die
+danach korrekt mit `-process osos_runtime_dram_20261025.bin` ausgeführten
+Abfragen sind in der Tabelle genannt.
+
+Jede Ghidra-Abfrage wurde mit `-readOnly -noanalysis` ausgeführt. Das
+SHA-256-Manifest für diese Belege liegt unter `SHA256SUMS`.
