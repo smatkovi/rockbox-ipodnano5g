@@ -1,0 +1,44 @@
+The target architecture is set to "arm".
+The target is set to little endian.
+0x09000000 in _start ()
+Hardware assisted breakpoint 1 at 0x22005d3c
+Hardware assisted breakpoint 2 at 0xbf000e0
+
+Breakpoint 1, 0x22005d3c in ?? ()
+
+STOP_PC_OSOS_MAP_INITIALIZER
+pc             0x22005d3c          0x22005d3c
+cpsr           0x600001d3          1610613203
+
+Breakpoint 2, 0x0bf000e0 in ?? ()
+
+STOP_PC_EXPECTED_START_LOC
+pc             0xbf000e0           0xbf000e0
+cpsr           0x200001d3          536871379
+
+OSOS_STARTUP_CP15_READBACK
+0x90000e8:	0x00c5187d
+0x90000ec:	0x00000007
+0x90000f0:	0x086dc000
+0x90000f4:	0x00000000
+0x90000f8:	0x00000001
+0x90000fc:	0x00000000
+
+ACTUAL_OSOS_STARTUP_TABLE
+0x86dc000:	0x2200c802
+0x86dc200:	0x08007c0e
+0x86dc880:	0x22004c02
+0x86de200:	0x08004c02
+0x86de2fc:	0x0bf04c02
+0x86dc800:	0x20006c0a
+0x86dce00:	0x38000c02
+
+CANONICAL_ENTRY_WORDS
+0xbf00000:	0xea00000d	0xe59ff014	0xe59ff014	0xe59ff014
+
+ALIAS_ENTRY_WORDS
+0x8bf00000:	0xea00000d	0xe59ff014	0xe59ff014	0xe59ff014
+
+BSS_BEGIN_WORDS_AFTER_BSS_INIT
+0xbf20000:	0x00000000	0x00000000	0x00000000	0x00000000
+[Inferior 1 (process 1) detached]

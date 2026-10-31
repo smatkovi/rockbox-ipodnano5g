@@ -75,9 +75,10 @@ Codepfade, die Tabellenwerte indirekt ändern, nicht aus.
   lassen Bit 28 aber ebenfalls stehen. Auch die übrigen gefundenen N33-SCTLR-
   Helfer ändern M, I-cache oder XP, nicht TRE. Im OSOS-DRAM-Code-Suffix wurde
   keine dekodierte SCTLR-Schreibstelle gefunden; der SRAM-Setup-Code erhält TRE.
-  Damit ist `TRE=0` für den normalen Startpfad eine starke statische
-  Schlussfolgerung, aber kein am Gerät gemessener Zustand. Ein nicht erfasster
-  Hardware-/Startpfad oder eine spätere Änderung bleibt als Restunsicherheit.
+  Damit ist `TRE=0` für den normalen Startpfad durch statische Vorgängeranalyse
+  und die Ausführung des echten OSOS-MMU-Initialisierers in QEMU gestützt, aber
+  nicht am iPod gemessen. Ein abweichender Hardware-/Startpfad oder eine
+  spätere Änderung bleibt als Restunsicherheit.
   Header-, Listing-, Xref- und Section-Bytevergleichsbelege stehen in
   `analysis/evidence/accessories-alias-startup-reach-2026-10-31/README.md`.
 
@@ -89,9 +90,9 @@ nicht live ausgelesen.
 Der Alias ist damit **statisch durch den normalen OSOS-Setup-Pfad eingerichtet**,
 nach der durch IMG1-Header, Relokationstabelle und OSOS-Section-Layout
 gestützten SRAM-/DRAM-Relokation. Der
-gemessene `TRE`-Wert, die fortbestehenden Deskriptor-/TLB-Werte am Callback und
-ein Geräteaufruf des Accessories-Pfads bleiben offen. Der Alias ist keine
-Gerätebestätigung des Rockbox-Handoffs.
+auf dem iPod gemessene `TRE`-Wert, die fortbestehenden Deskriptor-/TLB-Werte am
+Callback und ein Geräteaufruf des Accessories-Pfads bleiben offen. Der Alias
+ist keine Gerätebestätigung des Rockbox-Handoffs.
 
 Der Loader-Startpfad macht die Hypothese bei erfüllten MMU-Voraussetzungen
 technisch plausibel:
@@ -190,10 +191,24 @@ die Adressübersetzung in diesem QEMU-Rehost. Der Harness ruft den Writer mit
 statisch bestimmten Argumenten auf; er führt nicht den vollständigen OSOS-
 Startup aus.
 
-Beide System-Rehosts sind Kontrollflussnachweise in QEMU, keine OSOS-Runtime-
-oder Geräte-Messungen. Sie schließen weder die tatsächliche DRAM-Belegung noch
-aktive Geräte-TLB-Einträge ein; QEMU-TCG bildet die realen ARM1176-I-/D-Caches
-und den Write-Buffer nicht ab. Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
+Ein dritter Lauf ruft den echten, in den SRAM-Prefix relocatierten
+OSOS-MMU-Initialisierer `FUN_22005d3c` auf. Seine CP15-Helfer, der SRAM-Thunk
+und der DRAM-Descriptor-Writer laufen im ARM1176-System-QEMU. Nach Rückkehr
+liest GDB `SCTLR=0x00c5187d` (`M=1`, `C=1`, `I=1`, `XP=1`, `TRE=0`),
+`ACTLR=7`, `TTBR0=0x086dc000`, `TTBCR=0` und `DACR=1` aus. Die am echten
+Tabellenort erzeugten Einträge umfassen den Aliasstart `0x08004c02`, den
+Loader-Alias `0x0bf04c02` bei `0x086de2fc`, DRAM-Identity `0x08007c0e`,
+IRAM-Identity `0x22004c02`, den Low-Vector-Alias `0x2200c802` und den
+SROM-Eintrag `0x38000c02`. Der Lauf hält zunächst bei `PC=0x22005d3c` und
+erreicht nach dem kontrollierten Loader-Read wieder `PC=0x0bf000e0`.
+
+Dieser dritte Lauf belegt den MMU-Initialisierer unter den in QEMU gelieferten
+Speicherabbildern, nicht den IMG1-Relokator oder den gesamten OSOS-Startup.
+Auch der Datei-Read ist weiterhin ein Harness-Kopiervorgang, kein VFS-/FAT-/ATA-
+Read. Die drei System-Rehosts sind daher keine Geräte-Messungen. Sie schließen
+weder die tatsächliche DRAM-Belegung noch aktive Geräte-TLB-Einträge ein;
+QEMU-TCG bildet die realen ARM1176-I-/D-Caches und den Write-Buffer nicht ab.
+Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
 `analysis/evidence/accessories-alias-arm1176-qemu-2026-10-31/README.md`.
 
 ## Grenzen
@@ -201,17 +216,19 @@ und den Write-Buffer nicht ab. Reproduktionsdateien und GDB-/QEMU-Logs liegen un
 - Der Alias-Descriptor wird durch den statisch erreichbaren Setup-Code im
   üblichen SRAM-/DRAM-Layout beschrieben. Das Ende des Runtime-Suffix-Abbilds
   weicht in 2.267 Bytes vom IMG1-Body ab; diese Tail-Differenz ändert den
-  byteidentischen Mappercode an `0x080e3e84` nicht. Die `TRE=0`-Einschätzung
-  stützt sich auf ARM1176-Resetwert plus statische Vorgänger- und OSOS-Codepfade;
-  sie ist keine Live-Messung. Die statische DRAM-Abbildung enthält die
+  byteidentischen Mappercode an `0x080e3e84` nicht. Der echte OSOS-
+  Initialisierer wurde mit dem extrahierten SRAM-Prefix und DRAM-Suffix in QEMU
+  ausgeführt. Das ist keine Live-Messung. Die statische DRAM-Abbildung enthält die
   L1-Tabelle ab `0x086dc000` nicht, weil sie im BSS liegt. Ob die
   Alias-Deskriptoren bis zum Accessories-Callback unverändert bleiben, ist
   nicht verifiziert.
-- Wenn `TRE=0` gilt und der Alias-Descriptor bis zum Callback aktiv bleibt,
-  soll der neue DSB-Schritt den ausstehenden Write-Buffer leeren. Beide
-  System-QEMU-Rehosts führen DSB mit `C=I=0` aus und prüfen den Kontrollfluss,
-  können aber weder den realen Write-Buffer-Effekt noch Cachekohärenz des
-  ARM1176 messen.
+- Der dritte QEMU-Lauf liest `TRE=0` aus dem CP15-Zustand, den der echte
+  OSOS-MMU-Initialisierer unter QEMU hinterlässt; das ist weiterhin keine
+  Live-Messung am iPod. Wenn derselbe Zustand dort gilt und der Alias-Descriptor
+  bis zum Callback aktiv bleibt, soll der DSB-Schritt ausstehende Schreibzugriffe
+  ordnen. Der dritte Rehost lässt `C=I=1`; die zwei älteren System-Rehosts
+  verwenden `C=I=0`. QEMU-TCG misst weder den echten Write-Buffer-Effekt noch
+  Cachekohärenz des ARM1176.
   Rockbox' frühe Self-Copy und Cachepflege beweisen den Geräteweg nicht. Wenn der
   Alias bei `TRE=1` cachebar remapped wird, reicht DSB allein nicht als
   I-Cache-/D-Cache-Synchronisierung.
@@ -220,9 +237,11 @@ und den Write-Buffer nicht ab. Reproduktionsdateien und GDB-/QEMU-Logs liegen un
 - `/BOOT.BIN` fehlt in der gesicherten Volumeaufnahme; der ROP-/FAT-/VFS-
   Kaltstartpfad und das Laden dieser Datei bleiben offen.
 - Die 704- und 736-Byte-Kandidaten wurden nur in kontrollierten Parser-Rehosts
-  verarbeitet; sie wurden nicht auf ein Gerät kopiert. Der Loader hielt am
-  Entry an und lief nicht. Der DSB-Stub führte keine Barriere aus. Ein
-  untethered Rockbox-Geräteboot ist nicht bestätigt.
+  verarbeitet; sie wurden nicht auf ein Gerät kopiert. Der DSB-Stub in einem
+  Parser-Rehost war nur `bx lr` und führte keine Barriere aus. Die System-QEMU-
+  Rehosts durchliefen den echten Loader-Startcode bis `start_loc=0x0bf000e0` und
+  hielten dort an. Ein realer Loader- oder untethered Rockbox-Geräteboot ist
+  nicht bestätigt.
 
 Dauerbelege und Quellen: `analysis/evidence/accessories-cache-alias-2026-10-31/README.md`;
 Body-/Runtime-Thunk-Abgleich: `analysis/evidence/accessories-alias-startup-reach-2026-10-31/README.md`.

@@ -90,6 +90,56 @@ Laufbelege. Der Runner benötigt zusätzlich die lokale Datei
 `../local-analysis/inputs/osos_runtime_dram_20261025.bin` mit dem oben genannten
 SHA-256.
 
+## Zusatzlauf mit dem echten OSOS-MMU-Initialisierer
+
+Der dritte Harness lädt den SRAM-Prefix `osos_bootprefix_22000000_20261031.bin`
+bei `0x22000000`, den offline abgebildeten DRAM-Code-Suffix bei `0x08000000`
+und hält vor dem Aufruf des tatsächlichen `FUN_22005d3c` an. Diese Funktion
+und ihre CP15-Helfer laufen dann unverändert im ARM1176-System-QEMU; über den
+SRAM-Thunk bei `0x22003970` ruft sie den echten Descriptor-Writer bei
+`0x080e3e84` auf. Der Harness setzt die L1-Tabelle zuvor am echten OSOS-Ort
+`0x086dc000` auf null, entsprechend dem im normalen Layout genullten BSS.
+Er führt nicht den IMG1-Relokator oder den übrigen OSOS-Startup aus.
+Der DRAM-Suffix ist kein Live-Dump und weicht am Ende in 2.267 Bytes vom
+IMG1-Body ab (`0x6c3768..0x6c43a7`); der ausgeführte Mappercode ist im
+bytegleichen Bereich.
+
+Nach Rückkehr aus `FUN_22005d3c` liest der Harness CP15 und die Tabelle aus:
+
+- `SCTLR = 0x00c5187d`: `M=1`, `C=1`, `I=1`, `XP=1`, `TRE=0`.
+- `ACTLR = 0x00000007`, `TTBR0 = 0x086dc000`, `TTBCR = 0`, `DACR = 1`.
+- Low-Vector-Alias `0x2200c802`, DRAM-Identity `0x08007c0e`, IRAM-Identity
+  `0x22004c02`, Aliasanfang `0x08004c02` und Loader-Alias
+  `0x0bf04c02` bei `0x086de2fc`.
+- Der zusätzliche SROM-Eintrag lautet `0x38000c02`; die IRAM-Range beginnt
+  bei `0x20006c0a`.
+
+`TRE=0` entspricht dem ARMv6-Attributmodus. Für das Aliasdescriptorwort
+`0x0bf04c02` sind `TEX=100` und `C=B=0`; nach dem ARM-Attributschema ergeben
+sich nicht-cachebare Inner-/Outer-Attribute für Normal Memory. Das ist für
+den echten Chip aus dem Code und dem in QEMU gelesenen Zustand gestützt, aber
+weiterhin keine Live-Messung. Der QEMU-Lauf stoppt bei `0x22005d3c`, führt die
+Funktion aus und erreicht anschließend `PC=0x0bf000e0`. Die kanonischen und
+Alias-Dumps des Loaderabbilds stimmen bytegenau mit `bootloader-safe.bin`
+überein. Die ARM-Control- und TEX-Attributfelder sind im
+[ARM1176JZF-S TRM](https://documentation-service.arm.com/static/5e8e294efd977155116a6ca3)
+und im
+[ARM Architecture Reference Manual, Abschnitt ohne TEX-Remap](https://documentation-service.arm.com/static/5f8daeb7f86e16515cdb8c4e)
+beschrieben.
+
+Reproduktion:
+
+```sh
+bash utils/ipodnano5g/analysis/evidence/accessories-alias-arm1176-qemu-2026-10-31/run_osos_startup_mapper_handoff.sh
+```
+
+Der Runner braucht außerdem
+`../local-analysis/inputs/osos_bootprefix_22000000_20261031.bin` (SHA-256
+`0b01c47e51b562523ddce4747529bd9f41b14840337e76ede54af60a809f54e2`) und den
+bereits genannten DRAM-Suffix. Beide Eingaben sind extrahierte
+Offline-Abbildungen, keine Geräte-RAM-Dumps. `gdb_osos_startup_mapper_handoff.log`
+und `qemu_osos_startup_mapper_handoff.log` halten den Lauf fest.
+
 ## Aussagegrenze
 
 Der erste Lauf belegt den Kontrollfluss mit einer **synthetisch aufgebauten**
@@ -99,6 +149,11 @@ und dass diese Abbildung den Loader-Handoff trägt. Er führt weder den
 OSOS-Startup noch den 704-Byte-ROP-Kandidaten, den Datei-/FAT-/VFS-Pfad oder
 den Callback-Stack aus. Die Parameter werden dem echten Writer vom Harness
 übergeben; sie wurden nicht aus einem live beobachteten Startup übernommen.
-QEMU-TCG modelliert die echten separaten I-/D-Caches, Write-Buffer, DMA und die
-DRAM-Belegung des Geräts nicht. Die Läufe belegen daher weder eine persistente
-Geräte-TLB-Abbildung noch Cache-Kohärenz oder einen Geräteboot.
+Der dritte Lauf ruft den echten OSOS-MMU-Initialisierer und dessen CP15-Helfer
+auf und liest die daraus entstandene Tabelle sowie CP15-Werte zurück. Auch
+dieser Lauf überspringt den IMG1-Relokator, den tatsächlichen
+Accessories-Callback und Dateisystem-Read; der Harness kopiert den Loader als
+kontrollierte Eingabe. QEMU-TCG modelliert die echten separaten I-/D-Caches,
+Write-Buffer, DMA und die DRAM-Belegung des Geräts nicht. Die Läufe belegen
+daher weder eine live persistente Geräte-TLB-Abbildung, reale Cache-Kohärenz
+noch einen Geräteboot.
