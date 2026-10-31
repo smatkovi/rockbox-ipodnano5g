@@ -1,0 +1,63 @@
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> ===== 080b1904 FUN_080b1904 =====  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> body=[[080b1904, 080b1973]] signature=undefined FUN_080b1904(void)  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1904: push {r4,r5,r6,lr}  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1906: mov r6,r1  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1908: movs r1,#0xff  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b190a: sub sp,#0x190  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b190c: mov r5,r0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b190e: adds r1,#0x5  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1910: add r0,sp,#0x88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1912: blx 0x082002cc  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1916: movs r1,#0x48  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1918: add r0,sp,#0x40  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b191a: blx 0x082002cc  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b191e: ldr r1,[0x080b1974]  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1920: movs r2,#0x40  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1922: mov r0,sp  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1924: blx 0x082002c4  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1928: mov r0,sp  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b192a: bl 0x081b2c88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b192e: mov r4,r0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1930: mov r0,r6  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1932: bl 0x081b2c88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1936: adds r4,r4,r0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1938: add r3,sp,#0x80  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b193a: movs r0,#0x0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b193c: adds r4,r4,#0x1  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b193e: strh r0,[r3,#0x8]  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1940: mov r2,r4  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1942: mov r1,sp  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1944: mov r0,r6  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1946: bl 0x080cb21e  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b194a: add r1,sp,#0x88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b194c: adds r1,#0x2  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b194e: mov r2,r4  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1950: mov r0,sp  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1952: bl 0x082783d6  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1956: cmp r5,#0x0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1958: beq 0x080b1966  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b195a: movs r2,#0xff  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b195c: adds r2,#0x3  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b195e: add r1,sp,#0x88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1960: mov r0,r5  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1962: blx 0x08200600  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1966: movs r2,#0x0  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1968: add r1,sp,#0x40  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b196a: add r0,sp,#0x88  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b196c: bl 0x08270164  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1970: add sp,#0x190  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 080b1972: pop {r4,r5,r6,pc}  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> XREF 08213496 bl 0x080b1904  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> ===== 08006d30 FUN_08006d30 =====  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> body=[[08006d30, 08006d31]] signature=undefined FUN_08006d30(void)  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 08006d30: bx lr  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> XREF 080028fc bl 0x08006d30  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> XREF 08002972 bl 0x08006d30  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> ===== 08006134 FUN_08006134 =====  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> body=[[08006134, 0800613b]] signature=undefined FUN_08006134(void)  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 08006134: adds r0,#0x80  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 08006136: str r1,[r0,#0x8]  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 08006138: movs r0,#0x1  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> 0800613a: bx lr  
+2026-10-31 14:42:42 INFO  DumpFunctionListing.java> XREF 0800bb3a bl 0x08006134  
+2026-10-31 14:42:42 INFO  DecompileFunctions.java> ===== 080b1904 FUN_080b1904 =====  

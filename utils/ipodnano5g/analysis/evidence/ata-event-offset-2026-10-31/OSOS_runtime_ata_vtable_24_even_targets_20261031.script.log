@@ -1,0 +1,15 @@
+2026-10-31 14:40:45 INFO  DumpManualFunction.java> Disassembling at 0833b7ea  
+2026-10-31 14:40:45 INFO  DumpManualFunction.java> FUNCTION FUN_0833b7ea [[0833b7ea, 0833b7f3]]  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833b7ea  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833b7eb  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java>   085356a0 DATA caller=<none>  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> Disassembling at 0833b7d8  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> FUNCTION FUN_0833b7d8 [[0833b7d8, 0833b7e9]]  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833b7d8  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833b7d9  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java>   085356a4 DATA caller=<none>  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> Disassembling at 0833bcec  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> FUNCTION FUN_0833bcec [[0833bcec, 0833bcff]]  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833bcec  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java> XREFS TO 0833bced  
+2026-10-31 14:40:46 INFO  DumpManualFunction.java>   084f5280 DATA caller=<none>  

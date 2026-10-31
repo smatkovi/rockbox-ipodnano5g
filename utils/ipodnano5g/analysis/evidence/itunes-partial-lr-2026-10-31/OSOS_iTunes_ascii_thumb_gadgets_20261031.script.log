@@ -1,0 +1,512 @@
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> SCAN_RANGE 08000000..08010000  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> TARGET_ENCODING: instruction address | 1; printable VFAT-safe low pointer bytes  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002729 at=08002728 chars=')'' 08002728:adds r0,#0x10 | 0800272a:add r2,sp,#0x2c | 0800272c:add r1,sp,#0x1c | 0800272e:bl 0x08073f42  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800272b at=0800272a chars='+'' 0800272a:add r2,sp,#0x2c | 0800272c:add r1,sp,#0x1c | 0800272e:bl 0x08073f42  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800272d at=0800272c chars='-'' 0800272c:add r1,sp,#0x1c | 0800272e:bl 0x08073f42  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002737 at=08002736 chars='7'' 08002736:add r2,sp,#0x1c | 08002738:add r1,sp,#0x24 | 0800273a:mov r0,r5 | 0800273c:bl 0x0807413c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002739 at=08002738 chars='9'' 08002738:add r1,sp,#0x24 | 0800273a:mov r0,r5 | 0800273c:bl 0x0807413c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002749 at=08002748 chars='I'' 08002748:add sp,#0x64 | 0800274a:pop {r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800274b at=0800274a chars='K'' 0800274a:pop {r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800275b at=0800275a chars='['' 0800275a:pop {r4,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002767 at=08002766 chars='g'' 08002766:ldr r0,[sp,#0x0] | 08002768:str r0,[r4,#0x0] | 0800276a:pop {r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002769 at=08002768 chars='i'' 08002768:str r0,[r4,#0x0] | 0800276a:pop {r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800276b at=0800276a chars='k'' 0800276a:pop {r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800276d at=0800276c chars='m'' 0800276c:push {r0,r1,r4,r5,r6,r7,lr} | 0800276e:sub sp,#0x1c | 08002770:mov r5,r0 | 08002772:add r0,sp,#0x8 | 08002774:str r0,[sp,#0x4] | 08002776:bl 0x08002754  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800276f at=0800276e chars='o'' 0800276e:sub sp,#0x1c | 08002770:mov r5,r0 | 08002772:add r0,sp,#0x8 | 08002774:str r0,[sp,#0x4] | 08002776:bl 0x08002754  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002771 at=08002770 chars='q'' 08002770:mov r5,r0 | 08002772:add r0,sp,#0x8 | 08002774:str r0,[sp,#0x4] | 08002776:bl 0x08002754  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002773 at=08002772 chars='s'' 08002772:add r0,sp,#0x8 | 08002774:str r0,[sp,#0x4] | 08002776:bl 0x08002754  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002775 at=08002774 chars='u'' 08002774:str r0,[sp,#0x4] | 08002776:bl 0x08002754  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800282b at=0800282a chars='+(' 0800282a:ldrsb r2,[r0,r2] | 0800282c:strb r2,[r1,#0x6] | 0800282e:ldrb r0,[r0,#0xb] | 08002830:cmp r0,#0x0 | 08002832:strb r0,[r1,#0x7] | 08002834:beq 0x0800283a  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800282d at=0800282c chars='-(' 0800282c:strb r2,[r1,#0x6] | 0800282e:ldrb r0,[r0,#0xb] | 08002830:cmp r0,#0x0 | 08002832:strb r0,[r1,#0x7] | 08002834:beq 0x0800283a  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002831 at=08002830 chars='1(' 08002830:cmp r0,#0x0 | 08002832:strb r0,[r1,#0x7] | 08002834:beq 0x0800283a  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002833 at=08002832 chars='3(' 08002832:strb r0,[r1,#0x7] | 08002834:beq 0x0800283a  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002837 at=08002836 chars='7(' 08002836:subs r2,r2,#0x4 | 08002838:strb r2,[r1,#0x6] | 0800283a:movs r0,#0x3 | 0800283c:strb r0,[r1,#0xb] | 0800283e:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002839 at=08002838 chars='9(' 08002838:strb r2,[r1,#0x6] | 0800283a:movs r0,#0x3 | 0800283c:strb r0,[r1,#0xb] | 0800283e:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800283b at=0800283a chars=';(' 0800283a:movs r0,#0x3 | 0800283c:strb r0,[r1,#0xb] | 0800283e:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800283d at=0800283c chars='=(' 0800283c:strb r0,[r1,#0xb] | 0800283e:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002857 at=08002856 chars='W(' 08002856:ldrsb r2,[r0,r2] | 08002858:strb r2,[r1,#0x7] | 0800285a:ldrb r0,[r0,#0x7] | 0800285c:cmp r0,#0x0 | 0800285e:strb r0,[r1,#0xb] | 08002860:beq 0x08002866  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002859 at=08002858 chars='Y(' 08002858:strb r2,[r1,#0x7] | 0800285a:ldrb r0,[r0,#0x7] | 0800285c:cmp r0,#0x0 | 0800285e:strb r0,[r1,#0xb] | 08002860:beq 0x08002866  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800285b at=0800285a chars='[(' 0800285a:ldrb r0,[r0,#0x7] | 0800285c:cmp r0,#0x0 | 0800285e:strb r0,[r1,#0xb] | 08002860:beq 0x08002866  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800285d at=0800285c chars='](' 0800285c:cmp r0,#0x0 | 0800285e:strb r0,[r1,#0xb] | 08002860:beq 0x08002866  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800285f at=0800285e chars='_(' 0800285e:strb r0,[r1,#0xb] | 08002860:beq 0x08002866  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002863 at=08002862 chars='c(' 08002862:adds r2,r2,#0x4 | 08002864:strb r2,[r1,#0x7] | 08002866:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002865 at=08002864 chars='e(' 08002864:strb r2,[r1,#0x7] | 08002866:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002867 at=08002866 chars='g(' 08002866:bx lr  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800286b at=0800286a chars='k(' 0800286a:sub sp,#0x1fc | 0800286c:sub sp,#0x1fc | 0800286e:sub sp,#0xc4 | 08002870:mov r4,r0 | 08002872:add r3,sp,#0x3fc | 08002874:movs r0,#0x0  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800286d at=0800286c chars='m(' 0800286c:sub sp,#0x1fc | 0800286e:sub sp,#0xc4 | 08002870:mov r4,r0 | 08002872:add r3,sp,#0x3fc | 08002874:movs r0,#0x0 | 08002876:adds r3,#0x84  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800286f at=0800286e chars='o(' 0800286e:sub sp,#0xc4 | 08002870:mov r4,r0 | 08002872:add r3,sp,#0x3fc | 08002874:movs r0,#0x0 | 08002876:adds r3,#0x84 | 08002878:mvns r0,r0  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002873 at=08002872 chars='s(' 08002872:add r3,sp,#0x3fc | 08002874:movs r0,#0x0 | 08002876:adds r3,#0x84 | 08002878:mvns r0,r0 | 0800287a:str r0,[r3,#0x38] | 0800287c:movs r0,#0x1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002877 at=08002876 chars='w(' 08002876:adds r3,#0x84 | 08002878:mvns r0,r0 | 0800287a:str r0,[r3,#0x38] | 0800287c:movs r0,#0x1 | 0800287e:ldr r5,[0x0800297c] | 08002880:movs r6,#0x3f  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800287b at=0800287a chars='{(' 0800287a:str r0,[r3,#0x38] | 0800287c:movs r0,#0x1 | 0800287e:ldr r5,[0x0800297c] | 08002880:movs r6,#0x3f | 08002882:str r0,[r3,#0x34] | 08002884:bl 0x081902d4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800287d at=0800287c chars='}(' 0800287c:movs r0,#0x1 | 0800287e:ldr r5,[0x0800297c] | 08002880:movs r6,#0x3f | 08002882:str r0,[r3,#0x34] | 08002884:bl 0x081902d4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002921 at=08002920 chars='!)' 08002920:adds r3,#0x84 | 08002922:add r5,sp,#0x4 | 08002924:ldr r1,[r3,#0x1c] | 08002926:movs r2,#0x0 | 08002928:movs r0,#0x1 | 0800292a:stmia r5!,{r0,r1,r2}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002923 at=08002922 chars='#)' 08002922:add r5,sp,#0x4 | 08002924:ldr r1,[r3,#0x1c] | 08002926:movs r2,#0x0 | 08002928:movs r0,#0x1 | 0800292a:stmia r5!,{r0,r1,r2} | 0800292c:adr r5,[0x8002980]  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002931 at=08002930 chars='1)' 08002930:mov r0,r6 | 08002932:str r2,[sp,#0x0] | 08002934:ldr r1,[r3,#0x34] | 08002936:adr r2,[0x800298c] | 08002938:mov r3,r5 | 0800293a:bl 0x0800a3fc  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002933 at=08002932 chars='3)' 08002932:str r2,[sp,#0x0] | 08002934:ldr r1,[r3,#0x34] | 08002936:adr r2,[0x800298c] | 08002938:mov r3,r5 | 0800293a:bl 0x0800a3fc  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002951 at=08002950 chars='Q)' 08002950:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002953 at=08002952 chars='S)' 08002952:add r3,sp,#0x3fc | 08002954:adds r3,#0x84 | 08002956:ldr r2,[0x08002990] | 08002958:ldr r1,[r3,#0x40] | 0800295a:ldr r0,[0x08002994] | 0800295c:cmp r1,r2  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002955 at=08002954 chars='U)' 08002954:adds r3,#0x84 | 08002956:ldr r2,[0x08002990] | 08002958:ldr r1,[r3,#0x40] | 0800295a:ldr r0,[0x08002994] | 0800295c:cmp r1,r2 | 0800295e:bne 0x08002964  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002961 at=08002960 chars='a)' 08002960:strb r7,[r0,#0x0] | 08002962:b 0x08002968  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002965 at=08002964 chars='e)' 08002964:movs r1,#0x1 | 08002966:strb r1,[r0,#0x0] | 08002968:mov r0,r6 | 0800296a:bl 0x0800a5dc  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002967 at=08002966 chars='g)' 08002966:strb r1,[r0,#0x0] | 08002968:mov r0,r6 | 0800296a:bl 0x0800a5dc  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800296f at=0800296e chars='o)' 0800296e:add r0,sp,#0x3fc | 08002970:adds r0,#0xa4 | 08002972:bl 0x08006d30  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002971 at=08002970 chars='q)' 08002970:adds r0,#0xa4 | 08002972:bl 0x08006d30  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b25 at=08002b24 chars='%+' 08002b24:str r1,[r0,#0x0] | 08002b26:movs r0,#0x0 | 08002b28:add sp,#0x1fc | 08002b2a:add sp,#0x8 | 08002b2c:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b29 at=08002b28 chars=')+' 08002b28:add sp,#0x1fc | 08002b2a:add sp,#0x8 | 08002b2c:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b2b at=08002b2a chars='++' 08002b2a:add sp,#0x8 | 08002b2c:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b2d at=08002b2c chars='-+' 08002b2c:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b43 at=08002b42 chars='C+' 08002b42:adds r0,#0x10 | 08002b44:mov r4,r2 | 08002b46:mov r1,sp | 08002b48:bl 0x0818e1da  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b59 at=08002b58 chars='Y+' 08002b58:ldr r1,[sp,#0x8] | 08002b5a:ldr r0,[sp,#0x4] | 08002b5c:stmia r4!,{r0,r1} | 08002b5e:movs r0,#0x0 | 08002b60:pop {r1,r2,r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b5b at=08002b5a chars='[+' 08002b5a:ldr r0,[sp,#0x4] | 08002b5c:stmia r4!,{r0,r1} | 08002b5e:movs r0,#0x0 | 08002b60:pop {r1,r2,r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b5d at=08002b5c chars=']+' 08002b5c:stmia r4!,{r0,r1} | 08002b5e:movs r0,#0x0 | 08002b60:pop {r1,r2,r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b61 at=08002b60 chars='a+' 08002b60:pop {r1,r2,r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002b67 at=08002b66 chars='g+' 08002b66:pop {r1,r2,r3,r4,r5,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002c4d at=08002c4c chars='M,' 08002c4c:blx 0x082002b4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002c57 at=08002c56 chars='W,' 08002c56:blx 0x082002b4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002c5d at=08002c5c chars='],' 08002c5c:blx 0x08200380  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002c61 at=08002c60 chars='a,' 08002c60:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002c6f at=08002c6e chars='o,' 08002c6e:blx 0x0818eb34  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08002d21 at=08002d20 chars='!-' 08002d20:pop {r4,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003041 at=08003040 chars='A0' 08003040:str r0,[sp,#0x0] | 08003042:ldr r0,[0x08003084] | 08003044:mov r2,sp | 08003046:add r1,sp,#0x4 | 08003048:str r4,[sp,#0x4] | 0800304a:bl 0x08190b10  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003043 at=08003042 chars='C0' 08003042:ldr r0,[0x08003084] | 08003044:mov r2,sp | 08003046:add r1,sp,#0x4 | 08003048:str r4,[sp,#0x4] | 0800304a:bl 0x08190b10  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003045 at=08003044 chars='E0' 08003044:mov r2,sp | 08003046:add r1,sp,#0x4 | 08003048:str r4,[sp,#0x4] | 0800304a:bl 0x08190b10  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003047 at=08003046 chars='G0' 08003046:add r1,sp,#0x4 | 08003048:str r4,[sp,#0x4] | 0800304a:bl 0x08190b10  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003049 at=08003048 chars='I0' 08003048:str r4,[sp,#0x4] | 0800304a:bl 0x08190b10  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003071 at=08003070 chars='q0' 08003070:movs r0,#0x1 | 08003072:adds r5,#0x80 | 08003074:strb r0,[r5,#0x7] | 08003076:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003073 at=08003072 chars='s0' 08003072:adds r5,#0x80 | 08003074:strb r0,[r5,#0x7] | 08003076:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003075 at=08003074 chars='u0' 08003074:strb r0,[r5,#0x7] | 08003076:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003077 at=08003076 chars='w0' 08003076:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003825 at=08003824 chars='%8' 08003824:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003827 at=08003826 chars=''8' 08003826:movs r2,#0x0 | 08003828:str r0,[sp,#0x14] | 0800382a:mov r1,r2 | 0800382c:mov r0,r4 | 0800382e:mov r3,r2 | 08003830:bl 0x08190a94  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003829 at=08003828 chars=')8' 08003828:str r0,[sp,#0x14] | 0800382a:mov r1,r2 | 0800382c:mov r0,r4 | 0800382e:mov r3,r2 | 08003830:bl 0x08190a94  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003835 at=08003834 chars='58' 08003834:str r0,[sp,#0x28] | 08003836:movs r4,#0x0 | 08003838:movs r2,#0x3 | 0800383a:movs r1,#0x10 | 0800383c:add r0,sp,#0x4 | 0800383e:bl 0x081917b4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800383d at=0800383c chars='=8' 0800383c:add r0,sp,#0x4 | 0800383e:bl 0x081917b4  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003845 at=08003844 chars='E8' 08003844:add r0,sp,#0x14 | 08003846:bl 0x08190f06  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800384f at=0800384e chars='O8' 0800384e:add r0,sp,#0x14 | 08003850:bl 0x08190f06  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003921 at=08003920 chars='!9' 08003920:ldrh r1,[r3,#0x8] | 08003922:strh r1,[r6,#0x0] | 08003924:ldrh r1,[r3,#0xa] | 08003926:strh r1,[r6,#0x2] | 08003928:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003923 at=08003922 chars='#9' 08003922:strh r1,[r6,#0x0] | 08003924:ldrh r1,[r3,#0xa] | 08003926:strh r1,[r6,#0x2] | 08003928:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003925 at=08003924 chars='%9' 08003924:ldrh r1,[r3,#0xa] | 08003926:strh r1,[r6,#0x2] | 08003928:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003927 at=08003926 chars=''9' 08003926:strh r1,[r6,#0x2] | 08003928:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800392d at=0800392c chars='-9' 0800392c:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003949 at=08003948 chars='I9' 08003948:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800394b at=0800394a chars='K9' 0800394a:str r0,[sp,#0x4] | 0800394c:add r0,sp,#0x4 | 0800394e:bl 0x08023e5c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800394d at=0800394c chars='M9' 0800394c:add r0,sp,#0x4 | 0800394e:bl 0x08023e5c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800395d at=0800395c chars=']9' 0800395c:add r3,sp,#0x4 | 0800395e:bl 0x08004644  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003965 at=08003964 chars='e9' 08003964:ldrh r0,[r3,#0x0] | 08003966:strh r0,[r4,#0x0] | 08003968:ldrh r0,[r3,#0x2] | 0800396a:strh r0,[r4,#0x2] | 0800396c:mov r0,sp | 0800396e:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003967 at=08003966 chars='g9' 08003966:strh r0,[r4,#0x0] | 08003968:ldrh r0,[r3,#0x2] | 0800396a:strh r0,[r4,#0x2] | 0800396c:mov r0,sp | 0800396e:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003969 at=08003968 chars='i9' 08003968:ldrh r0,[r3,#0x2] | 0800396a:strh r0,[r4,#0x2] | 0800396c:mov r0,sp | 0800396e:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800396b at=0800396a chars='k9' 0800396a:strh r0,[r4,#0x2] | 0800396c:mov r0,sp | 0800396e:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003973 at=08003972 chars='s9' 08003972:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800397d at=0800397c chars='}9' 0800397c:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b41 at=08003b40 chars='A;' 08003b40:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b43 at=08003b42 chars='C;' 08003b42:str r0,[sp,#0x4] | 08003b44:add r0,sp,#0x4 | 08003b46:bl 0x08023e5c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b45 at=08003b44 chars='E;' 08003b44:add r0,sp,#0x4 | 08003b46:bl 0x08023e5c  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b55 at=08003b54 chars='U;' 08003b54:add r3,sp,#0x4 | 08003b56:bl 0x08004b28  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b5d at=08003b5c chars='];' 08003b5c:ldrh r0,[r3,#0x0] | 08003b5e:strh r0,[r4,#0x0] | 08003b60:ldrh r0,[r3,#0x2] | 08003b62:strh r0,[r4,#0x2] | 08003b64:mov r0,sp | 08003b66:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b5f at=08003b5e chars='_;' 08003b5e:strh r0,[r4,#0x0] | 08003b60:ldrh r0,[r3,#0x2] | 08003b62:strh r0,[r4,#0x2] | 08003b64:mov r0,sp | 08003b66:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b61 at=08003b60 chars='a;' 08003b60:ldrh r0,[r3,#0x2] | 08003b62:strh r0,[r4,#0x2] | 08003b64:mov r0,sp | 08003b66:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b63 at=08003b62 chars='c;' 08003b62:strh r0,[r4,#0x2] | 08003b64:mov r0,sp | 08003b66:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b6b at=08003b6a chars='k;' 08003b6a:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08003b75 at=08003b74 chars='u;' 08003b74:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004339 at=08004338 chars='9C' 08004338:sub sp,#0x30 | 0800433a:mov r1,r2 | 0800433c:mov r3,r2 | 0800433e:bl 0x08190a94  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800434b at=0800434a chars='KC' 0800434a:add r0,sp,#0x10 | 0800434c:bl 0x08044666  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004351 at=08004350 chars='QC' 08004350:add r0,sp,#0x4 | 08004352:blx 0x08192080  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004353 at=08004352 chars='SC' 08004352:blx 0x08192080  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004359 at=08004358 chars='YC' 08004358:add r0,sp,#0x4 | 0800435a:bl 0x08002840  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004423 at=08004422 chars='#D' 08004422:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800443b at=0800443a chars=';D' 0800443a:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004441 at=08004440 chars='AD' 08004440:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004457 at=08004456 chars='WD' 08004456:pop {r4,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004471 at=08004470 chars='qD' 08004470:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004473 at=08004472 chars='sD' 08004472:str r0,[sp,#0x0] | 08004474:movs r2,#0x2 | 08004476:movs r1,#0x1 | 08004478:mov r0,sp | 0800447a:bl 0x08190fb8  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004543 at=08004542 chars='CE' 08004542:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004545 at=08004544 chars='EE' 08004544:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004671 at=08004670 chars='qF' 08004670:add r0,sp,#0x4 | 08004672:bl 0x08004a44  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004679 at=08004678 chars='yF' 08004678:ldrh r0,[r3,#0x4] | 0800467a:strh r0,[r4,#0x0] | 0800467c:ldrh r0,[r3,#0x6] | 0800467e:strh r0,[r4,#0x2] | 08004680:add r0,sp,#0x4 | 08004682:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800467b at=0800467a chars='{F' 0800467a:strh r0,[r4,#0x0] | 0800467c:ldrh r0,[r3,#0x6] | 0800467e:strh r0,[r4,#0x2] | 08004680:add r0,sp,#0x4 | 08004682:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800467d at=0800467c chars='}F' 0800467c:ldrh r0,[r3,#0x6] | 0800467e:strh r0,[r4,#0x2] | 08004680:add r0,sp,#0x4 | 08004682:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004759 at=08004758 chars='YG' 08004758:movs r0,#0x68 | 0800475a:strb r0,[r4,#0x1d] | 0800475c:ldr r1,[sp,#0x8] | 0800475e:movs r0,#0x20 | 08004760:cmp r1,#0x20 | 08004762:bhi 0x08004766  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800475b at=0800475a chars='[G' 0800475a:strb r0,[r4,#0x1d] | 0800475c:ldr r1,[sp,#0x8] | 0800475e:movs r0,#0x20 | 08004760:cmp r1,#0x20 | 08004762:bhi 0x08004766  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004765 at=08004764 chars='eG' 08004764:adds r0,r1,#0x1 | 08004766:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004767 at=08004766 chars='gG' 08004766:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004775 at=08004774 chars='uG' 08004774:sub sp,#0x2c | 08004776:mov r1,r2 | 08004778:mov r3,r2 | 0800477a:bl 0x08190a94  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004821 at=08004820 chars='!H' 08004820:ldrh r1,[r3,#0x2c] | 08004822:strh r1,[r0,#0x0] | 08004824:ldrh r1,[r3,#0x2e] | 08004826:strh r1,[r0,#0x2] | 08004828:add r0,sp,#0x2c | 0800482a:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004823 at=08004822 chars='#H' 08004822:strh r1,[r0,#0x0] | 08004824:ldrh r1,[r3,#0x2e] | 08004826:strh r1,[r0,#0x2] | 08004828:add r0,sp,#0x2c | 0800482a:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004825 at=08004824 chars='%H' 08004824:ldrh r1,[r3,#0x2e] | 08004826:strh r1,[r0,#0x2] | 08004828:add r0,sp,#0x2c | 0800482a:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004827 at=08004826 chars=''H' 08004826:strh r1,[r0,#0x2] | 08004828:add r0,sp,#0x2c | 0800482a:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004829 at=08004828 chars=')H' 08004828:add r0,sp,#0x2c | 0800482a:bl 0x08190ab6  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004841 at=08004840 chars='AH' 08004840:str r0,[sp,#0x28] | 08004842:add r0,sp,#0x28 | 08004844:bl 0x080237b8  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004843 at=08004842 chars='CH' 08004842:add r0,sp,#0x28 | 08004844:bl 0x080237b8  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004849 at=08004848 chars='IH' 08004848:mov r4,r0 | 0800484a:movs r0,#0x0 | 0800484c:add r1,sp,#0x24 | 0800484e:str r5,[sp,#0x24] | 08004850:bl 0x08192300  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800484b at=0800484a chars='KH' 0800484a:movs r0,#0x0 | 0800484c:add r1,sp,#0x24 | 0800484e:str r5,[sp,#0x24] | 08004850:bl 0x08192300  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800484d at=0800484c chars='MH' 0800484c:add r1,sp,#0x24 | 0800484e:str r5,[sp,#0x24] | 08004850:bl 0x08192300  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800484f at=0800484e chars='OH' 0800484e:str r5,[sp,#0x24] | 08004850:bl 0x08192300  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004865 at=08004864 chars='eH' 08004864:add sp,#0x3c | 08004866:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004867 at=08004866 chars='gH' 08004866:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800486f at=0800486e chars='oH' 0800486e:blx r1  
+2026-10-31 14:45:40 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004875 at=08004874 chars='uH' 08004874:blx 0x0818e65c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004931 at=08004930 chars='1I' 08004930:str r1,[sp,#0x48] | 08004932:movs r2,#0xe | 08004934:str r0,[sp,#0x44] | 08004936:add r1,sp,#0x44 | 08004938:add r0,sp,#0x34 | 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004933 at=08004932 chars='3I' 08004932:movs r2,#0xe | 08004934:str r0,[sp,#0x44] | 08004936:add r1,sp,#0x44 | 08004938:add r0,sp,#0x34 | 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004935 at=08004934 chars='5I' 08004934:str r0,[sp,#0x44] | 08004936:add r1,sp,#0x44 | 08004938:add r0,sp,#0x34 | 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004937 at=08004936 chars='7I' 08004936:add r1,sp,#0x44 | 08004938:add r0,sp,#0x34 | 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004939 at=08004938 chars='9I' 08004938:add r0,sp,#0x34 | 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800493b at=0800493a chars=';I' 0800493a:blx 0x082002c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004945 at=08004944 chars='EI' 08004944:blx r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004947 at=08004946 chars='GI' 08004946:str r0,[sp,#0x28] | 08004948:movs r1,#0x2 | 0800494a:add r0,sp,#0x28 | 0800494c:bl 0x08190f06  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800494b at=0800494a chars='KI' 0800494a:add r0,sp,#0x28 | 0800494c:bl 0x08190f06  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004959 at=08004958 chars='YI' 08004958:blx r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800495f at=0800495e chars='_I' 0800495e:adds r0,r4,r0 | 08004960:ldrb r0,[r0,#0x8] | 08004962:cmp r0,#0x0 | 08004964:beq 0x08004972  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004979 at=08004978 chars='yI' 08004978:blx r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a2d at=08004a2c chars='-J' 08004a2c:movs r0,#0x1 | 08004a2e:adds r4,#0x60 | 08004a30:cmp r5,#0x0 | 08004a32:strb r0,[r4,#0x14] | 08004a34:beq 0x08004a40  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a31 at=08004a30 chars='1J' 08004a30:cmp r5,#0x0 | 08004a32:strb r0,[r4,#0x14] | 08004a34:beq 0x08004a40  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a33 at=08004a32 chars='3J' 08004a32:strb r0,[r4,#0x14] | 08004a34:beq 0x08004a40  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a41 at=08004a40 chars='AJ' 08004a40:add sp,#0x54 | 08004a42:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a43 at=08004a42 chars='CJ' 08004a42:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a53 at=08004a52 chars='SJ' 08004a52:adds r4,#0x80 | 08004a54:movs r1,#0x1 | 08004a56:strb r1,[r4,#0x8] | 08004a58:movs r3,#0x0 | 08004a5a:movs r2,#0x9 | 08004a5c:movs r1,#0x2  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a55 at=08004a54 chars='UJ' 08004a54:movs r1,#0x1 | 08004a56:strb r1,[r4,#0x8] | 08004a58:movs r3,#0x0 | 08004a5a:movs r2,#0x9 | 08004a5c:movs r1,#0x2 | 08004a5e:bl 0x08190aae  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a57 at=08004a56 chars='WJ' 08004a56:strb r1,[r4,#0x8] | 08004a58:movs r3,#0x0 | 08004a5a:movs r2,#0x9 | 08004a5c:movs r1,#0x2 | 08004a5e:bl 0x08190aae  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a63 at=08004a62 chars='cJ' 08004a62:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004a6b at=08004a6a chars='kJ' 08004a6a:sub sp,#0x1c | 08004a6c:mov r1,r2 | 08004a6e:mov r3,r2 | 08004a70:bl 0x08190a94  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004b6b at=08004b6a chars='kK' 08004b6a:ldrh r0,[r3,#0x0] | 08004b6c:strh r0,[r4,#0x0] | 08004b6e:ldrh r0,[r3,#0x2] | 08004b70:strh r0,[r4,#0x2] | 08004b72:mov r0,sp | 08004b74:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004b6d at=08004b6c chars='mK' 08004b6c:strh r0,[r4,#0x0] | 08004b6e:ldrh r0,[r3,#0x2] | 08004b70:strh r0,[r4,#0x2] | 08004b72:mov r0,sp | 08004b74:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004b6f at=08004b6e chars='oK' 08004b6e:ldrh r0,[r3,#0x2] | 08004b70:strh r0,[r4,#0x2] | 08004b72:mov r0,sp | 08004b74:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004b71 at=08004b70 chars='qK' 08004b70:strh r0,[r4,#0x2] | 08004b72:mov r0,sp | 08004b74:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004b79 at=08004b78 chars='yK' 08004b78:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d41 at=08004d40 chars='AM' 08004d40:adds r1,#0x8 | 08004d42:bl 0x08192790  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d4d at=08004d4c chars='MM' 08004d4c:adds r2,#0x10 | 08004d4e:adds r1,#0x10 | 08004d50:bl 0x08192790  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d4f at=08004d4e chars='OM' 08004d4e:adds r1,#0x10 | 08004d50:bl 0x08192790  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d57 at=08004d56 chars='WM' 08004d56:adds r1,r5,#0x4 | 08004d58:mov r0,r5 | 08004d5a:adds r2,#0x20 | 08004d5c:bl 0x08192790  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d5b at=08004d5a chars='[M' 08004d5a:adds r2,#0x20 | 08004d5c:bl 0x08192790  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d67 at=08004d66 chars='gM' 08004d66:adds r0,#0x20 | 08004d68:strb r5,[r0,#0x4] | 08004d6a:ldr r0,[sp,#0x10] | 08004d6c:adds r0,#0x20 | 08004d6e:strb r1,[r0,#0x5] | 08004d70:ldr r0,[sp,#0x10]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d6d at=08004d6c chars='mM' 08004d6c:adds r0,#0x20 | 08004d6e:strb r1,[r0,#0x5] | 08004d70:ldr r0,[sp,#0x10] | 08004d72:adds r0,#0x20 | 08004d74:strb r4,[r0,#0x6] | 08004d76:ldr r0,[sp,#0x10]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d73 at=08004d72 chars='sM' 08004d72:adds r0,#0x20 | 08004d74:strb r4,[r0,#0x6] | 08004d76:ldr r0,[sp,#0x10] | 08004d78:adds r0,#0x20 | 08004d7a:strb r4,[r0,#0x7] | 08004d7c:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d75 at=08004d74 chars='uM' 08004d74:strb r4,[r0,#0x6] | 08004d76:ldr r0,[sp,#0x10] | 08004d78:adds r0,#0x20 | 08004d7a:strb r4,[r0,#0x7] | 08004d7c:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d77 at=08004d76 chars='wM' 08004d76:ldr r0,[sp,#0x10] | 08004d78:adds r0,#0x20 | 08004d7a:strb r4,[r0,#0x7] | 08004d7c:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d79 at=08004d78 chars='yM' 08004d78:adds r0,#0x20 | 08004d7a:strb r4,[r0,#0x7] | 08004d7c:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004d7b at=08004d7a chars='{M' 08004d7a:strb r4,[r0,#0x7] | 08004d7c:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e21 at=08004e20 chars='!N' 08004e20:strb r4,[r0,#0x16] | 08004e22:ldr r0,[sp,#0x10] | 08004e24:adds r0,#0x20 | 08004e26:cmp r6,#0x38 | 08004e28:strb r4,[r0,#0x17] | 08004e2a:bhi 0x08004e2e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e23 at=08004e22 chars='#N' 08004e22:ldr r0,[sp,#0x10] | 08004e24:adds r0,#0x20 | 08004e26:cmp r6,#0x38 | 08004e28:strb r4,[r0,#0x17] | 08004e2a:bhi 0x08004e2e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e25 at=08004e24 chars='%N' 08004e24:adds r0,#0x20 | 08004e26:cmp r6,#0x38 | 08004e28:strb r4,[r0,#0x17] | 08004e2a:bhi 0x08004e2e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e27 at=08004e26 chars=''N' 08004e26:cmp r6,#0x38 | 08004e28:strb r4,[r0,#0x17] | 08004e2a:bhi 0x08004e2e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e29 at=08004e28 chars=')N' 08004e28:strb r4,[r0,#0x17] | 08004e2a:bhi 0x08004e2e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e37 at=08004e36 chars='7N' 08004e36:str r1,[sp,#0x1c] | 08004e38:add r2,sp,#0x1c | 08004e3a:ldr r1,[r0,#0x0] | 08004e3c:ldr r3,[r1,#0x10] | 08004e3e:mov r1,r5 | 08004e40:blx r3  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e39 at=08004e38 chars='9N' 08004e38:add r2,sp,#0x1c | 08004e3a:ldr r1,[r0,#0x0] | 08004e3c:ldr r3,[r1,#0x10] | 08004e3e:mov r1,r5 | 08004e40:blx r3  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e41 at=08004e40 chars='AN' 08004e40:blx r3  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e53 at=08004e52 chars='SN' 08004e52:add r0,sp,#0xc | 08004e54:bl 0x08191818  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e59 at=08004e58 chars='YN' 08004e58:add sp,#0x3c | 08004e5a:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08004e5b at=08004e5a chars='[N' 08004e5a:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800512b at=0800512a chars='+Q' 0800512a:adds r5,r1,r0 | 0800512c:adds r5,r5,#0x2 | 0800512e:subs r1,r7,#0x2 | 08005130:cmp r5,r1 | 08005132:bhi 0x0800517c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800512d at=0800512c chars='-Q' 0800512c:adds r5,r5,#0x2 | 0800512e:subs r1,r7,#0x2 | 08005130:cmp r5,r1 | 08005132:bhi 0x0800517c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005135 at=08005134 chars='5Q' 08005134:strb r0,[r4,#0x2] | 08005136:ldr r2,[sp,#0x5c] | 08005138:ldr r1,[sp,#0x60] | 0800513a:adds r0,r4,#0x3 | 0800513c:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800513b at=0800513a chars=';Q' 0800513a:adds r0,r4,#0x3 | 0800513c:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800513d at=0800513c chars='=Q' 0800513c:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005145 at=08005144 chars='EQ' 08005144:adds r2,r2,#0x3 | 08005146:lsls r0,r0,#0x2 | 08005148:strb r0,[r4,r2] | 0800514a:adds r2,r2,#0x1 | 0800514c:movs r0,#0x0 | 0800514e:b 0x08005174  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005147 at=08005146 chars='GQ' 08005146:lsls r0,r0,#0x2 | 08005148:strb r0,[r4,r2] | 0800514a:adds r2,r2,#0x1 | 0800514c:movs r0,#0x0 | 0800514e:b 0x08005174  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005149 at=08005148 chars='IQ' 08005148:strb r0,[r4,r2] | 0800514a:adds r2,r2,#0x1 | 0800514c:movs r0,#0x0 | 0800514e:b 0x08005174  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800514b at=0800514a chars='KQ' 0800514a:adds r2,r2,#0x1 | 0800514c:movs r0,#0x0 | 0800514e:b 0x08005174  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005153 at=08005152 chars='SQ' 08005152:add r3,sp,#0xc | 08005154:ldr r6,[r3,r1] | 08005156:lsrs r6,r6,#0x18 | 08005158:strb r6,[r4,r2] | 0800515a:ldr r6,[r3,r1] | 0800515c:adds r2,r2,#0x1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800515d at=0800515c chars=']Q' 0800515c:adds r2,r2,#0x1 | 0800515e:lsrs r6,r6,#0x10 | 08005160:strb r6,[r4,r2] | 08005162:ldr r6,[r3,r1] | 08005164:adds r2,r2,#0x1 | 08005166:lsrs r6,r6,#0x8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005165 at=08005164 chars='eQ' 08005164:adds r2,r2,#0x1 | 08005166:lsrs r6,r6,#0x8 | 08005168:strb r6,[r4,r2] | 0800516a:ldr r1,[r3,r1] | 0800516c:adds r2,r2,#0x1 | 0800516e:strb r1,[r4,r2]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800516d at=0800516c chars='mQ' 0800516c:adds r2,r2,#0x1 | 0800516e:strb r1,[r4,r2] | 08005170:adds r2,r2,#0x1 | 08005172:adds r0,r0,#0x1 | 08005174:ldr r1,[sp,#0x8] | 08005176:cmp r0,r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800516f at=0800516e chars='oQ' 0800516e:strb r1,[r4,r2] | 08005170:adds r2,r2,#0x1 | 08005172:adds r0,r0,#0x1 | 08005174:ldr r1,[sp,#0x8] | 08005176:cmp r0,r1 | 08005178:bcc 0x08005150  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005171 at=08005170 chars='qQ' 08005170:adds r2,r2,#0x1 | 08005172:adds r0,r0,#0x1 | 08005174:ldr r1,[sp,#0x8] | 08005176:cmp r0,r1 | 08005178:bcc 0x08005150  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005173 at=08005172 chars='sQ' 08005172:adds r0,r0,#0x1 | 08005174:ldr r1,[sp,#0x8] | 08005176:cmp r0,r1 | 08005178:bcc 0x08005150  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800532b at=0800532a chars='+S' 0800532a:add r0,sp,#0x8 | 0800532c:mov r3,r2 | 0800532e:bl 0x08190a94  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005339 at=08005338 chars='9S' 08005338:blx r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800533b at=0800533a chars=';S' 0800533a:str r0,[sp,#0x4] | 0800533c:movs r2,#0x1 | 0800533e:movs r1,#0x4 | 08005340:add r0,sp,#0x4 | 08005342:bl 0x08190fb8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005341 at=08005340 chars='AS' 08005340:add r0,sp,#0x4 | 08005342:bl 0x08190fb8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005361 at=08005360 chars='aS' 08005360:ldr r0,[sp,#0x0] | 08005362:str r0,[sp,#0x8] | 08005364:mov r0,sp | 08005366:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005363 at=08005362 chars='cS' 08005362:str r0,[sp,#0x8] | 08005364:mov r0,sp | 08005366:bl 0x08190ab6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800536b at=0800536a chars='kS' 0800536a:add r0,sp,#0x8 | 0800536c:bl 0x08190ef8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005379 at=08005378 chars='yS' 08005378:add r0,sp,#0x4 | 0800537a:bl 0x08190fb8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005421 at=08005420 chars='!T' 08005420:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005429 at=08005428 chars=')T' 08005428:blx 0x0835e2a0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800542d at=0800542c chars='-T' 0800542c:movs r0,#0xa4 | 0800542e:strb r0,[r6,#0x0] | 08005430:adds r0,r4,#0x2 | 08005432:cmp r0,r5 | 08005434:strb r4,[r6,#0x1] | 08005436:bcc 0x0800543a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005431 at=08005430 chars='1T' 08005430:adds r0,r4,#0x2 | 08005432:cmp r0,r5 | 08005434:strb r4,[r6,#0x1] | 08005436:bcc 0x0800543a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005433 at=08005432 chars='3T' 08005432:cmp r0,r5 | 08005434:strb r4,[r6,#0x1] | 08005436:bcc 0x0800543a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005435 at=08005434 chars='5T' 08005434:strb r4,[r6,#0x1] | 08005436:bcc 0x0800543a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005439 at=08005438 chars='9T' 08005438:adds r0,r5,#0x1 | 0800543a:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800543b at=0800543a chars=';T' 0800543a:pop {r2,r3,r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800545f at=0800545e chars='_T' 0800545e:adds r2,r0,r1 | 08005460:adds r3,r4,r1 | 08005462:ldrb r2,[r2,#0x18] | 08005464:adds r1,r1,#0x1 | 08005466:cmp r1,#0x20 | 08005468:strb r2,[r3,#0x4]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005461 at=08005460 chars='aT' 08005460:adds r3,r4,r1 | 08005462:ldrb r2,[r2,#0x18] | 08005464:adds r1,r1,#0x1 | 08005466:cmp r1,#0x20 | 08005468:strb r2,[r3,#0x4] | 0800546a:blt 0x0800545e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005463 at=08005462 chars='cT' 08005462:ldrb r2,[r2,#0x18] | 08005464:adds r1,r1,#0x1 | 08005466:cmp r1,#0x20 | 08005468:strb r2,[r3,#0x4] | 0800546a:blt 0x0800545e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005465 at=08005464 chars='eT' 08005464:adds r1,r1,#0x1 | 08005466:cmp r1,#0x20 | 08005468:strb r2,[r3,#0x4] | 0800546a:blt 0x0800545e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005467 at=08005466 chars='gT' 08005466:cmp r1,#0x20 | 08005468:strb r2,[r3,#0x4] | 0800546a:blt 0x0800545e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005469 at=08005468 chars='iT' 08005468:strb r2,[r3,#0x4] | 0800546a:blt 0x0800545e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005475 at=08005474 chars='uT' 08005474:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800553b at=0800553a chars=';U' 0800553a:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005545 at=08005544 chars='EU' 08005544:adds r3,#0xc2 | 08005546:cmp r3,r1 | 08005548:bls 0x08005552  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005551 at=08005550 chars='QU' 08005550:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005559 at=08005558 chars='YU' 08005558:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800555f at=0800555e chars='_U' 0800555e:sub sp,#0xc | 08005560:mov r4,r2 | 08005562:movs r5,#0xf8 | 08005564:mov r7,r0 | 08005566:ldr r0,[sp,#0x10] | 08005568:ldr r1,[r7,#0x64]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800556d at=0800556c chars='mU' 0800556c:subs r0,#0xc2 | 0800556e:uxtb r0,r0 | 08005570:muls r5,r0 | 08005572:movs r0,#0xf8 | 08005574:subs r1,r1,r5 | 08005576:cmp r1,#0xf8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005575 at=08005574 chars='uU' 08005574:subs r1,r1,r5 | 08005576:cmp r1,#0xf8 | 08005578:bcs 0x0800557c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800557b at=0800557a chars='{U' 0800557a:mov r0,r1 | 0800557c:uxtb r0,r0 | 0800557e:str r0,[sp,#0x4] | 08005580:bl 0x081925f8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800557d at=0800557c chars='}U' 0800557c:uxtb r0,r0 | 0800557e:str r0,[sp,#0x4] | 08005580:bl 0x081925f8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800562b at=0800562a chars='+V' 0800562a:strb r1,[r4,#0xe] | 0800562c:ldrb r0,[r0,#0x18] | 0800562e:strb r0,[r4,#0xf] | 08005630:movs r0,#0x10 | 08005632:cmp r5,#0x10 | 08005634:bhi 0x08005638  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800562d at=0800562c chars='-V' 0800562c:ldrb r0,[r0,#0x18] | 0800562e:strb r0,[r4,#0xf] | 08005630:movs r0,#0x10 | 08005632:cmp r5,#0x10 | 08005634:bhi 0x08005638  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005639 at=08005638 chars='9V' 08005638:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005657 at=08005656 chars='WV' 08005656:strb r3,[r1,#0x9] | 08005658:movs r0,#0xc | 0800565a:strb r3,[r1,#0xa] | 0800565c:cmp r2,#0xc | 0800565e:strb r3,[r1,#0xb] | 08005660:bhi 0x08005664  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005659 at=08005658 chars='YV' 08005658:movs r0,#0xc | 0800565a:strb r3,[r1,#0xa] | 0800565c:cmp r2,#0xc | 0800565e:strb r3,[r1,#0xb] | 08005660:bhi 0x08005664  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800565b at=0800565a chars='[V' 0800565a:strb r3,[r1,#0xa] | 0800565c:cmp r2,#0xc | 0800565e:strb r3,[r1,#0xb] | 08005660:bhi 0x08005664  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800565d at=0800565c chars=']V' 0800565c:cmp r2,#0xc | 0800565e:strb r3,[r1,#0xb] | 08005660:bhi 0x08005664  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800565f at=0800565e chars='_V' 0800565e:strb r3,[r1,#0xb] | 08005660:bhi 0x08005664  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005663 at=08005662 chars='cV' 08005662:adds r0,r2,#0x1 | 08005664:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005665 at=08005664 chars='eV' 08005664:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800567b at=0800567a chars='{V' 0800567a:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005737 at=08005736 chars='7W' 08005736:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005757 at=08005756 chars='WW' 08005756:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800575f at=0800575e chars='_W' 0800575e:mov r4,r2 | 08005760:str r3,[r0,#0x4] | 08005762:str r1,[r0,#0x0] | 08005764:mov r1,r0 | 08005766:adds r0,#0x8 | 08005768:bl 0x080065e4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005761 at=08005760 chars='aW' 08005760:str r3,[r0,#0x4] | 08005762:str r1,[r0,#0x0] | 08005764:mov r1,r0 | 08005766:adds r0,#0x8 | 08005768:bl 0x080065e4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005763 at=08005762 chars='cW' 08005762:str r1,[r0,#0x0] | 08005764:mov r1,r0 | 08005766:adds r0,#0x8 | 08005768:bl 0x080065e4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005767 at=08005766 chars='gW' 08005766:adds r0,#0x8 | 08005768:bl 0x080065e4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800576d at=0800576c chars='mW' 0800576c:subs r0,#0x8 | 0800576e:movs r2,#0x3 | 08005770:strb r4,[r0,#0x18] | 08005772:lsls r1,r2,#0xd | 08005774:adds r0,#0x1c | 08005776:bl 0x0819231e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800576f at=0800576e chars='oW' 0800576e:movs r2,#0x3 | 08005770:strb r4,[r0,#0x18] | 08005772:lsls r1,r2,#0xd | 08005774:adds r0,#0x1c | 08005776:bl 0x0819231e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005771 at=08005770 chars='qW' 08005770:strb r4,[r0,#0x18] | 08005772:lsls r1,r2,#0xd | 08005774:adds r0,#0x1c | 08005776:bl 0x0819231e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005775 at=08005774 chars='uW' 08005774:adds r0,#0x1c | 08005776:bl 0x0819231e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005833 at=08005832 chars='3X' 08005832:adds r5,#0xf9 | 08005834:cmp r4,#0x59 | 08005836:mov r6,r2 | 08005838:str r1,[sp,#0x0] | 0800583a:str r1,[sp,#0x4] | 0800583c:beq 0x0800585e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005835 at=08005834 chars='5X' 08005834:cmp r4,#0x59 | 08005836:mov r6,r2 | 08005838:str r1,[sp,#0x0] | 0800583a:str r1,[sp,#0x4] | 0800583c:beq 0x0800585e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005837 at=08005836 chars='7X' 08005836:mov r6,r2 | 08005838:str r1,[sp,#0x0] | 0800583a:str r1,[sp,#0x4] | 0800583c:beq 0x0800585e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005839 at=08005838 chars='9X' 08005838:str r1,[sp,#0x0] | 0800583a:str r1,[sp,#0x4] | 0800583c:beq 0x0800585e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800583b at=0800583a chars=';X' 0800583a:str r1,[sp,#0x4] | 0800583c:beq 0x0800585e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005979 at=08005978 chars='yY' 08005978:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a21 at=08005a20 chars='!Z' 08005a20:movs r7,#0x6 | 08005a22:adds r0,r0,r1 | 08005a24:str r1,[sp,#0x8] | 08005a26:ldrsh r7,[r0,r7] | 08005a28:bl 0x08018654  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a23 at=08005a22 chars='#Z' 08005a22:adds r0,r0,r1 | 08005a24:str r1,[sp,#0x8] | 08005a26:ldrsh r7,[r0,r7] | 08005a28:bl 0x08018654  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a25 at=08005a24 chars='%Z' 08005a24:str r1,[sp,#0x8] | 08005a26:ldrsh r7,[r0,r7] | 08005a28:bl 0x08018654  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a33 at=08005a32 chars='3Z' 08005a32:ldr r2,[r4,#0x4] | 08005a34:ldr r1,[sp,#0x8] | 08005a36:str r0,[r2,r1] | 08005a38:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a35 at=08005a34 chars='5Z' 08005a34:ldr r1,[sp,#0x8] | 08005a36:str r0,[r2,r1] | 08005a38:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a37 at=08005a36 chars='7Z' 08005a36:str r0,[r2,r1] | 08005a38:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a41 at=08005a40 chars='AZ' 08005a40:movs r2,#0xc | 08005a42:ldr r1,[r4,#0x4] | 08005a44:muls r2,r5 | 08005a46:adds r0,r0,r6 | 08005a48:str r0,[r1,r2] | 08005a4a:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a43 at=08005a42 chars='CZ' 08005a42:ldr r1,[r4,#0x4] | 08005a44:muls r2,r5 | 08005a46:adds r0,r0,r6 | 08005a48:str r0,[r1,r2] | 08005a4a:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a45 at=08005a44 chars='EZ' 08005a44:muls r2,r5 | 08005a46:adds r0,r0,r6 | 08005a48:str r0,[r1,r2] | 08005a4a:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a47 at=08005a46 chars='GZ' 08005a46:adds r0,r0,r6 | 08005a48:str r0,[r1,r2] | 08005a4a:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a49 at=08005a48 chars='IZ' 08005a48:str r0,[r1,r2] | 08005a4a:b 0x08005a58  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a5f at=08005a5e chars='_Z' 08005a5e:adds r5,r5,#0x1 | 08005a60:adds r1,r0,r1 | 08005a62:movs r0,#0x6 | 08005a64:ldrsh r0,[r1,r0] | 08005a66:adds r6,r0,r6 | 08005a68:cmp r5,#0x5  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a61 at=08005a60 chars='aZ' 08005a60:adds r1,r0,r1 | 08005a62:movs r0,#0x6 | 08005a64:ldrsh r0,[r1,r0] | 08005a66:adds r6,r0,r6 | 08005a68:cmp r5,#0x5 | 08005a6a:bcc 0x08005a12  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a67 at=08005a66 chars='gZ' 08005a66:adds r6,r0,r6 | 08005a68:cmp r5,#0x5 | 08005a6a:bcc 0x08005a12  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a7b at=08005a7a chars='{Z' 08005a7a:str r0,[sp,#0x4] | 08005a7c:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005a7d at=08005a7c chars='}Z' 08005a7c:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b2d at=08005b2c chars='-[' 08005b2c:adds r4,r4,#0x1 | 08005b2e:cmp r4,#0x5 | 08005b30:bcc 0x08005b1a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b33 at=08005b32 chars='3[' 08005b32:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b4b at=08005b4a chars='K[' 08005b4a:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b61 at=08005b60 chars='a[' 08005b60:blx 0x0818e65c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b67 at=08005b66 chars='g[' 08005b66:adds r1,r0,#0x1 | 08005b68:lsls r2,r2,#0x5 | 08005b6a:muls r2,r1 | 08005b6c:ldr r1,[r4,#0x0] | 08005b6e:adds r1,r1,r5 | 08005b70:cmp r2,r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b6f at=08005b6e chars='o[' 08005b6e:adds r1,r1,r5 | 08005b70:cmp r2,r1 | 08005b72:bhi 0x08005b78  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005b7d at=08005b7c chars='}[' 08005b7c:muls r0,r3 | 08005b7e:subs r1,r1,r0 | 08005b80:str r1,[r4,#0x0] | 08005b82:movs r1,#0x7d | 08005b84:lsls r1,r1,#0x3 | 08005b86:blx 0x0818e65c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d2b at=08005d2a chars='+]' 08005d2a:sub sp,#0x18 | 08005d2c:mov r5,r1 | 08005d2e:bl 0x08192eb8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d4f at=08005d4e chars='O]' 08005d4e:str r0,[sp,#0x0] | 08005d50:ldr r0,[r5,#0x4] | 08005d52:ldr r3,[r0,#0x3c] | 08005d54:ldr r2,[r0,#0x38] | 08005d56:add r0,sp,#0x4 | 08005d58:bl 0x08192ee4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d57 at=08005d56 chars='W]' 08005d56:add r0,sp,#0x4 | 08005d58:bl 0x08192ee4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d5d at=08005d5c chars=']]' 08005d5c:add r1,sp,#0x4 | 08005d5e:mov r0,r6 | 08005d60:bl 0x08192eec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d65 at=08005d64 chars='e]' 08005d64:add r0,sp,#0x4 | 08005d66:bl 0x08192f28  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d71 at=08005d70 chars='q]' 08005d70:add sp,#0x18 | 08005d72:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005d73 at=08005d72 chars='s]' 08005d72:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e21 at=08005e20 chars='!^' 08005e20:ldr r0,[0x08005e48] | 08005e22:push {lr} | 08005e24:str r0,[r1,#0x0] | 08005e26:mov r0,r3 | 08005e28:bl 0x0801c9e0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e23 at=08005e22 chars='#^' 08005e22:push {lr} | 08005e24:str r0,[r1,#0x0] | 08005e26:mov r0,r3 | 08005e28:bl 0x0801c9e0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e25 at=08005e24 chars='%^' 08005e24:str r0,[r1,#0x0] | 08005e26:mov r0,r3 | 08005e28:bl 0x0801c9e0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e2d at=08005e2c chars='-^' 08005e2c:adds r3,#0x20 | 08005e2e:ldrb r0,[r3,#0xb] | 08005e30:cmp r0,#0x0 | 08005e32:bne 0x08005e44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e3b at=08005e3a chars=';^' 08005e3a:str r0,[r1,#0x0] | 08005e3c:ldr r1,[0x08005e50] | 08005e3e:movs r0,#0x0 | 08005e40:adds r1,#0x40 | 08005e42:str r0,[r1,#0x20] | 08005e44:pop {pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e3d at=08005e3c chars='=^' 08005e3c:ldr r1,[0x08005e50] | 08005e3e:movs r0,#0x0 | 08005e40:adds r1,#0x40 | 08005e42:str r0,[r1,#0x20] | 08005e44:pop {pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e41 at=08005e40 chars='A^' 08005e40:adds r1,#0x40 | 08005e42:str r0,[r1,#0x20] | 08005e44:pop {pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e43 at=08005e42 chars='C^' 08005e42:str r0,[r1,#0x20] | 08005e44:pop {pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e45 at=08005e44 chars='E^' 08005e44:pop {pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e75 at=08005e74 chars='u^' 08005e74:movs r1,#0x0 | 08005e76:strb r1,[r0,#0x9] | 08005e78:strb r1,[r0,#0x5] | 08005e7a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e77 at=08005e76 chars='w^' 08005e76:strb r1,[r0,#0x9] | 08005e78:strb r1,[r0,#0x5] | 08005e7a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e79 at=08005e78 chars='y^' 08005e78:strb r1,[r0,#0x5] | 08005e7a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005e7b at=08005e7a chars='{^' 08005e7a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f29 at=08005f28 chars=')_' 08005f28:subs r2,r0,#0x2 | 08005f2a:cmp r3,r2 | 08005f2c:bge 0x08005f30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f31 at=08005f30 chars='1_' 08005f30:strb r0,[r1,#0x5] | 08005f32:strb r0,[r1,#0x6] | 08005f34:ldrb r0,[r1,#0x9] | 08005f36:movs r2,#0x0 | 08005f38:lsls r0,r0,#0x18 | 08005f3a:bpl 0x08005f42  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f33 at=08005f32 chars='3_' 08005f32:strb r0,[r1,#0x6] | 08005f34:ldrb r0,[r1,#0x9] | 08005f36:movs r2,#0x0 | 08005f38:lsls r0,r0,#0x18 | 08005f3a:bpl 0x08005f42  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f4d at=08005f4c chars='M_' 08005f4c:adds r1,r0,r1 | 08005f4e:movs r0,#0xe1 | 08005f50:lsls r0,r0,#0x16 | 08005f52:adds r0,r1,r0 | 08005f54:str r2,[r0,#0x0] | 08005f56:bl 0x0801b880  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f4f at=08005f4e chars='O_' 08005f4e:movs r0,#0xe1 | 08005f50:lsls r0,r0,#0x16 | 08005f52:adds r0,r1,r0 | 08005f54:str r2,[r0,#0x0] | 08005f56:bl 0x0801b880  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f51 at=08005f50 chars='Q_' 08005f50:lsls r0,r0,#0x16 | 08005f52:adds r0,r1,r0 | 08005f54:str r2,[r0,#0x0] | 08005f56:bl 0x0801b880  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f53 at=08005f52 chars='S_' 08005f52:adds r0,r1,r0 | 08005f54:str r2,[r0,#0x0] | 08005f56:bl 0x0801b880  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f55 at=08005f54 chars='U_' 08005f54:str r2,[r0,#0x0] | 08005f56:bl 0x0801b880  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f6b at=08005f6a chars='k_' 08005f6a:sub sp,#0x80 | 08005f6c:ldr r4,[0x08005fcc] | 08005f6e:ldr r1,[r4,#0x28] | 08005f70:adds r1,r1,#0x1 | 08005f72:beq 0x08005f78  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08005f71 at=08005f70 chars='q_' 08005f70:adds r1,r1,#0x1 | 08005f72:beq 0x08005f78  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006135 at=08006134 chars='5a' 08006134:adds r0,#0x80 | 08006136:str r1,[r0,#0x8] | 08006138:movs r0,#0x1 | 0800613a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006137 at=08006136 chars='7a' 08006136:str r1,[r0,#0x8] | 08006138:movs r0,#0x1 | 0800613a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800613b at=0800613a chars=';a' 0800613a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006271 at=08006270 chars='qb' 08006270:push {r0,r4,r5,r6,r7,lr} | 08006272:sub sp,#0x8 | 08006274:movs r5,#0x0 | 08006276:str r5,[sp,#0x4] | 08006278:bl 0x08010a70  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006273 at=08006272 chars='sb' 08006272:sub sp,#0x8 | 08006274:movs r5,#0x0 | 08006276:str r5,[sp,#0x4] | 08006278:bl 0x08010a70  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006275 at=08006274 chars='ub' 08006274:movs r5,#0x0 | 08006276:str r5,[sp,#0x4] | 08006278:bl 0x08010a70  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006277 at=08006276 chars='wb' 08006276:str r5,[sp,#0x4] | 08006278:bl 0x08010a70  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800627d at=0800627c chars='}b' 0800627c:blx 0x082003d4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006325 at=08006324 chars='%c' 08006324:strb r1,[r0,#0x1a] | 08006326:movs r1,#0x0 | 08006328:ldrb r4,[r0,#0x1a] | 0800632a:movs r2,#0x1 | 0800632c:mov r6,r1 | 0800632e:b 0x0800634c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006331 at=08006330 chars='1c' 08006330:adds r3,r0,r2 | 08006332:ldrb r3,[r3,#0x4] | 08006334:cmp r3,#0x0 | 08006336:bne 0x0800633c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006339 at=08006338 chars='9c' 08006338:adds r1,r1,#0x1 | 0800633a:b 0x08006348  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006341 at=08006340 chars='Ac' 08006340:adds r1,r1,#0x1 | 08006342:b 0x0800634a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006349 at=08006348 chars='Ic' 08006348:adds r6,r6,#0x1 | 0800634a:adds r2,r2,#0x1 | 0800634c:cmp r4,r2 | 0800634e:bgt 0x08006330  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800634b at=0800634a chars='Kc' 0800634a:adds r2,r2,#0x1 | 0800634c:cmp r4,r2 | 0800634e:bgt 0x08006330  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006359 at=08006358 chars='Yc' 08006358:adds r0,#0x20 | 0800635a:lsls r1,r1,#0x1 | 0800635c:ldrb r2,[r0,#0x11] | 0800635e:movs r5,#0xe1 | 08006360:lsls r2,r2,#0x2 | 08006362:adds r2,r2,r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006363 at=08006362 chars='cc' 08006362:adds r2,r2,r1 | 08006364:adds r2,#0xff | 08006366:adds r2,#0x11 | 08006368:lsls r5,r5,#0x16 | 0800636a:ldr r1,[r5,#0x24] | 0800636c:cmp r2,r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006365 at=08006364 chars='ec' 08006364:adds r2,#0xff | 08006366:adds r2,#0x11 | 08006368:lsls r5,r5,#0x16 | 0800636a:ldr r1,[r5,#0x24] | 0800636c:cmp r2,r1 | 0800636e:bls 0x08006372  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006367 at=08006366 chars='gc' 08006366:adds r2,#0x11 | 08006368:lsls r5,r5,#0x16 | 0800636a:ldr r1,[r5,#0x24] | 0800636c:cmp r2,r1 | 0800636e:bls 0x08006372  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006373 at=08006372 chars='sc' 08006372:str r2,[r5,#0x24] | 08006374:ldrb r1,[r0,#0xb] | 08006376:subs r3,r3,r2 | 08006378:mov r4,r2 | 0800637a:cmp r1,#0x0 | 0800637c:beq 0x08006382  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006377 at=08006376 chars='wc' 08006376:subs r3,r3,r2 | 08006378:mov r4,r2 | 0800637a:cmp r1,#0x0 | 0800637c:beq 0x08006382  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006421 at=08006420 chars='!d' 08006420:str r5,[r4,#0x4] | 08006422:str r1,[r4,#0x8] | 08006424:movs r0,#0x80 | 08006426:movs r1,#0x3 | 08006428:strb r5,[r4,#0xc] | 0800642a:bl 0x081935bc  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006423 at=08006422 chars='#d' 08006422:str r1,[r4,#0x8] | 08006424:movs r0,#0x80 | 08006426:movs r1,#0x3 | 08006428:strb r5,[r4,#0xc] | 0800642a:bl 0x081935bc  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006425 at=08006424 chars='%d' 08006424:movs r0,#0x80 | 08006426:movs r1,#0x3 | 08006428:strb r5,[r4,#0xc] | 0800642a:bl 0x081935bc  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006427 at=08006426 chars=''d' 08006426:movs r1,#0x3 | 08006428:strb r5,[r4,#0xc] | 0800642a:bl 0x081935bc  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006429 at=08006428 chars=')d' 08006428:strb r5,[r4,#0xc] | 0800642a:bl 0x081935bc  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006431 at=08006430 chars='1d' 08006430:str r0,[r4,#0x0] | 08006432:beq 0x08006460  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006435 at=08006434 chars='5d' 08006434:adds r0,#0x1f | 08006436:lsrs r0,r0,#0x5 | 08006438:lsls r0,r0,#0x5 | 0800643a:str r0,[r4,#0x4] | 0800643c:lsls r1,r0,#0x4 | 0800643e:bpl 0x08006450  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006437 at=08006436 chars='7d' 08006436:lsrs r0,r0,#0x5 | 08006438:lsls r0,r0,#0x5 | 0800643a:str r0,[r4,#0x4] | 0800643c:lsls r1,r0,#0x4 | 0800643e:bpl 0x08006450  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006439 at=08006438 chars='9d' 08006438:lsls r0,r0,#0x5 | 0800643a:str r0,[r4,#0x4] | 0800643c:lsls r1,r0,#0x4 | 0800643e:bpl 0x08006450  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800643b at=0800643a chars=';d' 0800643a:str r0,[r4,#0x4] | 0800643c:lsls r1,r0,#0x4 | 0800643e:bpl 0x08006450  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800644b at=0800644a chars='Kd' 0800644a:lsls r1,r1,#0x1f | 0800644c:orrs r0,r1 | 0800644e:str r0,[r4,#0x4] | 08006450:ldr r1,[r4,#0x8] | 08006452:movs r0,#0x0 | 08006454:b 0x08006458  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800644d at=0800644c chars='Md' 0800644c:orrs r0,r1 | 0800644e:str r0,[r4,#0x4] | 08006450:ldr r1,[r4,#0x8] | 08006452:movs r0,#0x0 | 08006454:b 0x08006458  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800644f at=0800644e chars='Od' 0800644e:str r0,[r4,#0x4] | 08006450:ldr r1,[r4,#0x8] | 08006452:movs r0,#0x0 | 08006454:b 0x08006458  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006457 at=08006456 chars='Wd' 08006456:adds r0,r0,#0x1 | 08006458:cmp r1,r0 | 0800645a:bhi 0x08006456  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800645d at=0800645c chars=']d' 0800645c:movs r0,#0x1 | 0800645e:strb r0,[r4,#0xc] | 08006460:subs r4,#0x90 | 08006462:bl 0x081935d8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800645f at=0800645e chars='_d' 0800645e:strb r0,[r4,#0xc] | 08006460:subs r4,#0x90 | 08006462:bl 0x081935d8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006461 at=08006460 chars='ad' 08006460:subs r4,#0x90 | 08006462:bl 0x081935d8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006475 at=08006474 chars='ud' 08006474:adds r1,r1,r4 | 08006476:adds r0,r0,#0x1 | 08006478:str r5,[r1,#0x38] | 0800647a:cmp r0,#0x9 | 0800647c:str r5,[r1,#0x5c] | 0800647e:blt 0x08006472  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006477 at=08006476 chars='wd' 08006476:adds r0,r0,#0x1 | 08006478:str r5,[r1,#0x38] | 0800647a:cmp r0,#0x9 | 0800647c:str r5,[r1,#0x5c] | 0800647e:blt 0x08006472  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006479 at=08006478 chars='yd' 08006478:str r5,[r1,#0x38] | 0800647a:cmp r0,#0x9 | 0800647c:str r5,[r1,#0x5c] | 0800647e:blt 0x08006472  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800647b at=0800647a chars='{d' 0800647a:cmp r0,#0x9 | 0800647c:str r5,[r1,#0x5c] | 0800647e:blt 0x08006472  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800647d at=0800647c chars='}d' 0800647c:str r5,[r1,#0x5c] | 0800647e:blt 0x08006472  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006529 at=08006528 chars=')e' 08006528:blx 0x08202de8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006539 at=08006538 chars='9e' 08006538:blx 0x08202df0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006551 at=08006550 chars='Qe' 08006550:movs r0,#0x1 | 08006552:strb r0,[r4,#0x1a] | 08006554:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006553 at=08006552 chars='Se' 08006552:strb r0,[r4,#0x1a] | 08006554:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006555 at=08006554 chars='Ue' 08006554:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006559 at=08006558 chars='Ye' 08006558:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006573 at=08006572 chars='se' 08006572:strh r0,[r4,#0x1c] | 08006574:ldrh r0,[r5,#0x18] | 08006576:adds r0,r0,#0x1 | 08006578:strh r0,[r5,#0x18] | 0800657a:mov r0,r4 | 0800657c:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006575 at=08006574 chars='ue' 08006574:ldrh r0,[r5,#0x18] | 08006576:adds r0,r0,#0x1 | 08006578:strh r0,[r5,#0x18] | 0800657a:mov r0,r4 | 0800657c:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006577 at=08006576 chars='we' 08006576:adds r0,r0,#0x1 | 08006578:strh r0,[r5,#0x18] | 0800657a:mov r0,r4 | 0800657c:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006579 at=08006578 chars='ye' 08006578:strh r0,[r5,#0x18] | 0800657a:mov r0,r4 | 0800657c:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006621 at=08006620 chars='!f' 08006620:strb r5,[r0,#0x2] | 08006622:adds r0,r0,#0x4 | 08006624:bl 0x08192994  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006623 at=08006622 chars='#f' 08006622:adds r0,r0,#0x4 | 08006624:bl 0x08192994  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006629 at=08006628 chars=')f' 08006628:str r6,[r4,#0xc] | 0800662a:mov r0,r4 | 0800662c:strb r5,[r4,#0x10] | 0800662e:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800662b at=0800662a chars='+f' 0800662a:mov r0,r4 | 0800662c:strb r5,[r4,#0x10] | 0800662e:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800662d at=0800662c chars='-f' 0800662c:strb r5,[r4,#0x10] | 0800662e:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006635 at=08006634 chars='5f' 08006634:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006637 at=08006636 chars='7f' 08006636:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800663d at=0800663c chars='=f' 0800663c:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006643 at=08006642 chars='Cf' 08006642:sub sp,#0x10c | 08006644:mov r7,r1 | 08006646:ldr r0,[r0,#0x44] | 08006648:bl 0x081937da  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006651 at=08006650 chars='Qf' 08006650:str r0,[sp,#0x4] | 08006652:movs r0,#0x0 | 08006654:subs r6,r0,#0x1 | 08006656:mov r4,r0 | 08006658:str r0,[sp,#0x8] | 0800665a:b 0x0800669a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006653 at=08006652 chars='Sf' 08006652:movs r0,#0x0 | 08006654:subs r6,r0,#0x1 | 08006656:mov r4,r0 | 08006658:str r0,[sp,#0x8] | 0800665a:b 0x0800669a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006655 at=08006654 chars='Uf' 08006654:subs r6,r0,#0x1 | 08006656:mov r4,r0 | 08006658:str r0,[sp,#0x8] | 0800665a:b 0x0800669a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006657 at=08006656 chars='Wf' 08006656:mov r4,r0 | 08006658:str r0,[sp,#0x8] | 0800665a:b 0x0800669a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006659 at=08006658 chars='Yf' 08006658:str r0,[sp,#0x8] | 0800665a:b 0x0800669a  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800665f at=0800665e chars='_f' 0800665e:add r1,sp,#0xc | 08006660:mov r0,r5 | 08006662:bl 0x081937ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800666b at=0800666a chars='kf' 0800666a:add r1,sp,#0xc | 0800666c:add r0,sp,#0x4 | 0800666e:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800666d at=0800666c chars='mf' 0800666c:add r0,sp,#0x4 | 0800666e:bl 0x081936ec  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006673 at=08006672 chars='sf' 08006672:add r0,sp,#0x4 | 08006674:bl 0x08193830  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800667b at=0800667a chars='{f' 0800667a:add r0,sp,#0x4 | 0800667c:bl 0x081938e0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006823 at=08006822 chars='#h' 08006822:mov r4,r0 | 08006824:ldr r0,[0x08006838] | 08006826:str r0,[r4,#0x0] | 08006828:mov r0,r4 | 0800682a:adds r0,#0x14 | 0800682c:bl 0x08192c6c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006825 at=08006824 chars='%h' 08006824:ldr r0,[0x08006838] | 08006826:str r0,[r4,#0x0] | 08006828:mov r0,r4 | 0800682a:adds r0,#0x14 | 0800682c:bl 0x08192c6c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006827 at=08006826 chars=''h' 08006826:str r0,[r4,#0x0] | 08006828:mov r0,r4 | 0800682a:adds r0,#0x14 | 0800682c:bl 0x08192c6c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800682b at=0800682a chars='+h' 0800682a:adds r0,#0x14 | 0800682c:bl 0x08192c6c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006837 at=08006836 chars='7h' 08006836:pop {r4,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006853 at=08006852 chars='Sh' 08006852:adds r4,r1,r4 | 08006854:cmp r4,#0x0 | 08006856:bge 0x0800685c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006869 at=08006868 chars='ih' 08006868:adds r2,r2,r4 | 0800686a:cmp r2,r1 | 0800686c:bls 0x08006872  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800686f at=0800686e chars='oh' 0800686e:subs r1,r1,r4 | 08006870:str r1,[r6,#0x0] | 08006872:ldr r1,[r5,#0x8] | 08006874:ldr r2,[r6,#0x0] | 08006876:adds r1,r1,r4 | 08006878:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006871 at=08006870 chars='qh' 08006870:str r1,[r6,#0x0] | 08006872:ldr r1,[r5,#0x8] | 08006874:ldr r2,[r6,#0x0] | 08006876:adds r1,r1,r4 | 08006878:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006877 at=08006876 chars='wh' 08006876:adds r1,r1,r4 | 08006878:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006879 at=08006878 chars='yh' 08006878:blx 0x08200600  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800687d at=0800687c chars='}h' 0800687c:ldr r0,[r6,#0x0] | 0800687e:adds r0,r0,r4 | 08006880:str r0,[r5,#0x10] | 08006882:mov r0,r7 | 08006884:pop {r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006921 at=08006920 chars='!i' 08006920:add sp,#0x1c | 08006922:mov r0,r5 | 08006924:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006925 at=08006924 chars='%i' 08006924:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006929 at=08006928 chars=')i' 08006928:sub sp,#0x14 | 0800692a:mov r5,r0 | 0800692c:movs r7,r1 | 0800692e:mov r6,r3 | 08006930:bne 0x08006938  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006935 at=08006934 chars='5i' 08006934:add sp,#0x24 | 08006936:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006937 at=08006936 chars='7i' 08006936:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006941 at=08006940 chars='Ai' 08006940:adds r0,r0,r1 | 08006942:ldrb r4,[r0,#0x14] | 08006944:add r0,sp,#0xc | 08006946:str r0,[sp,#0x0] | 08006948:bl 0x0818edd4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006943 at=08006942 chars='Ci' 08006942:ldrb r4,[r0,#0x14] | 08006944:add r0,sp,#0xc | 08006946:str r0,[sp,#0x0] | 08006948:bl 0x0818edd4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006945 at=08006944 chars='Ei' 08006944:add r0,sp,#0xc | 08006946:str r0,[sp,#0x0] | 08006948:bl 0x0818edd4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006947 at=08006946 chars='Gi' 08006946:str r0,[sp,#0x0] | 08006948:bl 0x0818edd4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006951 at=08006950 chars='Qi' 08006950:adds r1,r0,r1 | 08006952:ldr r0,[sp,#0x0] | 08006954:bl 0x0818eb5c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800695b at=0800695a chars='[i' 0800695a:mov r3,r4 | 0800695c:mov r1,r7 | 0800695e:str r2,[sp,#0x0] | 08006960:add r2,sp,#0xc | 08006962:add r0,sp,#0x4 | 08006964:bl 0x08193c30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800695d at=0800695c chars=']i' 0800695c:mov r1,r7 | 0800695e:str r2,[sp,#0x0] | 08006960:add r2,sp,#0xc | 08006962:add r0,sp,#0x4 | 08006964:bl 0x08193c30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800695f at=0800695e chars='_i' 0800695e:str r2,[sp,#0x0] | 08006960:add r2,sp,#0xc | 08006962:add r0,sp,#0x4 | 08006964:bl 0x08193c30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006961 at=08006960 chars='ai' 08006960:add r2,sp,#0xc | 08006962:add r0,sp,#0x4 | 08006964:bl 0x08193c30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006963 at=08006962 chars='ci' 08006962:add r0,sp,#0x4 | 08006964:bl 0x08193c30  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006969 at=08006968 chars='ii' 08006968:add r0,sp,#0xc | 0800696a:bl 0x0818ebc0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006975 at=08006974 chars='ui' 08006974:adds r7,r0,r5 | 08006976:mov r1,r7 | 08006978:adds r1,#0x1c | 0800697a:mov r0,sp | 0800697c:bl 0x08193be0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006979 at=08006978 chars='yi' 08006978:adds r1,#0x1c | 0800697a:mov r0,sp | 0800697c:bl 0x08193be0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006a77 at=08006a76 chars='wj' 08006a76:sub sp,#0x4 | 08006a78:mov r6,r0 | 08006a7a:movs r7,#0x8 | 08006a7c:cmp r1,#0x4 | 08006a7e:bcs 0x08006ace  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b21 at=08006b20 chars='!k' 08006b20:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b25 at=08006b24 chars='%k' 08006b24:str r1,[sp,#0x10] | 08006b26:mov r1,r7 | 08006b28:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b29 at=08006b28 chars=')k' 08006b28:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b33 at=08006b32 chars='3k' 08006b32:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b3b at=08006b3a chars=';k' 08006b3a:adds r1,r1,#0x1 | 08006b3c:cmp r0,r2 | 08006b3e:ble 0x08006b42  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b69 at=08006b68 chars='ik' 08006b68:ldr r0,[sp,#0x44] | 08006b6a:subs r0,r0,r5 | 08006b6c:adds r0,r0,#0x1 | 08006b6e:str r0,[r4,#0xc] | 08006b70:add sp,#0x2c | 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b6b at=08006b6a chars='kk' 08006b6a:subs r0,r0,r5 | 08006b6c:adds r0,r0,#0x1 | 08006b6e:str r0,[r4,#0xc] | 08006b70:add sp,#0x2c | 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b6d at=08006b6c chars='mk' 08006b6c:adds r0,r0,#0x1 | 08006b6e:str r0,[r4,#0xc] | 08006b70:add sp,#0x2c | 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b6f at=08006b6e chars='ok' 08006b6e:str r0,[r4,#0xc] | 08006b70:add sp,#0x2c | 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b71 at=08006b70 chars='qk' 08006b70:add sp,#0x2c | 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b73 at=08006b72 chars='sk' 08006b72:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006b7b at=08006b7a chars='{k' 08006b7a:sub sp,#0x1c | 08006b7c:ldr r0,[sp,#0x1c] | 08006b7e:ldr r4,[sp,#0x40] | 08006b80:ldr r0,[r0,#0x4] | 08006b82:ldr r1,[r0,#0x0] | 08006b84:ldr r1,[r1,#0x2c]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c21 at=08006c20 chars='!l' 08006c20:strb r0,[r2,#0x2] | 08006c22:adds r0,r4,#0x3 | 08006c24:str r1,[r0,#0x40] | 08006c26:adds r0,#0x44 | 08006c28:adr r1,[0x8006d10] | 08006c2a:bl 0x08193d44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c23 at=08006c22 chars='#l' 08006c22:adds r0,r4,#0x3 | 08006c24:str r1,[r0,#0x40] | 08006c26:adds r0,#0x44 | 08006c28:adr r1,[0x8006d10] | 08006c2a:bl 0x08193d44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c25 at=08006c24 chars='%l' 08006c24:str r1,[r0,#0x40] | 08006c26:adds r0,#0x44 | 08006c28:adr r1,[0x8006d10] | 08006c2a:bl 0x08193d44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c27 at=08006c26 chars=''l' 08006c26:adds r0,#0x44 | 08006c28:adr r1,[0x8006d10] | 08006c2a:bl 0x08193d44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c31 at=08006c30 chars='1l' 08006c30:adds r0,#0x52 | 08006c32:adr r1,[0x8006d18] | 08006c34:bl 0x08193d44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c41 at=08006c40 chars='Al' 08006c40:adds r6,#0xbf | 08006c42:adds r0,r0,#0x1 | 08006c44:beq 0x08006c78  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c43 at=08006c42 chars='Cl' 08006c42:adds r0,r0,#0x1 | 08006c44:beq 0x08006c78  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c49 at=08006c48 chars='Il' 08006c48:ldr r0,[sp,#0x40] | 08006c4a:ldrh r2,[r4,#0x1a] | 08006c4c:adds r0,r1,r0 | 08006c4e:muls r1,r2 | 08006c50:str r1,[sp,#0x18] | 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c4b at=08006c4a chars='Kl' 08006c4a:ldrh r2,[r4,#0x1a] | 08006c4c:adds r0,r1,r0 | 08006c4e:muls r1,r2 | 08006c50:str r1,[sp,#0x18] | 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c4d at=08006c4c chars='Ml' 08006c4c:adds r0,r1,r0 | 08006c4e:muls r1,r2 | 08006c50:str r1,[sp,#0x18] | 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c4f at=08006c4e chars='Ol' 08006c4e:muls r1,r2 | 08006c50:str r1,[sp,#0x18] | 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c51 at=08006c50 chars='Ql' 08006c50:str r1,[sp,#0x18] | 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c53 at=08006c52 chars='Sl' 08006c52:blx 0x0818f6c4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c59 at=08006c58 chars='Yl' 08006c58:adds r0,r0,#0x1 | 08006c5a:mov r3,r4 | 08006c5c:muls r1,r0 | 08006c5e:ldr r0,[sp,#0x28] | 08006c60:subs r0,r1,r0 | 08006c62:ldr r1,[sp,#0x28]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c61 at=08006c60 chars='al' 08006c60:subs r0,r1,r0 | 08006c62:ldr r1,[sp,#0x28] | 08006c64:adds r5,r5,r0 | 08006c66:subs r2,r5,#0x1 | 08006c68:str r2,[sp,#0x4] | 08006c6a:str r1,[sp,#0x0]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c65 at=08006c64 chars='el' 08006c64:adds r5,r5,r0 | 08006c66:subs r2,r5,#0x1 | 08006c68:str r2,[sp,#0x4] | 08006c6a:str r1,[sp,#0x0] | 08006c6c:ldr r1,[sp,#0x24] | 08006c6e:ldr r0,[sp,#0x1c]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c67 at=08006c66 chars='gl' 08006c66:subs r2,r5,#0x1 | 08006c68:str r2,[sp,#0x4] | 08006c6a:str r1,[sp,#0x0] | 08006c6c:ldr r1,[sp,#0x24] | 08006c6e:ldr r0,[sp,#0x1c] | 08006c70:mov r2,r6  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c69 at=08006c68 chars='il' 08006c68:str r2,[sp,#0x4] | 08006c6a:str r1,[sp,#0x0] | 08006c6c:ldr r1,[sp,#0x24] | 08006c6e:ldr r0,[sp,#0x1c] | 08006c70:mov r2,r6 | 08006c72:bl 0x08006ad4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c6b at=08006c6a chars='kl' 08006c6a:str r1,[sp,#0x0] | 08006c6c:ldr r1,[sp,#0x24] | 08006c6e:ldr r0,[sp,#0x1c] | 08006c70:mov r2,r6 | 08006c72:bl 0x08006ad4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006c77 at=08006c76 chars='wl' 08006c76:adds r6,#0x10 | 08006c78:ldr r0,[sp,#0x20] | 08006c7a:lsls r0,r0,#0x1f | 08006c7c:beq 0x08006c98  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d25 at=08006d24 chars='%m' 08006d24:ldr r2,[0x08006d2c] | 08006d26:str r2,[r0,#0x0] | 08006d28:str r1,[r0,#0x4] | 08006d2a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d27 at=08006d26 chars=''m' 08006d26:str r2,[r0,#0x0] | 08006d28:str r1,[r0,#0x4] | 08006d2a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d29 at=08006d28 chars=')m' 08006d28:str r1,[r0,#0x4] | 08006d2a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d2b at=08006d2a chars='+m' 08006d2a:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d31 at=08006d30 chars='1m' 08006d30:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d37 at=08006d36 chars='7m' 08006d36:mov r4,r0 | 08006d38:ldr r0,[0x08006d64] | 08006d3a:mov r5,r1 | 08006d3c:str r0,[r4,#0x0] | 08006d3e:movs r0,#0x24 | 08006d40:bl 0x0818eb44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d39 at=08006d38 chars='9m' 08006d38:ldr r0,[0x08006d64] | 08006d3a:mov r5,r1 | 08006d3c:str r0,[r4,#0x0] | 08006d3e:movs r0,#0x24 | 08006d40:bl 0x0818eb44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d3b at=08006d3a chars=';m' 08006d3a:mov r5,r1 | 08006d3c:str r0,[r4,#0x0] | 08006d3e:movs r0,#0x24 | 08006d40:bl 0x0818eb44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d3d at=08006d3c chars='=m' 08006d3c:str r0,[r4,#0x0] | 08006d3e:movs r0,#0x24 | 08006d40:bl 0x0818eb44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d4d at=08006d4c chars='Mm' 08006d4c:str r0,[r4,#0x4] | 08006d4e:movs r0,#0x24 | 08006d50:bl 0x0818eb44  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d5d at=08006d5c chars=']m' 08006d5c:str r0,[r4,#0x8] | 08006d5e:mov r0,r4 | 08006d60:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006d61 at=08006d60 chars='am' 08006d60:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006f41 at=08006f40 chars='Ao' 08006f40:pop {r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006f6f at=08006f6e chars='oo' 08006f6e:bx lr  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08006f73 at=08006f72 chars='so' 08006f72:sub sp,#0x1c | 08006f74:mov r5,r1 | 08006f76:bl 0x081940d4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007129 at=08007128 chars=')q' 08007128:sub sp,#0x5c | 0800712a:adr r1,[0x80071ec] | 0800712c:mov r0,r6 | 0800712e:mov r3,r2 | 08007130:bl 0x08194138  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007139 at=08007138 chars='9q' 08007138:adds r0,r5,r0 | 0800713a:ldrb r0,[r0,#0x16] | 0800713c:cmp r0,#0x1 | 0800713e:bne 0x080071da  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800714d at=0800714c chars='Mq' 0800714c:movs r0,#0x0 | 0800714e:str r0,[sp,#0x58] | 08007150:str r0,[sp,#0x54] | 08007152:mov r1,r4 | 08007154:add r0,sp,#0x34 | 08007156:bl 0x0819435c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800714f at=0800714e chars='Oq' 0800714e:str r0,[sp,#0x58] | 08007150:str r0,[sp,#0x54] | 08007152:mov r1,r4 | 08007154:add r0,sp,#0x34 | 08007156:bl 0x0819435c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007151 at=08007150 chars='Qq' 08007150:str r0,[sp,#0x54] | 08007152:mov r1,r4 | 08007154:add r0,sp,#0x34 | 08007156:bl 0x0819435c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007155 at=08007154 chars='Uq' 08007154:add r0,sp,#0x34 | 08007156:bl 0x0819435c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800715f at=0800715e chars='_q' 0800715e:add r0,sp,#0x58 | 08007160:bl 0x08194680  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007165 at=08007164 chars='eq' 08007164:add r3,sp,#0x40 | 08007166:ldrh r0,[r3,#0x10] | 08007168:bl 0x081946b0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007171 at=08007170 chars='qq' 08007170:add r0,sp,#0x54 | 08007172:bl 0x08194680  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007177 at=08007176 chars='wq' 08007176:add r0,sp,#0x54 | 08007178:bl 0x08194730  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007253 at=08007252 chars='Sr' 08007252:adds r1,#0x1c | 08007254:bl 0x0800a734  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007271 at=08007270 chars='qr' 08007270:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007539 at=08007538 chars='9u' 08007538:adds r0,r0,r1 | 0800753a:ldrb r0,[r0,#0x10] | 0800753c:cmp r0,#0x1 | 0800753e:bne 0x0800763e  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007741 at=08007740 chars='Aw' 08007740:pop {r4,r5,r6,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800784f at=0800784e chars='Ox' 0800784e:sub sp,#0x4 | 08007850:movs r2,#0x1 | 08007852:adr r1,[0x8007b78] | 08007854:ldr r0,[sp,#0x8] | 08007856:bl 0x08193f2c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x0800796b at=0800796a chars='ky' 0800796a:adds r2,#0xe1 | 0800796c:movs r3,#0x3 | 0800796e:adr r1,[0x8007cac] | 08007970:bl 0x08193f7c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007b5b at=08007b5a chars='[{' 08007b5a:adds r2,#0xe1 | 08007b5c:movs r3,#0x3 | 08007b5e:adr r1,[0x8007cac] | 08007b60:bl 0x08193f7c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007b75 at=08007b74 chars='u{' 08007b74:pop {r1,r2,r3,r4,r5,r6,r7,pc}  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d23 at=08007d22 chars='#}' 08007d22:sub sp,#0x48 | 08007d24:bl 0x081927a4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d33 at=08007d32 chars='3}' 08007d32:adds r6,r0,r1 | 08007d34:movs r0,#0x3 | 08007d36:strh r4,[r6,#0x4] | 08007d38:strh r4,[r6,#0x6] | 08007d3a:strb r0,[r6,#0x8] | 08007d3c:movs r0,#0x10  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d3b at=08007d3a chars=';}' 08007d3a:strb r0,[r6,#0x8] | 08007d3c:movs r0,#0x10 | 08007d3e:strh r0,[r6,#0xa] | 08007d40:add r1,sp,#0x4 | 08007d42:add r0,sp,#0x8 | 08007d44:bl 0x081920e8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d3d at=08007d3c chars='=}' 08007d3c:movs r0,#0x10 | 08007d3e:strh r0,[r6,#0xa] | 08007d40:add r1,sp,#0x4 | 08007d42:add r0,sp,#0x8 | 08007d44:bl 0x081920e8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d41 at=08007d40 chars='A}' 08007d40:add r1,sp,#0x4 | 08007d42:add r0,sp,#0x8 | 08007d44:bl 0x081920e8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d43 at=08007d42 chars='C}' 08007d42:add r0,sp,#0x8 | 08007d44:bl 0x081920e8  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d55 at=08007d54 chars='U}' 08007d54:adds r0,r0,r2 | 08007d56:str r1,[r0,#0x2c] | 08007d58:ldr r0,[sp,#0x48] | 08007d5a:movs r1,#0x2d | 08007d5c:lsls r1,r1,#0x5 | 08007d5e:adds r0,r0,r1  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d5f at=08007d5e chars='_}' 08007d5e:adds r0,r0,r1 | 08007d60:mov r5,r0 | 08007d62:bl 0x0800c70c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d6b at=08007d6a chars='k}' 08007d6a:subs r0,r4,#0x1 | 08007d6c:blx 0x081940f0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d6d at=08007d6c chars='m}' 08007d6c:blx 0x081940f0  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007d79 at=08007d78 chars='y}' 08007d78:adds r4,r0,r2 | 08007d7a:movs r0,#0x1 | 08007d7c:strb r1,[r4,#0x11] | 08007d7e:strb r0,[r5,#0x8] | 08007d80:ldr r2,[sp,#0x48] | 08007d82:movs r0,#0xb  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e29 at=08007e28 chars=')~' 08007e28:adds r2,r2,r3 | 08007e2a:str r1,[r2,#0x6c] | 08007e2c:str r0,[r2,#0x68] | 08007e2e:ldr r0,[sp,#0x30] | 08007e30:adds r0,#0xa0 | 08007e32:ldrb r1,[r0,#0x1d]  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e2d at=08007e2c chars='-~' 08007e2c:str r0,[r2,#0x68] | 08007e2e:ldr r0,[sp,#0x30] | 08007e30:adds r0,#0xa0 | 08007e32:ldrb r1,[r0,#0x1d] | 08007e34:cmp r1,#0x2 | 08007e36:bcc 0x08007e3c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e31 at=08007e30 chars='1~' 08007e30:adds r0,#0xa0 | 08007e32:ldrb r1,[r0,#0x1d] | 08007e34:cmp r1,#0x2 | 08007e36:bcc 0x08007e3c  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e47 at=08007e46 chars='G~' 08007e46:adds r0,#0x80 | 08007e48:subs r7,#0x50 | 08007e4a:ldr r1,[r0,#0x4] | 08007e4c:adds r7,r2,r7 | 08007e4e:movs r2,#0xf | 08007e50:lsrs r3,r1,#0x10  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e49 at=08007e48 chars='I~' 08007e48:subs r7,#0x50 | 08007e4a:ldr r1,[r0,#0x4] | 08007e4c:adds r7,r2,r7 | 08007e4e:movs r2,#0xf | 08007e50:lsrs r3,r1,#0x10 | 08007e52:subs r3,r3,#0x4  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e4d at=08007e4c chars='M~' 08007e4c:adds r7,r2,r7 | 08007e4e:movs r2,#0xf | 08007e50:lsrs r3,r1,#0x10 | 08007e52:subs r3,r3,#0x4 | 08007e54:movs r1,#0x8 | 08007e56:blx 0x0818f268  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e53 at=08007e52 chars='S~' 08007e52:subs r3,r3,#0x4 | 08007e54:movs r1,#0x8 | 08007e56:blx 0x0818f268  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET ptr=0x08007e57 at=08007e56 chars='W~' 08007e56:blx 0x0818f268  
+2026-10-31 14:45:41 INFO  ScanAsciiThumbGadgets.java> GADGET_COUNT 509  

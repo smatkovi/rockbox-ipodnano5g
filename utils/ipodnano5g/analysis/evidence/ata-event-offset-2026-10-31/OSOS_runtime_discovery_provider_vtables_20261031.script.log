@@ -1,0 +1,37 @@
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> MEMORY 084fd570..084fd5b0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd570 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd574 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd578 bytes=c3a73308 data=undefined value=-0x3d  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd57c bytes=b1a73308 data=undefined value=-0x4f  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd580 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd584 bytes=45a93308 data=undefined value=0x45  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd588 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd58c bytes=f5a93308 data=undefined value=-0xb  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd590 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd594 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd598 bytes=c5113008 data=undefined value=-0x3b  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd59c bytes=d5a83308 data=undefined value=-0x2b  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd5a0 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd5a4 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd5a8 bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd5ac bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 084fd5b0 bytes=add11508 data=undefined value=-0x53  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> MEMORY 0853567c..085356c0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 0853567c bytes=494f0208 data=undefined * value=08024f49  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535680 bytes=79b03308 data=undefined * value=0833b079  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535684 bytes=f5b73308 data=undefined * value=0833b7f5  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535688 bytes=a54d0208 data=undefined * value=08024da5  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 0853568c bytes=f94e0208 data=undefined * value=08024ef9  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535690 bytes=114e0208 data=undefined * value=08024e11  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535694 bytes=7d4a0208 data=undefined * value=08024a7d  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 08535698 bytes=01b03308 data=undefined * value=0833b001  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 0853569c bytes=0d500208 data=undefined * value=0802500d  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356a0 bytes=ebb73308 data=undefined * value=0833b7eb  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356a4 bytes=d9b73308 data=undefined * value=0833b7d9  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356a8 bytes=e54a0208 data=undefined * value=08024ae5  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356ac bytes=ed4a0208 data=undefined * value=08024aed  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356b0 bytes=094d0208 data=undefined * value=08024d09  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356b4 bytes=554c0208 data=undefined * value=08024c55  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356b8 bytes=3d4b0208 data=undefined * value=08024b3d  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356bc bytes=00000000 data=undefined value=0x0  
+2026-10-31 07:46:20 INFO  DumpMemoryRange.java> 085356c0 bytes=a94f0208 data=undefined value=-0x57  

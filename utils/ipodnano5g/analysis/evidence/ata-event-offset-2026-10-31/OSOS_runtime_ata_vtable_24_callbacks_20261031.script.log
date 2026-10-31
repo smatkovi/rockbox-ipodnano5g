@@ -1,0 +1,15 @@
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0833b7eb =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> XREF from=085356a0 type=DATA caller=<none>  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0833b7d9 =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> XREF from=085356a4 type=DATA caller=<none>  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 08024e11 =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_08024e10 [[08024e10, 08024ef3]] -----  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> XREF from=08535690 type=DATA caller=<none>  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0802500c =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_0802500c [[0802500c, 08025029]] -----  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0833c464 =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0833bced =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> XREF from=084f5280 type=DATA caller=<none>  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ===== TARGET 0833c504 =====  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_0833c504 [[0833c504, 0833c575]] -----  
+2026-10-31 14:40:07 INFO  DumpTargetFunctions.java> XREF from=0833bcfa type=UNCONDITIONAL_CALL caller=<none>  
