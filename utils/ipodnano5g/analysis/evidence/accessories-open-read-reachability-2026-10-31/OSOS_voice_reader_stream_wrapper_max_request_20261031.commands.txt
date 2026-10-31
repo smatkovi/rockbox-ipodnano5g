@@ -1,0 +1,8 @@
+Run from the repository root:
+
+arm-none-eabi-as -march=armv6k -o /tmp/OSOS_voice_reader_stream_wrapper_max_request_20261031.o utils/ipodnano5g/analysis/evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_stream_wrapper_max_request_20261031.S
+arm-none-eabi-ld -T utils/ipodnano5g/analysis/evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_stream_wrapper_max_request_20261031.ld -o /tmp/OSOS_voice_reader_stream_wrapper_max_request_20261031.elf /tmp/OSOS_voice_reader_stream_wrapper_max_request_20261031.o
+qemu-arm -cpu arm1176 /tmp/OSOS_voice_reader_stream_wrapper_max_request_20261031.elf
+
+Expected stdout: PASS
+The harness uses the runtime input at /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin through the .incbin directive.

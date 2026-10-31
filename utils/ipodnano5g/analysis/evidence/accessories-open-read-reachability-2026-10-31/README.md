@@ -19,6 +19,12 @@ SHA-256 steht in `INPUT_SHA256.txt`.
   kein Gerätetest.
 - `repro_variable_voice_reader_wrap_20261031.sanitizers.log`: zusätzlicher
   Host-Lauf mit AddressSanitizer und UndefinedBehaviorSanitizer, ohne Befund.
+- `OSOS_voice_reader_stream_wrapper_max_request_20261031.S`, `.ld`,
+  `.commands.txt` und `.run.log`: ARM1176-QEMU-Rehost mit Originalbytes von
+  `FUN_081fd5e8`; der
+  Prüf-Provider bestätigt den ungekürzten Erstrequest `0xffffffff` bei Offset
+  null. Datei-Status und Provider sind Stubs; der FAT- und Allokatorpfad läuft
+  in diesem Test nicht.
 - `OSOS_file_copy_*.application.log`, `OSOS_fat_write_provider_boundaries_20261031.application.log`
   und `OSOS_directory_remove_helpers_20261031.application.log`: ergänzende,
   read-only-Abzüge zu den bereits untersuchten Dateioperationen.

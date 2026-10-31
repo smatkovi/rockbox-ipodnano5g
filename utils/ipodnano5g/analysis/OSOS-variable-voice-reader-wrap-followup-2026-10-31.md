@@ -54,6 +54,14 @@ Zusätzlich lief dasselbe Modell mit AddressSanitizer und UndefinedBehaviorSanit
 beide meldeten keinen Fehler im Host-Testprogramm. Das sagt nichts über die
 Laufzeit des OSOS-Binaries aus.
 
+Ein ARM1176-QEMU-Rehost führt außerdem die originalen Runtimebytes von
+`FUN_081fd5e8` aus. Bei `Dateigröße=0xffffffff`, `cursor=0` und
+`request=0xffffffff` bestätigt der Prüf-Providerstub `offset=0`, die volle
+Länge und den vollen Outcount; der Lauf endet mit `PASS`. Der Rehost stubbt
+Datei-Status, Locking und Provider und führt weder den FAT-Pfad noch den
+Voice-Allocator aus. Er bestätigt somit die Übergabe des großen Requests durch
+den Original-Streamwrapper, nicht den vollständigen Gerätepfad.
+
 Quelltext und vollständige Ausgabe sind
 `evidence/accessories-open-read-reachability-2026-10-31/repro_variable_voice_reader_wrap_20261031.c`
 und `evidence/accessories-open-read-reachability-2026-10-31/repro_variable_voice_reader_wrap_20261031.log`.
@@ -82,8 +90,9 @@ Offen bleiben insbesondere:
 Bewertung: **starker, bedingter Heap-Overwrite-Kandidat; keine bestätigte
 RCE, kein nachgewiesener Rockbox-Handoff und kein Beleg für untethered boot.**
 Der Host-Modelltest verifiziert die Arithmetik und die bedingte
-Speicherüberschreitung, nicht die Provider- oder Kaltstart-Erreichbarkeit.
-Eine beschädigte Datei wurde nicht auf den iPod geschrieben.
+Speicherüberschreitung; der QEMU-Rehost bestätigt die Request-Übergabe im
+Original-Streamwrapper. Provider-, FAT- und Kaltstart-Erreichbarkeit bleiben
+offen. Eine beschädigte Datei wurde nicht auf den iPod geschrieben.
 
 ## Gerätestatus während dieser Prüfung
 
@@ -109,4 +118,6 @@ Die read-only-Ghidra-Abzüge, USB-/U-Boot-Beobachtung, Modellquelle und
 Modellausgabe liegen dauerhaft in
 `analysis/evidence/accessories-open-read-reachability-2026-10-31/`. Die
 Eingabeprüfsumme steht in `INPUT_SHA256.txt`; `SHA256SUMS` deckt die Dateien
-des Belegordners ab.
+des Belegordners ab. Der Streamwrapper-Rehost steht in
+`OSOS_voice_reader_stream_wrapper_max_request_20261031.S`, `.ld` und
+`.run.log`.
