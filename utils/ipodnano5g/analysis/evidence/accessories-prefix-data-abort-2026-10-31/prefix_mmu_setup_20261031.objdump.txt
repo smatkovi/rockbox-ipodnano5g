@@ -1,0 +1,73 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_bootprefix_22000000_20261031.bin:     file format binary
+
+
+Disassembly of section .data:
+
+22005d3c <.data+0x5d3c>:
+22005d3c:	e92d4010 	push	{r4, lr}
+22005d40:	ebfffb58 	bl	0x22004aa8
+22005d44:	ebfffb62 	bl	0x22004ad4
+22005d48:	ebfffb5b 	bl	0x22004abc
+22005d4c:	ebfffb65 	bl	0x22004ae8
+22005d50:	ebfffb69 	bl	0x22004afc
+22005d54:	ebfffaee 	bl	0x22004914
+22005d58:	e59f30c8 	ldr	r3, [pc, #200]	@ 0x22005e28
+22005d5c:	e59f10c8 	ldr	r1, [pc, #200]	@ 0x22005e2c
+22005d60:	e3a02422 	mov	r2, #570425344	@ 0x22000000
+22005d64:	e3a00000 	mov	r0, #0
+22005d68:	ebfff700 	bl	0x22003970
+22005d6c:	e59f40bc 	ldr	r4, [pc, #188]	@ 0x22005e30
+22005d70:	e3a02422 	mov	r2, #570425344	@ 0x22000000
+22005d74:	e59f10b8 	ldr	r1, [pc, #184]	@ 0x22005e34
+22005d78:	e1a03004 	mov	r3, r4
+22005d7c:	e1a00002 	mov	r0, r2
+22005d80:	ebfff6fa 	bl	0x22003970
+22005d84:	e3a02202 	mov	r2, #536870912	@ 0x20000000
+22005d88:	e59f30a8 	ldr	r3, [pc, #168]	@ 0x22005e38
+22005d8c:	e282161f 	add	r1, r2, #32505856	@ 0x1f00000
+22005d90:	e1a00002 	mov	r0, r2
+22005d94:	ebfff6f5 	bl	0x22003970
+22005d98:	e3a02302 	mov	r2, #134217728	@ 0x8000000
+22005d9c:	e59f3098 	ldr	r3, [pc, #152]	@ 0x22005e3c
+22005da0:	e3e0133d 	mvn	r1, #-201326592	@ 0xf4000000
+22005da4:	e1a00002 	mov	r0, r2
+22005da8:	ebfff6f0 	bl	0x22003970
+22005dac:	e1a03004 	mov	r3, r4
+22005db0:	e3a02302 	mov	r2, #134217728	@ 0x8000000
+22005db4:	e3e0131d 	mvn	r1, #1946157056	@ 0x74000000
+22005db8:	e3a00322 	mov	r0, #-2013265920	@ 0x88000000
+22005dbc:	ebfff6eb 	bl	0x22003970
+22005dc0:	e3a0230e 	mov	r2, #939524096	@ 0x38000000
+22005dc4:	e2443901 	sub	r3, r4, #16384	@ 0x4000
+22005dc8:	e3e01103 	mvn	r1, #-1073741824	@ 0xc0000000
+22005dcc:	e1a00002 	mov	r0, r2
+22005dd0:	ebfff6e6 	bl	0x22003970
+22005dd4:	e59f0064 	ldr	r0, [pc, #100]	@ 0x22005e40
+22005dd8:	ebfffaf2 	bl	0x220049a8
+22005ddc:	e3a00001 	mov	r0, #1
+22005de0:	ebfffaf2 	bl	0x220049b0
+22005de4:	e3a00000 	mov	r0, #0
+22005de8:	ebfffaf2 	bl	0x220049b8
+22005dec:	ebfffac3 	bl	0x22004900
+22005df0:	ebfffb22 	bl	0x22004a80
+22005df4:	ebfffb26 	bl	0x22004a94
+22005df8:	ebfffb0a 	bl	0x22004a28
+22005dfc:	ebfffafd 	bl	0x220049f8
+22005e00:	e3c00002 	bic	r0, r0, #2
+22005e04:	e3800501 	orr	r0, r0, #4194304	@ 0x400000
+22005e08:	ebfffafc 	bl	0x22004a00
+22005e0c:	ebfffaf9 	bl	0x220049f8
+22005e10:	e3800b02 	orr	r0, r0, #2048	@ 0x800
+22005e14:	ebfffaf9 	bl	0x22004a00
+22005e18:	ebfffafa 	bl	0x22004a08
+22005e1c:	e8bd4010 	pop	{r4, lr}
+22005e20:	e3800007 	orr	r0, r0, #7
+22005e24:	eafffaf9 	b	0x22004a10
+22005e28:	0000c802 	andeq	ip, r0, r2, lsl #16
+22005e2c:	000fffff 	strdeq	pc, [pc], -pc	@ <UNPREDICTABLE>
+22005e30:	00004c02 	andeq	r4, r0, r2, lsl #24
+22005e34:	220fffff 	andcs	pc, pc, #1020	@ 0x3fc
+22005e38:	00006c0a 	andeq	r6, r0, sl, lsl #24
+22005e3c:	00007c0e 	andeq	r7, r0, lr, lsl #24
+22005e40:	086dc000 	stmdaeq	sp!, {lr, pc}^

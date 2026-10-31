@@ -1,0 +1,2 @@
+0b01c47e51b562523ddce4747529bd9f41b14840337e76ede54af60a809f54e2  /home/sebastian/ipod-re/local-analysis/inputs/osos_bootprefix_22000000_20261031.bin
+1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03  /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin

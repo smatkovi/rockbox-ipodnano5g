@@ -9,10 +9,11 @@ prefix rehost. The saved `N5G_OSOS_runtime` program was opened with
 - `FUN_08213400` loads `r4` from `FUN_080b0cb6()` at `0x08213418`. The helper
   builds `iPod_Control\\iTunes\\iTunesDB`, initializes a 0x48-byte result,
   and calls `FUN_08270164`. The parser initializes its output to zero, then on
-  success stores a calendar-derived seconds value at offset `+8`. The caller
-  can apply a timezone correction. Static evidence therefore makes `r4` a
-  date/time-like value associated with the fixed iTunesDB path; the exact
-  on-device value and parser result are unknown.
+  success stores a calendar-derived seconds value at offset `+8`. The caller's
+  timezone correction occurs after `FUN_080b1904`; an overwritten return
+  address diverts control before that correction. Thus `r4` at the vulnerable
+  return is the unadjusted date/time-like value associated with the iTunesDB
+  path. The exact on-device value and parser result are unknown.
 - `FUN_080b1904` saves/restores `r4` and `r5`. At its call site in
   `FUN_08213400`, `r4` originates from the helper above and `r5` is the caller's
   first argument. Other callback entries pass either a singleton or a local
@@ -28,10 +29,12 @@ prefix rehost. The saved `N5G_OSOS_runtime` program was opened with
   Other MMU mappings, external bus responses, and the S5L8730's abort behavior
   have not been established. The QEMU `versatilepb` harness ignores these
   unassigned reads and is not a valid fault-behavior test for the iPod.
-- Parser return paths produce different condition flags. Success leaves
-  `N=0,V=0`; some errors leave `N=1,V=0`, while other errors can still leave
-  `N=0,V=0`. The actual status and flags on the candidate callback path remain
-  unresolved.
+- On the actual `FUN_080b1904` call, `param_2` is non-null and `param_3` is
+  zero. The parser's first compare therefore clears `V`; every examined return
+  path retains `V=0`. The caller epilogue is `ADD SP` plus `POP`, neither of
+  which changes flags. The prefix's `LDRBVC` is consequently enabled on the
+  parser return paths examined. `N` still varies with parser status and controls
+  the following conditional `LDCLPL`.
 
 ## Logs
 

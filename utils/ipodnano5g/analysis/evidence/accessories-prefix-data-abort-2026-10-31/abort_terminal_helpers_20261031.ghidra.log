@@ -1,0 +1,142 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (672 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1279 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x081a5608' '0x08056dd0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 081a5608 arm_81a5608 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void arm_81a5608(void)
+
+{
+  do {
+                    /* WARNING: Do nothing block with infinite loop */
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08056dd0 FUN_08056dd0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_08056dd0(undefined4 param_1,undefined4 param_2,int param_3,int param_4,undefined4 param_5,
+                 undefined4 param_6,undefined4 param_7)
+
+{
+  byte bVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  uint uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  undefined4 uVar8;
+  byte *pbVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  uint local_34;
+  undefined4 local_30;
+  int local_2c;
+  uint *local_28;
+  undefined4 uStack_24;
+  undefined4 uStack_20;
+  int iStack_1c;
+  int local_18;
+  
+  puVar2 = DAT_08056ef8;
+  iVar11 = 0;
+  uVar6 = DAT_08056efc[1];
+  uVar7 = DAT_08056efc[2];
+  uVar8 = DAT_08056efc[3];
+  pbVar9 = (byte *)(DAT_08056ef8 + 5);
+  *DAT_08056ef8 = *DAT_08056efc;
+  puVar2[1] = uVar6;
+  puVar2[2] = uVar7;
+  puVar2[3] = uVar8;
+  *(char *)(puVar2 + 5) = (char)param_1;
+  puVar2[6] = param_2;
+  puVar2[7] = param_6;
+  puVar2[9] = param_5;
+  puVar2[8] = *(undefined4 *)(*DAT_08056f00 + 0x20);
+  uStack_24 = param_1;
+  uStack_20 = param_2;
+  iStack_1c = param_3;
+  local_18 = param_4;
+  if (param_4 != 0) {
+    thunk_EXT_FUN_220000b4(DAT_08056ef8 + 10,param_4,0x38);
+  }
+  iVar4 = 0;
+  if (param_3 != 0) {
+    for (; (*(char *)(param_3 + iVar4) != '\0' && (iVar4 < 0x7f)); iVar4 = iVar4 + 1) {
+      *(char *)((int)puVar2 + iVar4 + 0x60) = *(char *)(param_3 + iVar4);
+    }
+  }
+  *(undefined1 *)((int)puVar2 + iVar4 + 0x60) = 0;
+  uVar6 = FUN_08021d14(puVar2 + 0x39,0x80,param_5,param_6,param_7);
+  puVar2[0x38] = uVar6;
+  local_2c = FUN_08022f40();
+  thunk_EXT_FUN_22000198(puVar2 + 0xc1,0x200);
+  local_28 = puVar2 + 0xc0;
+  *local_28 = 0;
+  if ((local_2c != 0) && (FUN_08022f4c(local_2c,&local_30,&local_34), local_34 < 0x200)) {
+    thunk_EXT_FUN_220001ec(puVar2 + 0xc1,local_30);
+    *local_28 = local_34;
+  }
+  FUN_08193d44(puVar2 + 0xb9,DAT_08056efc + -2);
+  FUN_08193d44(puVar2 + 0xbb,DAT_08056efc + 4);
+  FUN_08193d44(puVar2 + 0xbe,DAT_08056efc + -3);
+  puVar3 = DAT_08056f04;
+  uVar5 = 0;
+  do {
+    bVar1 = *pbVar9;
+    pbVar9 = pbVar9 + 1;
+    uVar5 = uVar5 + 1;
+    iVar11 = (uint)bVar1 + iVar11;
+  } while (uVar5 < 0x4f0);
+  puVar2[0x141] = iVar11;
+  puVar10 = puVar2;
+  while (puVar10 = puVar10 + 0x142, puVar10 < puVar3) {
+    thunk_EXT_FUN_220000b4(puVar10,puVar2,0x508);
+  }
+  return;
+}
+
+ (GhidraScript)  

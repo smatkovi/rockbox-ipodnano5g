@@ -54,9 +54,12 @@ Firmwareoperation.
    `iPod_Control\\iTunes\\iTunesDB` und übergibt ihn an `FUN_08270164`; der
    Parser initialisiert sein Ergebnis zunächst auf null und schreibt bei
    erfolgreicher Datumsverarbeitung einen aus Kalenderfeldern berechneten
-   Sekundenwert in das Ergebnis. `FUN_08213400` kann diesen Wert anschließend
-   noch um einen Zeitzonenversatz korrigieren. Daher ist `r4` plausibel ein
-   iTunesDB-bezogener Datums-/Zeitwert, bei Parserfehler vermutlich null.
+   Sekundenwert in das Ergebnis. Der Aufrufer führt eine bedingte
+   Zeitzonenkorrektur erst **nach** `FUN_080b1904` aus; wenn dessen gespeicherte
+   Rücksprungadresse überschrieben ist, erreicht der Kontrollfluss diese
+   Korrektur nicht. Daher ist `r4` bei der fehlerhaften Rückkehr der
+   unbereinigte iTunesDB-bezogene Datums-/Zeitwert, bei Parserfehler vermutlich
+   null.
    Das konkrete Gerätedatum und der reale Fehlerstatus wurden nicht gelesen.
 
 7. **Der Präfix enthält davor einen zusätzlichen speicherabhängigen Zugriff.**
@@ -70,6 +73,14 @@ Firmwareoperation.
    auch der Nullwert adressieren außerhalb dieses DRAM-Fensters. Das beweist
    noch keinen Absturz: MMU-Abbildungen, Busantwort und Fehlerbehandlung des
    S5L8730 an dieser Adresse sind nicht festgestellt.
+
+8. **Der echte Returnpfad führt den `LDRBVC` aus.** Bei diesem Call sind der
+   Parser-Ausgabezeiger nicht null und `param_3=0`. Der Parser vergleicht
+   `param_3` mit null, wodurch `V=0` wird; die untersuchten direkten
+   Rückgabepfade und der `FUN_080b1904`-Epilog ändern das nicht. Damit ist der
+   `LDRBVC` für diese Pfade nicht bloß eine frei erfundene Flagannahme. Der
+   ausführlichere MMU-/Data-Abort-Abgleich steht in
+   `OSOS-iTunes-prefix-data-abort-followup-2026-10-31.md`.
 
 ## Erreichbarkeit und Bewertung
 
@@ -110,9 +121,9 @@ Reads. Diese Ergebnisse bestätigen gerade nicht, dass der iPod den Zugriff
    aktuellem iTunesDB-Datumswert oder Parserfehler abfängt; die QEMU-Probe ist
    dafür ungeeignet. Dazu müssen zuvor MMU-Kontext und etwaige Bus-Fault-Handler
    aus dem Runtime-Abbild nachvollzogen werden.
-3. Das Statusflag-Setup nach den konkreten Rückgabepfaden von
-   `FUN_08270164` bis `FUN_080b1904` durchverfolgen; synthetische `N/V`-Werte
-   reichen nicht.
+3. `N` und den genauen Parserstatus bis zur fehlerhaften Rückkehr trennen; `V=0`
+   ist für die untersuchten echten Returnpfade belegt. Zusätzlich die mögliche
+   spätere Änderung der L1-Tabelle vor dem Callback begrenzen.
 4. Den FAT-LFN-Pfad bis zum Iterator-Callback im Offline-Modell schließen,
    einschließlich der realen UTF-8-Konvertierung.
 5. Erst danach lässt sich bewerten, ob der Kandidat für einen Gerätetest
