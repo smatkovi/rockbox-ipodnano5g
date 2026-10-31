@@ -223,14 +223,29 @@ deren Sperrzeiger auf `Manager + 0x2c` und setzt Kopf und Ende bei `+0x38` und
 anschließend die Sperre frei. `FUN_0819f508` entnimmt Knoten aus der Liste ab
 `+0x38` und reicht jeweils das Knotenfeld `+4` an den SVC-Wrapper weiter.
 
-Die Konstruktion erklärt damit Queueformat und Datenfluss, aber noch nicht,
-wer Knoten in genau diese Partitionsmanagerqueue einträgt. Der Konstruktor
-startet sie leer; die bisher ermittelten Aufrufer von `FUN_0819039e` sind die
-MBR-Registrierung `FUN_0818e998` und der Fehlerpfad `FUN_080029de`. Es ist
-keine belegte Kante von einer durch Medieninhalte erzeugten Queue-Nachricht
-zum Argument des SVC-Befehls 2 vorhanden. Ebenso bleibt offen, welche
-Laufzeitgröße die Tabelle ab `0x2200980c` hat. Eine kontrollierbare
-Out-of-bounds-Auswirkung ist deshalb nicht nachgewiesen.
+Die zuvor offene Produzentenkante ist jetzt identifiziert. `FUN_08268cda`
+erhält den Singleton aus `FUN_0818e934`. Solange das Änderungsbyte bei
+`Manager + 0x28` null ist, wartet es über `FUN_081ad3a8(Manager + 0x34)`.
+Der Synchronisationshelfer holt dafür einen 32-Bit-Wert über
+`FUN_081a4508`/SVC `0x0d`, Unterindex 2, und hängt seinen Zweifeld-Datensatz
+an der Liste ab `Manager + 0x38` ein. Das zweite Feld ist der Wert, den
+`FUN_0819f508` später aus dem Listeneintrag `+4` liest und an SVC-Befehl 2
+weitergibt. Beim Registrieren eines Objekts schreibt `FUN_0818e998` in
+denselben Singleton und ruft `FUN_0819039e` auf; diese setzt das Änderungsbyte
+und leert die Queue. Damit ist der SVC-2-Zugriff auf diesem wartenden
+Resolverpfad statisch erreichbar. Das korrigiert die vorherige Aussage, es
+sei kein Produzent für genau diese Queue gefunden worden.
+
+Die Herkunft des SVC-2-Arguments ist zugleich eingegrenzt: `FUN_081a4508`
+liest einen Eintrag aus dem internen Ringindex 2. `FUN_08222424` legt Werte
+über SVC `0x0c`, ebenfalls Unterindex 2, wieder in diesen Ring; seine
+Aufrufstellen verwenden den Wert als Synchronisationskennung. Der sichtbare
+Runtime-Pfad leitet das Argument daher aus diesem internen Kennungspool ab,
+nicht aus einem MBR-Sektor. Die Anfangsbelegung und Kapazität des Pools sowie
+die Größe der Tabelle ab `0x2200980c` liegen außerhalb des Runtime-Snapshots.
+Der SVC-2-Handler hat an der Zugriffsstelle weiterhin keine sichtbare
+Indexprüfung; ein vom Datenträger kontrollierbarer Tabellenindex oder eine
+ausnutzbare Auswirkung ist aber nicht belegt.
 
 ### Zusatzrunde: direkte Aufrufer und Startup-Registrierung
 
@@ -238,26 +253,27 @@ Die 12 eindeutigen direkten Aufrufer von `FUN_0818e934` wurden dekompiliert.
 Der Startup-Pfad ist `FUN_080202d8` → `FUN_08021d08` → Managerzugriff und
 `FUN_08029e80`; der letzte Eintrag ist im Runtime-Abbild nur `bx lr`. Für
 `FUN_08021d08` und `FUN_08029e80` gibt es jeweils genau eine direkte
-Code-Referenz. Damit richtet dieser Startup-Pfad keine sichtbaren Queue-
-Einträge ein. `FUN_0819039e` hat genau zwei direkte Code-Aufrufer:
-`FUN_0818e998` nach MBR-Registrierung und `FUN_080029de` im Fehlerpfad.
+Code-Referenz. Dieser Stub selbst richtet keine sichtbaren Queue-Einträge
+ein. `FUN_0819039e` hat genau zwei direkte Code-Aufrufer:
+`FUN_0818e998` nach Registrierung und `FUN_080029de` im Fehlerpfad.
 
-Zusätzlich wurden alle direkten Aufrufstellen des Präfix-Listen-Anfügers
-dekompiliert (12 Callsites in 11 Funktionen). Keine davon ließ sich der
-Queue bei `Manager + 0x34` zuordnen. Das ist eine Eingrenzung des sichtbaren
-Runtime-Codes, kein Beweis, dass keine indirekte oder außerhalb des Abbilds
-liegende Registrierung existiert. Für den MBR-Pfad ist weiterhin kein
-konkreter Queue-Knoten belegt; der SVC-Befehl 2 ist daher an dieser Stelle
-noch nicht als tatsächlich ausgeführter Pfad nachgewiesen.
+Der frühere Audit der direkten Präfix-Listen-Aufrufe hatte den Produzenten
+übersehen: Der Runtime-Code ruft zunächst `FUN_081ad3a8` auf; erst dieser
+berechnet `Manager + 0x38` aus dem übergebenen `Manager + 0x34` und ruft den
+Listenhelfer auf. Ein statischer Abgleich nur der direkten Listen-Callsites
+konnte diese Objektzuordnung nicht herstellen. Die Queue ist damit nicht nur
+initialisiert, sondern hat auf dem wartenden Resolverpfad einen belegten
+Produzenten und einen Registrierungs-/Weckpfad.
 
 ## Nächste Schritte
 
-- Den Produzenten der Queue bei `Manager + 0x34` finden und die Herkunft sowie
-  den Wertebereich von Knotenfeld `+4` bis zum SVC-Befehl 2 nachweisen; die
-  direkten Runtime-Anfüger sind bereits abgearbeitet, daher als Nächstes
-  indirekte Registrierung und externe Queueverwaltung prüfen.
-- Die Größe und Laufzeitinitialisierung der Präfixtabelle ab `0x2200980c`
-  klären; der sichtbare Handler prüft den Index vor dem Zugriff nicht.
+- Die Laufzeitinitialisierung und Kapazität des Kennungspools an
+  `0x2200975c` sowie die Größe der SVC-2-Tabelle ab `0x2200980c` klären; beide
+  dynamischen Bereiche liegen außerhalb des verfügbaren Runtime-Snapshots.
+- Die SVC-Befehle 1 und 2 samt Kennungslebenszyklus weiter auf Wertebereich
+  und Fehlerzustände prüfen. Der sichtbare SVC-2-Handler prüft den Index vor
+  dem Tabellenzugriff nicht, der ermittelte Runtime-Pfad bezieht ihn aber aus
+  dem internen Kennungspool.
 - Den Erzeuger der VTable-Instanz bei `0x085056d0` finden. Die VTable hat im
   Runtime-Abbild keine erkannten eingehenden Code-Referenzen.
 - Belegen, ob der MBR-Partitionsadapter in einen Tabellenobjekt-Wrapper

@@ -52,7 +52,7 @@ für `FUN_0812a9ca`:
 | `OSOS_runtime_listener_oscall_thunk_20261031.application.log` | Runtime-Veneer `0x08201220` lädt die Präfixadresse `0x22005934`; kein Beleg für externen Callback-Code |
 | `OSOS_runtime_listener_callback_callers_20261031.application.log` | Xrefs und Argumentquellen weiterer Aufrufer des Präfix-SVC-Wrappers |
 | `OSOS_runtime_listener_queue_wrapper_callers_20261031.application.log` | Direkte Aufrufer der Präfix-Listenfunktionen für Queue-Anfügen und -Entnahme |
-| `OSOS_runtime_all_runtime_list_add_callers_20261031.application.log` | Decompilierung aller 12 direkten Anfüge-Aufrufstellen; keine davon ist bislang der konkreten MBR-Managerqueue zugeordnet |
+| `OSOS_runtime_all_runtime_list_add_callers_20261031.application.log` | Decompilierung der 12 direkten Anfüge-Aufrufstellen; die höhere Zuordnung über `FUN_081ad3a8` ist separat belegt |
 | `OSOS_runtime_partition_manager_constructor_20261031.application.log` | Aufbau des 7-Slot-Partitionsmanagers und Initialisierer `FUN_08020448` |
 | `OSOS_runtime_partition_manager_queue_semantics_20261031.application.log` | Queueinitialisierung, Sperr-/Kopf-/Endfelder, Entnahme und Weitergabe von Knotenfeld `+4` |
 | `OSOS_runtime_partition_manager_singleton_all_callers_20261031.application.log` | Decompilierung aller 12 eindeutigen direkten Aufrufer des Partitionsmanager-Singletons |
@@ -69,17 +69,38 @@ für `FUN_0812a9ca`:
 | `OSOS_runtime_partition_manager_slot_guard_20261031.application.log` | unsigned Slotgrenze `< 7` und Leerplatzbedingung in `FUN_0826384c` |
 | `OSOS_runtime_partition_slot_release_20261031.application.log` | `FUN_0821545a` ruft den Slotabbau auf; `FUN_080e7e70` nullt den Managerslot und zerstört das Objekt |
 | `OSOS_runtime_partition_startup_reachability_20261031.application.log` | Direkte Runtime-Xrefs der Cache-Registrierungsaufrufer |
+| `OSOS_body_signal_token_svc_helpers_20261031.application.log` | Body-Wrapper: SVC `0x0d` liest Ringindex 2, SVC `0x0c` schreibt Ringwerte |
+| `OSOS_body_SVC_dispatch_all_wrapper_callers_20261031.application.log` | Decompilierung der 21 erkannten direkten Request-Wrapper für `FUN_08004f14`; `FUN_08005488` bildet SVC `0x0c` |
+| `OSOS_body_SVC_queue_table_globals_20261031.application.log` | Ghidra-Werte der globalen Pointer: `0x2200975c` für die 0x2c-Byte-Ringdeskriptoren und `0x2200980c` für die SVC-2-Tabelle |
+| `OSOS_runtime_signal_token_helpers_20261031.application.log` | Runtime-Helfer `FUN_081ad3a8`, `FUN_081a4508`, `FUN_08222424` und SVC-Aufrufstellen |
+| `OSOS_runtime_signal_token_origins_20261031.application.log` | Direkte Aufrufer und Verwendung der über Ringindex 2 geholten Kennung |
+| `OSOS_runtime_SVC_queue2_api_callers_20261031.application.log` | Runtime-Importveneer für SVC-`0x0c`/`0x0d` |
+| `OSOS_runtime_SVC_queue2_api_thunk_callers_20261031.application.log` | Direkte Runtime-Aufrufer der Veneers: `FUN_081a4508`/`FUN_080219fc` lesen Index 2; `FUN_080740d4` und `FUN_08222424` schreiben Index 1 bzw. 2 |
+| `OSOS_runtime_SVC_queue2_writer_paths_20261031.application.log` | `FUN_08222424` schreibt eine Kennung in Ringindex 2; Aufrufer behandeln sie als Synchronisationsressource und geben sie frei |
+| `OSOS_runtime_FUN_081ad3a8_callers_20261031.application.log` | Direkte Aufrufer des Synchronisationshelfers; `FUN_08268cda` übergibt `Manager + 0x34` |
 
 Die zunächst als Listener-Callback bezeichnete Kante ist korrigiert: Das
 Queue-Knotenfeld `+4` wird als Indexargument an SVC-Befehl 2 weitergereicht.
 Der SVC-Handler liest damit aus `0x2200980c`; er ruft den Wert nicht als
-Callback auf. Konstruktor und Aufruferabfrage belegen die Queueform und ihren
-leeren Anfangszustand. Ein Produzent, der Einträge in genau diese
-Partitionsmanagerqueue schreibt, ist in den direkten Listen-Aufrufstellen
-noch nicht identifiziert. Die direkte Manageraufruferliste zeigt außerdem,
-dass der Startup-Aufruf nach dem Singletonzugriff nur den `bx lr`-Stub
-`FUN_08029e80` erreicht; für `FUN_0819039e` sind nur MBR-Registrierung und
-Fehlerpfad als direkte Caller gefunden.
+Callback auf. Der konkrete Queue-Produzent ist nun gefunden: `FUN_08268cda`
+wartet bei leerem Änderungsbyte über `FUN_081ad3a8(Manager + 0x34)`.
+`FUN_081ad3a8` hängt einen Zweifeld-Datensatz direkt an die Liste bei
+`Manager + 0x38`; dessen zweites Wort ist die zuvor aus Ringindex 2 geholte
+Synchronisationskennung. `FUN_0819f508` entnimmt diesen Knoten und reicht
+`+4` an SVC-Befehl 2 weiter. `FUN_0818e998` registriert in demselben
+Singleton und ruft `FUN_0819039e`, wodurch der Manager den wartenden Pfad
+weckt. Die frühere Aussage, ein Produzent sei noch nicht identifiziert,
+war unvollständig: Der direkte Listenhelfer-Audit sah nicht, dass
+`FUN_081ad3a8` die Listenadresse aus `Manager + 0x34` berechnet.
+
+Die Runtime liest diese Kennung mit SVC `0x0d`, Unterindex 2, und gibt sie
+mit SVC `0x0c`, ebenfalls Unterindex 2, in den internen Ring zurück. Der
+sichtbare Pfad bezieht das SVC-2-Argument somit aus dem Kennungspool und
+nicht aus einem MBR-Sektor. Poolbelegung, Poolkapazität und die Größe der
+Tabelle bei `0x2200980c` sind im Runtime-Snapshot nicht enthalten. Der
+Startup-Aufruf nach dem Singletonzugriff erreicht nur den `bx lr`-Stub
+`FUN_08029e80`; `FUN_0819039e` hat weiterhin genau zwei direkte Caller:
+MBR-Registrierung und Fehlerpfad.
 
 Diese Abfragen zeigen, dass `FUN_081352fc` und `FUN_0816a928` dieselbe
 Vierer-Tabelle benutzen. Sie schließen nicht die Kante vom MBR-Partitionsadapter
@@ -100,10 +121,9 @@ teils eine falsche Startadresse oder fehlenden Thumb-Kontext. Die oben
 aufgeführten `OSOS_body_oscall_*`- und `OSOS_body_list_helpers_*`-Belege sind
 davon getrennt: Ersterer stammt aus dem korrekt geladenen
 `N5G_OSOS_RTOS`-Projekt, Letzterer aus einer Rohdisassemblierung des
-Body-Abbilds. Ebenso ausgeschlossen sind unvollständige Singleton-/Tabellen-
-Suchen und die allgemeinen Slot-`0x28`-Scans: Sie belegen keinen konkreten
-Aufrufpfad. Die gültigen Runtime-Abfragen wurden mit dem bestehenden Projekt
-und `-readOnly -noanalysis` ausgeführt.
+Body-Abbilds. Die neuen `OSOS_body_SVC_*`-Abfragen stammen ebenfalls aus dem
+korrekt geladenen Body-Projekt. Die gültigen Runtime-Abfragen wurden mit dem
+bestehenden Projekt und `-readOnly -noanalysis` ausgeführt.
 
 `OSOS_runtime_vtable_slot28_calls_20261031.application.log` und
 `OSOS_runtime_slot28_candidate_callers_20261031.application.log` sind nicht

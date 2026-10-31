@@ -1,0 +1,1309 @@
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (624 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1250 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpTargetFunctions.java '0x081ad3a8'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts/DumpTargetFunctions.java (HeadlessAnalyzer)  
+INFO  DumpTargetFunctions.java> ===== TARGET 081ad3a8 ===== (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_081ad3a8 [[081ad3a8, 081ad3d9]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_081ad3a8(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 *puVar1;
+  undefined4 uStack_18;
+  undefined4 local_14;
+  
+  puVar1 = (undefined4 *)*param_1;
+  uStack_18 = param_3;
+  local_14 = param_4;
+  local_14 = FUN_081935d8();
+  thunk_EXT_FUN_22003032(param_1 + 1,&uStack_18);
+  thunk_EXT_FUN_22003156(*puVar1);
+  FUN_081933d4(local_14);
+  FUN_0827c4b4(local_14);
+  local_14 = 0;
+  thunk_EXT_FUN_22003144(*puVar1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08268cf6 type=UNCONDITIONAL_CALL caller=FUN_08268cda@08268cda (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08268cda [[08268cda, 08268d3f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_08268cda(int param_1,int param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined1 auStack_24 [4];
+  int iStack_20;
+  int iStack_1c;
+  undefined4 local_18;
+  
+  iStack_20 = param_1;
+  iStack_1c = param_2;
+  local_18 = param_3;
+  thunk_EXT_FUN_22003048();
+  while (*(char *)(param_1 + 0x28) == '\0') {
+    FUN_081ad3a8(param_1 + 0x34);
+  }
+  thunk_EXT_FUN_22003052(param_1 + 0x2c);
+  FUN_0826383c(auStack_24,param_1 + 0x1c);
+  iVar1 = FUN_0826384c(param_1,param_2,0);
+  if (iVar1 == 0) {
+    uVar2 = *(undefined4 *)(param_1 + param_2 * 4);
+    FUN_0828ca1e(local_18,uVar2);
+  }
+  else {
+    uVar2 = FUN_0823fad4(param_1);
+  }
+  FUN_08279d68(auStack_24);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081a8e3c type=UNCONDITIONAL_CALL caller=FUN_081a8dd0@081a8dd0 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081a8dd0 [[081a8dd0, 081a8e49]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_081a8dd0(int *param_1)
+
+{
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
+  
+  iVar1 = DAT_081a8e50;
+  if (param_1[6] + DAT_081a8e4c == 0) {
+    iVar4 = FUN_08253f70(param_1[3],DAT_081a8e5c,param_1);
+    if (iVar4 == 0) {
+      while (param_1[6] != iVar1) {
+        FUN_081ad3a8(DAT_081a8e60);
+      }
+    }
+  }
+  else if (param_1[6] + DAT_081a8e4c + DAT_081a8e54 == 0) {
+    if (param_1[7] == 0) {
+      return;
+    }
+    piVar2 = (int *)*DAT_081a8e58;
+    piVar5 = (int *)0x0;
+    while ((piVar3 = piVar2, piVar3 != (int *)0x0 && (piVar3 != param_1))) {
+      piVar5 = piVar3;
+      piVar2 = (int *)*piVar3;
+    }
+    iVar4 = *param_1;
+    if (piVar5 == (int *)0x0) {
+      *DAT_081a8e58 = iVar4;
+      if ((iVar4 != 0) && (DAT_081a8e58[6] - *(int *)(iVar4 + 8) < 0)) {
+        FUN_08197514(DAT_081a8e58 + 5);
+      }
+    }
+    else {
+      *piVar5 = iVar4;
+    }
+    param_1[7] = 0;
+  }
+  param_1[6] = iVar1;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08302144 type=UNCONDITIONAL_CALL caller=FUN_08302090@08302090 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08302090 [[08302090, 08302159]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+int FUN_08302090(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                undefined4 param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  int iStack_24;
+  undefined4 local_20;
+  undefined4 uStack_1c;
+  undefined4 local_18;
+  
+  iStack_24 = param_1;
+  local_20 = param_2;
+  uStack_1c = param_3;
+  local_18 = param_4;
+  iVar1 = FUN_0827aea4(param_1 + 4,param_3);
+  *(undefined4 *)(iVar1 + -4) = DAT_0830215c;
+  *(undefined4 *)(iVar1 + 0x10c) = 0xffffffff;
+  *(undefined4 *)(iVar1 + 0x110) = 0;
+  iVar1 = FUN_08198770(iVar1 + 0x114,local_20);
+  FUN_08192c5c(iVar1 + 8);
+  iVar1 = FUN_081a7020(iVar1 + 0x10,iVar1 + 8);
+  iVar1 = FUN_081a7020(iVar1 + 0xc,iVar1 + -8);
+  *(undefined1 *)(iVar1 + 0xc) = 0;
+  iVar3 = iVar1 + -0x134;
+  FUN_08193be0(&local_28,iVar1 + -0x14);
+  iVar2 = FUN_08302068(iVar3,param_5);
+  *(int *)(iVar1 + -0x24) = iVar2;
+  if (iVar2 == -1) {
+    FUN_081940f0(0xffffffff);
+  }
+  local_30 = DAT_08302160;
+  local_2c = 0;
+  FUN_08196c00(&local_30,s_TPodMsgQ__s__0x_x_08302164,local_20,iVar3);
+  iVar2 = FUN_0830464c(iVar3,&local_30,0,*(undefined4 *)(iVar1 + -0x24),local_18,0x3c);
+  *(int *)(iVar1 + -0x20) = iVar2;
+  if (iVar2 != 0) {
+    FUN_081ad3a8(iVar1 + -0xc);
+  }
+  FUN_0818ebc0(&local_30);
+  thunk_EXT_FUN_22003052(local_28);
+  return iVar3;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0830da9a type=UNCONDITIONAL_CALL caller=FUN_0830da24@0830da24 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0830da24 [[0830da24, 0830daad]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4
+FUN_0830da24(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+            undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 *puStack_24;
+  undefined4 uStack_20;
+  undefined4 local_1c;
+  undefined4 uStack_18;
+  
+  if (param_1[1] == 0) {
+    puStack_24 = param_1;
+    uStack_20 = param_2;
+    local_1c = param_3;
+    uStack_18 = param_4;
+    FUN_08193be0(&local_28,param_1 + 3);
+    param_1[2] = param_4;
+    local_30 = DAT_0830dab0;
+    *param_1 = param_2;
+    local_2c = 0;
+    FUN_08196c00(&local_30,&DAT_0830dab4,param_1);
+    uVar1 = FUN_081909a4(&local_30);
+    uVar2 = FUN_081909a4(local_1c);
+    iVar3 = thumb_8193984(uVar2,DAT_0830dab8,uVar1,param_5,param_6,1,param_7);
+    param_1[1] = iVar3;
+    if (iVar3 != 0) {
+      FUN_081ad3a8(param_1 + 5);
+      FUN_0818ebc0(&local_30);
+      thunk_EXT_FUN_22003052(local_28);
+      return 1;
+    }
+    FUN_0818ebc0(&local_30);
+    thunk_EXT_FUN_22003052(local_28);
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08315568 type=UNCONDITIONAL_CALL caller=FUN_08315544@08315544 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08315544 [[08315544, 08315587]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+int FUN_08315544(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  byte *pbVar1;
+  undefined4 local_18;
+  
+  local_18 = param_4;
+  FUN_08193be0(&local_18);
+  pbVar1 = (byte *)(param_1 + 0x20);
+  *pbVar1 = *pbVar1 | 1;
+  while (-1 < (int)((uint)*pbVar1 << 0x1e)) {
+    FUN_081ad3a8(param_1 + 0x14);
+  }
+  thunk_EXT_FUN_22003052(local_18);
+  FUN_0819726a(param_1 + 0x14);
+  FUN_08192c80(param_1 + 0xc);
+  return param_1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081a8f76 type=UNCONDITIONAL_CALL caller=FUN_081a8f50@081a8f50 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081a8f50 [[081a8f50, 081a905d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4
+FUN_081a8f50(undefined4 *param_1,int param_2,undefined4 param_3,int param_4,int param_5,int param_6)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 local_34;
+  
+  local_34 = 0;
+  thunk_EXT_FUN_22003144(*param_1);
+  if (param_4 == 0) {
+    iVar1 = thunk_EXT_FUN_220030bc();
+  }
+  else {
+    while (iVar1 = thunk_EXT_FUN_220030bc(param_1 + 5), iVar1 == 0) {
+      FUN_081ad3a8(param_1 + 2);
+    }
+  }
+  thunk_EXT_FUN_22003156(*param_1);
+  if (iVar1 == 0) {
+    FUN_081a52d4();
+    local_34 = 1;
+  }
+  else {
+    FUN_081a6950(iVar1 + 8);
+    *(undefined4 *)(iVar1 + 0xc) = param_3;
+    *(char *)(iVar1 + 0x11) = (char)param_5;
+    *(undefined1 *)(iVar1 + 0x10) = 1;
+    if (param_5 != 0) {
+      iVar2 = FUN_081a52d4();
+      if (*(char *)(iVar2 + 0x50) == '\0') {
+        FUN_08192c5c();
+        FUN_0819e35c(iVar2 + 0x44,iVar2 + 0x3c);
+        *(undefined1 *)(iVar2 + 0x50) = 1;
+      }
+      param_1[9] = iVar2 + 0x44;
+      param_1[8] = iVar2 + 0x3c;
+      thunk_EXT_FUN_22003048();
+    }
+    thunk_EXT_FUN_22003144(*(undefined4 *)(param_2 + 0x2c));
+    if (((param_6 == 0) || (param_5 != 0)) || (*(int *)(param_2 + 0x40) == 0)) {
+      thunk_EXT_FUN_22003032(param_2 + 0x40,iVar1);
+      FUN_081ad3da(param_2 + 0x34);
+    }
+    else {
+      thunk_EXT_FUN_22003144(*param_1);
+      thunk_EXT_FUN_22003032(param_1 + 5,iVar1);
+      thunk_EXT_FUN_22003156(*param_1);
+      local_34 = 1;
+    }
+    thunk_EXT_FUN_22003156(*(undefined4 *)(param_2 + 0x2c));
+    if (param_5 != 0) {
+      param_1[10] = iVar1;
+      FUN_081ad3a8(param_1[9]);
+      param_1[10] = 0;
+      thunk_EXT_FUN_22003052(param_1[8]);
+      param_1[8] = 0;
+      param_1[9] = 0;
+    }
+  }
+  return local_34;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081a903c type=UNCONDITIONAL_CALL caller=FUN_081a8f50@081a8f50 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0832ec5c type=UNCONDITIONAL_CALL caller=FUN_0832ec46@0832ec46 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0832ec46 [[0832ec46, 0832ec6d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0832ec46(int param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 uStack_10;
+  int local_c;
+  
+  local_c = param_1 + 0x44;
+  uStack_10 = param_3;
+  thunk_EXT_FUN_22003048();
+  FUN_08190238(&uStack_10);
+  while (*(int *)(param_1 + 0x74) != 0) {
+    FUN_081ad3a8(*(undefined4 *)(param_1 + 0x4c));
+  }
+  thunk_EXT_FUN_22003052(local_c);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=083231b4 type=UNCONDITIONAL_CALL caller=FUN_08323180@08323180 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08323180 [[08323180, 083231d1]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_08323180(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 uStack_18;
+  
+  uStack_18 = param_4;
+  iVar1 = FUN_08279460();
+  if (iVar1 != 0) {
+    FUN_081940f0(0xffffffff);
+  }
+  FUN_08279cdc(param_1 + 0x108,param_2);
+  FUN_08258078(param_1,DAT_083231d4,param_1);
+  FUN_081ad3a8(param_1 + 0x10c);
+  uVar2 = FUN_08279cf8(&uStack_18,0);
+  FUN_08279cdc(param_1 + 0x108,uVar2);
+  FUN_0827aff2(&uStack_18);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=080b25e4 type=UNCONDITIONAL_CALL caller=FUN_080b25ac@080b25ac (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_080b25ac [[080b25ac, 080b262b]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined8 FUN_080b25ac(int param_1,int param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  int local_20;
+  
+  if (param_2 == 0) {
+    FUN_081940f0(0xffffffff);
+  }
+  local_20 = 0;
+  thunk_EXT_FUN_22003048();
+  uVar1 = 0;
+  while (iVar2 = uVar1 * 0xc + param_1, *(int *)(iVar2 + 0x28) != param_2) {
+    uVar1 = uVar1 + 1;
+    if (1 < uVar1) goto LAB_080b2612;
+  }
+  while (*(char *)(iVar2 + 0x30) == '\0') {
+    FUN_080e0ce4();
+    FUN_081ad3a8(param_1 + 0x1c);
+  }
+  (**(code **)(**(int **)(iVar2 + 0x28) + 0x20))(*(int **)(iVar2 + 0x28),0x1f);
+  *(undefined4 *)(iVar2 + 0x28) = 0;
+  *(undefined1 *)(iVar2 + 0x30) = 1;
+  local_20 = *(int *)(iVar2 + 0x2c);
+  if (local_20 == 0) {
+    FUN_081940f0(0xffffffff);
+  }
+  if (1 < uVar1) {
+LAB_080b2612:
+    FUN_081940f0(0xffffffff);
+  }
+  thunk_EXT_FUN_22003052(param_1 + 0x14);
+  return CONCAT44(local_20,local_20);
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0808fe14 type=UNCONDITIONAL_CALL caller=FUN_0808fdf4@0808fdf4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0808fdf4 [[0808fdf4, 0808fe25]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0808fdf4(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_10;
+  
+  local_10 = param_4;
+  FUN_08193be0(&local_10,param_1 + 0x230);
+  while (*(char *)(param_1 + 0x22d) != '\x03') {
+    FUN_081ad3a8(param_1 + 0x238);
+  }
+  thunk_EXT_FUN_22003052(local_10);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081b04e6 type=UNCONDITIONAL_CALL caller=FUN_081b04c8@081b04c8 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081b04c8 [[081b04c8, 081b0517] [081b06b0, 081b06f3]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+/* WARNING: Function: switch8_r3 replaced with injection: switch8_r3 */
+/* WARNING (jumptable): Removing unreachable block (ram,0x081b0514) */
+/* WARNING: Removing unreachable block (ram,0x081b0514) */
+
+void FUN_081b04c8(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 local_18;
+  
+  iVar3 = param_1 + 0x134;
+  local_18 = param_4;
+  iVar1 = FUN_081b5414(iVar3);
+  if (iVar1 == 0) {
+    FUN_08193be0(&local_18,param_1 + 0x140);
+    while (iVar1 = FUN_081f8710(iVar3), iVar1 != 0) {
+      FUN_081ad3a8(param_1 + 0x148);
+    }
+    iVar1 = thunk_EXT_FUN_220030bc(param_1 + 0x138);
+    iVar3 = 0;
+    if (iVar1 != 0) {
+      iVar3 = *(int *)(iVar1 + 4);
+      FUN_08191cdc();
+    }
+    thunk_EXT_FUN_22003052(local_18);
+    uVar2 = *(int *)(*(int *)(iVar3 + 8) + 4) + DAT_081b06f4;
+                    /* WARNING: Could not recover jumptable at 0x081b0514. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    if (DAT_081b0518 <= uVar2) {
+      uVar2 = (uint)DAT_081b0518;
+    }
+    (*(code *)((uint)*(byte *)(uVar2 + 0x81b0519) * 2 + 0x81b0519))();
+    return;
+  }
+  FUN_08193be0(&local_18,param_1 + 0x120);
+  iVar1 = FUN_081b5414(iVar3);
+  if (iVar1 != 0) {
+    *(undefined4 *)(param_1 + 0x154) = 0xffffffff;
+    *(undefined4 *)(param_1 + 0x158) = 0xffffffff;
+    *(undefined4 *)(param_1 + 0x15c) = 0xffffffff;
+  }
+  thunk_EXT_FUN_22003052(local_18);
+  FUN_0819f508(param_1 + 0x128);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0824934a type=UNCONDITIONAL_CALL caller=FUN_0824932a@0824932a (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0824932a [[0824932a, 0824935b]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0824932a(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_10;
+  
+  local_10 = param_4;
+  FUN_08193be0(&local_10,param_1 + 0x230);
+  while (*(char *)(param_1 + 0x22d) != '\0') {
+    FUN_081ad3a8(param_1 + 0x238);
+  }
+  thunk_EXT_FUN_22003052(local_10);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082e1730 type=UNCONDITIONAL_CALL caller=FUN_082e171c@082e171c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_082e171c [[082e171c, 082e1741]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_082e171c(int param_1)
+
+{
+  thunk_EXT_FUN_22003048();
+  while (*(int *)(param_1 + 0x14) != 0) {
+    FUN_081ad3a8(param_1 + 0x84);
+  }
+  thunk_EXT_FUN_22003052(param_1 + 0x7c);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081cf2b6 type=UNCONDITIONAL_CALL caller=FUN_081cf284@081cf284 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081cf284 [[081cf284, 081cf2e3]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_081cf284(int param_1,uint param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  undefined4 local_18;
+  
+  if (param_2 < 4) {
+    local_18 = param_4;
+    FUN_08193be0(&local_18,param_1 + 0x230);
+    iVar2 = param_2 * 0x10 + DAT_081cf2e4;
+    while (*(char *)(param_1 + 0x22c) != *(char *)(iVar2 + 0xc)) {
+      if (*(char *)(param_1 + 0x264) != '\0') goto LAB_081cf2ce;
+      FUN_081ad3a8(param_1 + 0x238);
+    }
+    if (*(char *)(param_1 + 0x264) == '\0') {
+      uVar1 = *(undefined1 *)(iVar2 + 0xe);
+    }
+    else {
+LAB_081cf2ce:
+      uVar1 = *(undefined1 *)(iVar2 + 0xf);
+    }
+    *(undefined1 *)(param_1 + 0x22d) = uVar1;
+    FUN_0819f508(param_1 + 0x238);
+    thunk_EXT_FUN_22003052(local_18);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08130f74 type=UNCONDITIONAL_CALL caller=FUN_08130efc@08130efc (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08130efc [[08130efc, 08130f9f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 *
+FUN_08130efc(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+            undefined4 param_5,undefined4 param_6)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  byte *pbVar4;
+  undefined4 *puVar5;
+  undefined4 uVar6;
+  
+  uVar6 = param_3;
+  puVar1 = (undefined4 *)FUN_0818eb44(0x24);
+  *puVar1 = 0;
+  puVar1[1] = 0;
+  puVar3 = puVar1 + 3;
+  puVar1[2] = 0;
+  FUN_08192c5c(puVar3);
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  puVar1[7] = 0;
+  FUN_0819e35c(puVar1 + 5,puVar3);
+  pbVar4 = (byte *)(puVar1 + 8);
+  *pbVar4 = *pbVar4 & 0xfc;
+  iVar2 = FUN_0813abf4(puVar1,param_1,param_2,param_3,param_4,param_5,param_6,param_1,param_2,uVar6)
+  ;
+  if (iVar2 == 0) {
+    puVar5 = puVar3;
+    thunk_EXT_FUN_22003048(puVar3);
+    *pbVar4 = *pbVar4 | 1;
+    while (-1 < (int)((uint)*pbVar4 << 0x1e)) {
+      FUN_081ad3a8(puVar1 + 5);
+    }
+    thunk_EXT_FUN_22003052(puVar5);
+    FUN_0819726a(puVar1 + 5);
+    FUN_08192c80(puVar3);
+    FUN_08191cdc(puVar1);
+    puVar1 = (undefined4 *)0x0;
+  }
+  return puVar1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0813ac6e type=UNCONDITIONAL_CALL caller=FUN_0813abf4@0813abf4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0813abf4 [[0813abf4, 0813ac83]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4
+FUN_0813abf4(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+            undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 *local_28;
+  undefined4 *puStack_24;
+  undefined4 uStack_20;
+  undefined4 local_1c;
+  undefined4 uStack_18;
+  
+  if (param_1[1] == 0) {
+    local_28 = param_1 + 3;
+    puStack_24 = param_1;
+    uStack_20 = param_2;
+    local_1c = param_3;
+    uStack_18 = param_4;
+    thunk_EXT_FUN_22003048();
+    param_1[2] = param_4;
+    *param_1 = param_2;
+    uVar1 = DAT_0813ac84;
+    local_2c = 0;
+    local_30 = DAT_0813ac84;
+    FUN_08196c00(&local_30,&DAT_0813ac88,param_1);
+    uVar2 = FUN_081909a4(&local_30);
+    uVar3 = FUN_081909a4(local_1c);
+    iVar4 = thumb_8193984(uVar3,DAT_0813ac8c,uVar2,param_5,param_6,1,param_7);
+    param_1[1] = iVar4;
+    if (iVar4 != 0) {
+      FUN_081ad3a8(param_1 + 5);
+      local_30 = uVar1;
+      FUN_081ada60(&local_30);
+      thunk_EXT_FUN_22003052(local_28);
+      return 1;
+    }
+    local_30 = uVar1;
+    FUN_081ada60(&local_30);
+    thunk_EXT_FUN_22003052(local_28);
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08267302 type=UNCONDITIONAL_CALL caller=FUN_0826726c@0826726c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0826726c [[0826726c, 08267311]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+int FUN_0826726c(int *param_1,uint param_2,undefined4 param_3,uint param_4,int param_5,
+                undefined4 param_6,undefined4 param_7)
+
+{
+  int iVar1;
+  
+  if (0x1f < param_2) {
+    FUN_081940f0(0xffffffff);
+  }
+  thunk_EXT_FUN_22003048();
+  while( true ) {
+    if ((param_4 == 0) || ((uint)param_1[param_2 + 0x23] <= param_4)) {
+      for (iVar1 = 0; iVar1 < *param_1; iVar1 = iVar1 + 1) {
+        if (*(char *)((int)param_1 + iVar1 + 0x70) == '\0') {
+          *(undefined1 *)((int)param_1 + iVar1 + 0x70) = 1;
+          (**(code **)(*(int *)param_1[iVar1 + 2] + 0x1c))((int *)param_1[iVar1 + 2],param_2);
+          FUN_082eb63c(param_1[iVar1 + 2],param_3,param_6,param_7);
+          *(undefined4 *)(param_1[iVar1 + 2] + 0x194) = 0;
+          param_1[param_2 + 0x23] = param_1[param_2 + 0x23] + 1;
+          thunk_EXT_FUN_22003052(param_1 + 0x43);
+          return param_1[iVar1 + 2];
+        }
+      }
+    }
+    if (param_5 == 0) break;
+    FUN_081ad3a8(param_1 + 0x45);
+  }
+  thunk_EXT_FUN_22003052(param_1 + 0x43);
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0811eb7c type=UNCONDITIONAL_CALL caller=FUN_0811eb6a@0811eb6a (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0811eb6a [[0811eb6a, 0811eb91]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0811eb6a(uint *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_10;
+  
+  local_10 = param_4;
+  FUN_08193be0(&local_10,param_1 + 0x10);
+  while (param_1[1] < *param_1) {
+    FUN_081ad3a8(param_1[0x12]);
+  }
+  thunk_EXT_FUN_22003052(local_10);
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=08271d5a type=UNCONDITIONAL_CALL caller=FUN_08271d08@08271d08 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08271d08 [[08271d08, 08271d5f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+uint FUN_08271d08(uint *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  undefined4 uStack_18;
+  undefined4 local_14;
+  
+  uStack_18 = param_3;
+  local_14 = param_4;
+  FUN_08193be0(&local_14,param_1 + 0x10);
+  FUN_08190238(&uStack_18);
+  do {
+    for (uVar1 = 0; uVar1 < *param_1; uVar1 = uVar1 + 1) {
+      if (*(char *)((int)param_1 + uVar1 + 0x30) == '\0') {
+        *(undefined1 *)((int)param_1 + uVar1 + 0x30) = 1;
+        (*(code *)**(undefined4 **)param_1[uVar1 + 2])();
+        param_1[1] = param_1[1] - 1;
+        uVar1 = param_1[uVar1 + 2];
+        thunk_EXT_FUN_22003052(local_14);
+        return uVar1;
+      }
+    }
+    FUN_081ad3a8(param_1[0x12]);
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0812be9a type=UNCONDITIONAL_CALL caller=FUN_0812be82@0812be82 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0812be82 [[0812be82, 0812bed5]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0812be82(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  do {
+    thunk_EXT_FUN_22003048(param_1 + 0x14);
+    while (iVar1 = *(int *)(param_1 + 0x28), iVar1 == 0) {
+      FUN_081ad3a8(param_1 + 0x1c);
+    }
+    iVar2 = *(int *)(iVar1 + 0x18);
+    *(int *)(param_1 + 0x28) = iVar2;
+    if (iVar2 == 0) {
+      *(undefined4 *)(param_1 + 0x2c) = 0;
+    }
+    *(undefined4 *)(iVar1 + 0x18) = 0;
+    thunk_EXT_FUN_22003052(param_1 + 0x14);
+    FUN_08135814(param_1,iVar1);
+    iVar1 = FUN_0818ebc0(iVar1 + 0x10);
+    iVar1 = FUN_0818ebc0(iVar1 + -0xc);
+    FUN_08191cdc(iVar1 + -4);
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0823f26e type=UNCONDITIONAL_CALL caller=FUN_0823f258@0823f258 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0823f258 [[0823f258, 0823f297]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0823f258(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 local_10;
+  
+  local_10 = param_4;
+  FUN_08193be0(&local_10,param_1 + 0xc);
+  while (iVar1 = FUN_081bfbfe(param_1), iVar1 != 0) {
+    FUN_081ad3a8(param_1 + 0x14);
+  }
+  iVar1 = thunk_EXT_FUN_220030bc(param_1 + 4);
+  uVar2 = 0;
+  if (iVar1 != 0) {
+    uVar2 = *(undefined4 *)(iVar1 + 4);
+    FUN_08191cdc();
+  }
+  thunk_EXT_FUN_22003052(local_10);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082772f2 type=UNCONDITIONAL_CALL caller=FUN_082772dc@082772dc (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_082772dc [[082772dc, 08277317]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+longlong FUN_082772dc(uint param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  
+  do {
+    thunk_EXT_FUN_22003144(*(undefined4 *)(param_1 + 0x2c));
+    while (iVar1 = thunk_EXT_FUN_220030bc(param_1 + 0x40), iVar1 == 0) {
+      FUN_081ad3a8(param_1 + 0x34);
+    }
+    thunk_EXT_FUN_22003156(*(undefined4 *)(param_1 + 0x2c));
+    iVar1 = FUN_082785f4(iVar1,param_2,param_3);
+  } while (iVar1 == 0);
+  return (ulonglong)param_1 << 0x20;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0831fe30 type=UNCONDITIONAL_CALL caller=FUN_0831fe00@0831fe00 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0831fe00 [[0831fe00, 0831fee7]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+int FUN_0831fe00(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined4 *local_20;
+  undefined4 local_1c;
+  undefined4 uStack_18;
+  undefined4 local_14;
+  
+  *param_1 = DAT_0831fee8;
+  local_20 = param_1;
+  local_1c = param_2;
+  uStack_18 = param_3;
+  local_14 = param_4;
+  FUN_08193be0(&local_14,param_1 + 0xf);
+  if (*(char *)(param_1 + 0x17) == '\0') {
+    *(undefined1 *)(param_1 + 0x17) = 1;
+    FUN_08258078(param_1,DAT_0831feec,param_1);
+    FUN_081ad3a8(param_1 + 0x14);
+    uVar1 = FUN_0827a8f8();
+    FUN_083229d6(uVar1,param_1);
+    FUN_0826269c(param_1);
+    FUN_0825e3b4(param_1);
+    FUN_0825e394(param_1 + 1);
+    if ((int *)param_1[0xe] != (int *)0x0) {
+      (**(code **)(*(int *)param_1[0xe] + 4))();
+      param_1[0xe] = 0;
+    }
+    FUN_08322f56(param_1 + 0x2c);
+  }
+  thunk_EXT_FUN_22003052(local_14);
+  FUN_0819726a(param_1 + 0x43);
+  iVar2 = FUN_0827bae2(param_1 + 0x42);
+  iVar2 = FUN_08322fac(iVar2 + -0x58);
+  iVar2 = FUN_08323260(iVar2 + -0x50);
+  FUN_0819726a(iVar2 + -0x10);
+  FUN_08192c80(iVar2 + -0x24);
+  puVar3 = (undefined4 *)(iVar2 + -0x5c);
+  local_20 = *(undefined4 **)(iVar2 + -0x4c);
+  if (local_20 != (undefined4 *)0x0) {
+    local_1c = local_20[2];
+    FUN_08236f8c(&uStack_18,puVar3,&local_1c,&local_20);
+    FUN_08243e7e(puVar3,*(undefined4 *)(iVar2 + -0x4c),0);
+    while (puVar4 = (undefined4 *)*puVar3, puVar4 != (undefined4 *)0x0) {
+      *puVar3 = *puVar4;
+      FUN_081956a0(puVar4[2],puVar4[1],0);
+      FUN_081956a0(puVar4,1,0);
+    }
+  }
+  return iVar2 + -0x60;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=083237be type=UNCONDITIONAL_CALL caller=FUN_08323776@08323776 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08323776 [[08323776, 08323853]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_08323776(int *param_1,int param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  undefined1 auStack_38 [16];
+  undefined4 local_28;
+  int *local_24;
+  undefined4 local_20;
+  int *piStack_1c;
+  int local_18;
+  
+  piStack_1c = param_1;
+  local_18 = param_2;
+  iVar1 = (**(code **)(*param_1 + 0x74))(param_1,param_1);
+  if (iVar1 != 0) {
+    (**(code **)(*param_1 + 0x70))(param_1,param_1);
+  }
+  FUN_08193be0(&local_20,param_1 + 0x21);
+  if ((param_1[0xe] != 0) && ((*(char *)((int)param_1 + 0x75) == '\x01' || (param_1[0x10] == 0)))) {
+    while (iVar1 = param_1[0x11], iVar1 == 0) {
+      FUN_081ad3a8(param_1[0x23]);
+    }
+    piVar2 = (int *)param_1[0x10];
+    param_1[0x11] = 0;
+    param_1[0x10] = iVar1;
+    *(undefined1 *)((int)param_1 + 0x75) = 0;
+    if (*(char *)((int)param_1 + 5) == '\x04') {
+      local_28 = 0;
+      local_24 = (int *)0x0;
+      FUN_0832ebfe(param_1[0x12],param_1[0x10],1,&local_28);
+    }
+    if (piVar2 != (int *)0x0) {
+      (**(code **)(*piVar2 + 4))(piVar2);
+    }
+  }
+  if ((local_18 != 0) && (param_1[0x14] != 0)) {
+    FUN_0819cbe4(auStack_38,param_1 + 0x13,0xfffffffe);
+    while (iVar1 = FUN_0819cc0a(auStack_38,&local_24), iVar1 != 0) {
+      (**(code **)(*local_24 + 0xb0))(local_24,local_18);
+    }
+    FUN_0819cc24(auStack_38);
+  }
+  if (((param_1[0xe] == 1) && ((char)param_1[0xc] != '\0')) && (param_1[10] != 0)) {
+    *(undefined1 *)(param_1 + 0xc) = 0;
+    FUN_0827dd58();
+  }
+  thunk_EXT_FUN_22003052(local_20);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0832f83a type=UNCONDITIONAL_CALL caller=FUN_0832f790@0832f790 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0832f790 [[0832f790, 0832f89d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0832f790(int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int *piVar3;
+  undefined4 local_28;
+  undefined4 local_24;
+  int local_20;
+  int local_1c;
+  
+  if (param_2 == 0) {
+    FUN_081940f0(0xffffffff);
+  }
+  if ((param_3 != 0) && (*(byte *)(param_1 + 5) < 3)) {
+    FUN_081940f0(0xffffffff);
+  }
+  local_20 = param_3;
+  if (((*(int *)(param_1 + 0x38) == 1) && (*(char *)(param_1 + 0x30) == '\0')) &&
+     (*(int *)(param_1 + 0x28) != 0)) {
+    FUN_0827e374();
+    if (*(int **)(param_1 + 0x40) == (int *)0x0) {
+      if (*(int **)(param_1 + 0x44) != (int *)0x0) {
+        (**(code **)(**(int **)(param_1 + 0x44) + 4))();
+        *(undefined4 *)(param_1 + 0x44) = 0;
+      }
+    }
+    else {
+      (**(code **)(**(int **)(param_1 + 0x40) + 4))();
+      *(undefined4 *)(param_1 + 0x40) = 0;
+    }
+    *(undefined1 *)(param_1 + 0x30) = 1;
+  }
+  local_1c = param_1 + 0x84;
+  FUN_08193be0(&local_28);
+  piVar3 = (int *)(param_1 + 0x80);
+  if (*(int *)(param_1 + 0x3c) == 0) {
+LAB_0832f854:
+    if ((*(int *)(param_1 + 0x44) != 0) &&
+       (iVar1 = FUN_081e80b4(*(undefined4 *)(param_1 + 0x48)), iVar1 == 0)) {
+      (**(code **)(**(int **)(param_1 + 0x44) + 4))();
+      *(undefined4 *)(param_1 + 0x44) = 0;
+    }
+  }
+  else {
+    if ((*(char *)(param_1 + 0x7c) == '\0') || (*piVar3 != param_2)) {
+      FUN_081940f0(0xffffffff);
+    }
+    if (local_20 != 0) {
+      FUN_081e80b4(*(undefined4 *)(param_1 + 0x48));
+    }
+    if (*piVar3 == param_1) {
+      uVar2 = *(undefined4 *)(param_1 + 0x3c);
+      goto LAB_0832f892;
+    }
+    while (*(int **)(param_1 + 0x44) == (int *)0x0) {
+      FUN_081ad3a8(*(undefined4 *)(param_1 + 0x8c));
+    }
+    (**(code **)(**(int **)(param_1 + 0x44) + 4))();
+    *(undefined4 *)(param_1 + 0x44) = 0;
+    if (*(int *)(param_1 + 0x3c) == 0) goto LAB_0832f854;
+  }
+  thunk_EXT_FUN_22003052(local_28);
+  local_24 = FUN_08271d08(*(undefined4 *)(param_1 + 0x48));
+  FUN_08193be0(&local_28,local_1c);
+  *(undefined4 *)(param_1 + 0x3c) = local_24;
+  *(undefined1 *)(param_1 + 0x7c) = 1;
+  *piVar3 = param_2;
+  uVar2 = local_24;
+LAB_0832f892:
+  thunk_EXT_FUN_22003052(local_28);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082af88e type=UNCONDITIONAL_CALL caller=FUN_082af7ec@082af7ec (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_082af7ec [[082af7ec, 082af8cb] [082af908, 082af909] [082afa2a, 082afb97]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+/* WARNING: Function: switch8_r3 replaced with injection: switch8_r3 */
+/* WARNING (jumptable): Removing unreachable block (ram,0x082af8c8) */
+/* WARNING: Removing unreachable block (ram,0x082af8c8) */
+/* WARNING: Removing unreachable block (ram,0x082afab6) */
+/* WARNING: Removing unreachable block (ram,0x082afb68) */
+/* WARNING: Removing unreachable block (ram,0x082afad0) */
+/* WARNING: Removing unreachable block (ram,0x082afaae) */
+/* WARNING: Removing unreachable block (ram,0x082afa84) */
+/* WARNING: Removing unreachable block (ram,0x082afada) */
+/* WARNING: Removing unreachable block (ram,0x082afa56) */
+/* WARNING: Removing unreachable block (ram,0x082af908) */
+/* WARNING: Removing unreachable block (ram,0x082afa42) */
+/* WARNING: Removing unreachable block (ram,0x082afa48) */
+/* WARNING: Removing unreachable block (ram,0x082afa4a) */
+/* WARNING: Removing unreachable block (ram,0x082afa62) */
+/* WARNING: Removing unreachable block (ram,0x082afb3a) */
+/* WARNING: Removing unreachable block (ram,0x082afb50) */
+/* WARNING: Removing unreachable block (ram,0x082afb54) */
+/* WARNING: Removing unreachable block (ram,0x082afb94) */
+/* WARNING: Removing unreachable block (ram,0x082afb58) */
+/* WARNING: Removing unreachable block (ram,0x082afb5e) */
+/* WARNING: Removing unreachable block (ram,0x082afb72) */
+/* WARNING: Removing unreachable block (ram,0x082afa90) */
+/* WARNING: Removing unreachable block (ram,0x082afb06) */
+/* WARNING: Removing unreachable block (ram,0x082afa9e) */
+/* WARNING: Removing unreachable block (ram,0x082afabe) */
+/* WARNING: Removing unreachable block (ram,0x082afac4) */
+/* WARNING: Removing unreachable block (ram,0x082afac6) */
+/* WARNING: Removing unreachable block (ram,0x082afb48) */
+/* WARNING: Removing unreachable block (ram,0x082afae4) */
+/* WARNING: Removing unreachable block (ram,0x082afaee) */
+/* WARNING: Removing unreachable block (ram,0x082afafa) */
+/* WARNING: Removing unreachable block (ram,0x082afb10) */
+/* WARNING: Removing unreachable block (ram,0x082afb1a) */
+/* WARNING: Removing unreachable block (ram,0x082afb2a) */
+/* WARNING: Removing unreachable block (ram,0x082afb84) */
+
+void FUN_082af7ec(undefined4 *param_1)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  uint uVar4;
+  uint *puVar5;
+  undefined4 *puVar6;
+  
+  uVar1 = FUN_081929f8();
+  *param_1 = uVar1;
+  do {
+    *(undefined1 *)((int)param_1 + 0x2a) = 1;
+    FUN_0818f694(param_1 + 9);
+    *(undefined1 *)((int)param_1 + 0x2a) = 0;
+    iVar3 = FUN_0824a5bc(param_1 + 1);
+  } while (iVar3 != 0);
+  puVar6 = param_1 + 1;
+  param_1 = param_1 + 4;
+  thunk_EXT_FUN_22003048();
+  puVar2 = puVar6 + 5;
+  while (iVar3 = FUN_081f5d4a(puVar6), iVar3 != 0) {
+    FUN_081ad3a8(puVar2);
+  }
+  iVar3 = thunk_EXT_FUN_220030bc(puVar6 + 1);
+  puVar5 = (uint *)0x0;
+  if (iVar3 != 0) {
+    puVar5 = *(uint **)(iVar3 + 4);
+    FUN_08191cdc();
+  }
+  thunk_EXT_FUN_22003052(param_1);
+  uVar4 = *puVar5;
+                    /* WARNING: Could not recover jumptable at 0x082af8c8. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  if (DAT_082af8cc <= uVar4) {
+    uVar4 = (uint)DAT_082af8cc;
+  }
+  (*(code *)((uint)*(byte *)(uVar4 + 0x82af8cd) * 2 + 0x82af8cd))();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082b60ba type=UNCONDITIONAL_CALL caller=FUN_082b60a4@082b60a4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_082b60a4 [[082b60a4, 082b627f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_082b60a4(undefined4 *param_1)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  int local_114;
+  undefined1 auStack_110 [84];
+  undefined1 auStack_bc [8];
+  undefined1 auStack_b4 [4];
+  int local_b0;
+  undefined4 local_a8;
+  undefined1 local_a4;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  undefined4 local_6c;
+  int local_68;
+  int local_64;
+  undefined1 local_50 [4];
+  int local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  int local_30;
+  int local_2c;
+  int local_28;
+  uint local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 *local_18;
+  
+  local_18 = param_1 + 9;
+  thunk_EXT_FUN_22003048();
+  puVar4 = param_1 + 0xb;
+  do {
+    while (*(char *)(param_1 + 7) == '\0') {
+      FUN_081ad3a8(puVar4);
+    }
+    *(undefined1 *)((int)param_1 + 0x1d) = 0;
+    *(undefined1 *)((int)param_1 + 0x1e) = 0;
+    *(undefined1 *)((int)param_1 + 0x1f) = 0;
+    thunk_EXT_FUN_22003052(local_18);
+    local_1c = 0;
+    local_20 = DAT_082b6280;
+    local_34 = 0x14;
+    iVar5 = 0;
+    iVar3 = 4;
+    local_38 = 0x48;
+    FUN_08198544(0x48,1);
+    while( true ) {
+      FUN_082bc4c8(param_1,*param_1,&local_20,iVar3);
+      uVar1 = FUN_08196ca8(auStack_bc,&local_20);
+      local_30 = FUN_08276a7c(uVar1,&local_2c,iVar3);
+      FUN_0818ebc0(auStack_bc);
+      if (local_30 == 0) break;
+      if (iVar3 != 4) goto LAB_082b618c;
+      iVar3 = 0;
+    }
+    local_28 = FUN_0827c5d4();
+    iVar5 = FUN_08194f20(local_2c + local_28 + -1);
+    if (iVar5 == 0) {
+LAB_082b618c:
+      thunk_EXT_FUN_22003048(local_18);
+      FUN_0819b010(iVar5);
+      *(undefined1 *)((int)param_1 + 0x1f) = 2;
+      *(undefined1 *)(param_1 + 7) = 0;
+      *(undefined1 *)((int)param_1 + 0x1d) = 0;
+      puVar2 = (undefined4 *)param_1[4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,param_1[3]);
+      }
+    }
+    else {
+      uVar1 = FUN_08196ca8(auStack_bc,&local_20);
+      FUN_0819878c(auStack_110,uVar1,1,iVar3,0x400,1,0);
+      FUN_0818ebc0(auStack_bc);
+      local_24 = (iVar5 + local_28) - 1U & ~(local_28 - 1U);
+      iVar3 = FUN_0819887c(auStack_110,local_2c,local_24,&local_114);
+      if (local_114 != local_2c) {
+        iVar3 = 5;
+      }
+      FUN_081ada78(auStack_110);
+      if ((iVar3 != 0) || (iVar5 == 0)) goto LAB_082b618c;
+      FUN_082bc734(local_50);
+      FUN_082bc6c4(local_50,local_24,local_2c);
+      FUN_08199a6c(auStack_b4);
+      local_b0 = local_4c + local_24;
+      local_a8 = local_48;
+      local_68 = param_1[5];
+      local_6c = DAT_082b6284;
+      local_64 = param_1[6];
+      if ((int)param_1[6] < 0) {
+        local_64 = local_68;
+      }
+      local_a0 = local_44;
+      local_98 = local_40;
+      local_9c = local_3c;
+      local_a4 = local_50[0];
+      *(undefined1 *)((int)param_1 + 0x1e) = 1;
+      uVar1 = FUN_08196090();
+      FUN_08199c18(uVar1,auStack_b4,DAT_082b6288,0);
+      thunk_EXT_FUN_22003048(local_18);
+      while (*(char *)((int)param_1 + 0x1e) != '\0') {
+        if (*(char *)((int)param_1 + 0x1d) != '\0') goto LAB_082b6240;
+        FUN_081ad3a8(puVar4);
+      }
+      if (*(char *)((int)param_1 + 0x1d) == '\0') {
+LAB_082b6252:
+        while (*(char *)((int)param_1 + 0x1e) != '\0') {
+          FUN_081ad3a8(puVar4);
+        }
+      }
+      else if (*(char *)((int)param_1 + 0x1e) != '\0') {
+LAB_082b6240:
+        uVar1 = FUN_08196090();
+        FUN_08199d60(uVar1,auStack_b4);
+        goto LAB_082b6252;
+      }
+      FUN_0819b010(iVar5);
+      *(undefined1 *)((int)param_1 + 0x1f) = 1;
+      puVar2 = (undefined4 *)param_1[4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,param_1[3],1);
+      }
+      *(undefined1 *)((int)param_1 + 0x1d) = 0;
+      *(undefined1 *)(param_1 + 7) = 0;
+      *(undefined1 *)((int)param_1 + 0x1e) = 0;
+      FUN_0827c31c(auStack_b4);
+    }
+    FUN_08198580(local_38,local_34);
+    FUN_0818ebc0(&local_20);
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082b6224 type=UNCONDITIONAL_CALL caller=FUN_082b60a4@082b60a4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=082b624e type=UNCONDITIONAL_CALL caller=FUN_082b60a4@082b60a4 (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=081b96d8 type=UNCONDITIONAL_CALL caller=FUN_081b96c2@081b96c2 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_081b96c2 [[081b96c2, 081b9701]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_081b96c2(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 local_10;
+  
+  local_10 = param_4;
+  FUN_08193be0(&local_10,param_1 + 0xc);
+  while (iVar1 = FUN_081ea154(param_1), iVar1 != 0) {
+    FUN_081ad3a8(param_1 + 0x14);
+  }
+  iVar1 = thunk_EXT_FUN_220030bc(param_1 + 4);
+  uVar2 = 0;
+  if (iVar1 != 0) {
+    uVar2 = *(undefined4 *)(iVar1 + 4);
+    FUN_08191cdc();
+  }
+  thunk_EXT_FUN_22003052(local_10);
+  return uVar2;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0831bcdc type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0831447e type=UNCONDITIONAL_CALL caller=FUN_08314440@08314440 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_08314440 [[08314440, 083144cb]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined8
+FUN_08314440(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  char *pcVar2;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  
+  *param_1 = DAT_083144cc;
+  local_20 = param_2;
+  local_1c = param_3;
+  local_18 = param_4;
+  FUN_08193be0(&local_18);
+  pcVar2 = (char *)(param_1 + 0x50);
+  if (*pcVar2 == '\0') {
+    *pcVar2 = '\x01';
+    local_1c = 0;
+    local_20 = DAT_083144d0;
+    FUN_08271e12(param_1 + 1,&local_20);
+    while (*pcVar2 != '\0') {
+      FUN_081ad3a8(param_1 + 0x4d);
+    }
+    if (param_1[0x45] != 0) {
+      FUN_08315544();
+      FUN_08191cdc();
+    }
+  }
+  thunk_EXT_FUN_22003052(local_18);
+  FUN_0819726a(param_1 + 0x4d);
+  FUN_0819726a(param_1 + 0x4a);
+  FUN_08192c80(param_1 + 0x48);
+  iVar1 = FUN_0818ebc0(param_1 + 0x46);
+  iVar1 = FUN_0823c04e(iVar1 + -0x114);
+  return CONCAT44(local_20,iVar1 + -4);
+}
+
+ (GhidraScript)  
