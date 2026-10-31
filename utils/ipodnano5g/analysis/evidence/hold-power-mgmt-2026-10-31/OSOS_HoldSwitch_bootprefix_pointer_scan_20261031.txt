@@ -1,0 +1,21 @@
+IMAGE=/home/sebastian/ipod-re/local-analysis/inputs/osos_bootprefix_22000000_20261031.bin
+SIZE=57980 BASE=0x22000000 SHA256=0b01c47e51b562523ddce4747529bd9f41b14840337e76ede54af60a809f54e2
+SCAN=all byte offsets for exact little-endian 32-bit address words; relative offsets, runtime-generated addresses, and indirect external calls are not detected
+GROUP=wakeup_handler
+  TARGET=0x08000b4e MATCH_COUNT=0
+  TARGET=0x08000b4f MATCH_COUNT=0
+GROUP=hold_status_wrapper
+  TARGET=0x0824dc22 MATCH_COUNT=0
+  TARGET=0x0824dc23 MATCH_COUNT=0
+GROUP=hold_reader
+  TARGET=0x082062c0 MATCH_COUNT=0
+  TARGET=0x082062c1 MATCH_COUNT=0
+GROUP=status_caller_081988fc
+  TARGET=0x081988fc MATCH_COUNT=0
+  TARGET=0x081988fd MATCH_COUNT=0
+GROUP=status_caller_0819c3f0
+  TARGET=0x0819c3f0 MATCH_COUNT=0
+  TARGET=0x0819c3f1 MATCH_COUNT=0
+GROUP=status_caller_081ad510
+  TARGET=0x081ad510 MATCH_COUNT=0
+  TARGET=0x081ad511 MATCH_COUNT=0

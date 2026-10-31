@@ -224,6 +224,15 @@ indirekte Aufrufe nicht aus. Dass der `PowerMgmt`-Task vor `MainAppTask`
 angefordert wird, belegt weder seine erste Ausführung vor dem MainApp-Parser
 noch einen abgeschlossenen Hold-Read zu diesem Zeitpunkt.
 
+Ein gezielter Absolutzeiger-Scan des 57.980-Byte-Bootprefixes findet keine
+exakten 32-Bit-Wörter für den Wakeup-Handler `0x08000b4e/0x08000b4f`, den
+Hold-Statuswrapper `0x0824dc22/0x0824dc23`, den PMU-Reader
+`0x082062c0/0x082062c1` oder die drei bekannten Status-Caller
+`0x081988fc`, `0x0819c3f0` und `0x081ad510` (jeweils mit Thumb-Bit-Variante).
+Damit ist im Prefix kein solcher absoluter Funktionszeiger belegt. Der Scan
+erfasst keine relativen Offsets, berechneten Adressen oder Aufrufe aus nicht
+vorliegenden externen Modulen und ist kein Beweis der Unerreichbarkeit.
+
 ## Nachtrag: PowerMgmt-Bereitschaft und Callback (31.10.2026)
 
 Der erste Prefix-Veneer im Task (`0x22003a80`) zeigt auf

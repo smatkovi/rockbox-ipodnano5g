@@ -70,6 +70,10 @@ Ausführungsreihenfolge gegenüber dem Parser bleibt ungeklärt.
 - `OSOS_HoldSwitch_raw_wrapper_call_scan_20261031.txt`: Rohscan nach
   eingehenden Thumb-`BL`-Instruktionen der beiden nicht aufgelösten Hold-
   Wrapper; die vier `FUN_0824dc22`-Treffer dienen als Dekodierkontrolle.
+- `OSOS_HoldSwitch_bootprefix_pointer_scan_20261031.txt`: exakte
+  Absolutzeiger-Suche im 57.980-Byte-Prefix für Wakeup-, Hold- und bekannte
+  Status-Einstiege; relative/berechnete Referenzen bleiben außerhalb der
+  Scan-Aussage.
 
 Projekte:
 
