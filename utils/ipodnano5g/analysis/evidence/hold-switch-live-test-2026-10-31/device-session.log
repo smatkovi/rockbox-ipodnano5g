@@ -1,0 +1,12 @@
+2026-10-31 20:12 CEST: host enumerated 05ac:1265, Manufacturer Rockbox.org.
+Rockbox exposed /dev/sdc as an 8-MiB writable NANO5G RAM disk; /dev/sdd1
+(iPod data) and /dev/sde (FTL) reported read-only. Read-only copies from
+/dev/sdd1 matched rockbox.ipod SHA-256 65276d4bf5b88af3c2ff5701a21fa6cd6654e24b4f147d7e7c31395a7023ec16,
+n5g-ramdisk.img SHA-256 6fb9df06b8083f8d27d18fdc2bfd70be383c5306b4691d767ef5c9e43c3a0cf5,
+and BOOT.BIN SHA-256 ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2.
+
+Built holdstat.rock against the installed Nano 5G firmware build. Copied it
+only to /dev/sdc:/.rockbox/rocks/apps/holdstat.rock. Readback SHA-256 matched
+272d6e2717563456d6186ac0501623eb13d13d915182da76332a46924bcbfcd5. No
+internal iPod or FTL volume was written. Awaiting user display observation of
+the Hold state with the switch unlocked and locked.
