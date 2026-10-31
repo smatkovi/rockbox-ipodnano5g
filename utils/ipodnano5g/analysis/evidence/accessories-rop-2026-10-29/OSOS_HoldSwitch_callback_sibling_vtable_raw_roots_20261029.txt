@@ -1,0 +1,16 @@
+Bytewise raw-pointer search for exact row-start addresses in the complete OSOS runtime image.
+0x084f58dc: no exact occurrence
+0x084f7630: no exact occurrence
+0x084f9fc4: no exact occurrence
+0x084fa838: no exact occurrence
+0x084fae68: no exact occurrence
+0x084fca5c: no exact occurrence
+0x084fefbc: no exact occurrence
+0x084ff1b4: no exact occurrence
+0x085008f0: no exact occurrence
+0x08501574: no exact occurrence
+0x085068fc: no exact occurrence
+0x085071e4: no exact occurrence
+0x0850dcd8: no exact occurrence
+0x08535f38: no exact occurrence
+0x08536308: no exact occurrence

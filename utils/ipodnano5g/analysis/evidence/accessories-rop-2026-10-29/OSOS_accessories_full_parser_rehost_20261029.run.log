@@ -1,0 +1,27 @@
+Build:
+  clang --target=arm-linux-gnueabi -nostdlib -no-pie -fno-pie -fuse-ld=lld
+  Linker script: OSOS_accessories_full_parser_rehost_20261029.ld
+  Assembly: OSOS_accessories_full_parser_rehost_20261029.S
+  Result: success, exit code 0
+
+Run:
+  qemu-arm -d in_asm,cpu OSOS_accessories_full_parser_rehost_20261029.elf
+  Stdout: PASS
+  Result: exit code 0
+
+Trace observations:
+  Original FUN_0802c3c4 begins with entry SP=0x08e55140 and establishes
+  parser frame S=0x08e55000. The token stub supplies one tag 0x44.
+  Original FUN_081965fe accepts the candidate's empty local string.
+  Original FUN_08039048 receives max_length=0x100; Read stubs return
+  length=0x284 then copy 0x284 candidate bytes to S+4.
+  Original FUN_081936ec runs and dispatches the empty-string clear through
+  the candidate VTable to the checked FUN_081ada60 stub.
+  Candidate loop-state value 1 ends the parser loop after that field.
+  Original close wrapper, parser epilogue, and original ROP gadgets reach
+  the prelinked 0x09000000 loader sentinel.
+
+The run uses synthetic stream, file, stack and service state. The token source,
+initialization, path construction, Open, low-level Reads, destructor and loader
+are stubbed. This does not show that the device opens the real accessories.reg,
+parses its container tags, loads a real Rockbox file, or boots untethered.

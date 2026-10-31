@@ -1,0 +1,16 @@
+Reproduktion aus dem Repository `rb-n5g`:
+
+```sh
+clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+  -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.ld \
+  -Wl,--build-id=none \
+  -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.elf \
+  utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.S
+
+prlimit --core=0 -- qemu-arm -cpu arm1176 -d in_asm,cpu \
+  -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.qemu-trace.log \
+  utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.elf \
+  > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-entry-20261030/OSOS_accessories_parser_real_fat_entry_rehost_20261030.stdout.bin
+```
+
+Beobachtet: Exit 0, stdout `PASS\n`.

@@ -1,0 +1,111 @@
+Runtime image SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Base VA: 0x08000000
+Command: arm-none-eabi-objdump -D -b binary -marm -M force-thumb --adjust-vma=0x08000000
+
+## read forwarding FUN_081b832e
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+081b832e <.data+0x1b832e>:
+ 81b832e:	b570      	push	{r4, r5, r6, lr}
+ 81b8330:	4604      	mov	r4, r0
+ 81b8332:	6800      	ldr	r0, [r0, #0]
+ 81b8334:	461e      	mov	r6, r3
+ 81b8336:	460d      	mov	r5, r1
+ 81b8338:	4611      	mov	r1, r2
+ 81b833a:	6ac3      	ldr	r3, [r0, #44]	@ 0x2c
+ 81b833c:	462a      	mov	r2, r5
+ 81b833e:	4620      	mov	r0, r4
+ 81b8340:	4798      	blx	r3
+ 81b8342:	42a8      	cmp	r0, r5
+ 81b8344:	6030      	str	r0, [r6, #0]
+ 81b8346:	d101      	bne.n	0x81b834c
+ 81b8348:	2000      	movs	r0, #0
+ 81b834a:	bd70      	pop	{r4, r5, r6, pc}
+ 81b834c:	6820      	ldr	r0, [r4, #0]
+ 81b834e:	6981      	ldr	r1, [r0, #24]
+ 81b8350:	4620      	mov	r0, r4
+ 81b8352:	4788      	blx	r1
+ 81b8354:	2800      	cmp	r0, #0
+ 81b8356:	d001      	beq.n	0x81b835c
+ 81b8358:	2005      	movs	r0, #5
+ 81b835a:	bd70      	pop	{r4, r5, r6, pc}
+ 81b835c:	2022      	movs	r0, #34	@ 0x22
+ 81b835e:	bd70      	pop	{r4, r5, r6, pc}
+ 81b8360:	b5fe      	push	{r1, r2, r3, r4, r5, r6, r7, lr}
+ 81b8362:	4604      	mov	r4, r0
+ 81b8364:	4846      	ldr	r0, [pc, #280]	@ (0x81b8480)
+ 81b8366:	f7e1 ff0f 	bl	0x819a188
+ 81b836a:	0005      	movs	r5, r0
+ 81b836c:	d02c      	beq.n	0x81b83c8
+ 81b836e:	6d20      	ldr	r0, [r4, #80]	@ 0x50
+
+## stream-open wrapper FUN_082721f0
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+082721f0 <.data+0x2721f0>:
+ 82721f0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 82721f2:	4604      	mov	r4, r0
+ 82721f4:	2601      	movs	r6, #1
+ 82721f6:	2a00      	cmp	r2, #0
+ 82721f8:	460f      	mov	r7, r1
+ 82721fa:	4615      	mov	r5, r2
+ 82721fc:	d004      	beq.n	0x8272208
+ 82721fe:	2100      	movs	r1, #0
+ 8272200:	4638      	mov	r0, r7
+ 8272202:	f008 fa05 	bl	0x827a610
+ 8272206:	2600      	movs	r6, #0
+ 8272208:	2034      	movs	r0, #52	@ 0x34
+ 827220a:	f71c fc9b 	bl	0x818eb44
+ 827220e:	2201      	movs	r2, #1
+ 8272210:	2300      	movs	r3, #0
+ 8272212:	03d2      	lsls	r2, r2, #15
+ 8272214:	9200      	str	r2, [sp, #0]
+ 8272216:	4632      	mov	r2, r6
+ 8272218:	4639      	mov	r1, r7
+ 827221a:	f00c fc33 	bl	0x827ea84
+ 827221e:	6020      	str	r0, [r4, #0]
+ 8272220:	6b01      	ldr	r1, [r0, #48]	@ 0x30
+ 8272222:	2600      	movs	r6, #0
+ 8272224:	69cf      	ldr	r7, [r1, #28]
+ 8272226:	2f00      	cmp	r7, #0
+ 8272228:	d005      	beq.n	0x8272236
+ 827222a:	2800      	cmp	r0, #0
+ 827222c:	d002      	beq.n	0x8272234
+ 827222e:	6801      	ldr	r1, [r0, #0]
+ 8272230:	6849      	ldr	r1, [r1, #4]
+ 8272232:	4788      	blx	r1
+ 8272234:	6026      	str	r6, [r4, #0]
+ 8272236:	2d00      	cmp	r5, #0
+ 8272238:	7126      	strb	r6, [r4, #4]
+ 827223a:	d001      	beq.n	0x8272240
+ 827223c:	2001      	movs	r0, #1
+ 827223e:	e000      	b.n	0x8272242
+ 8272240:	2000      	movs	r0, #0
+ 8272242:	7160      	strb	r0, [r4, #5]
+ 8272244:	4638      	mov	r0, r7
+ 8272246:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+
+## read dispatcher FUN_08268c3a
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08268c3a <.data+0x268c3a>:
+ 8268c3a:	b538      	push	{r3, r4, r5, lr}
+ 8268c3c:	6800      	ldr	r0, [r0, #0]
+ 8268c3e:	6803      	ldr	r3, [r0, #0]
+ 8268c40:	6cdc      	ldr	r4, [r3, #76]	@ 0x4c
+ 8268c42:	466b      	mov	r3, sp
+ 8268c44:	47a0      	blx	r4
+ 8268c46:	bd38      	pop	{r3, r4, r5, pc}
+

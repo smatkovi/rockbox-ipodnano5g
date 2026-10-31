@@ -1,0 +1,23 @@
+# Wrap parser EOF-status follow-up (29.10.2026)
+
+`qemu-arm -cpu arm1176` exits 0 and prints `PASS`. The only code-path change
+from `OSOS_accessories_wrap_error_parser_rehost_20261029` is that its synthetic
+partial-read implementation returns status `5` instead of `0x22`, after copying
+the same 672 candidate bytes plus 7488 modeled cluster-slack bytes.
+
+The original parser and helper run. Trace shows `FUN_08039048` returning
+`r0=5`; at `FUN_0802c4fe` the parser ORs this nonzero status into its loop exit
+condition. It skips another token iteration, then executes close/cleanup,
+epilogue, and the original gadget sequence to the prelinked loader sentinel.
+The sentinel's assertions pass.
+
+This complements (but is not a single combined run with) the stream/provider/FAT
+rehost, which produced status 5 while manually primed at the logical EOF. Here
+the parser's partial-read source and EOF-cluster bytes remain stubs. Therefore
+the test establishes the parser's behavior for EOF status 5, not an end-to-end
+FAT-to-parser exploit or hardware result.
+
+Artifacts: matching `.S`, `.ld`, `.elf`, `.qemu-trace.log`, `.stdout.bin`, and
+`.run.log` in this directory. The trace includes the returned status, parser
+branch at `0x0802c4fe`, close call at `0x0802c506`, saved-return gadget at
+`0x08007106`, and sentinel at `0x09000000`.

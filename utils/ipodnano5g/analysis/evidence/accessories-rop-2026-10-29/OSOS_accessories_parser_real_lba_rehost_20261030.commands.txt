@@ -1,0 +1,15 @@
+Build and run from /home/sebastian/ipod-re/rb-n5g:
+
+clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+  -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.ld \
+  -Wl,--build-id=none \
+  -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.elf \
+  utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.S
+
+prlimit --core=0 -- qemu-arm -cpu arm1176 -d in_asm,cpu \
+  -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.qemu-trace.log \
+  utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.elf \
+  > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_real_lba_rehost_20261030.stdout.bin
+
+Result: exit code 0, stdout PASS
+. This is an offline QEMU rehost.

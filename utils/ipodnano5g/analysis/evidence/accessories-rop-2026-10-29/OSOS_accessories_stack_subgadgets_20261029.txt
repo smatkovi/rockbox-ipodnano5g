@@ -1,0 +1,117 @@
+Runtime image SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Base VA: 0x08000000
+Disassembler: arm-none-eabi-objdump -D -b binary -marm -M force-thumb --adjust-vma=0x08000000
+
+## initial pop
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08007106 <.data+0x7106>:
+ 8007106:	bd1f      	pop	{r0, r1, r2, r3, r4, pc}
+
+## stack-pointer gadget
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0800396c <.data+0x396c>:
+ 800396c:	4668      	mov	r0, sp
+ 800396e:	f18d f8a2 	bl	0x8190ab6
+ 8003972:	bd7c      	pop	{r2, r3, r4, r5, r6, pc}
+
+## subs r0,#0xe0 gadget
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08005cc2 <.data+0x5cc2>:
+ 8005cc2:	38e0      	subs	r0, #224	@ 0xe0
+ 8005cc4:	bd70      	pop	{r4, r5, r6, pc}
+
+## second-halfword subs r0,#0x20 gadget
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+080066b2 <.data+0x66b2>:
+ 80066b2:	f92e 3820 	vld2.8	{d3-d4}, [lr :128], r0
+ 80066b6:	bd10      	pop	{r4, pc}
+
+## subs r0,#0x18; pop {r4,pc}
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0809cf54 <.data+0x9cf54>:
+ 809cf54:	f94c 3818 	vst2.8	{d19-d20}, [ip :64], r8
+ 809cf58:	bd10      	pop	{r4, pc}
+
+## call/pop trampoline
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08030cb8 <.data+0x30cb8>:
+ 8030cb8:	6f4b      	ldr	r3, [r1, #116]	@ 0x74
+ 8030cba:	4901      	ldr	r1, [pc, #4]	@ (0x8030cc0)
+ 8030cbc:	4798      	blx	r3
+ 8030cbe:	bd38      	pop	{r3, r4, r5, pc}
+ 8030cc0:	2873      	cmp	r0, #115	@ 0x73
+
+## alternative subs r0,#0x18; pop {pc}
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+080f8a30 <.data+0xf8a30>:
+ 80f8a30:	4814      	ldr	r0, [pc, #80]	@ (0x80f8a84)
+ 80f8a32:	3818      	subs	r0, #24
+ 80f8a34:	bd00      	pop	{pc}
+
+## second-halfword subs r0,#0x8c gadget
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08262d50 <.data+0x262d50>:
+ 8262d50:	fc26 388c 	vcmla.f16	d3, d22, d12, #0
+ 8262d54:	bd70      	pop	{r4, r5, r6, pc}
+
+## subs r0,#0x28; pop {r1,r2,r3,r4,r5,pc}
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+081df4be <.data+0x1df4be>:
+ 81df4be:	4620      	mov	r0, r4
+ 81df4c0:	3828      	subs	r0, #40	@ 0x28
+ 81df4c2:	bd3e      	pop	{r1, r2, r3, r4, r5, pc}
+ 81df4c4:	7f9c      	ldrb	r4, [r3, #30]
+
+## Stack accounting: first object-construction segment
+All offsets are relative to S, the parser frame base. After the parser epilogue SP=S+0x140; LR loads 0x08007107. That initial pop consumes 0x140..0x157 and leaves SP=S+0x158.
+At 0x0800396d, mov r0,sp yields S+0x158; its pop consumes six words and leaves SP=S+0x170. It supplies r3=0x0805b093, r5=0x6f6c746f, and PC=0x08005cc3.
+The sub-e0 gadget consumes four words and leaves SP=S+0x180; set r5=0x6f6c746f and PC=0x080066b5. The sub-20 gadget consumes two words and leaves SP=S+0x188; set PC=0x0809cf57. The sub-18/pop-r4 gadget consumes two words and leaves SP=S+0x190; set r4=0x61 and PC=0x08030cbd.
+At the trampoline, BLX r3 enters the stack-write gadget. Its pop consumes four words at S+0x190..S+0x19f, leaves SP=S+0x1a0, and sets PC=0x08198771 (string constructor). The constructor returns through LR=0x08030cbe. The trampoline pop then consumes S+0x1a0..S+0x1af, leaves SP=S+0x1b0, and can set PC=0x0800396d for the second stack-pointer stage.
+Arithmetic: S+0x158-(0xe0+0x20+0x18)=S+0x40. With P=S+0x40, the source string P+0x80 is S+0xc0, corresponding to data offset 0xbc. The stores from the old string-write gadget are at P+0x8c and P+0x90. For a preloaded '/BOOT.BIN\0', both stores fall after its NUL.
+
+This accounts for one stack segment through the second stack-pointer gadget, using the listed stack effects. It does not assemble the later Open/Read portion or prove execution.

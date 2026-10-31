@@ -1,0 +1,75 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0801d4a0 <.data+0x1d4a0>:
+ 801d4a0:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 801d4a2:	0000      	movs	r0, r0
+ 801d4a4:	20e1      	movs	r0, #225	@ 0xe1
+ 801d4a6:	0048      	lsls	r0, r1, #1
+ 801d4a8:	0001      	movs	r1, r0
+ 801d4aa:	0040      	lsls	r0, r0, #1
+ 801d4ac:	b510      	push	{r4, lr}
+ 801d4ae:	4c17      	ldr	r4, [pc, #92]	@ (0x801d50c)
+ 801d4b0:	4915      	ldr	r1, [pc, #84]	@ (0x801d508)
+ 801d4b2:	2204      	movs	r2, #4
+ 801d4b4:	60a1      	str	r1, [r4, #8]
+ 801d4b6:	60e1      	str	r1, [r4, #12]
+ 801d4b8:	2102      	movs	r1, #2
+ 801d4ba:	5e41      	ldrsh	r1, [r0, r1]
+ 801d4bc:	82a1      	strh	r1, [r4, #20]
+ 801d4be:	5e82      	ldrsh	r2, [r0, r2]
+ 801d4c0:	82e2      	strh	r2, [r4, #22]
+ 801d4c2:	8883      	ldrh	r3, [r0, #4]
+ 801d4c4:	8323      	strh	r3, [r4, #24]
+ 801d4c6:	6883      	ldr	r3, [r0, #8]
+ 801d4c8:	b21b      	sxth	r3, r3
+ 801d4ca:	83a3      	strh	r3, [r4, #28]
+ 801d4cc:	4359      	muls	r1, r3
+ 801d4ce:	8980      	ldrh	r0, [r0, #12]
+ 801d4d0:	1dc9      	adds	r1, r1, #7
+ 801d4d2:	8360      	strh	r0, [r4, #26]
+ 801d4d4:	17c8      	asrs	r0, r1, #31
+ 801d4d6:	0f40      	lsrs	r0, r0, #29
+ 801d4d8:	1840      	adds	r0, r0, r1
+ 801d4da:	211b      	movs	r1, #27
+ 801d4dc:	10c0      	asrs	r0, r0, #3
+ 801d4de:	1cc0      	adds	r0, r0, #3
+ 801d4e0:	0880      	lsrs	r0, r0, #2
+ 801d4e2:	0080      	lsls	r0, r0, #2
+ 801d4e4:	b200      	sxth	r0, r0
+ 801d4e6:	83e0      	strh	r0, [r4, #30]
+ 801d4e8:	4350      	muls	r0, r2
+ 801d4ea:	f176 f867 	bl	0x81935bc
+ 801d4ee:	6120      	str	r0, [r4, #16]
+ 801d4f0:	f33f eae6 	blx	0x835cac0
+ 801d4f4:	f187 fe06 	bl	0x81a5104
+ 801d4f8:	4905      	ldr	r1, [pc, #20]	@ (0x801d510)
+ 801d4fa:	6048      	str	r0, [r1, #4]
+ 801d4fc:	4805      	ldr	r0, [pc, #20]	@ (0x801d514)
+ 801d4fe:	f000 fe3f 	bl	0x801e180
+ 801d502:	2001      	movs	r0, #1
+ 801d504:	bd10      	pop	{r4, pc}
+ 801d506:	0000      	movs	r0, r0
+ 801d508:	beef      	bkpt	0x00ef
+ 801d50a:	dead      	udf	#173	@ 0xad
+ 801d50c:	0b9c      	lsrs	r4, r3, #14
+ 801d50e:	0883      	lsrs	r3, r0, #2
+ 801d510:	12cc      	asrs	r4, r1, #11
+ 801d512:	0855      	lsrs	r5, r2, #1
+ 801d514:	cc0c      	ldmia	r4!, {r2, r3}
+ 801d516:	0835      	lsrs	r5, r6, #32
+ 801d518:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 801d51a:	ac07      	add	r4, sp, #28
+ 801d51c:	460a      	mov	r2, r1
+ 801d51e:	cc70      	ldmia	r4, {r4, r5, r6}
+ 801d520:	9f06      	ldr	r7, [sp, #24]
+ 801d522:	2e00      	cmp	r6, #0
+ 801d524:	d100      	bne.n	0x801d528
+ 801d526:	4e19      	ldr	r6, [pc, #100]	@ (0x801d58c)
+ 801d528:	2102      	movs	r1, #2
+ 801d52a:	2c10      	cmp	r4, #16
+ 801d52c:	d021      	beq.n	0x801d572
+ 801d52e:	2c00      	cmp	r4, #0

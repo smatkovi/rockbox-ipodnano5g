@@ -1,0 +1,251 @@
+Runtime image SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Base VA: 0x08000000
+Disassembler: arm-none-eabi-objdump -D -b binary -marm -M force-thumb --adjust-vma=0x08000000
+Heap bounds cross-reference: OSOS-heap-and-rockbox-handoff-2026-10-25.md
+
+## FUN_08020df4 allocator search/split caller
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08020df4 <.data+0x20df4>:
+ 8020df4:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 8020df6:	310b      	adds	r1, #11
+ 8020df8:	b082      	sub	sp, #8
+ 8020dfa:	088d      	lsrs	r5, r1, #2
+ 8020dfc:	00ad      	lsls	r5, r5, #2
+ 8020dfe:	2d10      	cmp	r5, #16
+ 8020e00:	d200      	bcs.n	0x8020e04
+ 8020e02:	2510      	movs	r5, #16
+ 8020e04:	9802      	ldr	r0, [sp, #8]
+ 8020e06:	3080      	adds	r0, #128	@ 0x80
+ 8020e08:	2700      	movs	r7, #0
+ 8020e0a:	6ac4      	ldr	r4, [r0, #44]	@ 0x2c
+ 8020e0c:	e027      	b.n	0x8020e5e
+ 8020e0e:	6820      	ldr	r0, [r4, #0]
+ 8020e10:	0886      	lsrs	r6, r0, #2
+ 8020e12:	00b6      	lsls	r6, r6, #2
+ 8020e14:	42ae      	cmp	r6, r5
+ 8020e16:	d321      	bcc.n	0x8020e5c
+ 8020e18:	9802      	ldr	r0, [sp, #8]
+ 8020e1a:	4621      	mov	r1, r4
+ 8020e1c:	f187 f920 	bl	0x81a8060
+ 8020e20:	4628      	mov	r0, r5
+ 8020e22:	3010      	adds	r0, #16
+ 8020e24:	4286      	cmp	r6, r0
+ 8020e26:	d30b      	bcc.n	0x8020e40
+ 8020e28:	9b04      	ldr	r3, [sp, #16]
+ 8020e2a:	9802      	ldr	r0, [sp, #8]
+ 8020e2c:	1b72      	subs	r2, r6, r5
+ 8020e2e:	4621      	mov	r1, r4
+ 8020e30:	f004 f935 	bl	0x802509e
+ 8020e34:	4607      	mov	r7, r0
+ 8020e36:	9802      	ldr	r0, [sp, #8]
+ 8020e38:	4621      	mov	r1, r4
+ 8020e3a:	f187 f9b3 	bl	0x81a81a4
+ 8020e3e:	e010      	b.n	0x8020e62
+ 8020e40:	9802      	ldr	r0, [sp, #8]
+ 8020e42:	4621      	mov	r1, r4
+ 8020e44:	f187 f9c8 	bl	0x81a81d8
+ 8020e48:	2201      	movs	r2, #1
+ 8020e4a:	9200      	str	r2, [sp, #0]
+ 8020e4c:	9b04      	ldr	r3, [sp, #16]
+ 8020e4e:	9802      	ldr	r0, [sp, #8]
+ 8020e50:	4632      	mov	r2, r6
+ 8020e52:	4621      	mov	r1, r4
+ 8020e54:	f187 f9d6 	bl	0x81a8204
+ 8020e58:	4607      	mov	r7, r0
+ 8020e5a:	e002      	b.n	0x8020e62
+ 8020e5c:	68a4      	ldr	r4, [r4, #8]
+ 8020e5e:	2c00      	cmp	r4, #0
+ 8020e60:	d1d5      	bne.n	0x8020e0e
+ 8020e62:	2000      	movs	r0, #0
+ 8020e64:	2f00      	cmp	r7, #0
+ 8020e66:	d001      	beq.n	0x8020e6c
+ 8020e68:	4638      	mov	r0, r7
+ 8020e6a:	3008      	adds	r0, #8
+ 8020e6c:	b005      	add	sp, #20
+ 8020e6e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+## FUN_0802509e large-block split helper
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0802509e <.data+0x2509e>:
+ 802509e:	b5ff      	push	{r0, r1, r2, r3, r4, r5, r6, r7, lr}
+ 80250a0:	b081      	sub	sp, #4
+ 80250a2:	460c      	mov	r4, r1
+ 80250a4:	4615      	mov	r5, r2
+ 80250a6:	461e      	mov	r6, r3
+ 80250a8:	6808      	ldr	r0, [r1, #0]
+ 80250aa:	0887      	lsrs	r7, r0, #2
+ 80250ac:	9801      	ldr	r0, [sp, #4]
+ 80250ae:	00bf      	lsls	r7, r7, #2
+ 80250b0:	f183 f892 	bl	0x81a81d8
+ 80250b4:	2201      	movs	r2, #1
+ 80250b6:	9200      	str	r2, [sp, #0]
+ 80250b8:	9801      	ldr	r0, [sp, #4]
+ 80250ba:	1b7a      	subs	r2, r7, r5
+ 80250bc:	1961      	adds	r1, r4, r5
+ 80250be:	4633      	mov	r3, r6
+ 80250c0:	f183 f8a0 	bl	0x81a8204
+ 80250c4:	4606      	mov	r6, r0
+ 80250c6:	9801      	ldr	r0, [sp, #4]
+ 80250c8:	2300      	movs	r3, #0
+ 80250ca:	462a      	mov	r2, r5
+ 80250cc:	4621      	mov	r1, r4
+ 80250ce:	f186 fa09 	bl	0x81ab4e4
+ 80250d2:	b005      	add	sp, #20
+ 80250d4:	4630      	mov	r0, r6
+ 80250d6:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+## FUN_081a8204 chunk initializer
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+081a8204 <.data+0x1a8204>:
+ 81a8204:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 81a8206:	460c      	mov	r4, r1
+ 81a8208:	4606      	mov	r6, r0
+ 81a820a:	6808      	ldr	r0, [r1, #0]
+ 81a820c:	461f      	mov	r7, r3
+ 81a820e:	2302      	movs	r3, #2
+ 81a8210:	4635      	mov	r5, r6
+ 81a8212:	0780      	lsls	r0, r0, #30
+ 81a8214:	3580      	adds	r5, #128	@ 0x80
+ 81a8216:	0f80      	lsrs	r0, r0, #30
+ 81a8218:	4310      	orrs	r0, r2
+ 81a821a:	0840      	lsrs	r0, r0, #1
+ 81a821c:	0040      	lsls	r0, r0, #1
+ 81a821e:	6008      	str	r0, [r1, #0]
+ 81a8220:	0880      	lsrs	r0, r0, #2
+ 81a8222:	0080      	lsls	r0, r0, #2
+ 81a8224:	1808      	adds	r0, r1, r0
+ 81a8226:	6801      	ldr	r1, [r0, #0]
+ 81a8228:	4399      	bics	r1, r3
+ 81a822a:	6001      	str	r1, [r0, #0]
+ 81a822c:	6b68      	ldr	r0, [r5, #52]	@ 0x34
+ 81a822e:	1880      	adds	r0, r0, r2
+ 81a8230:	6368      	str	r0, [r5, #52]	@ 0x34
+ 81a8232:	6ba8      	ldr	r0, [r5, #56]	@ 0x38
+ 81a8234:	1c40      	adds	r0, r0, #1
+ 81a8236:	63a8      	str	r0, [r5, #56]	@ 0x38
+ 81a8238:	6be9      	ldr	r1, [r5, #60]	@ 0x3c
+ 81a823a:	4288      	cmp	r0, r1
+ 81a823c:	d900      	bls.n	0x81a8240
+ 81a823e:	63e8      	str	r0, [r5, #60]	@ 0x3c
+ 81a8240:	80a7      	strh	r7, [r4, #4]
+ 81a8242:	f0d0 fead 	bl	0x8278fa0
+ 81a8246:	80e0      	strh	r0, [r4, #6]
+ 81a8248:	6820      	ldr	r0, [r4, #0]
+ 81a824a:	0885      	lsrs	r5, r0, #2
+ 81a824c:	00ad      	lsls	r5, r5, #2
+ 81a824e:	1e68      	subs	r0, r5, #1
+ 81a8250:	f05b fb46 	bl	0x82038e0
+ 81a8254:	4601      	mov	r1, r0
+ 81a8256:	88e0      	ldrh	r0, [r4, #6]
+ 81a8258:	0080      	lsls	r0, r0, #2
+ 81a825a:	1980      	adds	r0, r0, r6
+ 81a825c:	30c0      	adds	r0, #192	@ 0xc0
+ 81a825e:	6882      	ldr	r2, [r0, #8]
+ 81a8260:	1952      	adds	r2, r2, r5
+ 81a8262:	6082      	str	r2, [r0, #8]
+ 81a8264:	00b8      	lsls	r0, r7, #2
+ 81a8266:	1980      	adds	r0, r0, r6
+ 81a8268:	30ff      	adds	r0, #255	@ 0xff
+ 81a826a:	30ff      	adds	r0, #255	@ 0xff
+ 81a826c:	3002      	adds	r0, #2
+ 81a826e:	6882      	ldr	r2, [r0, #8]
+ 81a8270:	1952      	adds	r2, r2, r5
+ 81a8272:	6082      	str	r2, [r0, #8]
+ 81a8274:	0088      	lsls	r0, r1, #2
+ 81a8276:	1981      	adds	r1, r0, r6
+ 81a8278:	2003      	movs	r0, #3
+ 81a827a:	0200      	lsls	r0, r0, #8
+ 81a827c:	1808      	adds	r0, r1, r0
+ 81a827e:	6801      	ldr	r1, [r0, #0]
+ 81a8280:	1c49      	adds	r1, r1, #1
+ 81a8282:	6001      	str	r1, [r0, #0]
+ 81a8284:	4620      	mov	r0, r4
+ 81a8286:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+
+## FUN_081ab4e4 companion chunk helper
+
+../local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+081ab4e4 <.data+0x1ab4e4>:
+ 81ab4e4:	b570      	push	{r4, r5, r6, lr}
+ 81ab4e6:	4606      	mov	r6, r0
+ 81ab4e8:	6808      	ldr	r0, [r1, #0]
+ 81ab4ea:	460c      	mov	r4, r1
+ 81ab4ec:	2302      	movs	r3, #2
+ 81ab4ee:	4635      	mov	r5, r6
+ 81ab4f0:	0780      	lsls	r0, r0, #30
+ 81ab4f2:	35c0      	adds	r5, #192	@ 0xc0
+ 81ab4f4:	0f80      	lsrs	r0, r0, #30
+ 81ab4f6:	4310      	orrs	r0, r2
+ 81ab4f8:	6008      	str	r0, [r1, #0]
+ 81ab4fa:	2000      	movs	r0, #0
+ 81ab4fc:	6048      	str	r0, [r1, #4]
+ 81ab4fe:	6088      	str	r0, [r1, #8]
+ 81ab500:	6808      	ldr	r0, [r1, #0]
+ 81ab502:	2101      	movs	r1, #1
+ 81ab504:	4308      	orrs	r0, r1
+ 81ab506:	6020      	str	r0, [r4, #0]
+ 81ab508:	0880      	lsrs	r0, r0, #2
+ 81ab50a:	0080      	lsls	r0, r0, #2
+ 81ab50c:	1820      	adds	r0, r4, r0
+ 81ab50e:	6801      	ldr	r1, [r0, #0]
+ 81ab510:	4319      	orrs	r1, r3
+ 81ab512:	6001      	str	r1, [r0, #0]
+ 81ab514:	6820      	ldr	r0, [r4, #0]
+ 81ab516:	0880      	lsrs	r0, r0, #2
+ 81ab518:	0080      	lsls	r0, r0, #2
+ 81ab51a:	1820      	adds	r0, r4, r0
+ 81ab51c:	3840      	subs	r0, #64	@ 0x40
+ 81ab51e:	63c2      	str	r2, [r0, #60]	@ 0x3c
+ 81ab520:	6828      	ldr	r0, [r5, #0]
+ 81ab522:	1c40      	adds	r0, r0, #1
+ 81ab524:	6028      	str	r0, [r5, #0]
+ 81ab526:	6869      	ldr	r1, [r5, #4]
+ 81ab528:	4288      	cmp	r0, r1
+ 81ab52a:	d900      	bls.n	0x81ab52e
+ 81ab52c:	6068      	str	r0, [r5, #4]
+ 81ab52e:	6820      	ldr	r0, [r4, #0]
+ 81ab530:	0880      	lsrs	r0, r0, #2
+ 81ab532:	0080      	lsls	r0, r0, #2
+ 81ab534:	1e40      	subs	r0, r0, #1
+ 81ab536:	f058 f9d3 	bl	0x82038e0
+ 81ab53a:	0080      	lsls	r0, r0, #2
+ 81ab53c:	1981      	adds	r1, r0, r6
+ 81ab53e:	2007      	movs	r0, #7
+ 81ab540:	01c0      	lsls	r0, r0, #7
+ 81ab542:	1808      	adds	r0, r1, r0
+ 81ab544:	6801      	ldr	r1, [r0, #0]
+ 81ab546:	1c49      	adds	r1, r1, #1
+ 81ab548:	6001      	str	r1, [r0, #0]
+ 81ab54a:	4620      	mov	r0, r4
+ 81ab54c:	bd70      	pop	{r4, r5, r6, pc}
+
+## Address arithmetic (static, not a live heap snapshot)
+Managed heap from prior mapped-boundary analysis: [0x08e54e4c, 0x0bba5ee0), size 0x2d51094 (45.317 MiB).
+The split call passes remainder=block_size-request to FUN_0802509e. That helper initializes the request-sized chunk at block+remainder (the high end), then reclassifies the original low-address part as the remaining free chunk. The allocator returns the high-end chunk's payload (+8). This is consistent with the original allocator QEMU rehost in evidence/xml-heap-2026-10-29/.
+
+loader_code_base: 0x09000000; heap-end distance 0x2ba5ee0 (45768416 bytes; 43.648 MiB)
+load_segment_end: 0x09010f80; heap-end distance 0x2b94f60 (45698912 bytes; 43.582 MiB)
+loader_stack_end: 0x09013780; heap-end distance 0x2b92760 (45688672 bytes; 43.572 MiB)
+bss_base: 0x09100000; heap-end distance 0x2aa5ee0 (44719840 bytes; 42.648 MiB)
+bss_end: 0x0919fd00; heap-end distance 0x2a061e0 (44065248 bytes; 42.024 MiB)
+
+Conditional inference: with a single contiguous free region, no fragmentation, and allocations descending from the top, the allocator would need to have consumed roughly 42.024 MiB before reaching the loader BSS end, and about 43.572 MiB before reaching the loader stack/code top boundary. These address thresholds ignore per-chunk metadata. The runtime allocation total, holes/secondary regions, and whether any active object occupies these addresses were not observed; this is not proof that the overwrite is safe.

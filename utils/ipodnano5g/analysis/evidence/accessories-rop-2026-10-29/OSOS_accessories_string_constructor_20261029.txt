@@ -1,0 +1,32 @@
+Date: 2026-10-29
+Purpose: verify the arguments and inline-source location used by the accessories.reg ROP candidate.
+
+Input image:
+  ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+  SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Command, run from /home/sebastian/ipod-re/rb-n5g:
+  arm-none-eabi-objdump -D -b binary -marm -M force-thumb \
+    --adjust-vma=0x08000000 --start-address=0x08198770 \
+    --stop-address=0x081987a8 ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+
+Original constructor instructions:
+  08198770: b510       push {r4, lr}
+  08198772: 4604       mov r4, r0
+  08198774: 4804       ldr r0, [pc, #16]  ; VTable 0x085354d8
+  08198776: 6020       str r0, [r4, #0]
+  08198778: 2000       movs r0, #0
+  0819877a: 6060       str r0, [r4, #4]
+  0819877c: 4620       mov r0, r4
+  0819877e: f7fa ffb5 bl 0x081936ec
+  08198782: 4620       mov r0, r4
+  08198784: bd10       pop {r4, pc}
+
+The constructor sets the VTable and clears the object buffer pointer, then calls
+`FUN_081936ec` with `r0=object` and the caller's `r1` unchanged as the source
+string. For the candidate layout `P=S+0x40`, the source at `P+0x80` is field
+data offset `(S+0x40+0x80)-(S+4)=0xbc`.
+
+This verifies the constructor ABI and the source address relation only. It does
+not execute the constructor, the parser, the complete ROP sequence, or a VFS
+Open/Read.

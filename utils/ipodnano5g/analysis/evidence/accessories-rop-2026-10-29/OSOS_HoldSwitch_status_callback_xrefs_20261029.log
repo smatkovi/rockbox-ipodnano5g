@@ -1,0 +1,109 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (682 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1294 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpReferencesTo.java '0x081d4a68' '0x080bd4d3' '0x080bd507' '0x080bd50b' '0x0804bc51' '0x083522bc' '0x0818ecfc'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpReferencesTo.java (HeadlessAnalyzer)  
+INFO  DumpReferencesTo.java> ===== TARGET 081d4a68 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> UNCONDITIONAL_CALL 0804bcb4 -> 081d4a68 function=<none> instruction=bl 0x081d4a68 (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 080bd4d3 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f58dc -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f7630 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f9fc4 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fa838 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fae68 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fca5c -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fefbc -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084ff1b4 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085008f0 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08501574 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085068fc -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085071e4 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 0850dcd8 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08535f38 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08536308 -> 080bd4d3 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=15 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 080bd507 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f58e0 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f7634 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f9fc8 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fa83c -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fae6c -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fca60 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fefc0 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084ff1b8 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085008f4 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08501578 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08506900 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085071e8 -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 0850dcdc -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08535f3c -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 0853630c -> 080bd507 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=15 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 080bd50b ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f58e4 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f7638 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f9fcc -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fa840 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fae70 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fca64 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084fefc4 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084ff1bc -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085008f8 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 0850157c -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08506904 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 085071ec -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 0850dce0 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08535f40 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 08536310 -> 080bd50b function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=15 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 0804bc51 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> DATA 084f763c -> 0804bc51 function=<none> instruction=<none> (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 083522bc ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> UNCONDITIONAL_CALL 0818ec48 -> 083522bc function=FUN_0818ebd8@0818ebd8 instruction=bl 0x083522bc (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 0818ecfc ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> UNCONDITIONAL_CALL 08183944 -> 0818ecfc function=FUN_08183928@08183928 instruction=bl 0x0818ecfc (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  

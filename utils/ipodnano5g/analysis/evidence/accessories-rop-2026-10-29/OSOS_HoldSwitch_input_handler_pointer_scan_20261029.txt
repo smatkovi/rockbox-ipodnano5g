@@ -1,0 +1,24 @@
+Roher Funktionszeiger-Byte-Scan (29.10.2026)
+
+Eingabe: /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin
+Runtime-VA-Basis: 0x08000000
+Dateigröße: 0x6c43a8
+SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Der Scan verwendete `bytes.find()` über alle Dateioffsets, also ohne
+Alignment-Annahme, für die exakten little-endian Wörter:
+
+  0x08000b4e: keine Fundstelle
+  0x08000b4f: keine Fundstelle
+  0x0818ebd8: keine Fundstelle
+  0x0818ebd9: keine Fundstelle
+  0x0824dc22: keine Fundstelle
+  0x0824dc23: keine Fundstelle
+
+Das ergänzt die gespeicherten Ghidra-Xrefs. Sie enthalten für den Einstieg
+FUN_0818ebd8 keine Referenzen, obwohl der separate Roh-Branchscan sechs
+Thumb-BLX-Aufrufe aus dem Button-Handler bei 0x08000b4e bestätigt. Für den
+Handlerstart selbst fanden sich in den Ghidra-Xrefs und dem Branchscan keine
+Eingangsreferenzen. Ein solcher Wortsuchlauf findet keine berechneten
+Adressen, Tabellen mit relativen Offsets oder Aufrufe aus nicht enthaltenem
+Code und beweist deshalb keine Unerreichbarkeit.

@@ -1,0 +1,82 @@
+# `accessories.reg`: Längen-Wrap und Lesen über das logische Dateiende
+
+Stand: 29.10.2026. Read-only-Ghidra-Auswertung und zwei ARM1176-QEMU-Rehosts mit Originalbytes aus dem OSOS-Runtime-Abbild. Kein Geräte-, USB-, DFU-, Reboot-, NAND-/NOR- oder Flashzugriff.
+
+## Ergebnis
+
+`FUN_081fd5e8` prüft `Dateiposition + angeforderte Länge` mit einer ungeprüften 32-Bit-Addition. Ein Request, dessen Summe überläuft, kann deshalb die Dateigrößenbegrenzung umgehen. Der Original-FAT-Reader `FUN_0814346c` berechnet sein Ende auf die Clustergröße gerundet; der genaue Provider-/FAT-Verlauf über dieses Ende ist noch nicht geklärt.
+
+Der isolierte QEMU-Rehost des FAT-Cores meldet 7488 kopierte Bytes ab logischem EOF bis zum Ende eines modellierten 8192-Byte-Clusters. Der letzte 256-Byte-Read kopiert dort zunächst 64 Bytes und endet dann mit dem FAT-Sentinel `0xffff`; `FUN_081384b0` normalisiert ihn auf `-1`. Der Trace zeigt dabei den Aufruf des EOC-Stubs `FUN_0814ed8c`. Ein zweiter Rehost mit Original-Provider und Original-Cluster-Mapper liefert im Kontrollfall am selben Startoffset dagegen alle 256 Bytes, belässt die Metadatengröße bei `0x1fc0` und setzt den Cursor auf `0xc0`; sein Trace ruft `FUN_0814ed8c` nicht auf. Dieser Kontrollfall läuft nach vorigen Szenarien im selben Prozess und setzt nicht den gesamten Handle-/Cachezustand zurück. Die beiden Rehosts sind daher noch nicht vergleichbar; die 7488-Byte-Aussage ist ein Ergebnis des isolierten Stub-Modells, kein verifizierter Providerpfad. RAM-Metadatenänderung und Persistenz sind damit ebenfalls nicht für das Gerät belegt.
+
+Der Read-Wrapper-Rehost bestätigt separat die Addition und Dispatch-Argumente: Für Dateiposition `0x2c0` wird der Restrequest `0xfffffd50` weitergereicht, weil die Summe auf `0x10` umläuft. Ein zweiter Fall lässt den Prüf-Provider 7424 Bytes und den Status `0x22` zurückgeben. Die Originalbytes des Wrappers propagieren den Fehlerstatus und erhöhen die Dateiposition von `0x2c0` auf `0x1fc0`, also genau um den gemeldeten Outcount. Das belegt die Kurzread-Semantik des Wrappers unter dem Stub-Vertrag. Die Verbindung dieses riesigen Requests durch den echten FAT-Provider bis zum echten Parserpuffer ist nicht end-to-end ausgeführt.
+
+Ein weiterer ARM1176-Rehost verbindet nun die Originalbytes von `FUN_081fd5e8`, `FUN_0812ac00`, `FUN_081384b0` und `FUN_0814346c`. Der Request `0x284` ab Dateiposition `0x20` läuft über drei Provider-Chunks (`0x100`, `0x100`, `0x84`), liest im Modell bis Dateiposition `0x2a4` und endet innerhalb der unveränderten logischen Dateigröße `0x2c0` (`PASS`). Outcount und Wrapper-/FAT-Dateiposition stimmen mit `0x284` beziehungsweise `0x2a4` überein; die logische Dateigröße und das Dirty-Feld bleiben unverändert. Damit ist der normale Kandidaten-Leseumfang durch Originalcode auf diesen vier Ebenen abgedeckt. Handle-Lookup/Seek, Cache, FAT-Ketten-/Sektorabbildung und ATA-Blockread bleiben kontrollierte Stubs; das Ergebnis belegt weder den Wrap-Overread noch den Parserlauf oder den Hardwarepfad.
+
+## Parserfehler nach partiellem Read
+
+Die Ghidra-Dekompilierung von `FUN_0802c3c4` zeigt, dass der Caller den Status von `FUN_08039048` speichert, danach aber ohne Erfolgsprüfung `auStack_13c[local_140] = 0` ausführt und `FUN_081936ec` aufruft. Ein nichtnulliger Status führt beim nächsten Schleifendurchlauf über den normalen Close-/Epilogpfad zurück. `FUN_08039048` ruft seinen nachfolgenden Tokenreader nur dann auf, wenn beide Stream-Reads Erfolg melden; der Fehler unterbindet diesen Tokenread, nicht die spätere Caller-Fortsetzung.
+
+Ein zusätzlicher Parser-Rehost führt `FUN_0802c3c4`, `FUN_08039048`, die Stringroutine und die vorhandene Gadgetfolge mit dem lokalen Wrap-Kandidaten aus. Sein Read-Stub liefert die 672 verbleibenden Bytes der 704-Byte-Datei, modelliert anschließend 7488 Cluster-Slack-Bytes bis zur 8192-Byte-Grenze und gibt danach `0x22` zurück. Der Originalparser läuft trotz dieses Kurzreadstatus in die gespeicherte Rückkehrkette; der Harness erreicht den vorverlinkten Loader-Sentinel (`PASS`). Das belegt nur die Parserfortsetzung unter dem vorgegebenen Streammodell. Da der FAT-/Provider-Rehost den Slack-Read noch nicht reproduzierbar bestätigt, ist die Verbindung dieses Parserbefunds mit tatsächlichen Dateibytes offen.
+
+Das ist noch kein durchgehender FAT-/Parserlauf: Der neue Harness modelliert Stream und Slack in einem Stub. `FUN_081fd5e8` und `FUN_0814346c` wurden separat mit Originalbytes getestet, nicht in diesen Parserlauf eingebunden. Die 7488 Slack-Bytes werden mit `0x41` gefüllt und sind keine aufgezeichneten Gerätebytes. Der bestehende Bericht `OSOS-accessories-reg-stack-overflow-followup-2026-10-26.md` belegt für `MainAppTask` eine angeforderte Stackgröße von `0x20000` Byte. Der hier modellierte Overread von 8160 Byte liegt darunter, schreibt aber über den aktuellen Parserframe in ältere Stackbereiche. Laufzeit-SP, konkrete Stackbasis und die dort lebenden Callerwerte sind unbekannt; Stackkorruption und Auswirkungen bleiben damit offen.
+
+## Abgrenzung zum bestehenden Overflow-Kandidaten
+
+Der kontrollierte `0x44`-Kandidat fordert `0x284` Bytes in einen 256-Byte-Parserpuffer. Seine 704 Bytes enthalten den nötigen LR-/ROP-Bereich bereits innerhalb der logischen Datei; dafür ist kein Längen-Wrap und kein Cluster-Slack nötig. Der Wrap wäre ein zusätzlicher Weg, Daten jenseits einer kurzen logischen Dateilänge in denselben Parserpuffer zu lesen. Eine solche Lesefolge würde nach dem aktuellen Ein-Cluster-Modell mit Fehlerstatus enden; ob die bereits kopierten Bytes danach den Parser-Epilog und die Kandidatenkette erreichen, ist noch nicht durch einen kombinierten Rehost geprüft.
+
+Der bekannte Gerätebestand ist weiterhin eine 69-Byte-Datei `accessories.reg` mit Startcluster 179788. Für einen 69-Byte-Eintrag wäre der Cluster-Slack nur dann kontrollierte Eingabe, wenn die physischen Bytes des Clusters entsprechend gesetzt sind. Das ist aus den vorhandenen Metadaten nicht ableitbar und wurde nicht auf dem Gerät geprüft.
+
+## Flush-/Persistenzprüfung
+
+Die untersuchte Close-Kette ist `FUN_0812ac80 -> FUN_08135324 -> FUN_08191cdc -> FUN_0819af00`. `FUN_0819af00` ruft `FUN_08272474` und danach `FUN_081967d0` auf. `FUN_0825cd24` wählt anhand des Werts `2` eines von sechs dynamischen Objekten aus dessen Wertebereich aus; `FUN_081967d0` ruft anschließend dessen VTable-Slot `+0x14` auf. Das ist ein generischer Objekt-/Referenzdispatch. Der konkrete Laufzeitbereich und das Zielobjekt sind aus dem statischen Abbild nicht bestimmt. Im sichtbaren Close-Code gibt es keinen direkten Dateisystem-Write-Aufruf; ein indirekter Effekt des dynamischen Callbacks ist aber nicht ausgeschlossen. Daraus folgt weder ein Dateisystem-Flush noch dessen Abwesenheit. Verifiziert ist nur die RAM-Änderung im QEMU-Modell; Persistenz bleibt offen.
+
+## Belege und Grenzen
+
+- `OSOS_accessories_file_read_wrap_probe_20261029.S/.ld/.elf/.run.log`: Originalbytes von `FUN_081fd5e8`, Provider-Dispatch als Prüf-Stub. `PASS` bestätigt sowohl den Wrap-Request als auch die Propagierung von Status `0x22` und Outcount 7424 (Dateiposition `0x2c0 -> 0x1fc0`).
+- `OSOS_accessories_wrapper_fat_provider_rehost_20261029.S/.ld/.elf/.run.log/.qemu-trace.log`: gemeinsamer Rehost von Original-Wrapper, `FUN_0812ac00`, `FUN_081384b0`, `FUN_0814346c` und `FUN_081d7e1a`. Der In-Range-Read (`0x284` ab `0x20`) besteht über drei Provider-/FAT-Chunks und endet bei `0x2a4` (`PASS`). Der Boundary-Kontrollfall besteht ebenfalls, aber er folgt anderen Ergebnissen als der isolierte EOF-Rehost und erreicht den EOC-Stub nicht; sein geteilter Testzustand muss bereinigt werden. Handle-Lookup/Seek, Cache, Cluster-Extent, Sektorabbildung und Blockread sind Stubs.
+- `OSOS_accessories_provider_chain_listing_20261029.log`: read-only-Ghidra-Listings für die Provider- und Fehlerhelfer mit Funktionsgrenzen.
+- `OSOS_accessories_boundary_case_debug_20261029.txt`: GDB-Eintrittszustand und Zwischenschritt des abweichenden Boundary-Kontrollfalls. Nach dem ersten 64-Byte-Sektorread stehen Cursor und gerundetes Ende beide auf `0x2000`, 192 Bytes bleiben; der EOC-Pfad des gemeinsamen Rehosts bleibt trotzdem unerklärt.
+- `OSOS_accessories_fat_logical_eof_probe_20261029.S/.ld/.elf/.run.log/.qemu-trace.log`: Originalbytes von `FUN_0814346c`; Ein-Cluster-Mapper, Cache und EOC sind modellierte Stubs. `run.log`: `PASS`; der Trace enthält einen Aufruf des EOC-Stubs. Das ist nicht gegen den abweichenden Provider-Kontrollfall aufgelöst.
+- `build_wrapped_candidate_accessories_reg.py` erstellt `candidate_accessories_reg_wrap_unexecuted.bin` aus dem vorhandenen 704-Byte-Kandidaten und setzt nur das Längenwort bei Offset `0x1c` auf `0xfffffff0`.
+- `OSOS_accessories_wrap_error_parser_rehost_20261029.S/.ld/.elf/.run.log/.qemu-trace.log`: Originalparser und Gadgetfolge; Stream-Read inklusive Fehler und Cluster-Slack sind modelliert. `run.log`: `PASS`, Loader-Sentinel erreicht.
+- `OSOS_accessories_controlled_length_raw_20261029.log` und `OSOS_accessories_controlled_length_stream_bounds_20261029.log`: Thumb-Listing und Stream-/Wrapper-Dekompilierung.
+- `OSOS_accessories_fat_read_deep_decompile_20261029.log`, `OSOS_accessories_fat_read_helper_listing_20261029.log` und `OSOS_accessories_fat_read_helpers_decompile_20261029.log`: FAT-Core und Cache-/Clusterpfad.
+- `OSOS_accessories_close_flush_audit_20261029.log`, `OSOS_accessories_close_flush_dispatch_20261029.log`, `OSOS_accessories_close_dispatch_targets_20261029.log` und `OSOS_accessories_read_error_and_close_decompile_20261029.log`: Close-/Objektpfad und Dispatch über sechs dynamische Wertebereiche; das ausgewählte Laufzeitobjekt bleibt unbestimmt.
+- Runtime-Eingabe: `local-analysis/inputs/osos_runtime_dram_20261025.bin`, SHA-256 `1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03`.
+
+Die Tests bilden weder die reale FAT-Kette, den ATA-/NAND-Cache noch den Provider-Open ab. Der Parser-Rehost zeigt Fehlerfortsetzung unter den dokumentierten Stubs, keinen Gerätelauf, keine bestätigte Codeausführung auf dem iPod und keinen Rockbox- oder untethered Boot.
+
+## Nächste Schritte
+
+1. Den Besitzer von `DAT_0819af18` und dessen sechs Wertebereiche bis zur Laufzeitinitialisierung verfolgen; damit das für `param_2=2` ausgewählte VTable-Ziel bestimmen und auf Storage-Schreiboperationen prüfen.
+2. Den Boundary-Kontrollfall isolieren: alle Handle-, Mapping-, Cache- und Größenfelder vor dem Lauf initialisieren und denselben Fall in einem frischen Prozess gegen den direkten FAT-Core-Rehost vergleichen. Erst danach den echten Provider-/Parserpfad für den Wrap-/Kurzreadfall zusammenführen.
+3. Den Einfluss des 8160-Byte-Schreibbereichs auf ältere MainApp-Taskstackframes bestimmen; die angeforderte Gesamtstackgröße von `0x20000` Byte ist bereits statisch bekannt.
+4. Hardware-/Speichertests getrennt planen; bisher wurde nichts auf das Gerät geschrieben.
+
+## Nachtrag 29.10.2026 – Originalstream über Wrapper, Provider und FAT-Core
+
+Der frühere Bericht hielt den Wrap-/Parserpfad wegen des widersprüchlichen Boundary-Kontrollfalls noch für unverbunden. Ein neuer ARM1176-Rehost läuft in einem frischen Prozess und führt den originalen Längenhelper `FUN_08039048`, den Streamdispatch `FUN_08268c3a`, Exact-Reader `FUN_081b832e`, Buffered-Read `FUN_0820cc90`, Bufferzustand `FUN_0823c9c0`, Backend `FUN_082a2c48`, Datei-Wrapper `FUN_081fd5e8`, FAT-Provider `FUN_0812ac00`, Fehlerübersetzer `FUN_081384b0`, FAT-Core `FUN_0814346c` und Cluster-Mapper `FUN_081d7e1a` aus.
+
+Der Stream- und Dateizustand wird vor dem Test manuell auf die plausible Fortsetzung eines bereits laufenden Parses gesetzt: äußerer Cursor `0x1c`, Cacheinhalt = 704-Byte-Kandidat, innerer Dateicursor = logisches EOF `0x2c0`, Dateigröße `0x2c0`, Startcluster 179788. Der originale Helper liest daraus `0xfffffff0` und startet danach den übergroßen Read mit `max_length=0x100`.
+
+Die originale Streamkonstruktion belegt, dass `0x8000` eine Pufferkapazität und keine Read-Obergrenze ist: `FUN_08271014` gibt die Kapazität an `FUN_0818f134`; `FUN_08260198` initialisiert den separaten Restzähler auf `0xffffffff`. `FUN_0820cc90` kann daher nach dem Kopieren verfügbarer Pufferbytes den Rest direkt an das Backend geben. Im Rehost läuft `0x20 + 0xfffffff0` im Stream-Fill-Check auf `0x10` um, sodass der vorhandene 704-Byte-Puffer nicht nachgefüllt wird. Das Stream-Backend erhält anschließend den Restrequest `0xfffffd50`; auch `FUN_081fd5e8` sieht bei Dateicursor `0x2c0` die umlaufende Summe `0x10` und reicht den Request an den Provider weiter.
+
+Der Rehost endet mit Status `5` (EOF-Kurzread). Der Payload-Read meldet `0x1fa0` Bytes: `672` Bytes ab dem logischen Dateioffset `0x20` plus `7424` gemeldete Bytes des Original-Wrapper-/Provider-/FAT-Pfads. Das FAT-Core-Modell schreibt den letzten Teiltransfer noch bis Zieloffset `0x1fe0`; Assertions prüfen die 672 unveränderten Kandidatenbytes, die Stubdaten `0x41` bis `0x1fdf` und den unberührten Sentinel ab `0x1fe0`. Der Kandidat setzt an Parserbuffer-Offset `0x138` (Stack-LR-Position) exakt `0x08007107`. Das ist die im separaten Stackledger dokumentierte erste Gadgetadresse. Es wurde kein realer Parserstack überschrieben und kein Gadget durch diesen Rehost ausgeführt.
+
+Damit ist der konkrete Read- und Bytefluss bis einschließlich Original-FAT-Core unter vorbereitetem Stream-/EOF-Zustand reproduziert. Der VFS-Open, tatsächliche Erstprefetch, Cacheinhalt, Sektormapping, FAT-Kettenzustand, ATA/NAND-Lesezugriff und reale Cluster-Slack-Bytes sind weiterhin Stubzustände. Der separate Parser-/Gadget-Rehost erreicht den Loader-Sentinel, verwendet aber selbst weiter einen Streamstub. Zusammengenommen belegen die Rehosts eine bedingte, ausführbare Kette; sie bestätigen weder reale Kontrollflussübernahme noch Loader- oder Rockbox-Ausführung.
+
+Wichtig für die Kandidatenbewertung: Das Längen-Wrap ist nicht nötig, um die ROP-Bytes zu erreichen. Der normale Kandidat mit Länge `0x284` enthält den LR- und Gadgetbereich vollständig innerhalb seiner logischen 704 Byte. Der Wrap-Rehost untersucht lediglich, was mit einer fehlerhaften nahezu-2^32-Länge zusätzlich passiert.
+
+### EOF-Status im Originalparser
+
+Ein abgeleiteter Parser-Rehost ersetzt den früheren partiellen-Read-Status `0x22` durch den vom separaten Originalstream-/Provider-/FAT-Rehost zurückgegebenen Status `5` (EOF). Der Originalparser nimmt den Wert entgegen; bei `0x0802c4fe` wird er mit dem Parser-Abbruchflag verknüpft und beendet die Token-Schleife. Danach laufen Close/Cleanup, Epilog und die gespeicherte Gadget-Rückkehr bis zum vorgelinkten Loader-Sentinel (`PASS`). Damit blockiert EOF-Status 5 im Modell nicht den Parser-Rückkehrpfad.
+
+Dieser Statusversuch bleibt von der Originalstream-/FAT-Ausführung getrennt: Der Parser-Rehost stubbt weiterhin die Reads, die 672 Kandidatenbytes und 7488 Slack-Bytes kopieren. Die beiden Rehosts sind damit nur bedingt zusammensetzbar; der echte FAT-Core hat nicht im selben Lauf in den Originalparserframe geschrieben. Weder die Slack-Bytes noch ein Gerätelauf, Loaderinhalt oder Rockbox-Handoff sind bestätigt. Artefakte: `evidence/accessories-rop-2026-10-29/OSOS_accessories_wrap_eof_parser_rehost_20261029.{S,ld,elf,run.log,qemu-trace.log,stdout.bin,results.txt}`.
+
+Reproduzierbare Artefakte und die genaue Ausgabe stehen in `evidence/accessories-rop-2026-10-29/OSOS_accessories_stream_fat_rehost_20261029.results.txt`; Linkerskript und Trace liegen im selben Verzeichnis. Der korrigierte Harness verwendet getrennte `PT_LOAD`-Segmente; ein Readelf-Abgleich findet keine überlappenden Segmente.
+
+### Aktualisierte nächste Schritte
+
+1. Den Originalparser `FUN_0802c3c4` mit dem Originalstream-/Provider-/FAT-Pfad in einem Harness verbinden, sodass der Zielbuffer direkt im Parserframe liegt. Dabei den erfolgreichen `0x284`-Kandidatenfall und den EOF-Kurzread getrennt protokollieren; VFS-Open und ATA-/Cachegrenzen ausdrücklich als Stubs markieren.
+2. Die erste Streambefüllung aus einer synthetischen FAT-Datei mit den Bytes des 704-Byte-Kandidaten ausführen, statt den Stream bei Offset `0x1c` vorzufüllen. Dafür die Cache-/Sektormappingstubs auf eine lokale Clusterabbildung umstellen.
+3. Unabhängig davon offen bleiben ein tatsächlicher Geräte-Open/Read, die Laufzeit-Stack-/Heaplage, ein erfolgreicher Loader-Read und ein echter Rockbox-Handoff. Der aktuell erfasste Gerätebestand enthält weiterhin nur die normale 69-Byte-`accessories.reg`; Kandidat und `/BOOT.BIN` wurden nicht auf das Volume geschrieben.

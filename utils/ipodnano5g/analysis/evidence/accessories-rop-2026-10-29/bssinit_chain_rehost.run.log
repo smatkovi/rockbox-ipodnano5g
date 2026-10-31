@@ -1,0 +1,5 @@
+wrote local candidate: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/candidate_accessories_reg_bssinit_unexecuted.bin
+size: 720 bytes (0x2d0)
+sha256: d9973abc3b223baceaf378a582e2b7acd3fd96b82ef548f40a8f31a4a957ecfa
+status: not executed and not written to a device
+PASS: original trampoline called bootloader bss_init, then reached sentinel

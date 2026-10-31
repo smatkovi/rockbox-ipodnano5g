@@ -1,0 +1,51 @@
+Integrierter ARM1176-Rehost mit echter FAT-Allokation
+====================================================
+
+Eingabedaten
+------------
+
+BPB: 4096 Byte pro FAT-Sektor, 2 Sektoren pro Cluster, 32 reservierte
+Sektoren, 2 FAT-Kopien, 1904 Sektoren pro FAT, ExtFlags 0 (gespiegelt).
+Der Datenbereich beginnt bei 512-Byte-LBA 0x7800; die Clusterkapazität
+beträgt 8192 Byte. `accessories.reg` startet laut Snapshot bei Cluster 179788
+und hat 69 Byte logische Länge.
+
+Read-only FAT-Capture
+--------------------
+
+Cluster 179788 liegt innerhalb jeder FAT bei Byteoffset 0x130, Sektorindex
+0x57c. FAT-Kopie 0: Sektor-LBA 0x67c. FAT-Kopie 1: Sektor-LBA 0x41fc.
+Beide Einträge sind raw 0x0fffffff, maskiert 0x0fffffff (EOC). Die beiden
+512-Byte-Sektoren sind byteidentisch und haben SHA-256
+3d8e64debc6be2debd552dc75172c0ea037a37439e8edc862fa5ca28c4493dde.
+
+Lauf
+----
+
+Der Rehost ruft unveränderte Runtimebytes von `FUN_082014fc` mit dem
+erfassten FAT-Sektor auf. Ergebnis: Extent-Länge 1, Cluster 179788.
+`FUN_0822641e` berechnet mit Datenstart 0x7800 und Shift 4 die Start-LBA
+
+    0x7800 + ((179788 - 2) << 4) = 0x2c5ca0
+
+Die echte FAT-Sektorquelle liefert ausschließlich LBA 0x67c. Für die
+synthetische Kandidatendatei werden ausschließlich 0x2c5ca0 und 0x2c5ca1
+akzeptiert. Der Parser-/Cache-Rehost kontrolliert beide Sektoroffsete,
+Bytes auf beiden Seiten der 512-Byte-Grenze, das Extent, den Cluster,
+den Mapperwert und den bereits modellierten Parser-/Loader-Sentinelpfad.
+
+QEMU ARM1176 endet mit Exit 0 und Ausgabe `PASS\n`.
+
+Grenzen
+-------
+
+Der 704-Byte-Kandidat ist synthetisch und wurde nicht aufs Gerät geschrieben.
+Die FAT-Metadaten sind echt; Dateiinhalt, Datei-Lese-Sektoren, Volume-/Handle-
+Startzustand, VFS-Open, Mount und Block-I/O bleiben lokal modelliert oder
+gesetzt. Der PASS-Wert beweist keine Geräte-Erreichbarkeit, RCE, Persistenz,
+Rockbox-Ausführung oder untethered Boot.
+
+Aus der BPB folgt als Geometrie-Inferenz: 704 Byte würden in die 8192 Byte
+eines Clusters passen. Die aktuelle Datei hat aber 69 Byte logische Größe.
+
+Keine NAND-/NOR-/Firmware-Schreibaktion und kein DFU-/USB-Statusabruf.

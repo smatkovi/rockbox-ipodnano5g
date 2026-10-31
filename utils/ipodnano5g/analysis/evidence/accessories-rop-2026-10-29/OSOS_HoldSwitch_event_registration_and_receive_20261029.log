@@ -1,0 +1,135 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (737 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1378 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpThumbRange.java '0x08023094' '0x08023120' '0x081a9bf8' '0x081a9c30'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpThumbRange.java (HeadlessAnalyzer)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 08023094 [[08023094, 080230b1]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 thumb_range_08023094(undefined4 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = _DAT_080230b4;
+  if (*(int *)(_DAT_080230b4 + 0x10) < *(int *)(_DAT_080230b4 + 0xc)) {
+    *(undefined4 *)(*(int *)(_DAT_080230b4 + 0x14) + *(int *)(_DAT_080230b4 + 0x10) * 4) = param_1;
+    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + 1;
+    return 0;
+  }
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 08023094..08023120 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 08023094  ldr r2,[0x080230b4] (GhidraScript)  
+INFO  DumpThumbRange.java> 08023096  ldr r3,[r2,#0xc] (GhidraScript)  
+INFO  DumpThumbRange.java> 08023098  ldr r1,[r2,#0x10] (GhidraScript)  
+INFO  DumpThumbRange.java> 0802309a  cmp r1,r3 (GhidraScript)  
+INFO  DumpThumbRange.java> 0802309c  bge 0x080230ae (GhidraScript)  
+INFO  DumpThumbRange.java> 0802309e  ldr r3,[r2,#0x14] (GhidraScript)  
+INFO  DumpThumbRange.java> 080230a0  lsls r1,r1,#0x2 (GhidraScript)  
+INFO  DumpThumbRange.java> 080230a2  str r0,[r3,r1] (GhidraScript)  
+INFO  DumpThumbRange.java> 080230a4  ldr r0,[r2,#0x10] (GhidraScript)  
+INFO  DumpThumbRange.java> 080230a6  adds r0,r0,#0x1 (GhidraScript)  
+INFO  DumpThumbRange.java> 080230a8  str r0,[r2,#0x10] (GhidraScript)  
+INFO  DumpThumbRange.java> 080230aa  movs r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080230ac  bx lr (GhidraScript)  
+INFO  DumpThumbRange.java> 080230ae  movs r0,#0x1 (GhidraScript)  
+INFO  DumpThumbRange.java> 080230b0  bx lr (GhidraScript)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 081a9bf8 [[081a9bf8, 081a9c03] [081a9c2e, 081a9c35]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+void thumb_range_081a9bf8
+               (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  int iStack_1c;
+  undefined4 uStack_18;
+  
+  puVar1 = DAT_081a9c38;
+  iVar3 = 0;
+  uStack_18 = param_4;
+  while( true ) {
+    if ((int)puVar1[4] <= iVar3) {
+      return;
+    }
+    iStack_1c = 0;
+    iVar2 = (**(code **)(puVar1[5] + iVar3 * 4))(&iStack_1c,param_1);
+    if (iVar2 != 0) break;
+    iVar3 = iVar3 + 1;
+  }
+  if (iStack_1c != 0) {
+    FUN_081b0c20(*puVar1,iStack_1c,param_1,0,0);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 081a9bf8..081a9c30 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9bf8  push {r1,r2,r3,r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9bfa  movs r4,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9bfc  mov r7,r0 (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9bfe  ldr r5,[0x081a9c38] (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9c00  mov r6,r4 (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9c02  b 0x081a9c2e (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9c2e  ldr r0,[r5,#0x10] (GhidraScript)  
+INFO  DumpThumbRange.java> 081a9c30  cmp r4,r0 (GhidraScript)  
+INFO  REPORT: Execute script: DumpCallersMany.java '0x08023094' '0x081a9bf8' '0x0802889a'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpCallersMany.java (HeadlessAnalyzer)  
+INFO  DumpCallersMany.java> ===== TARGET 08023094 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08020412 caller=FUN_080203c8@080203c8 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 081a9bf8 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08023082 caller=FUN_08023050@08023050 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08023b44 caller=FUN_08023ad0@08023ad0 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08023c8c caller=<none> (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=3 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0802889a ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08023062 caller=FUN_08023050@08023050 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  REPORT: Discarding changes to the following read-only file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  

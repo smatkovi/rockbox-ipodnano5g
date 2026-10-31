@@ -1,0 +1,26 @@
+# Original stream-to-FAT wrap rehost (29.10.2026)
+
+`qemu-arm -cpu arm1176` exits with code 0 and prints `PASS`. The harness invokes the original `FUN_08039048`, so the four-byte length field is read from the wrapped candidate, then the same helper issues the `0xfffffff0` payload request with `max_length=0x100`.
+
+The test state is primed manually: the 704-byte candidate is the outer stream buffer, its read position is `0x1c`, and the inner file cursor is at logical EOF `0x2c0`. This corresponds to the parser having consumed its preceding tokens and the stream having filled its buffer; the harness does not execute the VFS open or the initial prefetch.
+
+Decoded 32-bit output words from `OSOS_accessories_stream_fat_rehost_20261029.stdout.bin`:
+
+| Word | Value | Meaning |
+|---:|---:|---|
+| 0 | `0x00000005` | Original exact-read/helper EOF status after the short read |
+| 1 | `0x00001fa4` | Total stream bytes consumed, including the 4-byte length prefix |
+| 2 | `0x00001fc0` | File-wrapper cursor after the FAT read |
+| 3 | `0x00001fc0` | FAT handle cursor |
+| 4 | `0x00000001` | FAT handle dirty flag |
+| 5 | `0x00001fc0` | RAM file-size metadata |
+| 6–7 | `0x2c0`, `0x2c0` | Outer stream buffer length and consumed position |
+| 8 | `0x00000001` | Outer stream error/EOF flag |
+| 9 | `0x08007107` | Candidate word copied to parser-buffer offset `0x138` (saved-LR offset) |
+| 10 | `0x41414141` | First word of the modeled post-EOF FAT data |
+| 11 | `0xcccccccc` | First untouched word at buffer offset `0x1fe0` |
+| 12 | `0x41414141` | Last sampled word before offset `0x1fe0` |
+
+The payload read reports `0x1fa0` bytes: 672 bytes from the candidate after offset `0x20`, plus 7424 bytes reported by the original wrapper/provider path after logical EOF. The FAT core also copies the final partial chunk through offset `0x1fe0`; assertions verify candidate bytes at the start, `0x41` cache-stub bytes through `0x1fdf`, and the untouched sentinel at `0x1fe0`. The saved-LR word at `0x138` is exactly the candidate gadget `0x08007107`.
+
+Original runtime functions listed in the `.run.log` execute in the trace. Cache lookup, sector-to-buffer mapping, FAT-chain/EOC, ATA read, file open, and the external memcpy veneer are stubs. The outer stream state and candidate bytes are synthetic, and the sampled buffer is a rehost destination, not the actual `FUN_0802c3c4` stack frame. This demonstrates read-path reachability and byte placement under the documented state; it does not establish a device run, real cache contents, parser return control, ROP completion, loader execution, or persistence.

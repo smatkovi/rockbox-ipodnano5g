@@ -1,0 +1,79 @@
+OSOS HoldSwitch: EventManager-IDs und Eingabepfad (29.10.2026)
+
+Runtime-Abbild: osos_runtime_dram_20261025.bin, VA-Basis 0x08000000.
+
+1. Die EventManager-Schleife FUN_08023050 lädt ihre beiden Vergleichswerte
+   aus 0x0802308c und 0x08023090. Die rohen little-endian Wörter sind:
+
+   VA         Wort       Bytes       FourCC-Schreibweise
+   0802308c   6b44776e   6e 77 44 6b  kDwn
+   08023090   6b557020   20 70 55 6b  kUp<space>
+
+   Die Umkehrung der Bytefolge ist die übliche FourCC-Lesart. Der EventManager
+   ruft bei diesen IDs FUN_081a9b84 auf und verarbeitet danach den generischen
+   Eventfilter FUN_081a9bf8. Das sind generische Tastendruck-/Loslass-IDs, kein
+   eindeutiger Hold-Schaltercode.
+
+2. FUN_0826107c setzt Key-Zustandsbytes und erzeugt Eingabeereignisse. Seine
+   direkten Aufrufer umfassen Wrapper mit Codes 0x57, 0x58, 0x6e und 0x6f.
+   Der umgebende Handler bei 0x080d4920 vergleicht Remote-Ereignisnamen wie
+   HandleRemoteDownArrowUp und ruft Eingabewrapper auf. Das belegt einen
+   Remote-/Tastenpfad, nicht dessen Ausführung vor MainAppTask.
+
+   Der Literalpool von FUN_0826107c enthält außerdem 0x6b44776e (kDwn) und
+   0x6b557044 (kUpD). kUpD ist ein anderes Ereignis als das kUp<space>, das
+   FUN_08023050 direkt vergleicht.
+
+3. Die ARM-Funktion FUN_0818ebd8 ruft FUN_0824dc22 ab und kehrt bei
+   nichtnulligem Ergebnis zurück, bevor sie im sichtbaren Pfad FUN_0826107c
+   aufruft. FUN_081988fc (über FUN_0824dc22) liefert bei Rohstatus 0 zurück;
+   die zuvor verifizierte PMU-Auswertung ordnet diesen Wert dem gesperrten
+   Hold-Schalter zu. Damit enthält diese Routine einen Hold-Gate für den
+   Eingabepfad.
+
+   Der rohe ARM-/Thumb-Branchscan und der gültige Thumb-Export bestätigen
+   sechs BLX-Aufrufe auf FUN_0818ebd8 in der Button-/Wakeup-Funktion bei
+   0x08000b4e. Sie deckt einen `Wakeup button`-Zweig und Änderungen von fünf
+   Button-Bits ab.
+
+   Die offene Kante ist der Einstieg bei 0x08000b4e: gespeicherte Ghidra-Xrefs,
+   ein Branchscan auf diesen Funktionsstart und ein Wortsuchlauf nach einem
+   absoluten Funktionszeiger lieferten keinen eingehenden Verweis. Externe oder
+   berechnete Aufrufe bleiben möglich; eine Laufzeit- oder Bootzeit-Erreich-
+   barkeit ist nicht belegt.
+
+4. FUN_0818ecfc ist ein separater Thumb-Einstieg. Er wird direkt von
+   FUN_08183928 benutzt; FUN_08183928 wird von FUN_081736d4 aufgerufen. Der
+   Datenbereich enthält FUN_081736d4 als Funktionszeiger bei 0x084fdec0.
+   Diese Referenzkette beweist keinen Aufruf von FUN_0818ebd8 und keine
+   BootTask-Reihenfolge.
+
+5. Die BootTask-Tabelle enthält außerdem `PowerMgmt` mit Prioritätswert 4 und
+   dem Einstieg 0x22004fc1 (Thumb-Funktionszeiger außerhalb des
+   Runtime-Abbilds). Der Record wird vor dem späteren MainAppTask-Request
+   verarbeitet. Das ist ein plausibler externer Besitzer des Wakeup-Pfads,
+   aber es gibt in diesem Abbild keinen Nachweis, dass er 0x08000b4e
+   registriert oder aufruft. Schedulerreihenfolge und Ausführung vor dem
+   accessories.reg-Parser bleiben offen.
+
+Belegdateien im selben Verzeichnis:
+- OSOS_HoldSwitch_event_manager_dispatcher_20261029.log
+- OSOS_HoldSwitch_event_id_literal_refs_20261029.log
+- OSOS_HoldSwitch_event_id_duplicate_pool_refs_20261029.log
+- OSOS_HoldSwitch_event_kDwn_kUp_consumers_20261029.log
+- OSOS_HoldSwitch_key_event_callers_20261029.log
+- OSOS_HoldSwitch_key_event_producers_20261029.log
+- OSOS_HoldSwitch_key_wrapper_registration_refs_20261029.log
+- OSOS_HoldSwitch_key_wrapper_callsite_context_20261029.log
+- OSOS_HoldSwitch_PMU_gated_input_handler_refs_20261029.log
+- OSOS_HoldSwitch_raw_branchscan_0818ebd8_20261029.txt
+- OSOS_HoldSwitch_wakeup_button_handler_20261029.log
+- OSOS_HoldSwitch_wakeup_button_handler_refs_20261029.log
+- OSOS_HoldSwitch_input_handler_pointer_scan_20261029.txt
+- OSOS_HoldSwitch_input_init_parent_20261029.log
+- OSOS_HoldSwitch_input_init_ref_check_20261029.log
+- OSOS_HoldSwitch_input_callback_owners_20261029.log
+- OSOS_HoldSwitch_input_vtable_xrefs_20261029.log
+
+Alle Analysen sind statisch/read-only. Sie belegen weder einen Geräteaufruf
+noch eine Ausführung vor dem accessories.reg-Parser.

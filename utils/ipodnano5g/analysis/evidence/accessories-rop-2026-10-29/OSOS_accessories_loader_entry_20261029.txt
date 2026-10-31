@@ -1,0 +1,57 @@
+Offline-Pruefung des Kandidaten-Loader-Entrypoints
+Datum: 2026-10-29
+
+Eingaben
+--------
+Runtime-Abbild:
+  ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+  SHA-256 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Lokaler Rockbox-Bootloader:
+  rb-n5g/build-n5g-blramdisk/bootloader.bin
+  Größe 69.504 Byte (0x10f80)
+  SHA-256 09b2dc3ff4940855b175508ce817c5f913798f3d7b2ba7669edef3427e224d03
+
+ELF/Linkerbefund
+----------------
+`readelf -h -l -s build-n5g-blramdisk/bootloader.elf` meldet ARM ELF32,
+Entry `0x09000000`, erstes LOAD-Segment VA `0x09000000`, FileSiz `0x10f80`
+und MemSiz `0x13780`. Das zweite LOAD-Segment ist reines BSS ab `0x09100000`
+mit MemSiz `0x9fd00`.
+
+Die Mapdatei setzt `_movestart=0x09000000` und `_moveend=0x09010f80`. Damit
+endet der 0x10f80-Byte-Dateibereich exakt am Anfang des NOLOAD-Stackbereichs
+`0x09010f80..0x09013780`. Der separate BSS-Bereich beginnt bei `0x09100000`.
+Der in der accessories.reg-ROP-Folge angeforderte Read nach
+`0x09000000` von `0x10f80` Byte passt somit bytegenau zum lokalen ELF-Entry,
+Dateisegment und Linkerlayout. Das ist eine statische Kompatibilitätsprüfung;
+die tatsächliche Speicherbelegung durch OSOS bleibt separat offen.
+
+Die ARM-Disassemblierung (`llvm-objdump --triple=arm-unknown-eabi -d`)
+bestätigt am Entry `0x09000000` einen Sprung zu `_newstart` bei
+`0x0900003c`. Der Startupcode leitet die Quellbasis aus PC und `_rtpc` ab und
+verschiebt das Bild an `_movestart`; bei diesem Load sind Quelle und Ziel
+beide `0x09000000`. Danach kopiert er die Exceptionvektoren nach IRAM0,
+bereinigt/invalidiert die Caches, schaltet MMU und Caches ab, verwirft alte
+TLB-Einträge, richtet die Stacks ein und verzweigt zu `main`. Das bestätigt,
+dass `0x09000000` der vorgesehene ARM-Einstieg ist, nicht nur eine passende
+Zieladresse für Daten.
+
+Hold-Fallback
+-------------
+Im lokalen `bootloader/ipodnano4g.c` wird für `IPOD_NANO5G` vor der
+FAT-Initialisierung bei verriegeltem Hold `nand_init()` und anschließend
+`launch_apple(APPLE_IMG_OSOS)` versucht. Derselbe Apple-Fallback steht bei
+Storagefehler, fehlendem FAT-Volume, fehlender Rockbox-Datei und fehlendem
+RAM-Disk-Image im jeweiligen Fehlerpfad. `launch_apple` lädt das signierte
+OSOS aus NAND. Das ist Sourcecode-/Buildbefund, keine Bestätigung, dass dieser
+Loader bereits auf dem iPod installiert oder auf Hardware getestet wurde.
+
+Grenzen
+-------
+Der Parser-QEMU-Rehost springt weiterhin nur zu seinem Loader-Sentinel. Er
+lädt diese Bootloaderbytes nicht und führt sie nicht aus. Slot-0-Provider,
+FAT-Open/Read, tatsächlicher 0x10f80-Byte-Read, OSOS-Heapkollision und
+Rockbox-Handoff bleiben unbestätigt. `BOOT.BIN` und der Kandidat wurden nicht
+auf das Gerät geschrieben; es gab keine Geräte-, USB-, DFU- oder
+Flashoperation.

@@ -1,0 +1,16 @@
+Build and run from `/home/sebastian/ipod-re`:
+
+```sh
+clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+  -Wl,-T,rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030.ld \
+  -Wl,--build-id=none \
+  -o rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030_v2.elf \
+  rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030_v2.S
+
+prlimit --core=0 -- qemu-arm -cpu arm1176 -d in_asm,cpu \
+  -D rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030_v2.qemu-trace.log \
+  rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030_v2.elf \
+  > rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/real-fat-original-control-20261030/OSOS_accessories_parser_original_fat_control_rehost_20261030_v2.stdout.bin
+```
+
+Observed: exit 0 and stdout `PASS\n`.

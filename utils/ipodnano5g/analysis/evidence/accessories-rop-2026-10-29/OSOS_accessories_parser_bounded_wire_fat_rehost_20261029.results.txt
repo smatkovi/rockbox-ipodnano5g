@@ -1,0 +1,41 @@
+Original wire parser with the in-file 0x284 candidate (2026-10-29)
+
+Build: clang ARM1176 target, link succeeded.
+Run: qemu-arm -cpu arm1176 -d in_asm,cpu; exit code 0.
+Stdout: PASS\n
+
+Verified trace facts:
+- The original parser and original token reader consume the complete wire
+  prefix from stream position zero. FUN_08039048 receives max_length=0x100,
+  then the candidate's ordinary length 0x284.
+- The 0x284-byte field starts at file offset 0x20 and ends at 0x2a4, within
+  the 704-byte candidate ending at 0x2c0. The following 4-byte terminator is
+  also in-file. No integer wrap or post-EOF bytes are needed for this case.
+- The original parser epilogue loads the saved PC from S+0x13c and executes
+  gadget 0x08007106. The sentinel independently checks S+0x13c == 0x08007107,
+  the controlled loader-read arguments and parser cleanup; all checks pass.
+- Final stream cursor is 0x2a8. File cursor remains at 0x2c0 because the
+  candidate is manually preloaded into the stream buffer. The trace contains
+  no FUN_081fd5e8, FUN_0812ac00 or FAT-reader execution in this bounded case.
+
+Model limits:
+- The input is the local 704-byte candidate_accessories_reg_unexecuted.bin,
+  not the 69-byte file from the read-only device snapshot.
+- The VFS open and initial stream-buffer fill are not simulated; the harness
+  seeds all candidate bytes in the stream buffer. Therefore the run proves a
+  parser stack overwrite and return sequence conditional on these bytes being
+  supplied, not that OSOS reads them from the real file during boot.
+- Loader read remains a checking stub; no bootloader bytes or Rockbox code are
+  loaded. No hardware, USB, NAND/NOR or flash operation occurred.
+
+Reproduction, from rb-n5g:
+
+  clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+    -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.ld \
+    -Wl,--build-id=none \
+    -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.elf \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.S
+  qemu-arm -cpu arm1176 -d in_asm,cpu \
+    -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.qemu-trace.log \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.elf \
+    > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_bounded_wire_fat_rehost_20261029.stdout.bin

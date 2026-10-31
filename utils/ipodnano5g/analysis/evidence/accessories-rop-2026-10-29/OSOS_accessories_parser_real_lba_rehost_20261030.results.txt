@@ -1,0 +1,46 @@
+Realer FAT-LBA im accessories.reg-Parser-Rehost (2026-10-30)
+
+QEMU: exit code 0
+stdout: PASS
+
+Erfasste Dateisystemwerte aus OSOS_live_fat_slot_read_20261029.txt und
+OSOS_live_parser_inputs_20261029.txt:
+- BPB-Sektorgröße: 4096 Byte
+- Sektoren je Cluster: 2 (8192 Byte / Cluster)
+- Datenstart in 512-Byte-LBAs: 0x7800
+- Cluster-Shift in Runtime-Einheit: 4 (16 LBAs je Cluster)
+- accessories.reg Startcluster: 179788 (0x2be4c)
+- erster Datei-LBA: 0x7800 + ((179788 - 2) << 4) = 0x2c5ca0
+- maximaler Cluster aus BPB-Geometrie: 0x1dbc41
+- Volume-Ende in 512-Byte-LBAs: 3901312 * 8 = 0x01dc3c00
+- zweiter Sektor-LBA: 0x2c5ca1
+- aktuelle Datei im Snapshot: 69 Byte, SHA-256 b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854
+- synthetischer Parser-Kandidat: 704 Byte (nicht aufs Gerät geschrieben)
+
+Ausführung:
+- Original-Funktion FUN_0822641e wurde mit Volume+0x74=0x7800,
+  Volume+0x1ce=4 und Cluster 179788 aufgerufen.
+- Rückgabewert im QEMU-Trace: 0x2c5ca0.
+- Der Setup-Code initialisiert damit das aktuelle Sektor-LBA-Feld des
+  modellierten Datei-Handles.
+- Die lokale Blockquelle akzeptiert nur 0x2c5ca0 und 0x2c5ca1; andere Werte
+  führen zu FAIL. Beide Werte erscheinen in den Cache-Reader-Aufrufen.
+- PASS-Assertions bestätigen Start-LBA 0x2c5ca0, Sektor-Bitmap 0b11,
+  mindestens zwei Transfers und Kandidatenbytes bei Offset 0x200 / 0x2a4.
+- Die zuvor breite, relative LBA-Zuordnung wurde damit beseitigt.
+
+Erster Negativlauf:
+- Ohne Initialisierung des Handle-Felds forderte der Cache-Reader LBA 0 an.
+- Der nun exakte lokale Quellenstub lehnte diesen LBA ab (FAIL). Die alte,
+  flexible Quelle hätte diesen Modellierungsfehler verborgen.
+- Trace und stdout liegen als initialization_miss.* daneben.
+
+Grenzen:
+- Volume/Handle/FAT-Mount sind synthetisch gesetzt.
+- BPB-basierte Volume-Felder +0x7c (maximaler Cluster 0x1dbc41) und +0x1d8
+  (Volume-Ende 0x01dc3c00) sind gesetzt. FUN_082014fc (FAT-Extent/FAT-
+  Kettenabfrage) und FAT-Backend bleiben Stubs; deren Prüfung dieser Felder
+  und der reale FAT-Eintrag sind noch nicht belegt.
+- LBA-Rechnung läuft in Originalbytes; untere Blockquelle liefert lokale
+  Kandidatendaten statt Gerätebytes.
+- Kein VFS-Open, kein Gerätetest, kein NAND-/NOR-Schreiben und kein Flash.

@@ -1,0 +1,19 @@
+Raw branch scan: /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin
+size=0x6c43a8 sha256=1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03 base=0x08000000
+Scanned aligned ARM BL/BLX-immediate words and halfword-aligned Thumb-2 BL/BLX-immediate pairs; candidates require exact computed target. Byte patterns may occur in data. This scan cannot detect indirect/computed branches or calls from code outside this image.
+target 0x08000b4e: 0 branch candidate(s)
+target 0x0818ebd8: 6 branch candidate(s)
+  THUMB_BLX source=0x08000b64 raw=f18e e838
+  THUMB_BLX source=0x08000b88 raw=f18e e826
+  THUMB_BLX source=0x08000b98 raw=f18e e81e
+  THUMB_BLX source=0x08000ba8 raw=f18e e816
+  THUMB_BLX source=0x08000bb8 raw=f18e e80e
+  THUMB_BLX source=0x08000bc8 raw=f18e e806
+target 0x0818ecfc: 1 branch candidate(s)
+  THUMB_BL source=0x08183944 raw=f00b f9da
+target 0x0824dc22: 5 branch candidate(s)
+  ARM_BLX source=0x0818ec24 raw=fb02fbfd
+  THUMB_BL source=0x0804fe28 raw=f1fd fefb
+  THUMB_BL source=0x080a2a90 raw=f1ab f8c7
+  THUMB_BL source=0x080b9a2a raw=f194 f8fa
+  THUMB_BL source=0x081e18b0 raw=f06c f9b7

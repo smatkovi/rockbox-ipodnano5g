@@ -1,0 +1,21 @@
+PowerMgmt-BootTask: externer Einstieg (29.10.2026)
+
+Runtime-Abbild: osos_runtime_dram_20261025.bin, VA-Basis 0x08000000,
+Dateigröße 0x6c43a8; abgedeckter Bereich 0x08000000..0x086c43a7.
+
+Der BootTask-Constructor ruft für den Record mit Namen `PowerMgmt` den
+Record-Helper mit Prioritätswert 4 und Entry-Argument `DAT_080140e4` auf.
+Das rohe Wort an 0x080140e4 ist 0x22004fc1 (Thumb-Tag gesetzt). Die Adresse
+0x22004fc0 liegt außerhalb des Runtime-Abbilds; der Task-Code ist in diesem
+Ghidra-Projekt daher nicht enthalten.
+
+Die BootTask-Tabelle wird vor dem späteren MainAppTask-Request verarbeitet.
+Das macht PowerMgmt zu einem plausiblen Besitzer des Wakeup-/Buttonpfads,
+belegt aber nicht, dass er die Routine bei 0x08000b4e registriert/aufruft oder
+dass er vor dem accessories.reg-Parser ausgeführt wird.
+
+Quellen:
+- OSOS_HoldSwitch_task_constructor_forced_range_20261029.log
+- OSOS_HoldSwitch_task_record_consumer_20261029.log
+- OSOS_HoldSwitch_wakeup_button_handler_20261029.log
+- OSOS_HoldSwitch_wakeup_button_handler_refs_20261029.log

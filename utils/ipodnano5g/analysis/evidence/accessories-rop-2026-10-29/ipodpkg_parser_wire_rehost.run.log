@@ -1,0 +1,16 @@
+wrote local candidate: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/candidate_accessories_reg_bssinit_unexecuted.bin
+size: 720 bytes (0x2d0)
+sha256: d9973abc3b223baceaf378a582e2b7acd3fd96b82ef548f40a8f31a4a957ecfa
+status: not executed and not written to a device
+wrote local candidate: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/candidate_accessories_reg_ipodpkg_unexecuted.bin
+size: 720 bytes (0x2d0)
+sha256: 2b8cad2fba9c3c1ff8e1f010ed5d92fcc2c3bd738a4f8418bac8e48cfbc6cbfb
+loader read: /BOOT.BIN, length 0x10f88, destination 0x08fffff8
+raw bootloader body: 0x09000000; candidate remains unexecuted
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/bssinit_parser_wire_rehost.S
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/bssinit_parser_wire_rehost.ld
+base rehost and original candidate were not modified
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/ipodpkg_parser_wire_rehost.S
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/ipodpkg_parser_wire_rehost.ld
+original parser rehost and candidates were not modified
+PASS: original parser reached the packaged loader, restored +0x40, and cleared BSS

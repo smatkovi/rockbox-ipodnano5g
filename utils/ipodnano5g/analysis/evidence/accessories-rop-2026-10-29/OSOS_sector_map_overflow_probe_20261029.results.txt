@@ -1,0 +1,68 @@
+FAT-Cluster-zu-LBA-Wraparound in FUN_0822641e
+Stand: 2026-10-29
+
+Ergebnis
+--------
+Der originale Verzeichnis-Clusterdecoder FUN_08229210 und der originale
+FUN_08158d00-Pfad reichen einen 32-Bit-Clusterwert ungeprüft an
+FUN_0822641e weiter. Der LBA-Mapper schiebt (cluster - 2) um 4 Bits und addiert
+0x7800 mit 32-Bit-Arithmetik. Danach vergleicht er nur, ob das Ergebnis kleiner
+als volume+0x1d8 ist. Ein Überlauf kann dadurch einen kleinen, nichtnulligen
+LBA erzeugen, der diese Prüfung besteht.
+
+Der ARM1176-QEMU-Rehost führte die Originalbytes an 0x08158d00, 0x08229210 und
+0x0822641e aus. Nur der gemountet-Prädikataufruf FUN_08229880 war ein Stub; die
+Volume- und Directory-Entry-Daten waren synthetisch. Alle folgenden Ergebnisse
+wurden von den Originalfunktionen zurückgegeben und durch Assertions geprüft:
+
+  Directory-Cluster    Rückgabe-LBA    Bedeutung
+  2                    0x00007800      erster Datencluster
+  179788               0x002c5ca0      aktueller accessories.reg-Cluster
+  1948737              0x01dc3bf0      letzter Cluster gemäß erfasstem BPB
+  1948738              0                 Mapping-Grenze / LBA == Volume-Ende
+  1                    0                 ungültige Cluster-ID
+  0x0ffff883           0x00000010      Wraparound-Alias vor Datenbereich
+
+BPB-Abgleich
+------------
+Der gespeicherte read-only Snapshot `OSOS_live_fat_slot_read_20261029.txt`
+meldet 4096-Byte-Sektoren, 2 Sektoren pro Cluster, 32 reservierte Sektoren,
+zwei FATs mit je 1904 Sektoren und 3,901,312 Sektoren insgesamt. Daraus folgen
+3,897,472 Daten-Sektoren, 1,948,736 Datencluster und die höchste reguläre
+Cluster-ID 1,948,737 (0x1dbc41). In der OSOS-512-Byte-LBA-Einheit sind
+Data-Start 0x7800, 16 LBAs pro Cluster und Volume-Ende 0x1dc3c00.
+
+Der für den Rehost gesetzte Cluster 0x0ffff883 ist ein syntaktisch regulärer
+28-Bit-FAT32-Wert unterhalb der FAT32-EOC-Marker, liegt aber weit über der
+Clustergrenze dieses Volumes. Die 32-Bit-Rechnung ergibt
+0x7800 + ((0x0ffff883 - 2) << 4) mod 2^32 = 0x10. Da 0x10 < 0x1dc3c00 ist,
+liefert FUN_0822641e diesen Wert statt Fehler.
+
+Erreichbarkeit und Grenzen
+--------------------------
+- FUN_08229210 setzt bei Volume-Typ 8 den Cluster direkt aus den zwei
+  16-Bit-Feldern der FAT-Verzeichniseintragsbytes zusammen; in diesem Pfad
+  erscheinen keine 28-Bit-Maske und keine Prüfung gegen volume+0x7c.
+- FUN_08158d00 ruft bei aktivem Volume zuerst FUN_08229210 und unmittelbar
+  danach FUN_0822641e auf. FUN_08159018 übernimmt jeden nichtnulligen
+  Rückgabewert als Startsektor des Directory-Iterators.
+- Die regulären Extent-/FAT-Kettenhelfer FUN_082014fc und FUN_0814ed8c prüfen
+  Cluster gegen volume+0x7c. Diese Prüfungen schützen den direkten
+  Directory-Startpfad über FUN_08158d00 nicht.
+- FUN_0821959c verwirft nur LBAs ab volume+0x1d8. Damit besteht LBA 0x10
+  seine sichtbare Volume-Grenze. Der komplette Cache-/Blockgerätelauf wurde in
+  diesem Probe nicht ausgeführt.
+- Die QEMU-Ausführung belegt Arithmetik und Funktionsdatenfluss. Sie belegt
+  keinen realen Gerätesektorread, keine Kontrolle über beliebige Bytes in den
+  reservierten Sektoren, keine Speicherbeschädigung und keine Codeausführung.
+
+Der frühere integrierte `...parser_backup_input_lba_rehost...`-Versuch meldete
+`FAIL`, weil sein kontrollierter `FUN_082014fc`-Extent-Stub den Pfad vor dem
+Mapper abkürzte. Dieser negative Lauf prüfte FUN_0822641e nicht; der fokussierte
+Probe hier ruft die echte Decoder-/Mapper-Kette explizit auf.
+
+Nächster statischer Schritt: FUN_08159018 und den Directory-Scanner
+FUN_08158b64 mit einem protokollierenden lokalen Sektorbackend rehosten. Dabei
+ist zu prüfen, ob der Alias-LBA 0x10 bis zum Blockbackend gelangt und welche
+Eintragsbytes der Scanner daraus übernimmt. Weiterhin kein Geräte-, NAND-, NOR-
+oder Flash-Zugriff.

@@ -1,0 +1,70 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+083a7320 <.data+0x3a7320>:
+ 83a7320:	e92d4070 	push	{r4, r5, r6, lr}
+ 83a7324:	e3e05000 	mvn	r5, #0
+ 83a7328:	e59f6048 	ldr	r6, [pc, #72]	@ 0x83a7378
+ 83a732c:	e3a04000 	mov	r4, #0
+ 83a7330:	e0840104 	add	r0, r4, r4, lsl #2
+ 83a7334:	e0860100 	add	r0, r6, r0, lsl #2
+ 83a7338:	e5d0100e 	ldrb	r1, [r0, #14]
+ 83a733c:	e3510000 	cmp	r1, #0
+ 83a7340:	0a000007 	beq	0x83a7364
+ 83a7344:	e3750001 	cmn	r5, #1
+ 83a7348:	0a000004 	beq	0x83a7360
+ 83a734c:	e0851105 	add	r1, r5, r5, lsl #2
+ 83a7350:	e0861101 	add	r1, r6, r1, lsl #2
+ 83a7354:	eb00122f 	bl	0x83abc18
+ 83a7358:	e3700001 	cmn	r0, #1
+ 83a735c:	1a000000 	bne	0x83a7364
+ 83a7360:	e1a05004 	mov	r5, r4
+ 83a7364:	e2844001 	add	r4, r4, #1
+ 83a7368:	e3540005 	cmp	r4, #5
+ 83a736c:	baffffef 	blt	0x83a7330
+ 83a7370:	e1a00005 	mov	r0, r5
+ 83a7374:	e8bd8070 	pop	{r4, r5, r6, pc}
+ 83a7378:	086d9918 	stmdaeq	sp!, {r3, r4, r8, fp, ip, pc}^
+ 83a737c:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 83a7380:	e3a07000 	mov	r7, #0
+ 83a7384:	ebffffe5 	bl	0x83a7320
+ 83a7388:	e3700001 	cmn	r0, #1
+ 83a738c:	e1a04000 	mov	r4, r0
+ 83a7390:	0a00001b 	beq	0x83a7404
+ 83a7394:	e3a00003 	mov	r0, #3
+ 83a7398:	ebf9c465 	bl	0x8218534
+ 83a739c:	e59f0070 	ldr	r0, [pc, #112]	@ 0x83a7414
+ 83a73a0:	e0841104 	add	r1, r4, r4, lsl #2
+ 83a73a4:	e0806101 	add	r6, r0, r1, lsl #2
+ 83a73a8:	e1a01006 	mov	r1, r6
+ 83a73ac:	e3a00001 	mov	r0, #1
+ 83a73b0:	ebff9767 	bl	0x838d154
+ 83a73b4:	e59f105c 	ldr	r1, [pc, #92]	@ 0x83a7418
+ 83a73b8:	e1a00006 	mov	r0, r6
+ 83a73bc:	eb001215 	bl	0x83abc18
+ 83a73c0:	e3500000 	cmp	r0, #0
+ 83a73c4:	03a07001 	moveq	r7, #1
+ 83a73c8:	0a00000a 	beq	0x83a73f8
+ 83a73cc:	e59f5044 	ldr	r5, [pc, #68]	@ 0x83a7418
+ 83a73d0:	e3a0200c 	mov	r2, #12
+ 83a73d4:	e1a01006 	mov	r1, r6
+ 83a73d8:	e2850000 	add	r0, r5, #0
+ 83a73dc:	e5d58007 	ldrb	r8, [r5, #7]
+ 83a73e0:	e5d59006 	ldrb	r9, [r5, #6]
+ 83a73e4:	e5d5a00b 	ldrb	sl, [r5, #11]
+ 83a73e8:	ebf9c449 	bl	0x8218514
+ 83a73ec:	e5c58007 	strb	r8, [r5, #7]
+ 83a73f0:	e5c59006 	strb	r9, [r5, #6]
+ 83a73f4:	e5c5a00b 	strb	sl, [r5, #11]
+ 83a73f8:	ebffffb8 	bl	0x83a72e0
+ 83a73fc:	e3a00003 	mov	r0, #3
+ 83a7400:	ebf9c451 	bl	0x821854c
+ 83a7404:	e59f0010 	ldr	r0, [pc, #16]	@ 0x83a741c
+ 83a7408:	e5804000 	str	r4, [r0]
+ 83a740c:	e1a00007 	mov	r0, r7
+ 83a7410:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 83a7414:	086d9918 	stmdaeq	sp!, {r3, r4, r8, fp, ip, pc}^
+ 83a7418:	086d990c 	stmdaeq	sp!, {r2, r3, r8, fp, ip, pc}^

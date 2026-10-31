@@ -1,0 +1,83 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0835d0d0 <.data+0x35d0d0>:
+ 835d0d0:	faf3118f 	blx	0x8021714
+ 835d0d4:	e28dd008 	add	sp, sp, #8
+ 835d0d8:	ecbd0b11 	fldmiax	sp!, {d0-d7}	@ Deprecated
+ 835d0dc:	e8bd8000 	ldmfd	sp!, {pc}
+ 835d0e0:	e3a01001 	mov	r1, #1
+ 835d0e4:	e3a00003 	mov	r0, #3
+ 835d0e8:	e92d4010 	push	{r4, lr}
+ 835d0ec:	ebfaece8 	bl	0x8218494
+ 835d0f0:	e3a01001 	mov	r1, #1
+ 835d0f4:	e3a00004 	mov	r0, #4
+ 835d0f8:	ebfaece5 	bl	0x8218494
+ 835d0fc:	eb00018b 	bl	0x835d730
+ 835d100:	e3a00003 	mov	r0, #3
+ 835d104:	ebfaed10 	bl	0x821854c
+ 835d108:	e3a00004 	mov	r0, #4
+ 835d10c:	ebfaed08 	bl	0x8218534
+ 835d110:	e59f2040 	ldr	r2, [pc, #64]	@ 0x835d158
+ 835d114:	e3a00000 	mov	r0, #0
+ 835d118:	e1a01000 	mov	r1, r0
+ 835d11c:	e0803100 	add	r3, r0, r0, lsl #2
+ 835d120:	e2800001 	add	r0, r0, #1
+ 835d124:	e0823103 	add	r3, r2, r3, lsl #2
+ 835d128:	e3500005 	cmp	r0, #5
+ 835d12c:	e5c3100e 	strb	r1, [r3, #14]
+ 835d130:	bafffff9 	blt	0x835d11c
+ 835d134:	e3a00004 	mov	r0, #4
+ 835d138:	ebfaed03 	bl	0x821854c
+ 835d13c:	e59f0018 	ldr	r0, [pc, #24]	@ 0x835d15c
+ 835d140:	e5d0000b 	ldrb	r0, [r0, #11]
+ 835d144:	e3100001 	tst	r0, #1
+ 835d148:	18bd4010 	popne	{r4, lr}
+ 835d14c:	13a00000 	movne	r0, #0
+ 835d150:	1a012889 	bne	0x83a737c
+ 835d154:	e8bd8010 	pop	{r4, pc}
+ 835d158:	086d9918 	stmdaeq	sp!, {r3, r4, r8, fp, ip, pc}^
+ 835d15c:	086d990c 	stmdaeq	sp!, {r2, r3, r8, fp, ip, pc}^
+ 835d160:	e59d0004 	ldr	r0, [sp, #4]
+ 835d164:	eafaecd2 	b	0x82184b4
+ 835d168:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 835d16c:	e1a05002 	mov	r5, r2
+ 835d170:	e1a08003 	mov	r8, r3
+ 835d174:	e59d6020 	ldr	r6, [sp, #32]
+ 835d178:	e59d9024 	ldr	r9, [sp, #36]	@ 0x24
+ 835d17c:	e59d7028 	ldr	r7, [sp, #40]	@ 0x28
+ 835d180:	ebfaeccf 	bl	0x82184c4
+ 835d184:	e2904000 	adds	r4, r0, #0
+ 835d188:	13a04001 	movne	r4, #1
+ 835d18c:	e3540000 	cmp	r4, #0
+ 835d190:	0a000020 	beq	0x835d218
+ 835d194:	e1a03009 	mov	r3, r9
+ 835d198:	e1a02006 	mov	r2, r6
+ 835d19c:	e1a01008 	mov	r1, r8
+ 835d1a0:	e1a00005 	mov	r0, r5
+ 835d1a4:	eb00007a 	bl	0x835d394
+ 835d1a8:	e28f1070 	add	r1, pc, #112	@ 0x70
+ 835d1ac:	e3a00004 	mov	r0, #4
+ 835d1b0:	ef123456 	svc	0x00123456
+ 835d1b4:	e28f1068 	add	r1, pc, #104	@ 0x68
+ 835d1b8:	e3a00004 	mov	r0, #4
+ 835d1bc:	ef123456 	svc	0x00123456
+ 835d1c0:	e28f1094 	add	r1, pc, #148	@ 0x94
+ 835d1c4:	e3a00004 	mov	r0, #4
+ 835d1c8:	ef123456 	svc	0x00123456
+ 835d1cc:	e3560009 	cmp	r6, #9
+ 835d1d0:	13c55001 	bicne	r5, r5, #1
+ 835d1d4:	03c75001 	biceq	r5, r7, #1
+ 835d1d8:	e1a00005 	mov	r0, r5
+ 835d1dc:	eb000198 	bl	0x835d844
+ 835d1e0:	e1a01000 	mov	r1, r0
+ 835d1e4:	e3a00004 	mov	r0, #4
+ 835d1e8:	ef123456 	svc	0x00123456
+ 835d1ec:	e28f1084 	add	r1, pc, #132	@ 0x84
+ 835d1f0:	e3a00004 	mov	r0, #4
+ 835d1f4:	ef123456 	svc	0x00123456
+ 835d1f8:	e1a00005 	mov	r0, r5
+ 835d1fc:	eb000190 	bl	0x835d844

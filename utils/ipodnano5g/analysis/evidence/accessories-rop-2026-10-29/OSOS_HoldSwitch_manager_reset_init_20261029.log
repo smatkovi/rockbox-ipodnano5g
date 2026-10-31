@@ -1,0 +1,119 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (614 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1261 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpThumbRange.java '0x0835cc0c' '0x0835cc90' '0x08354ba8' '0x08354c20' '0x083534e8' '0x08353560'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpThumbRange.java (HeadlessAnalyzer)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 0835cc0c [[0835cc0c, 0835cc13]] ===== (GhidraScript)  
+WARN  Decompiling 0835cc0c, pcode error at 0835d0b0: Unable to resolve constructor at 0835d0b0 (DecompileCallback)  
+INFO  DumpThumbRange.java> 
+/* WARNING: Control flow encountered bad instruction data */
+
+void thumb_range_0835cc0c(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 0835cc0c..0835cc90 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 0835cc0c  ands r0,r2 (GhidraScript)  
+INFO  DumpThumbRange.java> 0835cc0e  push {r3,r4,r12,lr,pc} (GhidraScript)  
+INFO  DumpThumbRange.java> 0835cc12  b 0x0835d0b0 (GhidraScript)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 08354ba8 [[08354ba8, 08354bab]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+void thumb_range_08354ba8(int param_1)
+
+{
+  FUN_0835c9ec(param_1 >> 0x20);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 08354ba8..08354c20 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 08354ba8  asrs r0,r0,#0x20 (GhidraScript)  
+INFO  DumpThumbRange.java> 08354baa  b 0x083552ee (GhidraScript)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 083534e8 [[083534e8, 083534ef]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void thumb_range_083534e8(uint param_1,uint param_2,uint param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined4 *unaff_r4;
+  int unaff_r5;
+  undefined4 uVar3;
+  uint unaff_r6;
+  int unaff_r7;
+  uint unaff_r8;
+  uint unaff_r10;
+  undefined4 unaff_r11;
+  uint in_r12;
+  uint in_pc;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_00000018;
+  undefined4 in_stack_0000002c;
+  
+  uVar1 = param_1 & param_3 & (unaff_r6 >> 2 | unaff_r6 << 0x1e) & unaff_r8 & in_pc >> 2;
+  uVar1 = param_2 >> 3 &
+          uVar1 >> 2 & uVar1 & unaff_r5 << 3 & param_2 >> 3 & in_r12 >> 3 & unaff_r5 >> 3;
+  uVar2 = uVar1 & unaff_r7 >> 0x20;
+  _Reset = (uVar1 & unaff_r10) + ((int)unaff_r8 >> 0xc);
+  uVar3 = *unaff_r4;
+  _UndefinedInstruction = uVar2;
+  *unaff_r4 = unaff_r11;
+  FUN_08354e3c(&stack0x0000002c,uVar2,in_stack_00000014,in_stack_00000018);
+  *unaff_r4 = uVar3;
+  FUN_0835cfa0(in_stack_0000002c);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 083534e8..08353560 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 083534e8  ands r0,r2 (GhidraScript)  
+INFO  DumpThumbRange.java> 083534ea  push {lr} (GhidraScript)  
+INFO  DumpThumbRange.java> 083534ee  b 0x08353832 (GhidraScript)  
+INFO  REPORT: Discarding changes to the following read-only file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  

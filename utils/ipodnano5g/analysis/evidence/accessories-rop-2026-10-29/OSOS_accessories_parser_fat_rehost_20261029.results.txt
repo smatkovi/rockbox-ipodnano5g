@@ -1,0 +1,41 @@
+Combined original-parser and stream/provider/FAT rehost (2026-10-29)
+
+Build: clang ARM1176 target, link succeeded.
+Run: qemu-arm -cpu arm1176 -d in_asm,cpu; exit code 0.
+Stdout: PASS\n
+
+Verified trace facts:
+- Original parser FUN_0802c3c4 and original length helper FUN_08039048 execute.
+- Original stream/file/provider/FAT code appears in the trace at
+  FUN_081fd5e8, FUN_0812ac00, FUN_081384b0, FUN_0814346c and FUN_081d7e1a.
+- Parser epilogue returns to gadget 0x08007106. Candidate word 0x08007107
+  at file offset 0x158 maps to parser-frame slot S+0x13c: file offset 0x20
+  is the body start and the body destination is S+4.
+- The loader sentinel checks S+0x13c == 0x08007107, parser cleanup flags,
+  file/handle cursor 0x1fc0 and metadata size 0x1fc0. All checks pass.
+- The gadget sequence reaches the linked sentinel at 0x09000000. The sentinel
+  checks the requested read arguments (buffer S+0x40, length 0x10f80,
+  destination 0x09000000); its read stub returns success without loading bytes.
+
+Model limits:
+- The stream is prepositioned at 0x1c and the token reader injects tag 0x44;
+  the parser does not consume the full wire prefix in this run.
+- File/VFS/FAT metadata and cache state are manually seeded. Cache, cluster
+  extent, FAT-chain/EOC, sector mapping, ATA, open and loader-read services are
+  stubs or synthetic data. Bytes after the 704-byte candidate are modeled as
+  0x41, not read from the iPod.
+- This is a local QEMU control-flow/read-path rehost. It does not establish a
+  device exploit, real cluster-slack disclosure, Rockbox execution, persistent
+  installation or untethered boot. No device or flash operation was performed.
+
+Reproduction, from rb-n5g:
+
+  clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+    -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.ld \
+    -Wl,--build-id=none \
+    -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.elf \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.S
+  qemu-arm -cpu arm1176 -d in_asm,cpu \
+    -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.qemu-trace.log \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.elf \
+    > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_fat_rehost_20261029.stdout.bin

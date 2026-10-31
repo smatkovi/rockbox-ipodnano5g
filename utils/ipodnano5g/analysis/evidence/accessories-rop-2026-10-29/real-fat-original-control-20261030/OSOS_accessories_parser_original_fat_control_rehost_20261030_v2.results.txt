@@ -1,0 +1,46 @@
+# Korrigierter 69-Byte-Kontrolllauf: Ergebnis
+
+## Eingabe
+
+- Quelle: `device-backup-20261024/iPod_Control/Device/accessories.reg`
+- Größe: 69 Byte
+- SHA-256: `b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854`
+- Inhalt: vorhandener harmloser `0x44`-Eintrag mit Länge 9 und String
+  `Pedometer`.
+
+## Rehost-Ergebnis
+
+- ARM1176-QEMU: Exit 0, Ausgabe `PASS\n`.
+- `FUN_082014fc` verarbeitet den read-only erfassten FAT-Sektor an LBA
+  `0x67c` und liefert Extent-Länge 1 für Cluster 179788.
+- `FUN_0822641e` liefert bei Datenstart `0x7800` und Shift 4 die Daten-LBA
+  `0x2c5ca0`.
+- Die lokale Sektorquelle lehnt andere LBAs ab. Insgesamt gibt es drei
+  Sektortransfers: den FAT-Sektor einmal sowie LBA `0x2c5ca0` zweimal. Die
+  Bitmap ist 1, also wird nur ein eindeutiger Dateisektor verwendet; LBA
+  `0x2c5ca1` wird nicht angefordert.
+- Der Parser-Callbackstub wurde einmal aufgerufen, der niedrigere
+  VFS-Open-Zähler blieb null. Das entspricht dem Harness: Stream und Handle
+  sind vor dem direkten Parseraufruf gesetzt.
+- Die Funktion kehrt normal zurück; der Loader-Wrapperzähler bleibt 0.
+- Der Trace zeigt den Originalparser `FUN_0802c3c4`, die Stringverarbeitung,
+  den Cleanup bei `FUN_081ada60` und den normalen Parser-Epilog.
+
+## Korrektur der Kontrollspur
+
+Die unveränderten Runtimebytes von `FUN_081ada60` (Dateioffset `0x1ada60`)
+zeigen: Bei einem gesetzten Member `+4` ruft der Destruktor
+`FUN_0819af00(pointer, 0x34)` auf und setzt anschließend Member `+4` auf
+null. Die vorherige Stubversion erwartete schon vor dem Destruktor einen
+Nullzeiger und löste deshalb ihren eigenen `FAIL`-Pfad aus. Version 2 prüft
+den vorhersehbaren Stubpuffer, löscht das Feld und zählt den Cleanup-Aufruf.
+Sie ersetzt weiterhin die echte Referenzfreigabe.
+
+## Aussagegrenzen
+
+Der Test bestätigt den normalen Parser-/Cleanup-Rückweg und die konkrete
+Datei-LBA im Rehost. Der Parser-Callback läuft, aber ein echter VFS-Open wird
+nicht ausgeführt: Der Aufruf, Volume-/Handlefelder und Stream werden im Harness
+vorbereitet. Die FAT-Bytes sind echt, die Dateidaten kommen aus dem lokalen
+Backup. Es ist kein Laufzeitnachweis auf dem iPod und kein RCE-, Loader-,
+Rockbox- oder untethered-Boot-Nachweis. Nichts wurde auf das Gerät geschrieben.

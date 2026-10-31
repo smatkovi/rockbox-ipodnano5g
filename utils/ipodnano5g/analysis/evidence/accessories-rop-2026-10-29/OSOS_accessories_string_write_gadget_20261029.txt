@@ -1,0 +1,39 @@
+Date: 2026-10-29
+Purpose: verify Thumb entry and stack-string writes used by the accessories.reg ROP candidate.
+
+Input image:
+  ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+  SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+
+Command, run from /home/sebastian/ipod-re/rb-n5g:
+  arm-none-eabi-objdump -D -b binary -marm -M force-thumb \
+    --adjust-vma=0x08000000 --start-address=0x0805b088 \
+    --stop-address=0x0805b0a2 ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+
+Original bytes decoded from the runtime image:
+  0805b088: fdb3 3008  ldc2 0, cr3, [r3, #32]!
+  0805b08c: f13b fdb0  bl 0x08196bf0
+  0805b090: 3884  subs r0, #0x84
+  0805b092: 4601  mov r1, r0
+  0805b094: 3180  adds r1, #0x80
+  0805b096: 60cd  str r5, [r1, #12]
+  0805b098: 740c  strb r4, [r1, #16]
+  0805b09a: bd70  pop {r4, r5, r6, pc}
+
+Address interpretation:
+
+- The planned ROP uses `BLX r3` with `r3=0x0805b093`. The low bit selects
+  Thumb state; execution begins at `0x0805b092`, so it skips the preceding
+  `subs r0,#0x84` at `0x0805b090`.
+- With `r0=P`, the entered sequence sets `r1=P+0x80`, writes `r5` at
+  `P+0x8c`, writes the low byte of `r4` at `P+0x90`, then pops the next
+  registers and PC. For `r5=0x6f6c746f` and `r4=0x61`, the writes encode
+  `otlo` and `a`, as required for `/.rockbox/bootloader.bin` after the
+  prefilled `/.rockbox/bo` prefix.
+- A Thumb entry at `0x0805b091` would execute the subtraction and would instead
+  require `r0=P+0x84`. The older gadget note conflated that full entry with the
+  candidate's `0x0805b093` entry.
+
+This verifies only this gadget's entry address and write offsets. It does not
+verify the complete ROP stack, VFS Open/Read results, payload serialization,
+or a Rockbox handoff.

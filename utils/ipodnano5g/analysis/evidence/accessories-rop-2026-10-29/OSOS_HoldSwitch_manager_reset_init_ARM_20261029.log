@@ -1,0 +1,47 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0835cc00 <.data+0x35cc00>:
+ 835cc00:	e12fff1e 	bx	lr
+ 835cc04:	e3a00000 	mov	r0, #0
+ 835cc08:	e12fff1e 	bx	lr
+ 835cc0c:	e92d4010 	push	{r4, lr}
+ 835cc10:	e24dd018 	sub	sp, sp, #24
+ 835cc14:	fbf30cfd 	blx	0x8020012
+ 835cc18:	faf30e19 	blx	0x8020484
+ 835cc1c:	faf30b1f 	blx	0x801f8a0
+ 835cc20:	e3a01003 	mov	r1, #3
+ 835cc24:	e3a00f96 	mov	r0, #600	@ 0x258
+ 835cc28:	faf30d36 	blx	0x8020108
+ 835cc2c:	faf30ee5 	blx	0x80207c8
+ 835cc30:	e3a00f7d 	mov	r0, #500	@ 0x1f4
+ 835cc34:	faf30f33 	blx	0x8020908
+ 835cc38:	e3a000c8 	mov	r0, #200	@ 0xc8
+ 835cc3c:	faf30f2e 	blx	0x80208fc
+ 835cc40:	e59f4030 	ldr	r4, [pc, #48]	@ 0x835cc78
+ 835cc44:	e3a02000 	mov	r2, #0
+ 835cc48:	e1a01002 	mov	r1, r2
+ 835cc4c:	e28d0008 	add	r0, sp, #8
+ 835cc50:	e1d431f4 	ldrsh	r3, [r4, #20]
+ 835cc54:	e58d3000 	str	r3, [sp]
+ 835cc58:	e1d431f6 	ldrsh	r3, [r4, #22]
+ 835cc5c:	fafc79fb 	blx	0x827b450
+ 835cc60:	e28d1008 	add	r1, sp, #8
+ 835cc64:	e2840020 	add	r0, r4, #32
+ 835cc68:	faf30dd6 	blx	0x80203c8
+ 835cc6c:	eb00011b 	bl	0x835d0e0
+ 835cc70:	e28dd018 	add	sp, sp, #24
+ 835cc74:	e8bd8010 	pop	{r4, pc}
+ 835cc78:	08830b9c 	stmeq	r3, {r2, r3, r4, r7, r8, r9, fp}
+ 835cc7c:	e200000f 	and	r0, r0, #15
+ 835cc80:	e08ff200 	add	pc, pc, r0, lsl #4
+ 835cc84:	e1a00000 	nop			@ (mov r0, r0)
+ 835cc88:	ee301b10 	vmov.32	r1, d0[1]
+ 835cc8c:	ee100b10 	vmov.32	r0, d0[0]
+ 835cc90:	e12fff1e 	bx	lr
+ 835cc94:	e1a00000 	nop			@ (mov r0, r0)
+ 835cc98:	ee311b10 	vmov.32	r1, d1[1]
+ 835cc9c:	ee110b10 	vmov.32	r0, d1[0]

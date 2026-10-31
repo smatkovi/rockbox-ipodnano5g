@@ -1,0 +1,14 @@
+Read-only capture of FAT32 allocation entries for accessories.reg
+date=2026-10-30
+device_by_id=usb-Apple_iPod_000A27001E9B0F77-0:0-part1
+partition_read=O_RDONLY; no mount; no partition writes; no USB/DFU query
+bpb_first_4096_sha256=2b7d996b74e031264e4272ece1fd67e3b4e3314b7855ee42bc861181e68cf3eb
+bytes_per_sector=4096 sectors_per_cluster=2 reserved_sectors=32
+fat_count=2 fat_size_sectors=1904 total_sectors=3901312 extflags=0x0000 root_cluster=2
+data_start_lba_512=0x7800 blocks_per_cluster_512=16 max_cluster=0x1dbc41
+fat_mirrored=true active_copy=all mirrored copies
+cluster=179788 entry_byte_offset=0x130 sector_index_in_each_fat=0x57c
+copy0_fat_base_lba=0x100 entry_lba=0x67c raw=0x0fffffff masked=0xfffffff
+copy0_sector_sha256=3d8e64debc6be2debd552dc75172c0ea037a37439e8edc862fa5ca28c4493dde file=OSOS_accessories_FAT_cluster_179788_copy0_lba_0000067c_20261030.bin
+copy1_fat_base_lba=0x3c80 entry_lba=0x41fc raw=0x0fffffff masked=0xfffffff
+copy1_sector_sha256=3d8e64debc6be2debd552dc75172c0ea037a37439e8edc862fa5ca28c4493dde file=OSOS_accessories_FAT_cluster_179788_copy1_lba_000041fc_20261030.bin

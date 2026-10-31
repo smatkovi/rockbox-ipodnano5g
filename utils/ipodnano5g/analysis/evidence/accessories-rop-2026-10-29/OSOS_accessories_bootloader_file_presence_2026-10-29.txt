@@ -1,0 +1,39 @@
+Loader-Datei und Pfad im gespeicherten Volume-Zustand — 2026-10-29
+
+Read-only Belege
+----------------
+`../lfn-resolution-2026-10-28/OSOS_live_fat_slot_read_20261029.txt` wurde am
+2026-10-29 aus `/dev/sdb1` aufgenommen. Der Root-Datensatz beginnt bei Cluster
+2 / Sektor 3840; Slot 23 ist der FAT-Endrecord. Die Einträge enthalten
+`iPod_Control`, `DCIM`, weitere Systemverzeichnisse und `.rockbox`, aber kein
+`BOOT.BIN`. Raw-Sektordigest des Root-Clusters:
+`8f7590e24e0ce7831fc937fa6174740113084ec67365cefc870b102484020fda`.
+
+Die gespeicherte `vfat_dir_ioctl`-Liste
+`../lfn-resolution-2026-10-28/OSOS_live_vfat_dir_ioctl_20261026.txt` zeigt im
+Verzeichnis `.rockbox` unter anderem `rockbox.ipod` und `n5g-ramdisk.img`; ein
+`bootloader.bin` ist nicht gelistet. Diese Liste ist vom 2026-10-26.
+
+Kandidat und offene Pfadfrage
+----------------------------
+Der aktuelle lokale Parser-/ROP-Kandidat öffnet synthetisch einen String
+`/BOOT.BIN`; die Testharness prüft die Stackadresse/Arguments, nicht den
+realen VFS-Pfad. Ein älterer Gadget-Bericht beschreibt
+`/.rockbox/bootloader.bin`. Die VFS-Pfadauflösung des Kandidaten wurde nicht
+ausgeführt. Der tatsächliche Gerätepfad bleibt deshalb offen.
+
+Das Host-Image
+`build-n5g-blramdisk/bootloader.bin` ist 69.504 Byte (`0x10f80`), SHA-256
+`09b2dc3ff4940855b175508ce817c5f913798f3d7b2ba7669edef3427e224d03`. Es ist
+lokal vorhanden; die gespeicherten Verzeichnislisten zeigen es nicht auf dem
+Volume. Ebenso ist die dort erfasste `accessories.reg` die normale 69-Byte-
+Datei, nicht einer der lokalen ROP-Kandidaten. Die Befunde sagen nichts über
+Änderungen nach den Capture-Zeitpunkten aus.
+
+Konsequenz
+----------
+Ein erfolgreicher synthetischer Loader-Read setzt voraus, dass der vollständige
+`0x10f80`-Byte-Blob am tatsächlich aufgelösten Pfad lesbar ist. Vor einem
+Gerätetest müssen der aufgelöste Pfad und eine passende Datei geklärt werden.
+Diese Prüfung verwendete ausschließlich gespeicherte Belege; es gab keinen
+aktuellen Geräte-, USB-, DFU- oder Flash-Zugriff.

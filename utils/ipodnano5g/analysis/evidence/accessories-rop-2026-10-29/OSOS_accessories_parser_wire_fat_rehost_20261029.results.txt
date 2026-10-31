@@ -1,0 +1,49 @@
+Original wire parser plus stream/provider/FAT rehost (2026-10-29)
+
+Build: clang ARM1176 target, link succeeded.
+Run: qemu-arm -cpu arm1176 -d in_asm,cpu; exit code 0.
+Stdout: PASS\n
+
+Verified trace facts:
+- Original FUN_0802c3c4, token reader FUN_0826dd26, container/integer
+  readers, length helper FUN_08039048 and buffered stream functions execute.
+- The original token reader reads from stream position zero; the outer
+  candidate prefix is no longer bypassed and tag 0x44 is not injected.
+- At FUN_08039048, max_length is 0x100. Its following exact-read receives the
+  candidate length 0xfffffff0 from file offset 0x1c.
+- Original stream/file/provider/FAT functions appear in the trace at
+  FUN_081fd5e8, FUN_0812ac00, FUN_081384b0, FUN_0814346c and FUN_081d7e1a.
+  The parser exits through the EOF status 5 cleanup path.
+- Candidate word 0x08007107 at file offset 0x158 maps to saved-PC slot
+  S+0x13c (body offset 0x138, body starts at file offset 0x20 and dest S+4).
+  The epilogue returns to Thumb gadget 0x08007106; a loader-sentinel assertion
+  independently confirms S+0x13c still contains 0x08007107.
+- The original gadget sequence reaches 0x09000000. Sentinel checks pass for
+  loader read arguments (buffer S+0x40, length 0x10f80, target 0x09000000),
+  parser cleanup, outer stream position 0x2c0 and file/handle/metadata cursor
+  0x1fc0.
+
+Model limits:
+- The 704-byte input is the local wrapped candidate. Compared with
+  candidate_accessories_reg_unexecuted.bin, only the four length bytes at
+  offset 0x1c differ (0x00000284 becomes 0xfffffff0).
+- The parser's outer wire prefix now runs through original parser/token and
+  stream code. However, registry VFS open, FAT metadata, cache/cluster extent,
+  FAT-chain/EOC, sector mapping and ATA state are manually seeded or stubbed.
+  Bytes after the 704-byte input are synthetic 0x41 cache data. The loader-read
+  stub returns success without copying the local bootloader.
+- No hardware exploit, real cluster-slack read, Rockbox execution, persistent
+  installation or untethered boot is demonstrated. No device or flash access
+  occurred.
+
+Reproduction, from rb-n5g:
+
+  clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+    -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.ld \
+    -Wl,--build-id=none \
+    -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.elf \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.S
+  qemu-arm -cpu arm1176 -d in_asm,cpu \
+    -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.qemu-trace.log \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.elf \
+    > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_wire_fat_rehost_20261029.stdout.bin

@@ -1,0 +1,829 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (664 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1272 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpThumbRange.java '0x080d43c0' '0x080d45b0' '0x080d4920' '0x080d49b0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpThumbRange.java (HeadlessAnalyzer)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 080d43c0 [[080d41c2, 080d41cd] [080d43c0, 080d43c7]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+void thumb_range_080d43c0(void)
+
+{
+  FUN_08215024();
+  do {
+    FUN_080d532c();
+    FUN_080ed128();
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 080d43c0..080d45b0 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 080d43c0  mov r0,r6 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d43c2  bl 0x08215024 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d43c6  b 0x080d41c2 (GhidraScript)  
+INFO  DumpThumbRange.java> ===== DECOMPILE 080d4920 [[080d41e6, 080d41e7] [080d41fe, 080d41ff] [080d4216, 080d4217] [080d422e, 080d422f] [080d4246, 080d4247] [080d425e, 080d425f] [080d428e, 080d428f] [080d42a6, 080d42a7] [080d42be, 080d42bf] [080d42d6, 080d42d7] [080d42ee, 080d42ef] [080d42fc, 080d4307] [080d4314, 080d431f] [080d432c, 080d4337] [080d4344, 080d434f] [080d4920, 080d4cfb] [080d5088, 080d532b] [080d5330, 080d5333]] ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 
+undefined4 thumb_range_080d4920(int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 unaff_r4;
+  int iVar3;
+  int unaff_r5;
+  int iVar4;
+  int unaff_r6;
+  int iVar5;
+  int iVar6;
+  int in_lr;
+  bool bVar7;
+  
+  *(int *)(param_2 + 0x14) = param_1;
+  *(int *)(unaff_r5 + 0x44) = unaff_r6;
+  *(undefined4 *)(unaff_r5 + 0x54) = unaff_r4;
+  *(int *)(param_3 + 0x54) = param_3;
+  iVar4 = *(int *)(unaff_r5 + 0x74);
+  *(undefined4 *)(unaff_r6 + 0x54) = unaff_r4;
+  iVar3 = *(int *)(param_1 + 0x74);
+  iVar6 = *(int *)(unaff_r6 + 100);
+  *(char *)(param_1 + 9) = (char)param_2;
+  uVar2 = *(undefined4 *)(unaff_r6 + 0x74);
+  iVar6 = iVar6 + in_lr;
+  *(char *)(iVar4 + 0x1d) = (char)iVar6;
+  iVar5 = iVar4 << 1;
+  iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleRemoteDownArrowUp_080d4cfc,uVar2);
+  if (iVar1 == 0) {
+    if (iVar3 == iVar4) {
+LAB_080d50c2:
+      uVar2 = FUN_080d532c();
+      return uVar2;
+    }
+    FUN_080ed430(iVar5);
+  }
+  else {
+    iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleRemoteEvent_080d4d14);
+    if (iVar1 != 0) {
+      iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleRemoteBacklightOff_080d4d28);
+      if (iVar1 == 0) {
+        if (iVar3 != iVar4) {
+          FUN_080ed44c(iVar5);
+        }
+      }
+      else {
+        iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPlayPause_080d4d44);
+        if (iVar1 == 0) {
+          if (iVar3 != iVar4) {
+            FUN_08211c54(iVar5);
+          }
+        }
+        else {
+          iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioNext_080d4d5c);
+          if (iVar1 == 0) {
+            if (iVar3 != iVar4) {
+              FUN_080ec6e4(iVar5);
+            }
+          }
+          else {
+            iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioNextPressAndHold_080d4d6c);
+            if (iVar1 == 0) {
+              if (iVar3 != iVar4) {
+                FUN_080ed4aa(iVar5);
+              }
+            }
+            else {
+              iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPrevious_080d4d88);
+              if (iVar1 == 0) {
+                if (iVar3 != iVar4) {
+                  FUN_080ecfd6(iVar5);
+                }
+              }
+              else {
+                iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPreviousPressAndHold_080d4d9c);
+                if (iVar1 == 0) {
+                  if (iVar3 != iVar4) {
+                    FUN_080ed658(iVar5);
+                  }
+                }
+                else {
+                  iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioNextAlbum_080d4dbc);
+                  if (iVar1 == 0) {
+                    if (iVar3 != iVar4) {
+                      FUN_080ed0a2(iVar5);
+                    }
+                  }
+                  else {
+                    iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPrevAlbum_080d4dd4);
+                    if (iVar1 == 0) {
+                      if (iVar3 != iVar4) {
+                        FUN_080ed0c6(iVar5);
+                      }
+                    }
+                    else {
+                      iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioVolumeDown_080d4dec);
+                      if (iVar1 == 0) {
+                        if (iVar3 != iVar4) {
+                          FUN_080ed32a(iVar5);
+                        }
+                      }
+                      else {
+                        iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioVolumeUp_080d4e04);
+                        if (iVar1 == 0) {
+                          if (iVar3 != iVar4) {
+                            FUN_080ed106(iVar5);
+                          }
+                        }
+                        else {
+                          iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioVolumeDownUp_080d4e18);
+                          if (iVar1 == 0) {
+                            if (iVar3 != iVar4) {
+                              FUN_082150dc(iVar5);
+                            }
+                          }
+                          else {
+                            iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioVolumeUpUp_080d4e30);
+                            if (iVar1 == 0) {
+                              if (iVar3 != iVar4) {
+                                FUN_08213eba(iVar5);
+                              }
+                            }
+                            else {
+                              iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioStop_080d4e48);
+                              if (iVar1 == 0) {
+                                if (iVar3 != iVar4) {
+                                  FUN_080ec766(iVar5);
+                                }
+                              }
+                              else {
+                                iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPlay_080d4e58);
+                                if (iVar1 == 0) {
+                                  if (iVar3 != iVar4) {
+                                    FUN_080ec72e(iVar5);
+                                  }
+                                }
+                                else {
+                                  iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioPause_080d4e68);
+                                  if (iVar1 == 0) {
+                                    if (iVar3 != iVar4) {
+                                      FUN_080ec8a0(iVar5);
+                                    }
+                                  }
+                                  else {
+                                    iVar1 = thunk_FUN_0818edaa(iVar6,s_HandleAudioMute_080d4e7c);
+                                    if (iVar1 == 0) {
+                                      if (iVar3 != iVar4) {
+                                        FUN_080ec6c0(iVar5);
+                                      }
+                                    }
+                                    else {
+                                      iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioNextChapter_080d4e8c);
+                                      if (iVar1 == 0) {
+                                        if (iVar3 != iVar4) {
+                                          FUN_080ed2d4(iVar5);
+                                        }
+                                      }
+                                      else {
+                                        iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioPrevChapter_080d4ea4);
+                                        if (iVar1 == 0) {
+                                          if (iVar3 != iVar4) {
+                                            FUN_080ed2f8(iVar5);
+                                          }
+                                        }
+                                        else {
+                                          iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioNextPlaylist_080d4ebc);
+                                          if (iVar1 == 0) {
+                                            if (iVar3 != iVar4) {
+                                              FUN_080ed394(iVar5);
+                                            }
+                                          }
+                                          else {
+                                            iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioPrevPlaylist_080d4ed4);
+                                            if (iVar1 == 0) {
+                                              if (iVar3 != iVar4) {
+                                                FUN_080ed3b8(iVar5);
+                                              }
+                                            }
+                                            else {
+                                              iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioShuffle_080d4eec);
+                                              if (iVar1 == 0) {
+                                                if (iVar3 != iVar4) {
+                                                  FUN_080eceec(iVar5);
+LAB_080d4b30:
+                                                  uVar2 = FUN_080d532c();
+                                                  return uVar2;
+                                                }
+                                              }
+                                              else {
+                                                iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioRepeat_080d4f00);
+                                                if (iVar1 == 0) {
+                                                  if (iVar3 != iVar4) {
+                                                    FUN_080ecc64(iVar5);
+LAB_080d4b48:
+                                                    uVar2 = FUN_080d532c();
+                                                    return uVar2;
+                                                  }
+                                                }
+                                                else {
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioFFDown_080d4f14);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecc40(iVar5);
+LAB_080d4b60:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioFFUp_080d4f28);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec69c(iVar5);
+LAB_080d4b78:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioRewDown_080d4f38);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecec8(iVar5);
+LAB_080d4b90:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleAudioRewUp_080d4f4c);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec8c4(iVar5);
+LAB_080d4ba8:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPlayPause_080d4f60);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_082116e0(iVar5);
+LAB_080d4bc0:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoNext_080d4f78);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec7fa(iVar5);
+LAB_080d4bd8:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoNextPressAndHold_080d4f88);
+                                                  if (iVar1 != 0) {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPrevious_080d4fa4);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 == iVar4) goto LAB_080d41c2;
+                                                    FUN_080ed058(iVar5);
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPreviousPressAndHold_080d4fb8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed760(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4b30;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoStop_080d4fd8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec87c(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4b48;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPlay_080d4fe8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec844(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4b60;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPause_080d4ff8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080eca50(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4b78;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoFFDown_080d500c);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080eccfc(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4b90;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoFFUp_080d5020);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec7d6(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4ba8;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoRewDown_080d5030);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecfb2(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4bc0;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoRewUp_080d5044);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080eca74(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4bd8;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoNextChapter_080d5058);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed34c(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d4bf0;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPrevChapter_080d5070);
+                                                  if (iVar1 != 0) {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoNextFrame_080d5334);
+                                                  bVar7 = iVar1 == 0;
+                                                  do {
+                                                    do {
+                                                      do {
+                                                        if (bVar7) goto LAB_080d50c2;
+                                                        iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoPrevFrame_080d534c);
+                                                  bVar7 = true;
+                                                  } while (iVar1 == 0);
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVideoCaptionAdvance_080d5364);
+                                                  bVar7 = true;
+                                                  } while (iVar1 == 0);
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleShuffleSongsSelected_080d5380);
+                                                  if (iVar1 != 0) {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleShakeShuffleSongsSelected_080d539c);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed684(iVar5);
+LAB_080d50da:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleGlobalVolume_080d53bc);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecf28(iVar5,iVar3);
+LAB_080d50f4:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleSimulateOrientationChange_080d53d0);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed714(iVar5);
+LAB_080d510c:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenter_080d53f0);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecc88(iVar5);
+LAB_080d5124:
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterPressAndHold_080d5404);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 == iVar4) goto LAB_080d50c2;
+                                                    FUN_080ed628(iVar5);
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterReleased_080d5424);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed458(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterDoubleClick_080d5440);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed580(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterDoubleClickAndH_080d5460);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed7b4(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterTripleClick_080d5484);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed5d4(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyCenterTripleClickAndH_080d54a4);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed7ec(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50c2;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyAllUp_080d54c8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec8e8(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50da;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyVolumeUp_080d54dc);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed020(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d50f4;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyVolumeUpUp_080d54f0);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed18c(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d510c;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyVolumeDown_080d5508);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed154(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                    goto LAB_080d5124;
+                                                  }
+                                                  iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleMikeyVolumeDownUp_080d5520);
+                                                  if (iVar1 != 0) {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceOverPlaylistSelected_080d5538);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed78e(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceOverPodcastSelected_080d5558);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed64c(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceOverAudiobookSelected_080d5578);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ed79a(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleRadioTagUp_080d559c);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ec92c(iVar5);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceCommand_080d55b0);
+                                                  if (iVar1 != 0) {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceArtist_080d55c4);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080ecd20(iVar5,iVar3);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleVoiceAlbum_080d55d8);
+                                                  if (iVar1 == 0) {
+                                                    if (iVar3 != iVar4) {
+                                                      FUN_080eca98(iVar5,iVar3);
+                                                      uVar2 = FUN_080d532c();
+                                                      return uVar2;
+                                                    }
+                                                  }
+                                                  else {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRMenuUp_080d55ec);
+                                                  if ((((iVar1 != 0) &&
+                                                       (iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRPlayPauseUp_080d5600), iVar1 != 0))
+                                                  && (iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRNextUp_080d5618), iVar1 != 0)) &&
+                                                  (((iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRPrevUp_080d562c), iVar1 != 0 &&
+                                                  (iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRVolumeDownUp_080d5640), iVar1 != 0))
+                                                  && (iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleNECIRVolumeUpUp_080d5658), iVar1 != 0))))
+                                                  {
+                                                    iVar1 = thunk_FUN_0818edaa(iVar6,
+                                                  s_HandleCameraRemote_080d5670);
+                                                  if (iVar1 != 0) {
+                                                    return 0;
+                                                  }
+                                                  if (iVar3 != iVar4) {
+                                                    FUN_080ecf10(iVar5);
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  return 1;
+                                                  }
+                                                  if (iVar3 != iVar4) {
+                                                    FUN_080ed3dc(iVar5);
+                                                    uVar2 = FUN_080d532c();
+                                                    return uVar2;
+                                                  }
+                                                  }
+                                                  uVar2 = FUN_080d532c();
+                                                  return uVar2;
+                                                  }
+                                                  bVar7 = true;
+                                                  } while (iVar3 == iVar4);
+                                                  FUN_08213244(iVar5);
+                                                  goto LAB_080d50c2;
+                                                  }
+                                                  if (iVar3 != iVar4) {
+                                                    FUN_080ed370(iVar5);
+                                                    uVar2 = FUN_080d532c();
+                                                    return uVar2;
+                                                  }
+                                                  }
+                                                  uVar2 = FUN_080d532c();
+                                                  return uVar2;
+                                                  }
+                                                  if (iVar3 != iVar4) {
+                                                    FUN_080ed550(iVar5);
+LAB_080d4bf0:
+                                                    uVar2 = FUN_080d532c();
+                                                    return uVar2;
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+LAB_080d41c2:
+  do {
+    FUN_080d532c();
+    FUN_080ed128(iVar5);
+  } while( true );
+}
+
+ (GhidraScript)  
+INFO  DumpThumbRange.java> ===== LISTING 080d4920..080d49b0 ===== (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4920  str r0,[r1,#0x14] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4922  str r6,[r5,#0x44] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4924  str r4,[r5,#0x54] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4926  str r2,[r2,#0x54] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4928  ldr r5,[r5,#0x74] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d492a  str r4,[r6,#0x54] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d492c  ldr r4,[r0,#0x74] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d492e  ldr r7,[r6,#0x64] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4930  strb r1,[r0,#0x9] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4932  ldr r2,[r6,#0x74] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4934  add r7,lr (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4936  strb r7,[r5,#0x1d] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4938  lsls r6,r5,#0x1 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d493a  movs r0,r0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d493c  adr r1,[0x80d4cfc] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d493e  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4940  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4944  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4946  bne 0x080d4954 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4948  cmp r4,r5 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d494a  beq 0x080d4a2e (GhidraScript)  
+INFO  DumpThumbRange.java> 080d494c  mov r0,r6 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d494e  bl 0x080ed430 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4952  b 0x080d41c2 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4954  adr r1,[0x80d4d14] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4956  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4958  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d495c  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d495e  beq 0x080d4952 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4960  adr r1,[0x80d4d28] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4962  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4964  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4968  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d496a  bne 0x080d4978 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d496c  cmp r4,r5 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d496e  beq 0x080d4952 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4970  mov r0,r6 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4972  bl 0x080ed44c (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4976  b 0x080d41c2 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4978  adr r1,[0x80d4d44] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d497a  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d497c  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4980  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4982  bne 0x080d4990 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4984  cmp r4,r5 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4986  beq 0x080d4952 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4988  mov r0,r6 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d498a  bl 0x08211c54 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d498e  b 0x080d41c2 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4990  adr r1,[0x80d4d5c] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4992  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4994  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d4998  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d499a  bne 0x080d49a8 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d499c  cmp r4,r5 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d499e  beq 0x080d4952 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49a0  mov r0,r6 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49a2  bl 0x080ec6e4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49a6  b 0x080d41c2 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49a8  adr r1,[0x80d4d6c] (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49aa  mov r0,r7 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49ac  bl 0x0818eda4 (GhidraScript)  
+INFO  DumpThumbRange.java> 080d49b0  cmp r0,#0x0 (GhidraScript)  
+INFO  REPORT: Discarding changes to the following read-only file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  

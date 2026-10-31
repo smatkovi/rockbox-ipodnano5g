@@ -1,0 +1,43 @@
+Offline-Rehost des Originalparsers mit dem harmlosen Backup-Inhalt
+==================================================================
+
+Eingabe
+-------
+
+Quelle: /home/sebastian/ipod-re/device-backup-20261024/iPod_Control/Device/accessories.reg
+Größe: 69 Byte
+SHA-256: b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854
+Inhalt: normaler 0x44-Eintrag mit Länge 9 und String "Pedometer".
+
+Lauf
+----
+
+Die QEMU-ARM1176-Ausgabe ist `PASS\n`, Exitstatus 0. Der Rehost bindet die
+69 Eingabebytes direkt ein und führt `FUN_0802c3c4` sowie Originalteile des
+Stream-, Datei-, FAT-, Cluster- und Cachepfads aus. Der Trace enthält unter
+anderem Einstiege bei `0x0802c3c4`, `0x08039048`, `0x0826dd26`, `0x0820cc90`,
+`0x0812ac00`, `0x0814346c`, `0x081d7e1a`, `0x0821959c`, `0x082192c4`,
+`0x08219258`, `0x08219310`, `0x082195ee`, `0x08196ac6`, `0x0818eb44` und
+`0x0818eb5c`.
+
+Die Assertions bestätigen den Parser-Open, den Close-Aufruf, mindestens einen
+modellierten lokalen Sektortransfer und das erste Eingabewort `0x40000029`.
+Der Loader-Read-Stub und der Loader-Wrapper werden im normalen Backup-Lauf
+nicht erreicht. Der Datensatz führt damit im Modell durch den String-/Parser-
+Pfad, aber nicht in den Loader-Handoff.
+
+Grenzen
+-------
+
+Der Test beweist nicht, dass der automatische MainApp-Open auf einem Gerät
+erfolgreich ist. VFS-Open `FUN_082721f0`, Parserobjekt-/Stringallokation,
+Parsercallback, Close/Destruktor sowie mehrere Cache-/Gerätebereitschafts-
+übergänge sind Stubs oder manuell gesetzter Zustand. Die lokale Sektorquelle
+ordnet den ersten angeforderten LBA auf Offset null der eingebetteten Datei
+ab; sie prüft nicht, ob der Runtime-Code tatsächlich LBA `0x2c5ca0`
+angefordert hat. Das ist ein Kontrolllauf mit dem bekannten harmlosen Inhalt,
+kein Exploit-, Geräte-, Rockbox- oder Flashnachweis.
+
+Reproduktion und vollständige Stub-/Layoutdetails stehen in der `.S`-, `.ld`-
+und `.qemu-trace.log`-Datei desselben Verzeichnisses. Es gab keinen USB-/DFU-
+Zugriff und keine NAND-/NOR-/Dateisystem-Schreib- oder Flashaktion.

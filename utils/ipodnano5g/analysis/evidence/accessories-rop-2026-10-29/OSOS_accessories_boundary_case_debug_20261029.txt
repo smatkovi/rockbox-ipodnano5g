@@ -1,0 +1,49 @@
+Boundary-Rehost-Diagnose (29.10.2026)
+====================================
+
+Lokal, QEMU ARM1176; kein Zugriff auf iPod, USB, DFU, NAND, NOR oder Flash.
+
+Der gemeinsame Provider-/FAT-Rehost wurde nach Korrektur seiner Dirty-Feld-
+Assertion neu gebaut und ausgeführt. `run.log` meldet PASS.
+
+GDB hielt am Eintritt von FUN_0814346c im letzten Kontrollaufruf an. Der
+Breakpoint war nach 33 vorangegangenen Core-Aufrufen ignoriert worden. Zustand:
+
+  r0                    = 0x08e580a4 (fat_handle)
+  r1                    = 0x08e58528 (read_buffer)
+  r2                    = 0x00000100 (Requestlänge)
+  handle_entry          = 0x08e580a8
+  handle_entry + 0x08   = 0x00001fc0 (Cursor)
+  file_metadata + 0x1c  = 0x00001fc0 (Dateigröße)
+  volume_context+0x68   = 0x00001fff (Clusterbyte-Maske)
+
+Der gemeinsame Test startet somit mit den vorgesehenen Cursor-/Größenwerten.
+Sein QEMU-Trace enthält keinen Aufruf von FUN_0814ed8c; dennoch meldet der
+Provider 0x100 Bytes und der Test beobachtet danach Cursor 0xc0 sowie Dateigröße
+0x1fc0. Ein bedingter Breakpoint in der Core-Schleife für Cursor 0x2000 bei
+Dateigröße 0x1fc0 wurde nicht erreicht. Warum der Lauf den EOC-Pfad vermeidet,
+ist noch nicht erklärt.
+
+Ein zusätzlicher GDB-Stopp direkt nach dem ersten 64-Byte-Sektorread zeigte:
+
+  PC                    = 0x08143622 (Cursor-Update ist erfolgt)
+  handle_entry + 0x08   = 0x00002000
+  file_metadata + 0x1c  = 0x00001fc0
+  stack-locales Ende    = 0x00002000
+  verbleibende Bytes    = 0x000000c0
+  gemeldete Clusterzahl = 1
+
+Damit ist unmittelbar vor der Clustergrenzenbehandlung die Cursor-/End-
+Gleichheit im Kontrolllauf bestätigt. Der spätere Übergang zurück zum Mapping-
+Pfad statt zum beobachteten EOC-Stub ist noch nicht kausal erklärt.
+
+Der getrennte FAT-Core-Rehost startet in einem frischen Prozess, verwendet
+einen Stub als Ersatz für FUN_081d7e1a und erreicht bei seinem 30. Read den
+EOC-Stub. Er meldet 7488 kopierte Slackbytes. Die beiden Ergebnisse bleiben
+unvereinbar, solange der gemeinsame Rehost nicht pro Szenario mit vollständig
+initialisiertem Handle-/Mapping-/Cachezustand isoliert wurde. Kein Overread des
+Geräts und keine persistente Dateimetadatenänderung sind hiermit belegt.
+
+Reproduktion des GDB-Stoppzustands: Der gemeinsame ELF wurde mit dem
+ARM1176-Linkerskript gebaut und unter `qemu-arm -cpu arm1176 -g PORT` gestartet;
+GDB setzte einen Breakpoint auf `0x0814346c` und ignorierte 33 Treffer.

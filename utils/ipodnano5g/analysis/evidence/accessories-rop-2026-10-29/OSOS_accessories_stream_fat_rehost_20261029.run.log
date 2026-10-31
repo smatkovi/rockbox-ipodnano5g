@@ -1,0 +1,6 @@
+PASS
+Exit code: 0
+Target CPU: ARM1176 (qemu-arm)
+Executed original FUN_08039048, FUN_08268c3a, FUN_081b832e, FUN_0820cc90, FUN_0823c9c0, FUN_082a2c48, FUN_0819887c, FUN_081fd5e8, FUN_0812ac00, FUN_081384b0, FUN_0814346c, and FUN_081d7e1a.
+The stream cache/file position are manually primed at offset 0x1c / EOF 0x2c0; VFS open, cache lookup, sector mapping, FAT chain, ATA read, and the external memcpy veneer use documented stubs.
+See OSOS_accessories_stream_fat_rehost_20261029.results.txt for decoded output and scope.

@@ -1,0 +1,257 @@
+Runtime image: ../local-analysis/inputs/osos_runtime_dram_20261025.bin
+Runtime SHA-256: 1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+Base VA: 0x08000000
+Purpose: account for the candidate ROP stack from the second stack-relative
+stage, through stream open/read, to the existing Rockbox loader entry.
+This is static arithmetic over original instructions, not a serialized or
+executed payload.
+
+## Decisive original instructions
+
+ 800396c: 4668       mov r0, sp
+ 800396e: f18d f8a2  bl 0x8190ab6
+ 8003972: bd7c       pop {r2, r3, r4, r5, r6, pc}
+ 8190ab6: 4770       bx lr
+
+ 8262d52: 388c       subs r0, #0x8c
+ 8262d54: bd70       pop {r4, r5, r6, pc}
+
+ 81df4be: 4620       mov r0, r4
+ 81df4c0: 3828       subs r0, #0x28
+ 81df4c2: bd3e       pop {r1, r2, r3, r4, r5, pc}
+
+ 80f8a32: 3818       subs r0, #0x18
+ 80f8a34: bd00       pop {pc}
+
+ 818a910: 4601       mov r1, r0
+ 818a912: 4770       bx lr
+
+ 8030cbc: 4798       blx r3
+ 8030cbe: bd38       pop {r3, r4, r5, pc}
+
+ 82721f0: b5f8       push {r3, r4, r5, r6, r7, lr}
+ 8272244: 4638       mov r0, r7
+ 8272246: bdf8       pop {r3, r4, r5, r6, r7, pc}
+
+ 8005cc2: 38e0       subs r0, #0xe0
+ 8005cc4: bd70       pop {r4, r5, r6, pc}
+
+ 81df4c0: 3828       subs r0, #0x28
+ 81df4c2: bd3e       pop {r1, r2, r3, r4, r5, pc}
+
+ 8252028: 3808       subs r0, #8
+ 825202a: bd10       pop {r4, pc}
+
+ 8268c3a: b538       push {r3, r4, r5, lr}
+ 8268c42: 466b       mov r3, sp
+ 8268c44: 47a0       blx r4
+ 8268c46: bd38       pop {r3, r4, r5, pc}
+
+The active odd Thumb pointers are 0x0800396d, 0x08262d53, 0x081df4c1,
+0x080f8a33, 0x0818a911, 0x08030cbd, 0x082721f1, 0x08005cc3,
+0x08252029, and 0x08268c3b. In particular, 0x081df4c1 enters at the
+0x081df4c0 `subs` instruction and skips the preceding `mov r0,r4` at
+0x081df4be. The 0x08252029 pointer enters directly at `subs r0,#8`.
+
+## Stack ledger
+
+All SP values are relative to S, the parser frame base. The `0x44` field
+starts at S+4, so a word at S+n occupies field data offset n-4.
+
+After the constructor/trampoline segment already accounted for in
+OSOS_accessories_stack_subgadgets_20261029.txt, the second stack-relative
+entry has SP=S+0x1b0 and PC=0x0800396d.
+
+1. `0x0800396d` sets r0=S+0x1b0. The `bx lr` helper preserves r0; its pop
+   consumes six words and leaves SP=S+0x1c8.
+2. Two `0x08262d53` entries subtract 0x8c each and pop four words each.
+   They leave r0=S+0x98 and SP=S+0x1e8.
+3. `0x081df4c1` subtracts 0x28 from the live r0, then pops six words. It
+   leaves r0=S+0x70 and SP=S+0x200; its pop can set r2=0 and
+   r3=0x0818a911.
+4. Two `0x080f8a33` entries subtract 0x18 each and pop one word each. They
+   leave r0=P=S+0x40 and SP=S+0x208. Each `pop {pc}` consumes one word,
+   four bytes; the earlier ledger mistakenly charged eight bytes per gadget.
+5. The call/pop trampoline calls `0x0818a911`, which sets r1=r0=P and returns
+   to `0x08030cbe`. That pop consumes four words and leaves SP=S+0x218; set
+   r3=0x082721f1 and PC=0x08030cbd.
+6. The second trampoline call invokes `FUN_082721f0(P,P,0)`. The function's
+   push/pop is balanced, so its return to `0x08030cbe` preserves the external
+   SP. The trampoline pop consumes four words and leaves SP=S+0x228; its PC
+   can enter `0x0800396d` for the read stage.
+
+The third stack-relative stage therefore starts at S+0x228, not S+0x250,
+based on the documented second-stage gadgets and the balanced open ABI above.
+The corrected count is 0x28 bytes below the earlier estimate.
+
+7. At S+0x228, `0x0800396d` sets r0=S+0x228; its pop consumes six words and
+   leaves SP=S+0x240.
+8. Two `0x08005cc3` entries subtract 0xe0 each and pop four words each.
+   They leave r0=S+0x68 and SP=S+0x260.
+9. `0x081df4c1` subtracts 0x28 and pops six words, setting
+   r1=0x10f80, r2=0x09000000, r3=0x08268c3b, and PC=0x08030cbd. It leaves
+   r0=P=S+0x40 and SP=S+0x278.
+10. The trampoline calls `FUN_08268c3a(P,0x10f80,0x09000000)`. Its push/pop is
+    balanced. On return, the trampoline pop consumes words at S+0x278 through
+    S+0x287 and leaves SP=S+0x288. Set r3=0x09000000 and PC=0x08030cbd;
+    the next `blx r3` enters the loader at the even ARM address 0x09000000.
+
+The final trampoline-pop words are at S+0x278 (r3), S+0x27c (r4), S+0x280
+(r5), and S+0x284 (PC). The last required controlled word is therefore at
+field data offset 0x280, so the candidate `0x44` field needs at least 0x284
+data bytes. Keeping the existing registry tail (4-byte `0x44` end marker,
+16-byte `0x2d` record, and two 4-byte container ends) gives a 0x2c0-byte file.
+This supersedes both earlier SP/length estimates; it does not prove the file
+can be opened, read, or installed. The separately listed `0x08252029`
+`sub r0,#8` gadget is not needed after correcting the `pop {pc}` stack cost.
+
+## Parser cleanup argument
+
+The parser frame also saves its incoming `param_1` at S+0x128, which the
+0x284-byte field overwrites at field data offset 0x124. The MainApp caller at
+0x08022b66 calls `FUN_08194928`, then immediately calls `FUN_0802c3c4` at
+0x08022b6a without changing r0. `FUN_08194928` returns its lazily allocated
+singleton from global slot 0x086608d4 in r0, so the real value is runtime
+state, not a fixed payload constant.
+
+Caller instructions:
+ 8022b64: 4790       blx r2
+ 8022b66: f171 fedf  bl 0x8194928
+ 8022b6a: f009 fc2b  bl 0x802c3c4
+
+Singleton accessor at 0x08194928:
+ 8194928: b510       push {r4, lr}
+ 819492a: 4c07       ldr r4, [pc, #28]  ; literal 0x086608cc
+ 819492c: 68a0       ldr r0, [r4, #8]  ; singleton at 0x086608d4
+ 819492e: 2800       cmp r0, #0
+ 8194932: 2044       movs r0, #68
+ 8194934: f7fa f906  bl 0x818eb44
+ 8194938: f144 fdc0  bl 0x82d94bc
+ 819493e: 60a0       str r0, [r4, #8]
+ 8194946: bd10       pop {r4, pc}
+
+Parser exit instructions after the token loop:
+ 802c504: 9849       ldr r0, [sp, #0x124]  ; local stream-close pointer
+ 802c506: f245 fe67  bl 0x82721d8
+ 802c50a: 984a       ldr r0, [sp, #0x128]  ; saved param_1
+ 802c50c: 2100       movs r1, #0
+ 802c50e: 3040       adds r0, #0x40
+ 802c510: 7001       strb r1, [r0, #0]
+
+After the data read, the parser only uses its saved `param_1` again for the
+final byte store at `param_1+0x40` (the early calls use the original argument
+before the overflow). The candidate can set field data offset 0x124 to
+0x09000000. Cleanup then clears byte 0x09000040 before the ROP starts; the
+subsequent 0x10f80-byte loader read to 0x09000000 overwrites that byte from the
+loader file. This makes the saved-argument cleanup compatible at the
+instruction level, provided the full loader read succeeds. It is an inference
+from the parser epilogue and read order, not a runtime observation.
+
+The stream-close local at field data offset 0x120 remains set to the existing
+static-zero sentinel 0x084f59e0. `FUN_082721d8` tests `[r0]`, sees zero there,
+and returns without invoking a stream destructor.
+
+Close wrapper:
+ 82721d8: b510       push {r4, lr}
+ 82721da: 4604       mov r4, r0
+ 82721dc: 6800       ldr r0, [r0, #0]
+ 82721de: 2800       cmp r0, #0
+ 82721e0: d004       beq 0x82721ec
+ 82721e2: 6801       ldr r1, [r0, #0]
+ 82721e4: 6849       ldr r1, [r1, #4]
+ 82721e6: 4788       blx r1
+ 82721ea: 6020       str r0, [r4, #0]
+ 82721ec: 2000       movs r0, #0
+ 82721ee: bd10       pop {r4, pc}
+
+Static words:
+ 084f59e0: 00000000
+ 084f5a20: 08075415
+
+## Limits
+
+The stream ABI and these gadget effects are statically checked against the
+runtime image. A complete `0x44` candidate is now serialized locally as
+`candidate_accessories_reg_unexecuted.bin` (SHA-256 recorded in `SHA256SUMS`);
+the serializer asserts the critical PC words and read arguments above. This
+checks the bytes against the static ledger only, not runtime execution. The
+actual VFS/provider open/read, persistent placement of a root `/BOOT.BIN`,
+heap/stack occupancy, and successful Rockbox handoff are unverified. A short
+or failed loader read still leaves the candidate chain proceeding to the
+loader address.
+
+## Isolierter QEMU-Helper-, Epilog- und Gadget-Rehost (2026-10-29)
+
+QEMU führt den unveränderten `FUN_08039048` aus und übergibt `max_length=0x100`,
+einen synthetischen Stream, `buffer=S+4` und `length_ptr=S` bei `S=0x08e55000`.
+Der Read-Dispatcher ist ein Prüf-Stub: Beim ersten Aufruf schreibt er `0x284`
+an `S`; beim zweiten erhält er unverändert `length=0x284` und `buffer=S+4` und
+kopiert genau 0x284 Bytes des Kandidatenfelds dorthin. Der Originalhelper kehrt
+mit Erfolg zurück. Assertions prüfen `[S]=0x284`, das ROP-Wort bei `S+0x13c`,
+zwei Helper-Reads und das letzte kopierte Feldbyte bei `S+0x287`.
+
+Danach springt der Harness direkt in den Original-Parser-Epilog `0x0802c505`;
+die Tokenloop wird übersprungen. Der echte Close-Wrapper `FUN_082721d8` trifft
+den Nullsentinel. Der Epilog löscht das Testbyte bei `0x09000040`, prüft den
+Stringlocal über einen Destruktor-Stub und kehrt in die Original-Gadgets
+zurück. Die Gadgetfolge läuft bis zum vorverlinkten Loader-Sentinel. Konstruktor,
+Open, Read-Dispatcher, `FUN_0826dd26`, Destruktor und Loader sind Prüf-Stubs;
+der spätere Loader-Read füllt `0x09000000` nicht. QEMU gibt `PASS` aus und
+endet mit Exitcode 0.
+
+Das dynamisiert den fehlenden Längenvergleich im Originalhelper unter
+synthetischen Bedingungen, nicht den Parser-Tokenloop, echten Datei-I/O, VFS/
+Provider-Open, Rockbox-Lader oder Gerätepfad. Trace:
+`OSOS_accessories_rop_gadget_rehost_20261029.qemu-trace.log`; Quelle,
+Linkerskript und Grenzen stehen in
+`OSOS_accessories_rop_gadget_rehost_20261029.md`.
+
+## Originaler Parser-Tokenloop im QEMU-Rehost (2026-10-29)
+
+Ein separater QEMU-Harness führt nun die unveränderte Funktion
+`FUN_0802c3c4` vom Prolog bis zum Epilog aus. Der Tokenreader-Stub liefert genau
+ein `0x44`-Token; `FUN_081965fe`, `FUN_08039048` und `FUN_081936ec` laufen als
+Originalbytes. Die Read-Stubs liefern die Länge `0x284` und kopieren die
+0x284 Kandidatenbytes. Der originale Stringhelper dispatcht den Empty-String-
+Clear über die originale VTable auf den geprüften Destruktor-Stub. Das
+überlaufene Loopfeld beendet danach die Tokenloop, und Close-/Epilog-/ROP-
+Folge erreichen den Loader-Sentinel (`PASS`, Exitcode 0).
+
+Das bestätigt die bedingte Parserkontrollflussfolge, wenn Tokenreader, Open
+und Reads die vorbereiteten Ergebnisse liefern. Der Token selbst wird
+injiziert; Container-Tags und Streamdaten werden nicht aus einer Datei
+geparst. VFS/Provider, Dateizugriff, Konstruktoren, Open, Destruktor und Loader
+bleiben ganz oder teilweise gestubbt. Kein Geräte- oder Bootnachweis.
+Trace, Harness und detaillierte Grenzen stehen in
+`OSOS_accessories_full_parser_rehost_20261029.qemu-trace.log` und
+`OSOS_accessories_full_parser_rehost_20261029.md`.
+
+## Originaler Kandidaten-Byte-Stream im QEMU-Rehost (2026-10-29)
+
+Der neuere Rehost ersetzt den injizierten Token durch den vollständigen
+704-Byte-Kandidaten als sequenzielle Streamquelle. Unverändert ausgeführt
+werden `FUN_0802c3c4`, `FUN_0826dd26`, `FUN_0826abb0`, `FUN_0826ab24`,
+`FUN_0823f4f4`, `FUN_08039048`, `FUN_081965fe`, `FUN_081936ec`,
+`FUN_082721d8` und die Original-Gadgetfolge. Der Tokenreader verarbeitet die
+Bytes der beiden Container, des `0x2b`-Integerrecords inklusive
+`0x8000002b`, des `0x44`-Records und des `0x80000044`-Abschlusses.
+
+Die Read-Prüfstubkopie liefert die Bytefolge aus
+`candidate_accessories_reg_unexecuted.bin`. Der Originalhelper liest
+`length=0x284` trotz `max_length=0x100`; anschließend verbraucht der Parser
+den `0x44`-Abschluss. Assertions am Loader-Sentinel prüfen zehn Read-Aufrufe
+und den finalen Eingabeoffset `0x2a8`. QEMU meldet `PASS`, Exitcode 0.
+
+Der VFS-Slot-0-Lookup, FAT-Provider, echte Block-/Dateizugriffe, beide Opens
+und Loaderinhalt bleiben gestubbt. Der lokale
+`build-n5g-blramdisk/bootloader.bin` passt mit `0x10f80` Byte zum angeforderten
+Read und hat ELF-Entry sowie erstes LOAD-Segment bei `0x09000000`; er wird im
+Rehost nicht geladen oder gestartet. Der Taskkontext startet laut
+`OSOS-task-context-privilege-handoff-2026-10-25.md` im SVC-Modus. Diese Punkte
+schließen Dateizugriff und Übergabe auf echter Hardware nicht.
+
+Details, Quelle, Linkerskript und Trace:
+`OSOS_accessories_wire_prefix_parser_rehost_20261029.md`,
+`OSOS_accessories_wire_prefix_parser_rehost_20261029.S`,
+`OSOS_accessories_wire_prefix_parser_rehost_20261029.ld` und
+`OSOS_accessories_wire_prefix_parser_rehost_20261029.qemu-trace.log`.

@@ -1,0 +1,360 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (649 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1311 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x082014fc' '0x0822fbbc' '0x0822f934' '0x0822f86c' '0x081f889e' '0x081fce20'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 082014fc FUN_082014fc ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+uint FUN_082014fc(int param_1,uint param_2,uint *param_3,uint param_4)
+
+{
+  short sVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  uint uVar5;
+  int iVar6;
+  uint uVar7;
+  uint local_28;
+  int local_24;
+  uint uStack_20;
+  uint *local_1c;
+  uint local_18;
+  
+  if ((1 < param_2) && (param_2 <= *(uint *)(param_1 + 0x7c))) {
+    bVar2 = false;
+    bVar4 = false;
+    bVar3 = false;
+    sVar1 = *(short *)(param_1 + 0x6c);
+    if (sVar1 == 3) {
+      bVar2 = true;
+    }
+    else if (sVar1 == 4) {
+      bVar3 = true;
+    }
+    else {
+      if (sVar1 != 8) {
+        return 0;
+      }
+      bVar4 = true;
+    }
+    uVar7 = 1;
+    *param_3 = 0;
+    local_24 = param_1;
+    uStack_20 = param_2;
+    local_1c = param_3;
+    local_18 = param_4;
+    while (iVar6 = FUN_0822fbbc(local_24,param_2,&local_28), iVar6 != 0) {
+      if ((((local_28 == DAT_082015b4) && (bVar2)) || ((local_28 == DAT_082015b8 && (bVar3)))) ||
+         ((local_28 == DAT_082015b0 && (bVar4)))) {
+        param_2 = param_2 + 1;
+      }
+      else {
+        if ((((DAT_082015b4 < local_28) && (uVar5 = param_2, bVar2)) ||
+            ((DAT_082015b8 < local_28 && (uVar5 = param_2, bVar3)))) ||
+           ((((DAT_082015b0 <= local_28 && (uVar5 = param_2, bVar4)) ||
+             (param_2 = param_2 + 1, uVar5 = local_28, param_2 != local_28)) || (local_18 <= uVar7))
+           )) {
+          local_28 = uVar5;
+          *local_1c = local_28;
+          return uVar7;
+        }
+        uVar7 = uVar7 + 1;
+      }
+    }
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0822fbbc FUN_0822fbbc ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+longlong FUN_0822fbbc(int param_1,uint param_2,uint *param_3)
+
+{
+  byte bVar1;
+  int iVar2;
+  uint uVar3;
+  uint local_20;
+  undefined4 local_1c;
+  uint local_18;
+  
+  local_18 = 0;
+  local_20 = param_2;
+  local_1c = param_3;
+  if (*(short *)(param_1 + 0x6c) != 3) {
+    if (*(short *)(param_1 + 0x6c) == 8) {
+      iVar2 = FUN_08143ccc(param_1,param_2,&local_18);
+      if (iVar2 == 0) goto LAB_0822fc92;
+    }
+    else {
+      iVar2 = FUN_081e0e10(param_1,param_2,&local_1c,0);
+      if (iVar2 == 0) {
+LAB_0822fc92:
+        return (ulonglong)local_20 << 0x20;
+      }
+      local_18 = FUN_0814f752(&local_1c);
+    }
+    goto LAB_0822fc8a;
+  }
+  uVar3 = param_2 & 3;
+  iVar2 = FUN_081e0e10(param_1,(param_2 * 3 & 0xffff) >> 2,&local_1c,0);
+  if (iVar2 == 0) goto LAB_0822fc92;
+  if (uVar3 == 0) {
+    uVar3 = (uint)local_1c._1_1_;
+LAB_0822fc46:
+    local_18 = (uint)(byte)local_1c | (uVar3 & 0xf) << 8;
+  }
+  else {
+    iVar2 = ((param_2 * 3 & 0xffff) >> 2) + 1;
+    if (uVar3 == 1) {
+      iVar2 = FUN_081e0e10(param_1,iVar2,&local_20,0);
+      if (iVar2 == 0) goto LAB_0822fc92;
+      bVar1 = (byte)local_20;
+    }
+    else {
+      if (uVar3 == 2) {
+        iVar2 = FUN_081e0e10(param_1,iVar2,&local_20,0);
+        if (iVar2 == 0) goto LAB_0822fc92;
+        local_1c._0_1_ = local_1c._1_1_;
+        uVar3 = local_20;
+        goto LAB_0822fc46;
+      }
+      bVar1 = local_1c._1_1_;
+      local_1c._1_1_ = (byte)local_1c;
+      if (uVar3 != 3) goto LAB_0822fc8a;
+    }
+    local_18 = (uint)bVar1 << 4 | (uint)(local_1c._1_1_ >> 4);
+  }
+LAB_0822fc8a:
+  *param_3 = local_18;
+  return CONCAT44(local_20,1);
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0822f934 FUN_0822f934 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_0822f934(int param_1,uint param_2,uint param_3)
+
+{
+  byte bVar1;
+  byte bVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  byte local_28;
+  byte local_27;
+  uint local_24;
+  int local_20;
+  uint uStack_1c;
+  uint uStack_18;
+  
+  *(undefined4 *)(param_1 + 0x88) = 1;
+  local_20 = param_1;
+  uStack_1c = param_2;
+  uStack_18 = param_3;
+  if (*(short *)(param_1 + 0x6c) == 3) {
+    uVar3 = param_2 * 3 >> 2;
+    uVar5 = param_2 & 3;
+    iVar4 = FUN_081e0e10(param_1,uVar3,&local_28,0);
+    if (iVar4 == 0) {
+      return 0;
+    }
+    local_24 = (param_3 & 0xfff) >> 8;
+    if (uVar5 == 0) {
+      local_28 = (byte)param_3;
+      local_27 = local_27 & 0xf0 | (byte)((param_3 & 0xfff) >> 8);
+    }
+    else {
+      uVar6 = (param_2 * 3 >> 2) + 1;
+      bVar1 = (byte)(param_3 >> 4);
+      bVar2 = (byte)(param_3 << 4);
+      if (uVar5 == 1) {
+        local_27 = local_27 & 0xf | bVar2;
+        iVar4 = FUN_081e0e10(local_20,uVar3,&local_28,1);
+        if (iVar4 == 0) {
+          return 0;
+        }
+        iVar4 = FUN_081e0e10(local_20,uVar6 & 0xffff,&local_28,0);
+        local_28 = bVar1;
+        if (iVar4 == 0) {
+          return 0;
+        }
+      }
+      else {
+        if (uVar5 != 2) {
+          if (uVar5 != 3) {
+            return 1;
+          }
+          local_28 = local_28 & 0xf | bVar2;
+          local_27 = bVar1;
+          goto LAB_0822f9cc;
+        }
+        local_27 = (byte)param_3;
+        iVar4 = FUN_081e0e10(local_20,uVar3,&local_28,1);
+        if (iVar4 == 0) {
+          return 0;
+        }
+        iVar4 = FUN_081e0e10(local_20,uVar6 & 0xffff,&local_28,0);
+        if (iVar4 == 0) {
+          return 0;
+        }
+        local_28 = local_28 & 0xf0 | (byte)local_24;
+      }
+      uVar3 = uVar6 & 0xffff;
+    }
+  }
+  else {
+    if (*(short *)(param_1 + 0x6c) == 8) {
+      FUN_0814e8d8(&local_28,param_3);
+      iVar4 = FUN_0814f71c(local_20,param_2,&local_28);
+      goto LAB_0822f9d4;
+    }
+    FUN_0814e8e8(&local_28,param_3 & 0xffff);
+    uVar3 = param_2;
+  }
+LAB_0822f9cc:
+  iVar4 = FUN_081e0e10(local_20,uVar3,&local_28,1);
+LAB_0822f9d4:
+  if (iVar4 == 0) {
+    return 0;
+  }
+  return 1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0822f86c FUN_0822f86c ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_0822f86c(int param_1,undefined4 param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = DAT_0822f888;
+  if (*(short *)(param_1 + 0x6c) == 8) {
+    uVar1 = DAT_0822f884;
+  }
+  FUN_0822f934(param_1,param_2,uVar1);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 081f889e FUN_081f889e ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+uint FUN_081f889e(undefined4 param_1,uint param_2,uint param_3,int param_4)
+
+{
+  int iVar1;
+  int local_18;
+  
+  local_18 = param_4;
+  while ((param_2 < param_3 && (iVar1 = FUN_0822fbbc(param_1,param_2,&local_18), iVar1 != 0))) {
+    if (local_18 == 0) {
+      return param_2;
+    }
+    param_2 = param_2 + 1;
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 081fce20 FUN_081fce20 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+int FUN_081fce20(int param_1,int param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 local_24;
+  undefined4 local_20;
+  int local_1c;
+  int iStack_18;
+  
+  iVar6 = 0;
+  iVar5 = 0;
+  local_1c = param_1;
+  iStack_18 = param_2;
+  local_24 = FUN_08229210(param_1);
+  uVar1 = *(ushort *)(local_1c + 0x1ce) + 9;
+  uVar4 = *(uint *)(param_2 + 0x1c) >> (uVar1 & 0xff);
+  if (((1 << (uVar1 & 0xff)) - 1U & *(uint *)(param_2 + 0x1c)) != 0) {
+    uVar4 = uVar4 + 1;
+  }
+  do {
+    if (uVar4 == 0) {
+      iVar6 = FUN_081a4aa8(iVar6,(iVar5 + 1) * 8);
+      if (iVar6 == 0) {
+LAB_081fce9e:
+        iVar6 = 0;
+      }
+      else {
+        *(undefined4 *)(iVar6 + iVar5 * 8) = 0;
+        *(undefined4 *)(iVar5 * 8 + iVar6 + 4) = 0;
+      }
+      return iVar6;
+    }
+    iVar2 = FUN_082014fc(local_1c,local_24,&local_20,uVar4);
+    if (iVar2 == 0) {
+      if (iVar6 != 0) {
+        FUN_0818e7a8(iVar6);
+      }
+      goto LAB_081fce9e;
+    }
+    iVar6 = FUN_081a4aa8(iVar6,(iVar5 + 1) * 8);
+    if (iVar6 == 0) goto LAB_081fce9e;
+    iVar3 = iVar5 * 8;
+    iVar5 = iVar5 + 1;
+    *(undefined4 *)(iVar6 + iVar3) = local_24;
+    uVar4 = uVar4 - iVar2;
+    *(int *)(iVar3 + iVar6 + 4) = iVar2;
+    local_24 = local_20;
+  } while( true );
+}
+
+ (GhidraScript)  

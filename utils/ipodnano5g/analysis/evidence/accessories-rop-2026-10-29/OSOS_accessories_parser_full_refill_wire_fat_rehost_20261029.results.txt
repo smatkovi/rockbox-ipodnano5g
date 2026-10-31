@@ -1,0 +1,46 @@
+Original wire parser with a dynamically refilled stream and local cache source
+(2026-10-29)
+
+Build: clang ARM1176 target, link succeeded.
+Run: qemu-arm -cpu arm1176 -d in_asm,cpu; exit code 0.
+Stdout: PASS\n
+
+Verified by loader-sentinel assertions:
+- Stream starts with an empty buffer and the original refill path is executed.
+- Original parser/token reader consume the file's wire prefix from stream
+  offset 0. The file content comes from the local 704-byte candidate file.
+- Original FUN_0820cc90, FUN_0823c9c0, FUN_082a2c48, FUN_0819887c,
+  FUN_081fd5e8, FUN_0812ac00, FUN_081384b0, FUN_0814346c and FUN_081d7e1a
+  execute in the combined run.
+- File cursor, handle cursor and logical size end at 0x2c0; stream position
+  ends at 0x2a8 and EOF is set.
+- The cache getter ran at least twice and its final aligned file offset was
+  0x200. The stream-buffer words at offsets 0x200 and 0x2a4 equal the candidate
+  bytes, including bytes across the 512-byte boundary and the in-file
+  terminator.
+- Saved PC slot S+0x13c equals 0x08007107. Execution reaches gadget 0x08007106
+  and sentinel 0x09000000. Sentinel checks the expected 0x10f80-byte loader
+  read to 0x09000000; it does not load or execute a bootloader.
+
+Limits:
+- The VFS object, FAT handle, volume context and file size are manually seeded.
+- Cache-get is a local data-source hook that copies aligned 512-byte blocks
+  from the test file. Cache validity, FAT lookup, sector mapping, cluster
+  traversal and ATA/block I/O remain stubbed or manually modeled. The original
+  file/provider/FAT reader instructions run, but this is not a real filesystem
+  or device read.
+- Parser open and loader read are harness gates. No Rockbox code is loaded.
+- Candidate is local only. No device, USB or DFU query, NAND/NOR mutation,
+  erase, or firmware flash occurred.
+
+Reproduction, from rb-n5g:
+
+  clang --target=arm-linux-gnueabi -mcpu=arm1176jzf-s -nostdlib -no-pie -fno-pie -fuse-ld=lld \
+    -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.ld \
+    -Wl,--build-id=none \
+    -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.elf \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.S
+  qemu-arm -cpu arm1176 -d in_asm,cpu \
+    -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.qemu-trace.log \
+    utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.elf \
+    > utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_parser_full_refill_wire_fat_rehost_20261029.stdout.bin

@@ -1,0 +1,37 @@
+Rockbox BSS-init parser rehost — 2026-10-29
+
+Build: generated from the existing bounded-wire parser rehost; ARM1176 target.
+Run: qemu-arm -cpu arm1176; exit code 0; stdout: PASS\n.
+
+Input and candidate:
+- The separate candidate is 720 bytes (0x2d0), with tag-0x44 field length
+  0x294. The original 704-byte candidate remains unchanged.
+- The test-only copy of candidate_file changes only its final target word at
+  file offset 0x2a4 from 0x09000000 to sentinel 0x09300000. The on-disk test
+  candidate is not changed by the harness.
+- The stream buffer is seeded with the full candidate. VFS open and the
+  initial stream refill from a real FAT volume are not modeled.
+
+Verified trace sequence:
+- Original parser/tokenreader processes the wire prefix and the 0x294 field.
+- Original parser epilogue executes its cleanup store at 0x0802c510. The
+  candidate-controlled saved argument makes this store clear byte
+  0x09000040 before the ROP read.
+- The loader-read dispatcher validates length 0x10f80 and destination
+  0x09000000, then copies the actual built Rockbox image from QEMU address
+  0x09400000 to 0x09000000. This models a successful full file read and
+  restores word 0xe24fb008 at 0x09000040.
+- Original Thumb trampoline at 0x08030cbc calls the actual `bss_init` bytes
+  loaded at 0x090001c8. The final pop reaches sentinel 0x09300000.
+- Sentinel assertions pass for the restored instruction, the entire
+  0x09100000..0x0919fd00 BSS range being zero, saved-PC overwrite, parser
+  cleanup flags, and final stream/file cursors (0x2b8 / 0x2d0).
+
+Limitations:
+- This is an offline rehost. The stream input and filesystem state are
+  pre-seeded; no real volume open, FAT traversal, block I/O or device run is
+  shown. The loader read is modeled by a local copy loop, not the actual ATA
+  provider path.
+- The Rockbox `start` function is not executed. CP15/MMU/cache setup and SoC
+  hardware effects are outside this QEMU user-mode test.
+- No NAND/NOR write, erase or firmware flash operation occurred.

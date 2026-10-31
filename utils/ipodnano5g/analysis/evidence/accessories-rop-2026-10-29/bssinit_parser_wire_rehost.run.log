@@ -1,0 +1,8 @@
+wrote local candidate: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/candidate_accessories_reg_bssinit_unexecuted.bin
+size: 720 bytes (0x2d0)
+sha256: d9973abc3b223baceaf378a582e2b7acd3fd96b82ef548f40a8f31a4a957ecfa
+status: not executed and not written to a device
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/bssinit_parser_wire_rehost.S
+generated /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/bssinit_parser_wire_rehost.ld
+base rehost and original candidate were not modified
+PASS: parser cleanup was restored by file read; bss_init then cleared BSS

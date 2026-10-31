@@ -1,0 +1,7 @@
+Build: success
+Command: clang --target=arm-linux-gnueabi -nostdlib -no-pie -fno-pie -fuse-ld=lld -Wl,-T,utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_wire_prefix_parser_rehost_20261029.ld -Wl,--build-id=none -o utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_wire_prefix_parser_rehost_20261029.elf utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_wire_prefix_parser_rehost_20261029.S
+Run: qemu-arm -d in_asm,cpu -D utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_wire_prefix_parser_rehost_20261029.qemu-trace.log utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/OSOS_accessories_wire_prefix_parser_rehost_20261029.elf
+Stdout: PASS
+Result: exit code 0
+Assertions: 10 parser-stream reads, final input offset 0x2a8, original parser/tag/integer/field helpers, checked `/BOOT.BIN` open arguments, checked loader-read size 0x10f80 and destination 0x09000000.
+Limit: lower-level stream bytes come from the embedded local candidate; VFS/FAT/provider and actual loader contents are not executed.

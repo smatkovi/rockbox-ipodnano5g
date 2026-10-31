@@ -1,0 +1,24 @@
+Build:
+  clang --target=arm-linux-gnueabi -nostdlib -no-pie -fno-pie -fuse-ld=lld
+  Linker script: OSOS_accessories_rop_gadget_rehost_20261029.ld
+  Assembly: OSOS_accessories_rop_gadget_rehost_20261029.S
+  Result: success, exit code 0
+
+Run:
+  qemu-arm -d in_asm,cpu OSOS_accessories_rop_gadget_rehost_20261029.elf
+  Stdout: PASS
+  Result: exit code 0
+
+Observed original-helper path in the QEMU trace:
+  FUN_08039048 receives max_length=0x100, buffer=S+4, length_ptr=S.
+  Stub read #1 receives (stream, 4, S) and writes 0x284.
+  Stub read #2 receives (stream, 0x284, S+4) and copies 0x284 candidate bytes.
+  FUN_0826dd26 is stubbed and returns success.
+  Harness assertions pass for [S]=0x284, the ROP word at S+0x13c,
+  read_call_count=2, and the final copied field byte at S+0x287.
+
+The run then enters the original parser epilogue directly, without running the
+token loop. The original close wrapper and gadget path reach the prelinked
+loader sentinel. Constructor, destructor, Open, read dispatcher, helper finish
+and loader are stubs. The later loader Read does not populate 0x09000000; no
+VFS, real file I/O, device access, flash write, or Rockbox boot is exercised.

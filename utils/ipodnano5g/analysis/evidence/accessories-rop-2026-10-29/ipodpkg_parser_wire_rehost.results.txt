@@ -1,0 +1,33 @@
+Full bounded-wire parser rehost with the packaged Rockbox N5G bootloader
+Date: 2026-10-29
+
+Build: ARM1176 rehost linked successfully.
+Run: qemu-arm -cpu arm1176; exit code 0; stdout PASS.
+
+Verified by assertions in the original-parser rehost:
+- The 720-byte candidate is consumed as the parser's wire input.
+- The unmodified OSOS parser, tag reader, stream functions, cleanup, epilogue,
+  and serialized ROP sequence reach the loader-read dispatcher.
+- The candidate requests 0x10f88 bytes to 0x08fffff8.
+- The local read model copies the actual 69,512-byte
+  bootloader-ipodnano5g.ipod build artifact.
+- The first eight package bytes end at 0x09000000; the raw image entry word
+  there is 0xea00000d.
+- The full read restores 0x09000040 to 0xe24fb008 after parser cleanup.
+- The original bss_init routine clears 0x09100000..0x0919fd00 and the chain
+  reaches the sentinel.
+
+Limits:
+- The parser wire source is the local candidate. The loader read dispatcher
+  is a controlled local file-copy model; VFS open, FAT lookup, cluster walk,
+  cache and ATA/block I/O are not run in this combined harness.
+- The test does not prove that /BOOT.BIN exists or opens on the iPod.
+- The load and BSS target are in OSOS's documented managed heap. The actual
+  runtime heap frontier and MainAppTask stack address are not captured.
+- The test does not run the Rockbox CRT or establish a device boot, persistence,
+  lock-switch behavior, or an untethered boot.
+- No device, USB, DFU, NAND, NOR, or flash operation occurred. Neither the
+  candidate nor the loader package was written to the iPod.
+
+Artifacts: ipodpkg_parser_wire_rehost.S/.ld/.elf/.run.log/.qemu-trace.log/
+stdout.bin, build_ipodpkg_parser_rehost.py, and run_ipodpkg_parser_rehost.sh.

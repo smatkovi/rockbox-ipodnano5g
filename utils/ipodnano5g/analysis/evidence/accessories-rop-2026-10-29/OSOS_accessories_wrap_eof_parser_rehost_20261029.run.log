@@ -1,0 +1,28 @@
+PASS
+Exit code: 0
+Target: ARM1176 in local qemu-arm; no device access.
+
+The harness runs original FUN_0802c3c4, FUN_08039048, FUN_081965fe,
+FUN_081936ec, the parser cleanup/epilogue, and the existing runtime gadget
+sequence. The parser's read implementation is a stub derived from
+OSOS_accessories_wrap_error_parser_rehost_20261029.S. It copies the candidate's
+remaining 0x2a0 bytes and 7488 modeled cluster-slack bytes, then returns status
+5 (EOF), matching the status produced by the separate original stream/provider/
+FAT rehost. The original parser/tokenizer reads local candidate bytes; bytes
+after logical EOF are modeled as 0x41. The Read backend, Open/provider/ATA
+boundaries, Close dependencies, and Loader remain synthetic or stubbed.
+
+Trace evidence:
+- FUN_08039048 returns r0=5 to FUN_0802c3c4.
+- At parser address 0x0802c4fe, the saved nonzero status is ORed with the
+  parser's termination flag; the loop is not re-entered.
+- The parser executes its close/cleanup and epilogue; the saved return reaches
+  gadget 0x08007106 and continues to the prelinked loader sentinel at
+  0x09000000.
+- The sentinel validates parser/open/read markers and modeled partial/slack
+  lengths before printing PASS.
+
+This confirms that status 5 does not prevent the modeled parser cleanup and
+return chain. It does not integrate the real FAT read with the actual parser
+frame in one run and does not establish device reachability, controllable
+cluster-slack contents, real loader execution, or Rockbox boot.

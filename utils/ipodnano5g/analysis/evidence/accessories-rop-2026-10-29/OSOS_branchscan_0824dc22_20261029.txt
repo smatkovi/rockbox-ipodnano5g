@@ -1,0 +1,7 @@
+IMAGE=/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin SIZE=7095208 BASE=0x08000000 TARGET=0x0824dc22
+NOTE=raw byte scan only; inspect every match as code before treating it as a caller
+MATCH Thumb BL source=0x0804fe28 raw=0xfefbf1fd
+MATCH Thumb BL source=0x080a2a90 raw=0xf8c7f1ab
+MATCH Thumb BL source=0x080b9a2a raw=0xf8faf194
+MATCH Thumb BL source=0x081e18b0 raw=0xf9b7f06c
+MATCH_COUNT=4

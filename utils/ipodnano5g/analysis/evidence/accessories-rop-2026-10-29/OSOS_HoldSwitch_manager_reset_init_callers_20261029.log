@@ -1,0 +1,96 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (617 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1239 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpCallersMany.java '0x0835cc0c' '0x08354ba8' '0x0835c9ec' '0x0835cc28'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpCallersMany.java (HeadlessAnalyzer)  
+INFO  DumpCallersMany.java> ===== TARGET 0835cc0c ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0801d4fc caller=FUN_0801d4ac@0801d4ac (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 08354ba8 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08353524 caller=arm_83534e8@083534e8 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0835c9ec ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355010 caller=FUN_08354fa8@08354fa8 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355078 caller=FUN_08355020@08355020 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083550e4 caller=FUN_08355088@08355088 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835515c caller=FUN_083550f4@083550f4 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083551d4 caller=FUN_0835516c@0835516c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355240 caller=FUN_083551e4@083551e4 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083552ac caller=FUN_08355250@08355250 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835532c caller=FUN_083552bc@083552bc (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355494 caller=FUN_0835543c@0835543c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083554fc caller=FUN_083554a4@083554a4 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355564 caller=FUN_0835550c@0835550c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835588c caller=FUN_0835582c@0835582c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083558f4 caller=FUN_0835589c@0835589c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355960 caller=FUN_08355904@08355904 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083559d0 caller=FUN_08355970@08355970 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355a40 caller=FUN_083559e0@083559e0 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355aac caller=FUN_08355a50@08355a50 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355b18 caller=FUN_08355abc@08355abc (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355b88 caller=FUN_08355b28@08355b28 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355cd0 caller=FUN_08355c80@08355c80 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355d30 caller=FUN_08355ce0@08355ce0 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355d90 caller=FUN_08355d40@08355d40 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835542c caller=FUN_083553d4@083553d4 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354d84 caller=FUN_08354d40@08354d40 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083553b8 caller=FUN_08355348@08355348 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354dd8 caller=FUN_08354d94@08354d94 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354ed0 caller=FUN_08354e90@08354e90 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354f20 caller=FUN_08354ee0@08354ee0 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354e2c caller=FUN_08354de8@08354de8 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354e80 caller=FUN_08354e3c@08354e3c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08354f98 caller=FUN_08354f30@08354f30 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355c70 caller=FUN_08355c20@08355c20 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835561c caller=FUN_083555dc@083555dc (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08355c04 caller=FUN_08355ba4@08355ba4 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835566c caller=FUN_0835562c@0835562c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835575c caller=FUN_0835571c@0835571c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083557ac caller=FUN_0835576c@0835576c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 083556bc caller=FUN_0835567c@0835567c (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835570c caller=FUN_083556cc@083556cc (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0835581c caller=FUN_083557bc@083557bc (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=40 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 0835cc28 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=0 (GhidraScript)  

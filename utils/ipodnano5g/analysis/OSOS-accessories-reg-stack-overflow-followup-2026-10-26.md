@@ -1,11 +1,11 @@
 # Früher OSOS-Parser für `accessories.reg`: Stack-Überlauf
 
-Stand: 26.10.2026. Read-only-Disassemblierung und Analyse des vorhandenen
-OSOS-Runtime-Abbilds `osos_runtime_dram_20261025.bin`. Zusätzlich wurde die
-Datenpartition im Rockbox-USB-Modus read-only eingehängt und
+Stand: 29.10.2026 (Grundbericht vom 26.10.). Read-only-Disassemblierung und
+Analyse des vorhandenen OSOS-Runtime-Abbilds `osos_runtime_dram_20261025.bin`.
+Die Datenpartition wurde im Rockbox-USB-Modus read-only eingehängt und
 `iPod_Control/Device/accessories.reg` gelesen. Es wurden keine Gerätedaten
-geändert und keine DFU-, Boot-, NAND-/NOR- oder Flashoperation ausgeführt;
-keine Tests oder Builds.
+geändert und in dieser Analyse weder DFU-, Boot-, NAND-/NOR- noch
+Flashoperationen ausgeführt. Der spätere Kandidat wurde nur lokal serialisiert.
 
 ## Ergebnis
 
@@ -19,11 +19,13 @@ längerer Eingabe den Caller-Stack überschreiben. Die vorgeschaltete
 VTable-Verwendung und der Aufräumpfad lassen sich mit gültigen Objektwerten
 durchlaufen. Ein vorhandenes `pop {r0,r1,r2,r3,r4,pc}`-Gadget ermöglicht
 danach eine dateikontrollierte ROP-Folge in OSOS-Code. Der interne Writer und
-die echte 69-Byte-Datei stimmen beim Binärformat überein; eine Feldlänge von
-`0x2c4` passt strukturell in dieses Format. Die abgezählte Loaderfolge bleibt
-ungetestet: Datei-Open, Read und Rockbox-Handoff sind nicht verifiziert; ein
-neuer LFN-Befund im generischen FAT-Pfadauflöser kann den Read vorher
-unterbrechen.
+die echte 69-Byte-Datei stimmen beim Binärformat überein; die korrigierte
+Feldlänge von `0x284` passt strukturell in dieses Format. Die abgezählte
+Loaderfolge ist lokal serialisiert und im isolierten QEMU-Rehost des originalen
+Parser-Epilogs, Close-Wrappers und der Gadgets bis zu einem Loader-Sentinel
+gelaufen. Konstruktor, Open, Read und Loader sind Prüf-Stubs. Das ersetzt
+keinen echten Datei-Open, Read oder Rockbox-Handoff; der tatsächliche
+VFS-/Provider-Aufruf bleibt eine offene Schranke.
 
 ## Kaltstartpfad
 
@@ -216,39 +218,56 @@ Kandidatenfolge verschiebt deshalb das String-/Ausgabeobjekt auf `P=S+0x40`:
    `r0=S+0x158`. Die nachfolgenden Gadgets `sub r0,#0xe0`, `sub r0,#0x20`
    und `sub r0,#0x18` ergeben `P=S+0x40`.
 2. Der Call/Pop-Trampolin `0x08030cbd` ruft das Schreibgadget
-   `0x0805b093` auf. Es setzt `r1=P+0x80=S+0xc0` und schreibt mit
-   `r5=0x6f6c746f` sowie `r4=0x61` die Pfadbytes an Zeichenposition 12 bis 16.
+   `0x0805b093` auf. Der Thumb-Einstieg landet bei `0x0805b092` und überspringt
+   `subs r0,#0x84` bei `0x0805b090`; mit dem nach Schritt 1 erhaltenen
+   `r0=P` setzt er `r1=P+0x80=S+0xc0`. Für die kurze 8.3-Alternative wird
+   `/BOOT.BIN\0` schon bei Datenoffset `0xbc..0xc5` vorbesetzt. Die Stores mit
+   `r5=0x6f6c746f` und `r4=0x61` landen dann bei `P+0x8c` und `P+0x90`, also
+   hinter dem NUL. Das Gadget bleibt für den Quellzeiger `r1=P+0x80` nützlich;
    `FUN_08198770` (`0x08198771`) initialisiert bei `P` das Stringobjekt aus
-   diesem C-String. Der Text `/.rockbox/bo` davor und `der.bin\0` danach
-   belegt Datenoffset `0xbc` bis `0xd4`, also nur den Teil des Puffers vor LR.
+   dem vorbesetzten C-String. `/BOOT.BIN` ist eine Pfadoption, keine auf dem
+   erfassten Volume vorhandene Datei.
 3. Nach Konstruktion des Strings erfasst ein zweites Stackzeigergadget
    `S+0x1b0`. Die Subtraktionen `2*0x8c + 0x28 + 2*0x18` ergeben wieder
-   `P=S+0x40`. Das `sub 0x28`-Pop setzt `r2=0`; über `0x0818a911` wird
-   `r1=r0` hergestellt. `FUN_082721f0` (`0x082721f1`) erhält damit
-   `(r0=P, r1=P, r2=0)`: derselbe Stackbereich dient als String-Eingabe und
-   Ausgabeadresse. Die zuvor beschriebene Pfadkopie vor dem Schreiben des
-   Stream-Wrappers macht dieses Alias statisch möglich.
-4. Nach dem Open erfasst ein drittes Stackzeigergadget `S+0x250` und stellt
-   `P` mit `2*0xe0 + 2*0x28` wieder her. Das letzte Pop richtet die Read-Args
-   ein: `r1=0x10f80` (69.504 Byte), `r2=0x09000000` (Ziel), `r3=0x08268c3b`.
-   `FUN_08268c3a` dispatcht über Slot `+0x4c`; `thumb_81b832e` ordnet die
-   Register für den inneren Read als Ziel und Länge um und vergleicht die
-   gelesene Bytezahl mit der Anforderung. Danach kann der Trampolin
-   `0x09000000` mit `BLX` im ARM-Zustand aufrufen.
+   `P=S+0x40`. Das `0x081df4c1`-Pop setzt `r2=0` und `r3=0x0818a911`; dieser
+   Thumb-Einstieg beginnt direkt bei `subs r0,#0x28` und überspringt das
+   vorherige `mov r0,r4`. Nach den beiden `0x18`-Subtraktionen ruft der
+   Trampolin `0x0818a911` auf, wodurch `r1=r0=P` wird. Der folgende
+   Trampolin-Pop setzt `r3=0x082721f1`; `FUN_082721f0` erhält dadurch
+   `(r0=P, r1=P, r2=0)`. Derselbe Stackbereich dient als String-Eingabe und
+   Ausgabeadresse; der Open-Wrapper verwendet den Pfad, bevor er den
+   Streamzeiger bei `P` speichert.
+4. Nach dem Open liegt SP bei `S+0x228`, nicht bei `S+0x250`: Die zwei
+   `0x18`-Gadgets enden mit `pop {pc}` und verbrauchen je 4 Byte. Der zweite
+   SP-Abschnitt endet daher bei `S+0x208`; `r1=r0`-Hilfsaufruf samt
+   Trampolin-Pop und Open-Aufruf samt Pop führen zu `S+0x228`. Ein drittes
+   Stackzeigergadget erfasst diesen SP. Zwei `0xe0`-Subtraktionen und
+   `0x081df4c1` ergeben `2*0xe0 + 0x28 = 0x1e8` und erneut `P=S+0x40`. Das
+   `0x28`-Pop richtet die Read-Args ein: `r1=0x10f80` (69.504 Byte),
+   `r2=0x09000000` (Ziel), `r3=0x08268c3b`. `FUN_08268c3a` dispatcht über
+   Slot `+0x4c`; `thumb_81b832e` ordnet die Register für den inneren Read als
+   Ziel und Länge um und vergleicht die gelesene Bytezahl mit der Anforderung.
+   Nach dem Read-Trampolin-Pop setzt `r3=0x09000000` und `pc=0x08030cbd` den
+   letzten `BLX` in den ARM-Loader.
 
 Für diese Folge muss der Inhalt des überlaufenden Datenfelds mindestens
-`0x2c4` Byte lang sein, damit das letzte kontrollierte PC-Wort bei
-Datenoffset `0x2c0` mitgeschrieben wird. Der interne Writer bestätigt die
+`0x284` Byte lang sein, damit das letzte kontrollierte PC-Wort bei
+Datenoffset `0x280` mitgeschrieben wird. Der Loaderzeiger steht im selben
+Trampolin-Pop bei Datenoffset `0x274`. Der interne Writer bestätigt die
 Dateistruktur: Vor dem Feld stehen 32 Byte, danach folgen der 4-Byte-Endmarker
 des Felds, ein 16-Byte-`0x2d`-Wert und zwei 4-Byte-Container-Endmarker. Ein
-Dateikörper mit genau `0x2c4` Datenbytes wäre damit `0x300` Byte groß. Die von
+Dateikörper mit genau `0x284` Datenbytes wäre damit `0x2c0` Byte groß. Diese
+Rechnung ersetzt die frühere unbilanzierte `0x2c4`-/`0x300`-Schätzung und die
+anschließende Fehlzählung von `pop {pc}`. Die von
 `0x44` angeforderte Länge ist nicht durch `0x100` begrenzt. Der `0x8000`-Wert
 des Streams ist Pufferkapazität und die Refill-Schleife kann größere Reads an
 den Provider weiterreichen. Feldoffset `d` entspricht Dateioffset `0x20+d`:
 Der gespeicherte LR liegt somit bei Dateioffset `0x158`, das erste ROP-Wort bei
-`0x15c`, das letzte kontrollierte PC-Wort bei `0x2e0` und der Endmarker des
-`0x44`-Felds bei `0x2e4`. Das sind Layoutwerte der statischen Kandidatenfolge,
-kein erzeugtes oder ausgeführtes Payload.
+`0x15c`, das letzte kontrollierte PC-Wort bei `0x2a0` und der Endmarker des
+`0x44`-Felds bei `0x2a4`. Das sind Layoutwerte der statischen Kandidatenfolge,
+kein ausgeführtes Payload. Ein lokaler Serializer und Kandidat wurden nach
+der anschließenden Wort-für-Wort-Popprüfung erstellt; sie liegen unter
+`evidence/accessories-rop-2026-10-29/` und wurden nicht auf ein Gerät kopiert.
 
 Die durch den Überlauf vor dem Rücksprung beschädigten Parserfelder müssen
 weiterhin gültig gesetzt werden: Datenoffset `0x10c` erhält die bestätigte
@@ -258,16 +277,51 @@ die gültige VTable neu aufbauen und anschließend den harmlosen Close-Pfad
 nehmen. Diese Werte und die ROP-Wörter liegen im selben vom Datei-Read
 gefüllten Stackbereich.
 
+Der lange Read überschreibt außerdem den bei `S+0x128` gespeicherten
+`param_1`-Wert (Feldoffset `0x124`). Der MainApp-Caller übergibt dort den
+Laufzeitwert aus `FUN_08194928`, der aus einem Singleton-Slot geladen wird und
+nicht als feste Payloadkonstante vorausgesetzt werden kann. Nach dem
+Überlauf verwendet der Parser diesen Wert nur noch für den abschließenden
+Byte-Store bei `param_1+0x40`. Der Kandidatenwert `0x09000000` lässt diesen
+Cleanup byteweise nach `0x09000040` schreiben; der folgende vollständige
+`0x10f80`-Byte-Loader-Read überschreibt die Stelle wieder. Das ist eine
+instruktionsbasierte Inferenz und setzt einen erfolgreichen Loader-Read voraus.
+Caller- und Offsetbeleg: `evidence/accessories-rop-2026-10-29/OSOS_accessories_open_read_stack_accounting_20261029.txt`.
+
 Das ist noch kein bestätigter Exploit: Die Registry-Serialisierung ist anhand
-des internen Writers und der echten Datei abgeglichen, aber eine vollständige
-ROP-Datei wurde nicht erzeugt. Pfadauflösung für `/.rockbox/bootloader.bin`,
-Open-Erfolg und exakte Provider-Rückgabe sind nicht nachgewiesen; die Folge
-prüft ihre Statuswerte nicht. Der Loader liegt mit seinem Ziel `0x09000000` im
+des internen Writers und der echten Datei abgeglichen. Eine vollständige
+ROP-Datei ist lokal serialisiert, aber nicht ausgeführt. Open-Erfolg und exakte Provider-Rückgabe sind
+nicht nachgewiesen; `/BOOT.BIN` fehlt auf dem erfassten Volume und persistente
+Ablage ist offen. Die Folge prüft ihre Statuswerte nicht. Der Loader liegt mit
+seinem Ziel `0x09000000` im
 OSOS-Heapbereich und initialisiert zusätzlich BSS ab `0x09100000`. Ob diese
 Bereiche die laufende MainAppTask-Stackbelegung oder benötigte OSOS-Allokationen
 treffen, bleibt offen. Die Ausführbarkeit des Zielbereichs ist im
 MMU-Nachtrag unten statisch belegt; der erste `BLX`-Übergang und die
 Weiterverwendung des OSOS-Zustands sind nicht dynamisch verifiziert.
+
+### Package-aware Loader-Variante (29.10.2026)
+
+Für den 8-Byte-`scramble -add=nn5g`-Kopf existiert eine getrennte 720-Byte-
+Variante des Kandidaten. Sie öffnet `/BOOT.BIN`, liest `0x10f88` Byte nach
+`0x08fffff8` und springt anschließend nach `0x09000000`. Dort beginnt der
+Rohbody des lokalen `bootloader-ipodnano5g.ipod` genau an seiner ELF-Entry-
+Adresse; der Kopf liegt in den acht Bytes davor.
+
+Der ARM1176-QEMU-Rehost verwendet den ursprünglichen Parser, Tagreader,
+Streampfad, Cleanup, Epilog und die serialisierte Gadgetfolge. Im Rehost erreicht
+die Folge den Loader-Read-Dispatcher, kopiert das lokale Paket über ein
+kontrolliertes Read-Modell, stellt den zuvor überschriebenen Wert bei
+`0x09000040` wieder her und erreicht den `bss_init`-Pfad samt Sentinel. Das
+verifiziert die lokale Stack-/Adressrechnung dieser Variante. Der Rehost führt
+weder FAT-Open/Clusterauflösung noch Cache-/ATA-/Blockzugriffe aus; `/BOOT.BIN`
+ist auf dem erfassten Gerät nicht vorhanden. Es gab keinen Gerätelauf und
+keinen Rockbox-Handoff.
+
+Kandidat, Buildskripte, Loaderpaket und Rehostbelege stehen in
+`evidence/accessories-rop-2026-10-29/`; das README und
+`ipodpkg_parser_wire_rehost.results.txt` grenzen die verwendeten Stubs und
+offenen Hardwarefragen ab.
 
 ## Vorhandene Datei auf dem Gerät
 
@@ -512,14 +566,16 @@ werden über `FUN_0818e998` eingetragen. Dessen direkter Wrapper
 `FUN_082154b8` wird im analysierten Code für Slots 4, 5 und 6 benutzt; der
 `rsrc`-Zweig registriert Slot 4, nachdem er bereits Slot 0 abgefragt hat.
 Der weitere direkte Wrapper `FUN_08000a10` kann eine Partition als Dienst
-eintragen. Eine spätere Thumb-Nachprüfung fand den Caller in `PCFPowerMgr`,
-Fall 0: `0x08010cc4` ruft `FUN_08000a10(r5, 0)` auf. Damit ist ein bedingter
-Registrierungsversuch für Slot 0 statisch belegt. Ob der Task im normalen
-Gerätelauf startet und Fall 0 vor dem frühen MainApp-Parser erreicht, sowie ob
-Slot 0 dabei tatsächlich auf das FAT-Dateisystem zeigt, ist nicht dynamisch
-bestätigt. Die frühere Zuordnung des Callers zu `DeviceDiscovery` war falsch;
-Details und Task-Datensatz stehen in
-`OSOS-vfs-registration-caller-followup-2026-10-26.md`.
+eintragen. Eine spätere Thumb-Nachprüfung fand den Caller in
+`DeviceDiscovery`, Fall 0: `0x08010cc4` ruft `FUN_08000a10(r5, 0)` auf. Damit
+ist ein bedingter Registrierungsversuch für Slot 0 statisch belegt. Ob der
+Task im normalen Gerätelauf startet und Fall 0 vor dem frühen MainApp-Parser
+erreicht, sowie ob Slot 0 dabei tatsächlich auf das FAT-Dateisystem zeigt,
+ist nicht dynamisch bestätigt. Eine spätere Konstruktor-Record-Prüfung
+bestätigte `DeviceDiscovery` bei Einstieg `0x08010c98` (Recordindex 12,
+Priorität 9) und `PCFPowerMgr` separat bei `0x0801845c` (Index 13,
+Priorität 10); die frühere VFS-Notiz hatte die Tasknamen um einen Record
+verschoben.
 
 Eine erweiterte Xref-Prüfung aller Aufrufer von `FUN_0818e934` bestätigt diese
 Lücke: Die Startup-Funktion `FUN_080202d8` ruft `FUN_08021d08` auf; dieser holt
@@ -563,17 +619,20 @@ Rohbelege: `/tmp/OSOS_vfs_candidate_open_helper_20261026.txt`,
 
 ## Nachtrag: Queue-4-Produzent und mögliche Slot-0-Erreichbarkeit (26.10.2026)
 
-Der zuvor offene Queue-Produzent wurde im ATA-Worker eingegrenzt. `PCFPowerMgr`
+Der zuvor offene Queue-Produzent wurde im ATA-Worker eingegrenzt. `DeviceDiscovery`
 wartet auf Queue 4; `ATAWorkLoopTask` stellt beim Einstieg aus
 `FUN_0833cc58` einen statischen Queue-Datensatz ein. Der Pointer bei
 `0x0833ccd0` ist little-endian `0x08e51d7c`. Der frühe Resetpfad ruft
 `FUN_08005fec` auf und nullt den Bereich `0x086c43a8..0x08e54e4b`, der diesen
-Knoten enthält. Der Sender setzt Ereignisbyte `+0x10` im bedingten Zweig auf
-0; im anderen Zweig schreibt er es vor dem Post nicht. Unter der Annahme,
-dass kein anderer Pfad den Knoten vorher verändert, ist deshalb ein Ereignis
+Knoten enthält. Korrektur der früheren Bytezuordnung: Der bedingte Zweig von
+`FUN_0833cc58` setzt Byte `+0x11` zurück, nicht das von `DeviceDiscovery`
+ausgewertete Typbyte `+0x10`. Das Typbyte selbst ist beim ersten Startup
+durch den breiten `FUN_08005fec`-Nullungslauf auf 0 gesetzt; der Worker
+schreibt es an dieser Stelle nicht direkt. Unter der Annahme, dass kein
+anderer Pfad den Knoten vor dem ersten Post verändert, ist deshalb Ereignis
 Typ 0 plausibel.
 
-Der Fall 0 in `PCFPowerMgr` ruft `FUN_08000a10(r5, 0)` auf. `r5` stammt aus
+Der Fall 0 in `DeviceDiscovery` ruft `FUN_08000a10(r5, 0)` auf. `r5` stammt aus
 `FUN_0819ae24(1)`, das für diesen Modus ein Objekt über `FUN_0833a5e0`
 erzeugt. Damit gibt es jetzt einen konkreten statischen Produzenten und einen
 passenden Empfänger für den Slot-0-Registrierungsversuch. Noch offen bleibt,
@@ -812,3 +871,29 @@ Nachweis in `OSOS-FAT-LFN-index-taint-audit-2026-10-26.md`. Der MBR des
 aktuellen Volumes meldet 4096-Byte-Sektoren, Start-LBA 63, Länge 3.901.312 und
 3.901.376 Gerätesektoren insgesamt. Dieser Ist-Zustand testet keine präparierte
 LBA-Kette.
+
+## Korrektur: früher ATA-Start vor dem Registry-Parser (27.10.2026)
+
+Der zuvor offene ATA-Startpfad wurde statisch mit dem MainApp-Factory-Ablauf
+verbunden. `FUN_08022b08` ruft `FUN_080253f4` vor `FUN_0802c3c4` auf; die
+frühere Initialisierung erreicht über `FUN_081ac420` und `FUN_080b123c`
+`FUN_080cbae0`, das Provider 0 aktiviert und Sektor 0 liest. Bereits
+`FUN_0819ae68` startet beim frisch erzeugten Gerätewrapper über VTable-Slot
+`+0x1c` den ATA-Worker. Zusätzlich führt der früher angeforderte Task
+`DeviceDiscovery` beim Einstieg `FUN_0819ae24(1)` und `FUN_0819ae68` aus,
+wartet danach auf Queue 4 und behandelt Ereignistyp 0 mit
+`FUN_08000a10(r5, 0)`, dem Slot-0-Registrierer.
+
+Damit ist ein automatischer ATA-/Slot-0-Pfad vor dem Parser statisch
+plausibel; der exakte Scheduler-Zeitplan und der erfolgreiche Open der
+`accessories.reg` bleiben unbestätigt. Die frühere LFN-Blockerbewertung ist
+durch die nachfolgende Registerfluss- und Live-Slotkorrektur überholt: Der
+Originalscanner akzeptiert die erfassten Einträge, während vollständiger
+VFS-Open und Datei-Read offenbleiben. Der Overflow, die ROP-Folge und ein
+Rockbox-Handoff wurden nicht ausgelöst.
+
+Rohbelege: `/tmp/OSOS_early_PCF_ATA_before_accessories_20261027.txt`,
+`/tmp/OSOS_PCFPowerMgr_entry_recheck_20261026.txt` und
+`utils/ipodnano5g/analysis/OSOS-vfs-registration-caller-followup-2026-10-26.md`.
+Die Ghidra-Abfragen liefen mit `-readOnly -noanalysis`; keine Geräte-, USB-,
+DFU-, Boot-, NAND- oder Flashaktion.

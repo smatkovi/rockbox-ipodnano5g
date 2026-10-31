@@ -1,0 +1,29 @@
+Original cache manager/getter/release with a local sector source (2026-10-29)
+
+Build: clang ARM1176 target, link succeeded.
+Run: qemu-arm -cpu arm1176 -d in_asm,cpu; exit code 0.
+Stdout: PASS\n
+
+Original runtime functions in the trace:
+- FUN_081f139c: cache LRU lookup/allocation
+- FUN_08158994: runtime cache-pool accessor
+- FUN_0821959c: cache getter and sector fill
+- FUN_082192c4: single-sector read wrapper
+- FUN_08219258 and FUN_08219310: original post-copy/readback path
+- FUN_082195ee: cache release/refcount path
+
+Assertions passed:
+- Three cache timestamps and six modeled sector transfers.
+- Sector bitmap 0b11: both adjacent 512-byte candidate-file blocks supplied.
+- Selected cache entry has refcount 0 and a cleared key after release.
+- Stream bytes at offsets 0x200 and 0x2a4 match the local 704-byte candidate.
+- Saved PC is 0x08007107; gadget 0x08007106 reaches loader sentinel 0x09000000.
+- The sentinel validates loader-read parameters only; no real loader is read.
+
+Model limits:
+- Low-level device read at 0x08160a3a is a local sector source; the first
+  requested LBA maps to candidate offset 0, the next to 0x200.
+- VFS/volume/handle/FAT mount state is manually seeded. Cache locks,
+  FUN_08160438 readiness, parser open and loader read remain harness
+  stubs/gates.
+- No device/USB/DFU query or NAND/NOR write, erase, or firmware flash occurred.
