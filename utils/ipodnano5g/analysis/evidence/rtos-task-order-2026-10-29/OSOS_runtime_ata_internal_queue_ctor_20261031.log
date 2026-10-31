@@ -1,0 +1,186 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (675 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1287 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  ANALYZING all memory and code: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c359c: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c3db8: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 0854b7d8: Unable to read bytes at ram:00000014 (DecompileCallback)  
+WARN  Decompiling 083c3db8: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+WARN  Decompiling 083c3db8: Unable to read bytes at ram:3c50083c (DecompileCallback)  
+INFO  Packed database cache: /var/tmp/sebastian-ghidra/packed-db-cache (PackedDatabaseCache)  
+INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ARM Constant Reference Analyzer           18.646 secs
+    ARM Symbol                                 0.081 secs
+    ASCII Strings                              0.489 secs
+    Apply Data Archives                        0.322 secs
+    Call Convention ID                         0.145 secs
+    Call-Fixup Installer                       0.083 secs
+    Create Address Tables                      0.989 secs
+    Create Address Tables - One Time           0.398 secs
+    Create Function                            0.014 secs
+    Data Reference                             4.046 secs
+    Decompiler Switch Analysis                 6.876 secs
+    Demangler GNU                              0.039 secs
+    Disassemble                                0.152 secs
+    Disassemble Entry Points                   0.535 secs
+    Embedded Media                             0.026 secs
+    External Entry References                  0.000 secs
+    Function ID                                0.014 secs
+    Function Start Pre Search                  0.148 secs
+    Function Start Search                      1.802 secs
+    Function Start Search After Code           1.493 secs
+    Function Start Search After Data           1.360 secs
+    Function Start Search delayed - One Time   0.023 secs
+    Non-Returning Functions - Discovered       2.610 secs
+    Reference                                  5.101 secs
+    Shared Return Calls                        0.702 secs
+    Stack                                      5.133 secs
+    Subroutine References                      1.435 secs
+    Subroutine References - One Time           0.000 secs
+-----------------------------------------------------
+     Total Time   52 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpTargetFunctions.java '0x081e2554'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts/DumpTargetFunctions.java (HeadlessAnalyzer)  
+INFO  DumpTargetFunctions.java> ===== TARGET 081e2554 ===== (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_081e2554 [[081e2554, 081e257f]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_081e2554(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  if (((*DAT_081e2580 & 1) == 0) && (iVar1 = FUN_08192adc(DAT_081e2580), iVar1 != 0)) {
+    uVar2 = FUN_0833c3c2(DAT_081e2584);
+    FUN_08192aee(uVar2,DAT_081e258c,DAT_081e2588);
+  }
+  return DAT_081e2584;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833c11e type=UNCONDITIONAL_CALL caller=FUN_0833c118@0833c118 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833c118 [[0833c118, 0833c169]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0833c118(int param_1)
+
+{
+  undefined4 uVar1;
+  undefined1 auStack_28 [32];
+  
+  uVar1 = FUN_081e2554();
+  *(undefined4 *)(param_1 + 8) = uVar1;
+  thunk_EXT_FUN_22000198(auStack_28,0x20);
+  FUN_08195634(auStack_28,&DAT_0833c16c,param_1);
+  thumb_8193984(s_ATAWorkLoopTask_0833c174,DAT_0833c170,auStack_28,0x18,0x1000,0,0);
+  thumb_8193984(s_ATAWorkLoopIRQTask_0833c188,DAT_0833c184,auStack_28,0xc0,0x800,0,0);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd44 type=UNCONDITIONAL_CALL caller=FUN_0833cd3c@0833cd3c (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833cd3c [[0833cd3c, 0833cd5d]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+void FUN_0833cd3c(int param_1)
+
+{
+  undefined4 uVar1;
+  
+  *(undefined4 *)(param_1 + 8) = DAT_0833cd60;
+  uVar1 = FUN_081e2554();
+  FUN_0833ce28(uVar1,*(undefined4 *)(param_1 + 0xc));
+  FUN_081e2554();
+  FUN_0833cdf8();
+  uVar1 = thunk_EXT_FUN_220023c0();
+  *(undefined4 *)(param_1 + 4) = uVar1;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd4e type=UNCONDITIONAL_CALL caller=FUN_0833cd3c@0833cd3c (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833c56a type=UNCONDITIONAL_CALL caller=FUN_0833c504@0833c504 (GhidraScript)  
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_0833c504 [[0833c504, 0833c575]] ----- (GhidraScript)  
+INFO  DumpTargetFunctions.java> 
+undefined4 FUN_0833c504(int *param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  if ((param_3 != 0) && (param_2 != 0)) {
+    FUN_0833cd10(param_3,1);
+    *(undefined4 *)(param_3 + 0x58) = 0;
+    if ((param_1[5] == DAT_0833c578) &&
+       ((param_1[6] == DAT_0833c57c && (param_1[7] == DAT_0833c580)))) {
+      param_1[4] = param_3;
+      (**(code **)(*param_1 + 0x14))(param_1);
+    }
+    else {
+      iVar2 = param_1[3];
+      iVar1 = FUN_0818eb44(8);
+      *(int *)(iVar1 + 4) = param_3;
+      thunk_EXT_FUN_22003048();
+      thunk_EXT_FUN_22003032(iVar2,iVar1);
+      thunk_EXT_FUN_22003052(iVar2 + 8);
+      FUN_081e2554();
+      FUN_0833cbbe();
+    }
+    return 0;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DumpTargetFunctions.java> XREF from=0833cd6a type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)  
+INFO  ANALYZING changes made by post scripts: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Post-analysis succeeded for file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Discarding changes to the following read-only file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
