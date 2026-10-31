@@ -1,0 +1,14 @@
+2026-10-31: iPod Nano 5G, USB 05ac:1265, interner VFAT-Datenträger /dev/sdb1.
+Vorher accessories.reg: 69 Byte, b7203385b92dc4b3df094d0d0889b0f48dbd6766a687f54fa874d0c5f4e48854.
+Vorher /.rockbox/rockbox.ipod: 1079128 Byte, 65276d4bf5b88af3c2ff5701a21fa6cd6654e24b4f147d7e7c31395a7023ec16.
+Vorher /BOOT.BIN: nicht vorhanden.
+
+Geschrieben via mcopy auf /dev/sdb1:
+/iPod_Control/Device/accessories.reg <- 736 Byte, b19180df8a20ef7e5496885bf227827623d6c3115adef0e4d47ed2efe2e6f78e
+/BOOT.BIN <- 69504 Byte, ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2
+
+Rücklesen nach Schreiben: beide Hashes stimmen.
+SCSI eject meldete Erfolg und setzte /dev/sdb auf 0 Byte; sg_start --load stellte das Medium wieder mit 14.9 GiB bereit.
+sg_reset --device --no-escalate änderte den USB-LUN-Zustand nicht zu einem CPU-Neustart.
+Rücklesen nach diesen SCSI-Kommandos: beide Hashes stimmen weiterhin.
+Boottrigger noch ausstehend. Kein Rockbox- oder Fehlerbildschirm beobachtet.
