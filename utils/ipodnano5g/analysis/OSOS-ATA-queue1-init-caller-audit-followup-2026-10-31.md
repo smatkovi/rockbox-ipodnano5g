@@ -22,7 +22,17 @@ Ghidra-Abfrage findet keine eingehende Referenz zum Body-Veneer oder zum
 Prefix-API-Ziel. Ein reproduzierbarer Little-Endian-32-Bit-Scan von 160
 Codeabbildern und den beiden lokalen Prefix-/Runtime-Eingaben findet genau
 die beiden Importliterale in Body und Runtime; keinen gespeicherten Zeiger
-auf einen der beiden Veneers.
+auf einen der beiden Veneers und keinen direkten Import des generischen
+Prefix-SVC-Dispatchers `0x22007008`.
+
+Zusätzlich wurden alle 32 statischen Aufrufstellen des Prefix-SVC-Dispatchers
+ausgewertet. Genau eine setzt den Dienstcode `0x2e`: der Setupwrapper
+`FUN_22005248` selbst. Die neun Aufrufstellen, die Ghidra keiner Funktion
+zugeordnet hatte, wurden anhand ihrer ARM-/Thumb-Instruktionsfenster einzeln
+geprüft; keine richtet Queue 1 ein. Zusammen mit den fehlenden Body-Xrefs
+gibt es in den geprüften Prefix-/OSOS-Abbildern daher keinen statisch
+belegten Queue-Setup-Aufrufer. Ein dynamisch erzeugter Request oder ein
+früherer, außerhalb dieser Images liegender Setupschritt bleibt möglich.
 
 Das stützt die engere Aussage: **In den geprüften OSOS-Codeabbildern ist kein
 statischer Aufrufer des Queue-Setupdienstes belegt.** Es beweist nicht, dass
@@ -51,8 +61,9 @@ Beobachtung nicht.
 ## Belege
 
 - `evidence/ata-queue1-init-lookup-2026-10-31/` enthält den Ghidra-Auszug
-  des transient dekodierten Body-Veneers, die beiden Null-Xref-Abfragen, das
-  reproduzierbare Suchskript, dessen Ergebnis und Prüfsummen.
+  des transient dekodierten Body-Veneers, die Null-Xref-Abfragen, alle
+  Dispatcher-Aufrufer und die Fenster der nicht zugeordneten Aufrufstellen,
+  das reproduzierbare Suchskript, dessen Ergebnis und Prüfsummen.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_svc_dispatch_queue1_semantics_20261031.application.log`
   zeigt SVC-Fall `0x2e`, die Queuebeschreibung und die Kapazitätsprüfung.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log`

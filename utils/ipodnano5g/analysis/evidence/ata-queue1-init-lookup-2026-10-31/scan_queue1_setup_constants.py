@@ -23,6 +23,8 @@ MAX_SIZE = 16 * 1024 * 1024
 NEEDLES = {
     0x22005248: "prefix queue-setup API literal",
     0x22005249: "prefix queue-setup Thumb pointer",
+    0x22007008: "prefix SVC dispatcher literal",
+    0x22007009: "prefix SVC dispatcher Thumb pointer",
     0x0823B7A8: "OSOS-body queue-setup veneer pointer",
     0x0823B7A9: "OSOS-body queue-setup Thumb pointer",
     0x0820D52C: "OSOS-runtime queue-setup veneer pointer",

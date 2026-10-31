@@ -1,7 +1,7 @@
 literal-scan=LE32
 root=/home/sebastian/ipod-re/nano5g
 max_size=16777216
-needles=0x22005248,0x22005249,0x0823b7a8,0x0823b7a9,0x0820d52c,0x0820d52d
+needles=0x22005248,0x22005249,0x22007008,0x22007009,0x0823b7a8,0x0823b7a9,0x0820d52c,0x0820d52d
 HIT path=/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin sha256=1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03 value=0x22005248 offset=0x20d530 meaning=prefix queue-setup API literal
 HIT path=/home/sebastian/ipod-re/nano5g/osos_decrypted/osos_body.bin sha256=01f8f8c7adb81e548d000f74f2d1335bda6ce48f9c7ac74d81d80a278d7ee5ec value=0x22005248 offset=0x23b7ac meaning=prefix queue-setup API literal
 SCANNED_FILES=160 HITS=2
