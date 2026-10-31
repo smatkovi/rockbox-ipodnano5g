@@ -1,0 +1,34 @@
+
+../local-analysis/inputs/osos_bootprefix_22000000_20261031.bin:     file format binary
+
+
+Disassembly of section .data:
+
+22005fec <.data+0x5fec>:
+22005fec:	e59f1048 	ldr	r1, [pc, #72]	@ 0x2200603c
+22005ff0:	e59f0040 	ldr	r0, [pc, #64]	@ 0x22006038
+22005ff4:	e92d4010 	push	{r4, lr}
+22005ff8:	e3510000 	cmp	r1, #0
+22005ffc:	1bffe81c 	blne	0x22000074
+22006000:	e59f103c 	ldr	r1, [pc, #60]	@ 0x22006044
+22006004:	e59f0034 	ldr	r0, [pc, #52]	@ 0x22006040
+22006008:	e3510000 	cmp	r1, #0
+2200600c:	1bffe818 	blne	0x22000074
+22006010:	e59f1034 	ldr	r1, [pc, #52]	@ 0x2200604c
+22006014:	e59f002c 	ldr	r0, [pc, #44]	@ 0x22006048
+22006018:	e3510000 	cmp	r1, #0
+2200601c:	1bffe814 	blne	0x22000074
+22006020:	e59f102c 	ldr	r1, [pc, #44]	@ 0x22006054
+22006024:	e59f0024 	ldr	r0, [pc, #36]	@ 0x22006050
+22006028:	e3510000 	cmp	r1, #0
+2200602c:	18bd4010 	popne	{r4, lr}
+22006030:	1affe80f 	bne	0x22000074
+22006034:	e8bd8010 	pop	{r4, pc}
+22006038:	2200e27c 	andcs	lr, r0, #124, 4	@ 0xc0000007
+2200603c:	00000bc4 	andeq	r0, r0, r4, asr #23
+22006040:	22050000 	andcs	r0, r5, #0
+22006044:	00000000 	andeq	r0, r0, r0
+22006048:	086c3768 	stmdaeq	ip!, {r3, r5, r6, r8, r9, sl, ip, sp}^
+2200604c:	00000000 	andeq	r0, r0, r0
+22006050:	086c43a8 	stmdaeq	ip!, {r3, r5, r7, r8, r9, lr}^
+22006054:	00790aa4 	rsbseq	r0, r9, r4, lsr #21

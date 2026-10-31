@@ -1,0 +1,19 @@
+prefix_sha256=0b01c47e51b562523ddce4747529bd9f41b14840337e76ede54af60a809f54e2
+dram_suffix_sha256=1326c547b1a97ddf35bf0df53949833fa3b9ec8fabaa1733cb399df7b537ff03
+startup_call_0x220050bc=0x22005fec
+startup_call_0x220050c8=0x22005d3c
+bss_helper_call_0x22005ffc=0x22000074
+prefix_literal_0x6038=0x2200e27c
+prefix_literal_0x603c=0x00000bc4
+prefix_literal_0x6040=0x22050000
+prefix_literal_0x6044=0x00000000
+prefix_literal_0x6048=0x086c3768
+prefix_literal_0x604c=0x00000000
+prefix_literal_0x6050=0x086c43a8
+prefix_literal_0x6054=0x00790aa4
+dram_bss=[0x086c43a8,0x08e54e4c) size=0x790aa4
+l1_table=[0x086dc000,0x086e0000) size=0x4000
+witness_entry=0x086dd400
+dram_loaded_end=0x086c43a8
+assertions=PASS; exact startup calls BSS clear before MMU setup; L1 table is fully inside DRAM BSS
+scope=static offline images only; no live device RAM or MMU state

@@ -83,9 +83,14 @@ Codepfade, die Tabellenwerte indirekt ändern, nicht aus.
   `analysis/evidence/accessories-alias-startup-reach-2026-10-31/README.md`.
 
 Die L1-Tabelle ab `0x086dc000` liegt im DRAM-BSS und ist nicht in der
-code-only Suffixdatei enthalten. Das hindert den Setup-Code nicht daran, sie
-beim Start zu befüllen; ihre Werte beim Accessories-Callback sind allerdings
-nicht live ausgelesen.
+Suffixdatei enthalten. Ein neuer Abgleich des echten SRAM-Prefixes zeigt, dass
+`FUN_22005058` zuerst `FUN_22005fec` (bei `0x220050bc`) und später
+`FUN_22005d3c` (bei `0x220050c8`) aufruft. Die BSS-Routine nullt
+`[0x086c43a8, 0x08e54e4c)`; die gesamte 16-KiB-L1-Tabelle liegt darin. Ein
+getrennter QEMU-Lauf setzt vor dem Aufruf einen Marker in einen sonst
+unberührten L1-Eintrag und belegt, dass der echte OSOS-BSS-Code ihn vor Eintritt
+in den MMU-Initialisierer löscht. Die späteren Tabellenwerte beim
+Accessories-Callback sind weiterhin nicht live ausgelesen.
 
 Der Alias ist damit **statisch durch den normalen OSOS-Setup-Pfad eingerichtet**,
 nach der durch IMG1-Header, Relokationstabelle und OSOS-Section-Layout
@@ -202,13 +207,22 @@ IRAM-Identity `0x22004c02`, den Low-Vector-Alias `0x2200c802` und den
 SROM-Eintrag `0x38000c02`. Der Lauf hält zunächst bei `PC=0x22005d3c` und
 erreicht nach dem kontrollierten Loader-Read wieder `PC=0x0bf000e0`.
 
-Dieser dritte Lauf belegt den MMU-Initialisierer unter den in QEMU gelieferten
-Speicherabbildern, nicht den IMG1-Relokator oder den gesamten OSOS-Startup.
-Auch der Datei-Read ist weiterhin ein Harness-Kopiervorgang, kein VFS-/FAT-/ATA-
-Read. Die drei System-Rehosts sind daher keine Geräte-Messungen. Sie schließen
-weder die tatsächliche DRAM-Belegung noch aktive Geräte-TLB-Einträge ein;
-QEMU-TCG bildet die realen ARM1176-I-/D-Caches und den Write-Buffer nicht ab.
-Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
+Ein vierter Lauf ergänzt die bisher künstlich genullte Tabelle durch den echten
+OSOS-BSS-Initialisierer `FUN_22005fec`. Am Funktionsentry zeigt GDB den zuvor
+gesetzten Marker `0xdeadbeef` bei `0x086dd400`; am anschließenden Entry des
+MMU-Initialisierers ist der Wert null. Danach erzeugt `FUN_22005d3c` die
+erwarteten realen Tabellenwerte und der Loader erreicht wieder
+`PC=0x0bf000e0`. Der Harness ruft die beiden OSOS-Funktionen direkt auf und
+führt nicht den gesamten Startup mit vorherigen MMIO- und RTOS-Setup-Aufrufen
+aus. Die statische Callsite-Reihenfolge in `FUN_22005058` belegt, dass die
+BSS-Nullung vor dem MMU-Aufruf liegt. Reproduktionsdateien und Logs stehen in
+`analysis/evidence/accessories-alias-arm1176-qemu-bss-2026-10-31/README.md`.
+
+Auch der Datei-Read bleibt ein Harness-Kopiervorgang, kein VFS-/FAT-/ATA-Read.
+Die System-Rehosts sind keine Geräte-Messungen. Sie schließen weder die
+tatsächliche DRAM-Belegung noch aktive Geräte-TLB-Einträge ein; QEMU-TCG bildet
+die realen ARM1176-I-/D-Caches und den Write-Buffer nicht ab.
+Reproduktionsdateien und GDB-/QEMU-Logs der vorherigen Läufe liegen unter
 `analysis/evidence/accessories-alias-arm1176-qemu-2026-10-31/README.md`.
 
 ## Grenzen
@@ -217,11 +231,12 @@ Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
   üblichen SRAM-/DRAM-Layout beschrieben. Das Ende des Runtime-Suffix-Abbilds
   weicht in 2.267 Bytes vom IMG1-Body ab; diese Tail-Differenz ändert den
   byteidentischen Mappercode an `0x080e3e84` nicht. Der echte OSOS-
-  Initialisierer wurde mit dem extrahierten SRAM-Prefix und DRAM-Suffix in QEMU
-  ausgeführt. Das ist keine Live-Messung. Die statische DRAM-Abbildung enthält die
-  L1-Tabelle ab `0x086dc000` nicht, weil sie im BSS liegt. Ob die
-  Alias-Deskriptoren bis zum Accessories-Callback unverändert bleiben, ist
-  nicht verifiziert.
+  BSS-Initialisierer und MMU-Initialisierer wurden mit dem extrahierten
+  SRAM-Prefix und DRAM-Suffix getrennt in QEMU ausgeführt; der vierte Lauf
+  belegt, dass die im Suffix fehlende L1-Tabelle durch die BSS-Nullung vor dem
+  Befüllen auf null gesetzt wird. Das ist keine Live-Messung und kein vollständiger
+  Startup-Lauf. Ob die Alias-Deskriptoren bis zum Accessories-Callback
+  unverändert bleiben, ist nicht verifiziert.
 - Der dritte QEMU-Lauf liest `TRE=0` aus dem CP15-Zustand, den der echte
   OSOS-MMU-Initialisierer unter QEMU hinterlässt; das ist weiterhin keine
   Live-Messung am iPod. Wenn derselbe Zustand dort gilt und der Alias-Descriptor
