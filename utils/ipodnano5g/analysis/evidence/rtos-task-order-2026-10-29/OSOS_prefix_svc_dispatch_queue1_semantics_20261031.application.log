@@ -1,0 +1,1888 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)
+INFO  Searching for classes... (ClassSearcher)
+INFO  Class search complete (676 ms) (ClassSearcher)
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)
+INFO  Initializing Random Number Generator... (SecureRandomFactory)
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)
+INFO  Headless startup complete (1276 ms) (AnalyzeHeadless)
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_prefix_20261031/N5G_OSOS_prefix_20261031 (HeadlessAnalyzer)
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_prefix_20261031/N5G_OSOS_prefix_20261031 (HeadlessProject)
+INFO  REPORT: Processing read-only project file: /osos_bootprefix_22000000.bin (HeadlessAnalyzer)
+INFO  REPORT: Execute script: DumpTargetFunctions.java '0x22000b70' '0x22004f14'  (HeadlessAnalyzer)
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/xml-heap-2026-10-29/scripts/DumpTargetFunctions.java (HeadlessAnalyzer)
+INFO  DumpTargetFunctions.java> ===== TARGET 22000b70 ===== (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- TARGET_FUNCTION FUN_22000b70 [[22000b70, 22001633] [2200165c, 22002197]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22000b70(int param_1)
+
+{
+  short sVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  uint uVar9;
+  undefined4 uVar10;
+  int *piVar11;
+  int *extraout_r1;
+  int *extraout_r1_00;
+  int *extraout_r1_01;
+  int *extraout_r1_02;
+  int *extraout_r1_03;
+  int *extraout_r1_04;
+  int *extraout_r1_05;
+  int *extraout_r1_06;
+  int *extraout_r1_07;
+  int *extraout_r1_08;
+  int *extraout_r1_09;
+  int *extraout_r1_10;
+  int *extraout_r1_11;
+  int *extraout_r1_12;
+  int *extraout_r1_13;
+  int *extraout_r1_14;
+  int *extraout_r1_15;
+  int *extraout_r1_16;
+  int *extraout_r1_17;
+  int *extraout_r1_18;
+  int *extraout_r1_19;
+  int *extraout_r1_20;
+  int *extraout_r1_21;
+  int *piVar12;
+  int *piVar13;
+  int iVar14;
+  int iVar15;
+  int *piVar16;
+  bool bVar17;
+  bool bVar18;
+  undefined8 uVar19;
+
+  iVar7 = DAT_22001654;
+  iVar6 = DAT_22001648;
+  iVar3 = DAT_22001644;
+  iVar14 = DAT_22001640;
+  pcVar2 = DAT_22001638;
+  piVar11 = (int *)0xb;
+  piVar13 = *(int **)(param_1 + 4);
+  piVar12 = *(int **)(DAT_22001638 + 4);
+  piVar12[4] = param_1;
+  piVar8 = DAT_2200163c;
+  iVar15 = *piVar13;
+  iVar4 = *(int *)(pcVar2 + 8);
+  switch(iVar15) {
+  case 0:
+    break;
+  case 1:
+    iVar6 = piVar13[2];
+    iVar4 = *(int *)(iVar14 + iVar6 * 4);
+    if (iVar4 != -1) {
+      if (iVar4 == 0) {
+        *(undefined4 *)(iVar14 + iVar6 * 4) = 0xffffffff;
+      }
+      else {
+        piVar13[1] = 1;
+      }
+      break;
+    }
+    if (piVar13[3] != 0) {
+      iVar4 = piVar13[4];
+      piVar12[2] = iVar4;
+      *(int *)(iVar4 + 8) = piVar13[3];
+      *(undefined4 *)(iVar4 + 0xc) = 0;
+      *(int *)(iVar4 + 0x1c) = iVar6;
+      *(undefined4 *)(iVar4 + 0x18) = 1;
+      *(int *)(iVar4 + 0x10) = piVar12[8];
+      FUN_2200073c();
+      piVar13[1] = 5;
+    }
+    *(int *)(iVar14 + iVar6 * 4) = piVar12[8];
+    piVar12[7] = 0x40;
+    piVar12 = *(int **)(pcVar2 + 4);
+    goto LAB_22000dc0;
+  case 2:
+    iVar4 = piVar13[2];
+    piVar11 = *(int **)(iVar14 + iVar4 * 4);
+    if (piVar11 == (int *)0xffffffff) {
+LAB_2200182c:
+      *(undefined4 *)(iVar14 + iVar4 * 4) = 0;
+      break;
+    }
+    if (piVar11 == (int *)0x0) {
+      iVar4 = 0xe;
+      goto LAB_22001bdc;
+    }
+    piVar11 = *(int **)(iVar3 + 8);
+    *piVar11 = iVar4;
+    piVar12 = piVar11;
+    goto LAB_220012c4;
+  case 3:
+    piVar11 = *(int **)(iVar14 + piVar13[2] * 4);
+    if (piVar11 == (int *)0x0) {
+      *(undefined4 *)(iVar14 + piVar13[2] * 4) = 0xffffffff;
+    }
+    break;
+  case 4:
+    iVar4 = piVar13[5];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[9];
+    }
+    *(int *)(piVar13[6] + 8) = iVar4;
+    *(int *)(piVar13[6] + 0xc) = piVar13[2];
+    *(int *)(piVar13[6] + 4) = piVar12[8];
+    puVar5 = (undefined4 *)(DAT_22001658 + piVar13[3] * 0x14);
+    piVar11 = (int *)*puVar5;
+    for (piVar8 = piVar11; piVar8 != (int *)0x0; piVar8 = (int *)*piVar8) {
+      piVar12 = (int *)piVar13[6];
+      if (piVar12 == piVar8) goto switchD_22000bb8_default;
+    }
+    if ((piVar11 == (int *)0x0) && (puVar5[3] != 0)) {
+      thunk_EXT_FUN_08353708();
+    }
+    piVar11 = (int *)puVar5[1];
+    if (piVar11 == (int *)0x0) {
+LAB_22001574:
+      thunk_EXT_FUN_08353328(puVar5,piVar13[6]);
+    }
+    else {
+      iVar4 = *(int *)(piVar11[4] + 4);
+      piVar8 = *(int **)(iVar4 + 0x10);
+      if (piVar8 != (int *)0x0) {
+        piVar12 = *(int **)(*(int *)(pcVar2 + 4) + 0x20);
+      }
+      if (piVar8 != (int *)0x0 && piVar8 != piVar12) goto LAB_22001574;
+      *(int *)(iVar4 + 0x18) = piVar13[6];
+      puVar5[4] = puVar5[4] + 1;
+      iVar6 = *piVar11;
+      puVar5[1] = iVar6;
+      if (iVar6 != 0) {
+        *(undefined4 **)(*piVar11 + 4) = puVar5 + 1;
+      }
+      uVar9 = piVar11[7];
+      piVar11[7] = uVar9 & 0xffffffdf;
+      if ((uVar9 & 0xffffffdf) == 0) {
+        *piVar11 = *(int *)(pcVar2 + 8);
+        *(int **)(pcVar2 + 8) = piVar11;
+      }
+      if (piVar11[2] != 0) {
+        *(undefined4 *)(iVar4 + 4) = 0;
+        FUN_220022f0();
+        piVar11[2] = 0;
+      }
+    }
+    piVar12 = DAT_22001650;
+    piVar11 = (int *)piVar13[2];
+    if (piVar13[7] == 0) {
+      if (piVar11 == (int *)0x0) break;
+LAB_22001cbc:
+      *(undefined4 *)(iVar14 + (int)piVar11 * 4) = 0xffffffff;
+      break;
+    }
+    piVar8 = *(int **)(pcVar2 + 4);
+    *(int *)(iVar14 + (int)piVar11 * 4) = piVar8[8];
+    piVar8[7] = 0x40;
+    iVar4 = *piVar8;
+    *(int *)(pcVar2 + 4) = iVar4;
+    *(int **)(iVar4 + 4) = piVar12;
+    if (piVar13[8] == 0) break;
+    iVar14 = piVar13[9];
+    piVar8[2] = iVar14;
+    iVar4 = piVar13[8];
+    *(int **)(iVar14 + 0x1c) = piVar11;
+    *(int *)(iVar14 + 8) = iVar4;
+    *(undefined4 *)(iVar14 + 0xc) = 0;
+    *(undefined4 *)(iVar14 + 0x18) = 1;
+    iVar4 = piVar8[8];
+LAB_220015e0:
+    *(int *)(iVar14 + 0x10) = iVar4;
+    FUN_2200073c();
+    iVar4 = 5;
+    piVar11 = extraout_r1_04;
+    goto LAB_22001bdc;
+  case 5:
+    iVar6 = piVar13[4];
+    iVar4 = piVar13[3] * 5;
+    piVar8 = (int *)(DAT_22001658 + piVar13[3] * 0x14);
+    piVar12 = (int *)*piVar8;
+    if (piVar12 == (int *)0x0) {
+LAB_22001684:
+      piVar12 = (int *)0x0;
+    }
+    else {
+      if (iVar6 != 0) {
+        iVar4 = piVar12[1];
+      }
+      if (iVar6 != 0 && iVar4 != iVar6) {
+        do {
+          piVar11 = piVar12;
+          piVar12 = (int *)*piVar11;
+          if (piVar12 == (int *)0x0) goto LAB_22001684;
+        } while (piVar12[1] != iVar6);
+        *piVar11 = *piVar12;
+      }
+      else {
+        *piVar8 = *piVar12;
+      }
+    }
+    if (piVar12 == (int *)0x0) {
+      piVar11 = (int *)0x0;
+      if (piVar13[7] != 0) {
+        iVar4 = *(int *)(pcVar2 + 4);
+        *(undefined4 *)(iVar4 + 0x1c) = 0x20;
+        FUN_22000b1c(piVar8 + 1);
+        piVar11 = extraout_r1_05;
+        if (piVar13[8] != 0) {
+          iVar14 = piVar13[9];
+          *(int *)(iVar4 + 8) = iVar14;
+          *(int *)(iVar14 + 8) = piVar13[8];
+          *(undefined4 *)(iVar14 + 0xc) = 0;
+          *(undefined4 *)(iVar14 + 0x18) = 5;
+          *(int *)(iVar14 + 0x1c) = piVar13[3];
+          *(undefined4 *)(iVar14 + 0x10) = *(undefined4 *)(iVar4 + 0x20);
+          FUN_2200073c();
+          piVar13[1] = 5;
+          piVar11 = extraout_r1_06;
+        }
+      }
+    }
+    else {
+      piVar8[4] = piVar8[4] + 1;
+      piVar11 = (int *)piVar8[3];
+      if (piVar11 != (int *)0x0) {
+        if (*piVar8 == 0) {
+          *(undefined4 *)(iVar14 + (int)piVar11 * 4) = 0xffffffff;
+        }
+        else {
+          *(undefined4 *)(iVar14 + (int)piVar11 * 4) = 0;
+        }
+      }
+    }
+    piVar13[6] = (int)piVar12;
+    break;
+  case 6:
+    break;
+  case 7:
+    break;
+  case 8:
+    break;
+  case 9:
+    break;
+  case 10:
+    break;
+  case 0xb:
+    break;
+  case 0xc:
+    piVar8 = (int *)(iVar7 + piVar13[3] * 0x2c);
+    piVar11 = (int *)piVar8[4];
+    piVar16 = (int *)piVar8[2];
+    if (piVar16 != piVar11) {
+      piVar13[1] = 0;
+      piVar11 = (int *)piVar8[4];
+      iVar6 = piVar8[1];
+      if ((piVar11 != (int *)0x0) || (piVar12 = (int *)piVar8[5], piVar12 == (int *)0x0)) {
+        piVar8[4] = (int)piVar11 + 1;
+        piVar12 = (int *)(piVar8[3] + 1);
+        piVar8[3] = (int)piVar12;
+        if (piVar12 == piVar16) {
+          piVar12 = (int *)0x0;
+          piVar8[3] = 0;
+        }
+        if (iVar6 != 0) {
+          if (iVar6 == 1) {
+            piVar11 = (int *)(uint)*(byte *)piVar13[4];
+            *(byte *)(*piVar8 + (int)piVar12) = *(byte *)piVar13[4];
+          }
+          else if (iVar6 == 2) {
+            piVar11 = (int *)(uint)*(ushort *)piVar13[4];
+            *(ushort *)(*piVar8 + (int)piVar12 * 2) = *(ushort *)piVar13[4];
+          }
+          else if (iVar6 == 4) {
+            piVar11 = *(int **)piVar13[4];
+            *(int **)(*piVar8 + (int)piVar12 * 4) = piVar11;
+          }
+          else {
+            FUN_22000b04((int)piVar12 * iVar6 + *piVar8,piVar13[4],iVar6);
+            piVar11 = extraout_r1_10;
+          }
+        }
+        iVar4 = piVar8[10];
+        if ((int *)piVar8[4] == piVar16) {
+          if (iVar4 != 0) {
+            *(undefined4 *)(iVar14 + iVar4 * 4) = 0xffffffff;
+          }
+          if (piVar8[7] != 0) {
+            thunk_EXT_FUN_08353708();
+            piVar11 = extraout_r1_11;
+          }
+        }
+        else if (iVar4 != 0) {
+          piVar11 = (int *)0x0;
+          *(undefined4 *)(iVar14 + iVar4 * 4) = 0;
+        }
+        if (piVar8[4] != 1) break;
+        if (piVar8[9] != 0) {
+          *(undefined4 *)(iVar14 + piVar8[9] * 4) = 0xffffffff;
+        }
+LAB_22001908:
+        iVar4 = piVar8[8];
+        goto LAB_22001b84;
+      }
+      iVar7 = *piVar12;
+      piVar8[5] = iVar7;
+      if (iVar7 != 0) {
+        *(int **)(*piVar12 + 4) = piVar8 + 5;
+      }
+      piVar11 = (int *)(piVar12[7] & 0xffffff7f);
+      piVar12[7] = (int)piVar11;
+      if (piVar11 == (int *)0x0) {
+        *piVar12 = iVar4;
+        *(int **)(pcVar2 + 8) = piVar12;
+      }
+      if (piVar12[2] != 0) {
+        FUN_220022f0();
+        piVar12[2] = 0;
+        piVar11 = extraout_r1_07;
+      }
+      iVar4 = *(int *)(piVar12[4] + 4);
+      *(undefined4 *)(iVar4 + 4) = 0;
+      if (iVar6 != 0) {
+        if (iVar6 == 1) {
+          piVar11 = (int *)(uint)*(byte *)piVar13[4];
+          **(byte **)(iVar4 + 0x10) = *(byte *)piVar13[4];
+        }
+        else if (iVar6 == 2) {
+          piVar11 = (int *)(uint)*(ushort *)piVar13[4];
+          **(ushort **)(iVar4 + 0x10) = *(ushort *)piVar13[4];
+        }
+        else if (iVar6 == 4) {
+          piVar11 = *(int **)piVar13[4];
+          **(undefined4 **)(iVar4 + 0x10) = piVar11;
+        }
+        else {
+          FUN_22000b04(*(undefined4 *)(iVar4 + 0x10),(undefined4 *)piVar13[4],iVar6);
+          piVar11 = extraout_r1_08;
+        }
+      }
+      if (piVar8[8] != 0) {
+        thunk_EXT_FUN_08353708();
+        piVar11 = extraout_r1_09;
+      }
+      iVar4 = piVar8[10];
+      if (iVar4 == 0) break;
+      goto LAB_2200182c;
+    }
+    goto LAB_22001928;
+  case 0xd:
+    piVar8 = (int *)(iVar7 + piVar13[3] * 0x2c);
+    if (piVar8[4] != 0) {
+      piVar13[1] = 0;
+      iVar4 = piVar8[4];
+      iVar6 = piVar8[3];
+      piVar8[4] = iVar4 + -1;
+      iVar4 = iVar6 - (iVar4 + -1);
+      if (iVar4 < 0) {
+        iVar6 = piVar8[2];
+      }
+      iVar7 = piVar8[1];
+      if (iVar4 < 0) {
+        iVar4 = iVar4 + iVar6;
+      }
+      if (iVar7 != 0) {
+        if (iVar7 == 1) {
+          *(undefined1 *)piVar13[4] = *(undefined1 *)(*piVar8 + iVar4);
+        }
+        else if (iVar7 == 2) {
+          *(undefined2 *)piVar13[4] = *(undefined2 *)(*piVar8 + iVar4 * 2);
+        }
+        else if (iVar7 == 4) {
+          *(undefined4 *)piVar13[4] = *(undefined4 *)(*piVar8 + iVar4 * 4);
+        }
+        else {
+          FUN_22000b04(piVar13[4],iVar4 * iVar7 + *piVar8);
+        }
+      }
+      iVar4 = piVar8[8];
+      if (piVar8[4] == 0) {
+        if (iVar4 != 0) {
+          *(undefined4 *)(iVar14 + iVar4 * 4) = 0xffffffff;
+        }
+        if (piVar8[9] != 0) {
+          thunk_EXT_FUN_08353708();
+        }
+      }
+      else if (iVar4 != 0) {
+        *(undefined4 *)(iVar14 + iVar4 * 4) = 0;
+      }
+      piVar11 = (int *)(piVar8[2] + -1);
+      if ((int *)piVar8[4] == piVar11) {
+        piVar12 = (int *)piVar8[5];
+        if (piVar12 != (int *)0x0) {
+          iVar4 = *piVar12;
+          piVar8[5] = iVar4;
+          if (iVar4 != 0) {
+            *(int **)(*piVar12 + 4) = piVar8 + 5;
+          }
+          uVar9 = piVar12[7];
+          piVar12[7] = uVar9 & 0xffffff7f;
+          if ((uVar9 & 0xffffff7f) == 0) {
+            *piVar12 = *(int *)(pcVar2 + 8);
+            *(int **)(pcVar2 + 8) = piVar12;
+          }
+          if (piVar12[2] != 0) {
+            FUN_220022f0();
+            piVar12[2] = 0;
+          }
+          piVar8[4] = piVar8[4] + 1;
+          iVar4 = piVar8[3];
+          piVar8[3] = iVar4 + 1;
+          if (iVar4 + 1 == piVar8[2]) {
+            piVar8[3] = 0;
+          }
+          iVar4 = piVar8[3];
+          iVar6 = *(int *)(piVar12[4] + 4);
+          *(undefined4 *)(iVar6 + 4) = 0;
+          if (iVar7 != 0) {
+            if (iVar7 == 1) {
+              *(undefined1 *)(*piVar8 + iVar4) = **(undefined1 **)(iVar6 + 0x10);
+            }
+            else if (iVar7 == 2) {
+              *(undefined2 *)(*piVar8 + iVar4 * 2) = **(undefined2 **)(iVar6 + 0x10);
+            }
+            else if (iVar7 == 4) {
+              *(undefined4 *)(*piVar8 + iVar4 * 4) = **(undefined4 **)(iVar6 + 0x10);
+            }
+            else {
+              FUN_22000b04(iVar4 * iVar7 + *piVar8,*(undefined4 *)(iVar6 + 0x10),iVar7);
+            }
+          }
+          piVar11 = (int *)piVar8[2];
+          iVar4 = piVar8[10];
+          if ((int *)piVar8[4] == piVar11) {
+            if (iVar4 != 0) {
+              *(undefined4 *)(iVar14 + iVar4 * 4) = 0xffffffff;
+            }
+            if (piVar8[7] != 0) {
+              thunk_EXT_FUN_08353708();
+              piVar11 = extraout_r1_14;
+            }
+          }
+          else if (iVar4 != 0) {
+            *(undefined4 *)(iVar14 + iVar4 * 4) = 0;
+          }
+          if (piVar8[4] != 1) break;
+          goto LAB_22001908;
+        }
+        if (piVar8[7] != 0) {
+          *(undefined4 *)(iVar14 + piVar8[7] * 4) = 0xffffffff;
+        }
+      }
+      iVar4 = piVar8[10];
+LAB_22001b84:
+      if (iVar4 != 0) {
+        thunk_EXT_FUN_08353708();
+        piVar11 = extraout_r1_15;
+      }
+      break;
+    }
+LAB_22001928:
+    if (piVar13[5] == 0) break;
+    piVar12[7] = 0x80;
+    FUN_22000b1c(piVar8 + 5);
+    piVar11 = extraout_r1_12;
+    if (piVar13[6] == 0) break;
+    iVar4 = piVar13[7];
+    piVar12[2] = iVar4;
+    *(int *)(iVar4 + 8) = piVar13[6];
+    *(undefined4 *)(iVar4 + 0xc) = 0;
+    *(undefined4 *)(iVar4 + 0x18) = 3;
+    *(int *)(iVar4 + 0x1c) = piVar13[3];
+    *(int *)(iVar4 + 0x10) = piVar12[8];
+    goto LAB_22001980;
+  case 0xe:
+    puVar5 = (undefined4 *)(iVar6 + piVar13[2] * 0x20);
+    puVar5[6] = puVar5[6] + 1;
+    piVar8 = (int *)*puVar5;
+    if (piVar8 != (int *)0x0) {
+      if (piVar8 == piVar12) {
+        *(short *)(puVar5 + 1) = *(short *)(puVar5 + 1) + 1;
+LAB_22000ff4:
+        iVar4 = 10;
+        goto LAB_22001bdc;
+      }
+      puVar5[7] = puVar5[7] + 1;
+      piVar11 = (int *)0x0;
+      if (piVar13[3] == 0) goto LAB_220010f0;
+      if ((puVar5[5] == 1) && (piVar12[9] < piVar8[9])) {
+        if (puVar5[4] == 0) {
+          puVar5[4] = piVar8[9];
+        }
+        piVar8[9] = piVar12[9];
+        if (piVar8[7] == 0) {
+          *(int *)(*piVar8 + 4) = piVar8[1];
+          *(int *)piVar8[1] = *piVar8;
+          *piVar8 = *(int *)(pcVar2 + 8);
+          *(int **)(pcVar2 + 8) = piVar8;
+        }
+        else if ((piVar8[7] & 0xaaU) != 0) {
+          thunk_EXT_FUN_08354cb0();
+        }
+      }
+      iVar4 = *(int *)(pcVar2 + 4);
+      *(undefined4 *)(iVar4 + 0x1c) = 8;
+      FUN_22000b1c(puVar5 + 2);
+      piVar11 = extraout_r1;
+      if (piVar13[4] == 0) break;
+      iVar14 = piVar13[5];
+      *(int *)(iVar4 + 8) = iVar14;
+      *(int *)(iVar14 + 8) = piVar13[4];
+      *(undefined4 *)(iVar14 + 0xc) = 0;
+      *(undefined4 *)(iVar14 + 0x18) = 4;
+      *(int *)(iVar14 + 0x1c) = piVar13[2];
+      iVar4 = *(int *)(iVar4 + 0x20);
+      goto LAB_220015e0;
+    }
+    *puVar5 = piVar12;
+    *(undefined2 *)(puVar5 + 1) = 1;
+    goto LAB_220010b4;
+  case 0xf:
+    piVar11 = (int *)(iVar6 + piVar13[2] * 0x20);
+    if ((int *)*piVar11 != (int *)0x0) {
+      if ((int *)*piVar11 != piVar12) goto LAB_220010f0;
+      sVar1 = (short)piVar11[1] + -1;
+      *(short *)(piVar11 + 1) = sVar1;
+      if (sVar1 != 0) goto LAB_22000ff4;
+      if ((piVar11[5] == 1) && (iVar14 = piVar11[4], iVar14 != 0)) {
+        if (piVar12[9] < iVar14) {
+          piVar12[9] = iVar14;
+          piVar8 = DAT_22001650;
+          iVar6 = *piVar12;
+          if (*(int *)(iVar6 + 0x24) < iVar14) {
+            *(int *)(pcVar2 + 4) = iVar6;
+            *(int **)(iVar6 + 4) = piVar8;
+            *piVar12 = iVar4;
+            *(int **)(pcVar2 + 8) = piVar12;
+          }
+        }
+        piVar11[4] = 0;
+      }
+      piVar12 = (int *)piVar11[2];
+      if (piVar12 != (int *)0x0) {
+        iVar4 = *piVar12;
+        piVar11[2] = iVar4;
+        if (iVar4 != 0) {
+          *(int **)(*piVar12 + 4) = piVar11 + 2;
+        }
+        uVar9 = piVar12[7];
+        piVar12[7] = uVar9 & 0xfffffff7;
+        if ((uVar9 & 0xfffffff7) == 0) {
+          *piVar12 = *(int *)(pcVar2 + 8);
+          *(int **)(pcVar2 + 8) = piVar12;
+        }
+        *piVar11 = (int)piVar12;
+        *(undefined2 *)(piVar11 + 1) = 1;
+        if (piVar12[2] != 0) {
+          *(undefined4 *)(*(int *)(piVar12[4] + 4) + 4) = 0;
+          FUN_220022f0();
+          piVar12[2] = 0;
+          piVar11 = extraout_r1_00;
+        }
+        break;
+      }
+      *piVar11 = 0;
+    }
+LAB_220010b4:
+    piVar13[1] = 0;
+    break;
+  case 0x10:
+    uVar19 = thunk_EXT_FUN_08353304();
+    piVar11 = (int *)((ulonglong)uVar19 >> 0x20);
+    piVar13[5] = (int)uVar19;
+    break;
+  case 0x11:
+    puVar5 = (undefined4 *)piVar13[5];
+    if (puVar5[5] == 1) {
+      FUN_220022f0(puVar5);
+      piVar11 = extraout_r1_01;
+    }
+    *puVar5 = *(undefined4 *)(iVar3 + 0x14);
+    *(undefined4 **)(iVar3 + 0x14) = puVar5;
+    break;
+  case 0x12:
+    goto LAB_220011f8;
+  case 0x13:
+    goto LAB_220011f8;
+  case 0x14:
+    iVar14 = piVar13[1];
+    if (iVar14 != 0) {
+      iVar4 = piVar12[8];
+    }
+    if (iVar14 != 0 && iVar4 != iVar14) {
+      piVar12 = DAT_2200163c + iVar14 * 0xf;
+      if ((piVar12[7] & 4U) == 0) {
+        piVar11 = (int *)piVar13[2];
+        if ((piVar11 == (int *)0x0) || (piVar12[7] != 0)) break;
+        iVar4 = piVar12[4] + -0x20;
+      }
+      else {
+        iVar4 = piVar12[2];
+        FUN_220022f0(iVar4);
+        if (piVar13[2] == 0) {
+          uVar9 = piVar12[7];
+          piVar12[7] = uVar9 & 0xfffffffb;
+          piVar11 = extraout_r1_03;
+          if ((uVar9 & 0xfffffffb) == 0) {
+            *piVar12 = *(int *)(pcVar2 + 8);
+            *(int **)(pcVar2 + 8) = piVar12;
+          }
+          break;
+        }
+      }
+    }
+    else {
+      if (piVar13[2] == 0) break;
+      iVar14 = piVar12[8];
+      iVar4 = piVar13[3];
+    }
+    piVar12[2] = iVar4;
+    if (piVar12[7] == 0) {
+      *(int *)(*piVar12 + 4) = piVar12[1];
+      *(int *)piVar12[1] = *piVar12;
+    }
+    piVar12[7] = piVar12[7] | 4;
+    *(int *)(iVar4 + 8) = piVar13[2];
+    *(undefined4 *)(iVar4 + 0xc) = 0;
+    *(undefined4 *)(iVar4 + 0x18) = 0;
+    *(int *)(iVar4 + 0x1c) = iVar14;
+    *(int *)(iVar4 + 0x10) = iVar14;
+    goto LAB_22001980;
+  case 0x15:
+    piVar12 = DAT_2200163c + piVar13[2] * 0xf;
+    if (piVar12[7] == 0) {
+      *(int *)(*piVar12 + 4) = piVar12[1];
+      *(int *)piVar12[1] = *piVar12;
+    }
+    puVar5 = (undefined4 *)(piVar12[5] + (piVar12[6] - 0x40U >> 3 & 0xfffffff7) * 8);
+    piVar12[4] = (int)puVar5;
+    uVar9 = piVar12[3];
+    puVar5[0xf] = uVar9;
+    if ((uVar9 & 1) == 0) {
+      uVar10 = 0x13;
+    }
+    else {
+      uVar10 = 0x33;
+    }
+    *puVar5 = uVar10;
+    puVar5[0xb] = 0;
+    puVar5[0xc] = 0;
+    *(undefined1 *)(piVar12 + 10) = 0;
+    *(undefined1 *)((int)piVar12 + 0x29) = 0;
+    piVar12[7] = 0;
+    puVar5 = (undefined4 *)piVar12[0xc];
+    if (puVar5 == (undefined4 *)0x0) {
+      *(undefined1 *)(piVar12 + 0xd) = 0;
+    }
+    else {
+      puVar5[1] = 0x40000000;
+      puVar5[2] = DAT_22002318;
+      puVar5[3] = 0;
+      puVar5[4] = 0;
+      iVar4 = 0;
+      do {
+        iVar14 = iVar4 + 1;
+        puVar5[iVar4 + 5] = 0;
+        iVar4 = iVar14;
+      } while (iVar14 < 0x20);
+      *puVar5 = 0;
+      *(undefined1 *)(piVar12 + 0xd) = 1;
+    }
+    piVar11 = *(int **)(pcVar2 + 8);
+    *piVar12 = (int)piVar11;
+    *(int **)(pcVar2 + 8) = piVar12;
+    break;
+  case 0x16:
+    iVar4 = piVar13[2];
+    if (iVar4 == 0) {
+      piVar13[1] = 0xb;
+      break;
+    }
+    piVar11 = (int *)DAT_2200163c[iVar4 * 0xf + 7];
+    if (((uint)piVar11 & 0x100) != 0) {
+      DAT_2200163c[iVar4 * 0xf + 9] = piVar13[3];
+      if (piVar13[4] != 0) {
+        piVar8[iVar4 * 0xf + 5] = piVar13[4];
+        piVar8[iVar4 * 0xf + 6] = piVar13[5];
+      }
+      piVar8[iVar4 * 0xf + 3] = piVar13[6];
+      piVar8[iVar4 * 0xf + 2] = 0;
+      piVar8[iVar4 * 0xf + 0xb] = 0;
+      *(undefined1 *)(piVar8 + iVar4 * 0xf + 10) = 0;
+      *(undefined1 *)((int)piVar8 + iVar4 * 0x3c + 0x29) = 0;
+      *(undefined1 *)(piVar8 + iVar4 * 0xf + 0xd) = 0;
+      piVar11 = (int *)piVar13[7];
+      if (piVar11 == (int *)0x0) {
+        piVar8[iVar4 * 0xf + 0xc] = 0;
+      }
+      else {
+        piVar8[iVar4 * 0xf + 0xc] = (int)piVar11;
+      }
+      break;
+    }
+    iVar4 = 0xc;
+    goto LAB_22001bdc;
+  case 0x17:
+    puVar5 = *(undefined4 **)(iVar3 + 0x10);
+    if (puVar5 == (undefined4 *)0x0) {
+      piVar13[2] = 0;
+    }
+    else {
+      piVar11 = (int *)*puVar5;
+      *(int **)(iVar3 + 0x10) = piVar11;
+      piVar13[2] = puVar5[8];
+    }
+    break;
+  case 0x18:
+    iVar4 = piVar13[2];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[8];
+    }
+    else {
+      piVar12 = DAT_2200163c + iVar4 * 0xf;
+      piVar11 = DAT_2200163c;
+    }
+    *(undefined1 *)(piVar12 + 10) = 0;
+    *(undefined1 *)((int)piVar12 + 0x29) = 0;
+    if (piVar12[2] != 0) {
+      piVar11 = *(int **)(piVar12[2] + 0x14);
+      if (piVar11 == (int *)0x1) {
+        FUN_220022f0();
+        piVar11 = extraout_r1_20;
+      }
+      piVar12[2] = 0;
+    }
+    if ((piVar12[7] & 0x40U) != 0) {
+      puVar5 = *(undefined4 **)(piVar12[4] + 4);
+      piVar11 = (int *)*puVar5;
+      if (piVar11 == (int *)0x1 || piVar11 == (int *)&UndefinedInstruction) {
+        *(undefined4 *)(iVar14 + puVar5[2] * 4) = 0xffffffff;
+      }
+      else {
+        piVar8 = (int *)puVar5[3];
+        while( true ) {
+          iVar6 = *piVar8;
+          piVar11 = (int *)0x0;
+          if (iVar6 == 0) break;
+          piVar8 = piVar8 + 1;
+          *(undefined4 *)(iVar14 + iVar6 * 4) = 0xffffffff;
+        }
+      }
+    }
+    if ((piVar12[7] == 0) || ((piVar12[7] & 0xaaU) != 0)) {
+      iVar14 = *piVar12;
+      piVar11 = (int *)piVar12[1];
+      *piVar11 = iVar14;
+      if (iVar14 != 0) {
+        piVar11 = (int *)*piVar12;
+        piVar11[1] = piVar12[1];
+      }
+    }
+    iVar14 = *DAT_2200231c;
+    if (iVar14 < iVar4) {
+      iVar6 = 0x7e;
+    }
+    else {
+      iVar6 = DAT_22002320[iVar4 * 5 + 3];
+      piVar11 = DAT_22002320;
+    }
+    piVar12[9] = iVar6;
+    if (iVar14 < iVar4) {
+      *piVar12 = *(int *)(iVar3 + 0x10);
+      *(int **)(iVar3 + 0x10) = piVar12;
+    }
+    piVar8 = (int *)(uint)*(byte *)(piVar12 + 0xd);
+    bVar17 = piVar8 == (int *)0x1;
+    if (bVar17) {
+      piVar8 = *(int **)(iVar3 + 0x20);
+    }
+    if (bVar17 && piVar12 == piVar8) {
+      *(int **)(iVar3 + 0x20) = DAT_2200163c;
+    }
+    piVar12[7] = 0x100;
+    break;
+  case 0x19:
+    iVar4 = piVar13[2];
+    uVar9 = 0;
+    if (iVar4 != 0) {
+      piVar12 = DAT_2200163c + iVar4 * 0xf;
+      uVar9 = piVar12[7];
+      piVar11 = DAT_2200163c;
+    }
+    if (iVar4 != 0 && uVar9 != 0) {
+      piVar12[7] = uVar9 | 1;
+      break;
+    }
+    piVar12[7] = piVar12[7] | 1;
+    *(int *)(*piVar12 + 4) = piVar12[1];
+    iVar4 = *piVar12;
+    piVar11 = (int *)piVar12[1];
+    goto LAB_22000e7c;
+  case 0x1a:
+    piVar11 = DAT_2200163c + piVar13[2] * 0xf;
+    if ((piVar11[7] != 0) && (uVar9 = piVar11[7] & 0xfffffffe, piVar11[7] = uVar9, uVar9 == 0)) {
+      *piVar11 = iVar4;
+      *(int **)(pcVar2 + 8) = piVar11;
+    }
+    break;
+  case 0x1b:
+    if (0x7d < piVar13[3] - 1U) {
+      piVar13[3] = 0x7e;
+    }
+    iVar4 = piVar13[2];
+    piVar11 = (int *)0x0;
+    if (iVar4 != 0) {
+      piVar11 = DAT_2200163c + iVar4 * 0xf;
+    }
+    if (iVar4 == 0) {
+      piVar11 = piVar12;
+    }
+    thunk_EXT_FUN_083531f8(piVar11,piVar13[3]);
+    piVar11 = extraout_r1_21;
+    break;
+  case 0x1c:
+    piVar11 = *(int **)(*piVar12 + 0x24);
+    if (piVar11 == (int *)piVar12[9]) {
+      piVar13[1] = 0;
+      piVar8 = DAT_22001650;
+      *(undefined1 *)(piVar12 + 10) = *(undefined1 *)((int)piVar12 + 0x29);
+      piVar11 = (int *)*piVar12;
+      *(int **)(pcVar2 + 4) = piVar11;
+      piVar11[1] = (int)piVar8;
+      *piVar12 = iVar4;
+      *(int **)(pcVar2 + 8) = piVar12;
+    }
+    break;
+  case 0x1d:
+    iVar4 = piVar13[2];
+    piVar11 = (int *)piVar13[1];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[8];
+    }
+    if (piVar11 == (int *)0x0) {
+      piVar11 = (int *)piVar12[8];
+    }
+    piVar12 = DAT_2200163c + (int)piVar11 * 0xf;
+    for (; (int)piVar11 <= iVar4; piVar11 = (int *)((int)piVar11 + 1)) {
+      if (*(int **)(*(int *)(pcVar2 + 4) + 0x20) != piVar11) {
+        if (piVar12[7] == 0) {
+          *(int *)(*piVar12 + 4) = piVar12[1];
+          *(int *)piVar12[1] = *piVar12;
+        }
+        piVar12[7] = piVar12[7] | 0x10;
+      }
+      piVar12 = piVar12 + 0xf;
+    }
+    break;
+  case 0x1e:
+    iVar4 = piVar13[2];
+    piVar11 = (int *)piVar13[1];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[8];
+    }
+    if (piVar11 == (int *)0x0) {
+      piVar11 = (int *)piVar12[8];
+    }
+    piVar12 = DAT_2200163c + (int)piVar11 * 0xf;
+    for (; (int)piVar11 <= iVar4; piVar11 = (int *)((int)piVar11 + 1)) {
+      if ((piVar12[7] != 0) && (uVar9 = piVar12[7] & 0xffffffef, piVar12[7] = uVar9, uVar9 == 0)) {
+        *piVar12 = *(int *)(pcVar2 + 8);
+        *(int **)(pcVar2 + 8) = piVar12;
+      }
+      piVar12 = piVar12 + 0xf;
+    }
+    break;
+  case 0x1f:
+    piVar12 = (int *)(DAT_22001658 + piVar13[3] * 0x14);
+    piVar11 = (int *)piVar13[2];
+    piVar12[3] = (int)piVar11;
+    iVar4 = *piVar12;
+joined_r0x22001c58:
+    if (iVar4 == 0) goto LAB_22001cbc;
+    goto LAB_22001cc4;
+  case 0x20:
+    piVar12 = (int *)(iVar7 + piVar13[3] * 0x2c);
+    iVar4 = piVar12[4];
+    piVar12[4] = 0;
+    piVar12[3] = piVar12[2] + -1;
+    if (piVar12[9] != 0) {
+      thunk_EXT_FUN_08353708();
+      piVar11 = extraout_r1_16;
+    }
+    iVar14 = piVar12[2];
+    if (iVar4 == iVar14) {
+      if (piVar12[10] != 0) {
+        thunk_EXT_FUN_08353708();
+        piVar11 = extraout_r1_17;
+      }
+      iVar4 = piVar12[1];
+      while (piVar8 = (int *)piVar12[5], piVar8 != (int *)0x0) {
+        iVar6 = *piVar8;
+        piVar12[5] = iVar6;
+        if (iVar6 != 0) {
+          *(int **)(*piVar8 + 4) = piVar12 + 5;
+        }
+        uVar9 = piVar8[7];
+        piVar8[7] = uVar9 & 0xffffff7f;
+        if ((uVar9 & 0xffffff7f) == 0) {
+          *piVar8 = *(int *)(pcVar2 + 8);
+          *(int **)(pcVar2 + 8) = piVar8;
+        }
+        if (piVar8[2] != 0) {
+          FUN_220022f0();
+          piVar8[2] = 0;
+        }
+        piVar11 = *(int **)(piVar8[4] + 4);
+        piVar11[1] = 0;
+        piVar12[4] = piVar12[4] + 1;
+        iVar6 = piVar12[3];
+        piVar12[3] = iVar6 + 1;
+        if (iVar6 + 1 == iVar14) {
+          piVar12[3] = 0;
+        }
+        iVar6 = piVar12[3];
+        if (iVar4 != 0) {
+          if (iVar4 == 1) {
+            piVar8 = piVar11 + 4;
+            piVar11 = (int *)(uint)*(byte *)*piVar8;
+            *(byte *)(*piVar12 + iVar6) = *(byte *)*piVar8;
+          }
+          else if (iVar4 == 2) {
+            piVar8 = piVar11 + 4;
+            piVar11 = (int *)(uint)*(ushort *)*piVar8;
+            *(ushort *)(*piVar12 + iVar6 * 2) = *(ushort *)*piVar8;
+          }
+          else if (iVar4 == 4) {
+            piVar11 = *(int **)piVar11[4];
+            *(int **)(*piVar12 + iVar6 * 4) = piVar11;
+          }
+          else {
+            FUN_22000b04(iVar6 * iVar4 + *piVar12,piVar11[4]);
+            piVar11 = extraout_r1_18;
+          }
+        }
+        if ((piVar12[4] == 1) && (piVar12[8] != 0)) {
+          thunk_EXT_FUN_08353708();
+          piVar11 = extraout_r1_19;
+        }
+      }
+    }
+    break;
+  case 0x21:
+    piVar11 = (int *)piVar13[8];
+    iVar7 = iVar7 + piVar13[2] * 0x2c;
+    if (piVar11 == (int *)0x0) {
+      piVar11 = (int *)piVar13[7];
+      *(int **)(iVar7 + 0x20) = piVar11;
+      iVar4 = *(int *)(iVar7 + 0x10);
+      goto joined_r0x22001c58;
+    }
+    if (piVar11 != (int *)0x1) {
+      if (piVar11 == (int *)0x2) {
+        piVar11 = (int *)piVar13[7];
+        *(int **)(iVar7 + 0x1c) = piVar11;
+        if (*(int *)(iVar7 + 0x10) == *(int *)(iVar7 + 8)) goto LAB_22001cc4;
+      }
+      else {
+        if (piVar11 != (int *)0x3) break;
+        piVar11 = (int *)piVar13[7];
+        *(int **)(iVar7 + 0x24) = piVar11;
+        if (*(int *)(iVar7 + 0x10) == 0) goto LAB_22001cc4;
+      }
+      goto LAB_22001cbc;
+    }
+    piVar11 = (int *)piVar13[7];
+    *(int **)(iVar7 + 0x28) = piVar11;
+    if (*(int *)(iVar7 + 0x10) == *(int *)(iVar7 + 8)) goto LAB_22001cbc;
+LAB_22001cc4:
+    *(undefined4 *)(iVar14 + (int)piVar11 * 4) = 0;
+    break;
+  case 0x22:
+    for (piVar12 = (int *)piVar13[3]; iVar4 = *piVar12, iVar4 != 0; piVar12 = piVar12 + 1) {
+      piVar11 = (int *)(iVar14 + iVar4 * 4);
+      if (*piVar11 != -1) {
+        if ((iVar4 != 0) && (*piVar11 == 0)) {
+          piVar13[2] = iVar4;
+          for (piVar11 = (int *)piVar13[3]; piVar11 <= piVar12; piVar11 = piVar11 + 1) {
+            *(undefined4 *)(iVar14 + *piVar11 * 4) = 0xffffffff;
+          }
+          goto switchD_22000bb8_default;
+        }
+        break;
+      }
+      *piVar11 = *(int *)(*(int *)(pcVar2 + 4) + 0x20);
+    }
+    piVar12 = *(int **)(pcVar2 + 4);
+    piVar12[7] = 0x40;
+LAB_22000dc0:
+    piVar11 = DAT_22001650;
+    iVar4 = *piVar12;
+    *(int *)(pcVar2 + 4) = iVar4;
+    *(int **)(iVar4 + 4) = piVar11;
+    break;
+  case 0x23:
+    iVar4 = *(int *)(pcVar2 + 0xc);
+    piVar11 = (int *)piVar13[1];
+    piVar13[2] = iVar4 - *piVar11;
+LAB_22000e7c:
+    *piVar11 = iVar4;
+    break;
+  case 0x24:
+    piVar13[1] = *(int *)(pcVar2 + 0x10);
+    break;
+  case 0x25:
+    *(int *)(pcVar2 + 0x10) = piVar13[1];
+    break;
+  case 0x26:
+    iVar4 = *(int *)(iVar6 + piVar13[2] * 0x20);
+    if (iVar4 != 0) {
+      piVar13[6] = *(int *)(iVar4 + 0x20);
+    }
+    break;
+  case 0x27:
+    puVar5 = (undefined4 *)(iVar6 + piVar13[2] * 0x20);
+    piVar11 = (int *)*puVar5;
+    if (piVar11 == (int *)0x0) {
+      piVar11 = (int *)piVar13[7];
+      puVar5[5] = piVar11;
+      break;
+    }
+LAB_220010f0:
+    piVar13[1] = 9;
+    break;
+  case 0x28:
+    iVar4 = piVar13[2];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[8];
+    }
+    piVar13[8] = DAT_2200163c[iVar4 * 0xf + 0xb];
+    piVar11 = piVar8;
+    break;
+  case 0x29:
+    iVar4 = piVar13[2];
+    piVar11 = (int *)piVar13[8];
+    if (iVar4 == 0) {
+      iVar4 = piVar12[8];
+    }
+    DAT_2200163c[iVar4 * 0xf + 0xb] = (int)piVar11;
+    break;
+  case 0x2a:
+    piVar11 = *(int **)(piVar13[5] + 0x14);
+    if (piVar11 == (int *)0x1) {
+      piVar11 = *(int **)(pcVar2 + 0xc);
+      piVar13[3] = *(int *)(piVar13[5] + 8) - (int)piVar11;
+    }
+    else {
+      piVar13[3] = 0;
+    }
+    break;
+  case 0x2b:
+    for (piVar11 = (int *)piVar13[3]; iVar4 = *piVar11, iVar4 != 0; piVar11 = piVar11 + 1) {
+      iVar6 = *(int *)(iVar14 + iVar4 * 4);
+      if (iVar6 == -1) {
+        *(undefined4 *)(iVar14 + iVar4 * 4) = 0;
+      }
+      else if (iVar6 != 0) {
+        piVar12 = *(int **)(iVar3 + 8);
+        *piVar12 = iVar4;
+        *(int **)(iVar3 + 8) = piVar12 + 1;
+      }
+    }
+    break;
+  case 0x2c:
+    piVar12 = (int *)piVar13[3];
+    while (iVar4 = *piVar12, iVar4 != 0) {
+      piVar12 = piVar12 + 1;
+      if (*(int *)(iVar14 + iVar4 * 4) == 0) {
+        *(undefined4 *)(iVar14 + iVar4 * 4) = 0xffffffff;
+      }
+    }
+    piVar11 = (int *)0x0;
+    break;
+  case 0x2d:
+LAB_220011f8:
+    iVar4 = piVar13[5];
+    uVar19 = CONCAT44(0xb,iVar4);
+    if (iVar4 == 0) {
+      if (iVar15 != 0x12) {
+LAB_22001244:
+        iVar4 = 4;
+        goto LAB_22001bdc;
+      }
+      uVar19 = thunk_EXT_FUN_08353304();
+      iVar4 = (int)uVar19;
+      piVar11 = (int *)((ulonglong)uVar19 >> 0x20);
+      if (iVar4 == 0) break;
+      piVar13[5] = iVar4;
+      *(undefined4 *)(iVar4 + 0x10) = *(undefined4 *)(*(int *)(pcVar2 + 4) + 0x20);
+    }
+    else if (iVar15 == 0x13) {
+      piVar11 = (int *)piVar12[8];
+      uVar19 = CONCAT44(piVar11,iVar4);
+      if (*(int **)(iVar4 + 0x10) != piVar11) goto LAB_22001244;
+    }
+    piVar11 = (int *)((ulonglong)uVar19 >> 0x20);
+    iVar4 = (int)uVar19;
+    if (*(int *)(iVar4 + 0x14) == 0) {
+      iVar6 = *piVar13;
+      if (iVar6 == 0x13) {
+        iVar4 = 3;
+        goto LAB_22001bdc;
+      }
+    }
+    else {
+      FUN_220022f0(iVar4);
+      iVar6 = *piVar13;
+      piVar11 = extraout_r1_02;
+      if (iVar6 == 0x13) break;
+    }
+    if (iVar6 == 0x12) {
+      if (piVar13[3] == 0) {
+        if (piVar13[4] == 0) {
+          *(undefined4 *)(iVar4 + 0x10) = *(undefined4 *)(*(int *)(pcVar2 + 4) + 0x20);
+          piVar12 = *(int **)(iVar3 + 8);
+          piVar11 = (int *)piVar13[2];
+          *piVar12 = (int)piVar11;
+LAB_220012c4:
+          *(int **)(iVar3 + 8) = piVar12 + 1;
+          break;
+        }
+        piVar13[3] = piVar13[4];
+        piVar12 = *(int **)(iVar3 + 8);
+        *piVar12 = piVar13[2];
+        *(int **)(iVar3 + 8) = piVar12 + 1;
+      }
+    }
+    else {
+      piVar13[2] = *(int *)(iVar4 + 0x1c);
+    }
+    *(int *)(iVar4 + 8) = piVar13[3];
+    *(int *)(iVar4 + 0xc) = piVar13[4];
+    *(undefined4 *)(iVar4 + 0x18) = 6;
+    iVar7 = piVar13[2];
+    *(int *)(iVar4 + 0x1c) = iVar7;
+    iVar6 = *(int *)(iVar14 + iVar7 * 4);
+    bVar17 = iVar6 == 0;
+    if (bVar17) {
+      iVar6 = piVar13[4];
+    }
+    if (bVar17 && iVar6 == 0) {
+      *(undefined4 *)(iVar14 + iVar7 * 4) = 0xffffffff;
+    }
+LAB_22001980:
+    FUN_2200073c(iVar4);
+    piVar11 = extraout_r1_13;
+    break;
+  case 0x2e:
+    piVar8 = (int *)(iVar7 + piVar13[2] * 0x2c);
+    *piVar8 = piVar13[3];
+    piVar8[1] = piVar13[4];
+    piVar12 = (int *)piVar13[5];
+    piVar8[2] = (int)piVar12;
+    piVar11 = (int *)piVar13[6];
+    if (-1 < (int)piVar11 && (int)piVar11 <= (int)piVar12) {
+      bVar17 = piVar11 != (int *)0x0;
+      if (bVar17) {
+        piVar8[4] = (int)piVar11;
+        piVar12 = piVar11;
+      }
+      piVar11 = (int *)((int)piVar12 + -1);
+      piVar8[3] = (int)piVar11;
+      if (!bVar17) {
+        piVar8[4] = 0;
+      }
+      break;
+    }
+    iVar4 = 8;
+LAB_22001bdc:
+    piVar13[1] = iVar4;
+    break;
+  case 0x2f:
+    break;
+  case 0x30:
+    uVar19 = (*(code *)piVar13[2])(piVar13[1]);
+    piVar13[3] = (int)uVar19;
+    piVar11 = (int *)((ulonglong)uVar19 >> 0x20);
+  }
+switchD_22000bb8_default:
+  piVar12 = *(int **)(pcVar2 + 8);
+  bVar17 = piVar12 == (int *)0x0;
+  if (bVar17) {
+    piVar12 = *(int **)(iVar3 + 8);
+    piVar11 = *(int **)(iVar3 + 0xc);
+  }
+  bVar18 = bVar17 && piVar12 == piVar11;
+  if (bVar17 && piVar12 == piVar11) {
+    bVar18 = *pcVar2 == '\0';
+  }
+  if (bVar18) {
+    thunk_EXT_FUN_08365104(0);
+    uVar10 = *(undefined4 *)(*(int *)(pcVar2 + 4) + 0x10);
+  }
+  else {
+    uVar10 = FUN_22000798();
+  }
+  FUN_22004f44(uVar10);
+  return 0;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22004f40 type=UNCONDITIONAL_CALL caller=FUN_22004f14@22004f14 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22004f14 [[22004f14, 22004f43]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined8 FUN_22004f14(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  char in_NG;
+  char in_ZR;
+  char in_CY;
+  char in_OV;
+  byte in_Q;
+  int iStack_40;
+  undefined4 uStack_3c;
+  undefined4 uStack_38;
+  int iStack_34;
+  undefined4 uStack_30;
+
+  iStack_40 = (uint)(byte)(in_NG << 4 | in_ZR << 3 | in_CY << 2 | in_OV << 1 | in_Q) << 0x1b;
+  *DAT_22004f60 = 1;
+  uStack_3c = param_1;
+  uStack_38 = param_2;
+  iStack_34 = iStack_40;
+  uStack_30 = param_4;
+  iVar1 = FUN_22000b70(&iStack_40);
+  *DAT_22004f60 = 0;
+  return *(undefined8 *)(iVar1 + 4);
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> ===== TARGET 22004f14 ===== (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005b74 type=UNCONDITIONAL_CALL caller=FUN_22005b48@22005b48 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005b48 [[22005b48, 22005b83]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005b48(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined1 auStack_38 [32];
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 uStack_c;
+  undefined1 *local_8;
+
+  local_8 = auStack_38;
+  local_14 = 0;
+  local_18 = 1;
+  local_10 = param_1;
+  uStack_c = param_2;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_14;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005ba0 type=UNCONDITIONAL_CALL caller=FUN_22005b84@22005b84 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005b84 [[22005b84, 22005baf]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005b84(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 uStack_10;
+  undefined4 uStack_c;
+
+  local_14 = 0xd;
+  local_18 = 0x1c;
+  uStack_10 = param_3;
+  uStack_c = param_4;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_14;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220057e8 type=UNCONDITIONAL_CALL caller=FUN_2200573c@2200573c (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_2200573c [[2200573c, 220057f3]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_2200573c(int param_1)
+
+{
+  int *piVar1;
+  int *piVar2;
+  undefined4 local_30;
+  undefined4 local_2c;
+  int local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+
+  piVar2 = (int *)(DAT_220057f4 + param_1 * 0x20);
+  FUN_22007054();
+  piVar1 = DAT_220057f8;
+  if (*piVar2 == 0) {
+    piVar2[6] = piVar2[6] + 1;
+    *piVar2 = *piVar1;
+    *(undefined2 *)(piVar2 + 1) = 1;
+    FUN_2200704c();
+    local_2c = 0;
+  }
+  else if (*piVar2 == *DAT_220057f8) {
+    piVar2[6] = piVar2[6] + 1;
+    *(short *)(piVar2 + 1) = (short)piVar2[1] + 1;
+    FUN_2200704c();
+    local_2c = 10;
+  }
+  else {
+    FUN_2200704c();
+    local_20 = 0;
+    local_2c = 0;
+    local_24 = 1;
+    local_30 = 0xe;
+    local_28 = param_1;
+    FUN_22007008();
+    FUN_22004f14(&local_30);
+  }
+  return local_2c;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005aac type=UNCONDITIONAL_CALL caller=FUN_22005a14@22005a14 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005a14 [[22005a14, 22005ab7]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005a14(int param_1)
+
+{
+  int *piVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  int local_28;
+
+  piVar1 = (int *)(DAT_22005ab8 + param_1 * 0x20);
+  FUN_22007054();
+  if (*piVar1 == *DAT_22005abc) {
+    if ((short)piVar1[1] < 2) {
+      if (piVar1[2] == 0) {
+        *(undefined2 *)(piVar1 + 1) = 0;
+        *piVar1 = 0;
+        FUN_2200704c();
+        local_2c = 0;
+      }
+      else {
+        FUN_2200704c();
+        local_30 = 0xf;
+        local_2c = 0;
+        local_28 = param_1;
+        FUN_22007008();
+        FUN_22004f14(&local_30);
+      }
+    }
+    else {
+      *(short *)(piVar1 + 1) = (short)piVar1[1] + -1;
+      FUN_2200704c();
+      local_2c = 10;
+    }
+  }
+  else {
+    FUN_2200704c();
+    local_2c = 9;
+  }
+  return local_2c;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005218 type=UNCONDITIONAL_CALL caller=FUN_22005200@22005200 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005200 [[22005200, 22005227]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005200(void)
+
+{
+  undefined4 local_1c [5];
+  undefined4 local_8;
+
+  local_1c[0] = 0x10;
+  FUN_22007008();
+  FUN_22004f14(local_1c);
+  return local_8;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=2200527c type=UNCONDITIONAL_CALL caller=FUN_22005248@22005248 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005248 [[22005248, 2200528b]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4
+FUN_22005248(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+            undefined4 param_5)
+
+{
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 uStack_10;
+
+  local_24 = 0;
+  local_28 = 0x2e;
+  uStack_10 = param_5;
+  local_20 = param_1;
+  local_1c = param_4;
+  local_18 = param_2;
+  uStack_14 = param_3;
+  FUN_22007008();
+  FUN_22004f14(&local_28);
+  return local_24;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220052b4 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005318 type=UNCONDITIONAL_CALL caller=FUN_220052f8@220052f8 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220052f8 [[220052f8, 22005323]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+void FUN_220052f8(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 local_28 [2];
+  undefined4 local_20;
+  undefined4 local_8;
+
+  local_28[0] = 0x29;
+  local_20 = param_1;
+  local_8 = param_2;
+  FUN_22007008();
+  FUN_22004f14(local_28);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005390 type=UNCONDITIONAL_CALL caller=FUN_22005324@22005324 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005324 [[22005324, 2200539f]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4
+FUN_22005324(undefined4 param_1,undefined4 param_2,int param_3,int param_4,undefined4 param_5,
+            undefined4 param_6)
+
+{
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  uint local_18;
+  int local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+
+  local_18 = param_3 + 7U & 0xfffffff8;
+  local_c = param_6;
+  local_24 = 0;
+  local_14 = (param_3 + param_4 & 0xfffffff8U) - local_18;
+  local_28 = 0x16;
+  local_10 = param_5;
+  local_20 = param_1;
+  local_1c = param_2;
+  thunk_EXT_FUN_0835d7dc();
+  FUN_22007008();
+  FUN_22004f14(&local_28);
+  return local_24;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220053e4 type=UNCONDITIONAL_CALL caller=FUN_220053c0@220053c0 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220053c0 [[220053c0, 220053ef]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+void FUN_220053c0(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined1 auStack_34 [32];
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 uStack_c;
+  undefined1 *local_8;
+
+  local_8 = auStack_34;
+  local_14 = 0x14;
+  local_10 = param_1;
+  uStack_c = param_2;
+  FUN_22007008();
+  FUN_22004f14(&local_14);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=2200541c type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005458 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220054b4 type=UNCONDITIONAL_CALL caller=FUN_22005488@22005488 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005488 [[22005488, 220054c3]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005488(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 uStack_10;
+
+  uStack_10 = 0;
+  local_20 = 6;
+  local_24 = 0xc;
+  local_18 = param_1;
+  uStack_14 = param_2;
+  FUN_22007008();
+  FUN_22004f14(&local_24);
+  return local_20;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220054f0 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005598 type=UNCONDITIONAL_CALL caller=FUN_22005574@22005574 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005574 [[22005574, 220055a3]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+void FUN_22005574(int param_1)
+
+{
+  undefined4 local_1c [5];
+  int local_8;
+
+  if (param_1 != 0) {
+    local_1c[0] = 0x11;
+    local_8 = param_1;
+    FUN_22007008();
+    FUN_22004f14(local_1c);
+  }
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220055f0 type=UNCONDITIONAL_CALL caller=FUN_220055cc@220055cc (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220055cc [[220055cc, 220055ff]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_220055cc(undefined4 param_1)
+
+{
+  undefined4 local_24 [2];
+  undefined4 local_1c;
+  undefined4 local_c;
+
+  local_24[0] = 0x26;
+  local_c = 0;
+  local_1c = param_1;
+  FUN_22007008();
+  FUN_22004f14(local_24);
+  return local_c;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005640 type=UNCONDITIONAL_CALL caller=FUN_22005624@22005624 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005624 [[22005624, 2200564f]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005624(undefined4 param_1)
+
+{
+  undefined4 local_28 [2];
+  undefined4 local_20;
+  undefined4 local_8;
+
+  local_28[0] = 0x28;
+  local_20 = param_1;
+  FUN_22007008();
+  FUN_22004f14(local_28);
+  return local_8;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005728 type=UNCONDITIONAL_CALL caller=FUN_22005670@22005670 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005670 [[22005670, 22005733]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005670(int param_1,undefined4 param_2)
+
+{
+  int *piVar1;
+  int *piVar2;
+  undefined1 auStack_54 [32];
+  undefined4 local_34;
+  undefined4 local_30;
+  int local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined1 *local_20;
+
+  piVar2 = (int *)(DAT_22005734 + param_1 * 0x20);
+  FUN_22007054();
+  piVar1 = DAT_22005738;
+  if (*piVar2 == 0) {
+    piVar2[6] = piVar2[6] + 1;
+    *piVar2 = *piVar1;
+    *(undefined2 *)(piVar2 + 1) = 1;
+    FUN_2200704c();
+    local_30 = 0;
+  }
+  else if (*piVar2 == *DAT_22005738) {
+    piVar2[6] = piVar2[6] + 1;
+    *(short *)(piVar2 + 1) = (short)piVar2[1] + 1;
+    FUN_2200704c();
+    local_30 = 10;
+  }
+  else {
+    FUN_2200704c();
+    local_20 = auStack_54;
+    local_30 = 0;
+    local_34 = 0xe;
+    local_28 = 1;
+    local_2c = param_1;
+    local_24 = param_2;
+    FUN_22007008();
+    FUN_22004f14(&local_34);
+  }
+  return local_30;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005818 type=UNCONDITIONAL_CALL caller=FUN_220057fc@220057fc (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220057fc [[220057fc, 22005823]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+void FUN_220057fc(undefined4 param_1)
+
+{
+  undefined4 local_18 [2];
+  undefined4 local_10;
+
+  local_18[0] = 3;
+  local_10 = param_1;
+  FUN_22007008();
+  FUN_22004f14(local_18);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220058a4 type=UNCONDITIONAL_CALL caller=FUN_22005878@22005878 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005878 [[22005878, 220058b3]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005878(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 local_2c [3];
+  undefined4 local_20;
+  undefined4 uStack_1c;
+  undefined4 local_14;
+  undefined4 uStack_10;
+  undefined4 local_c;
+
+  local_14 = 0;
+  uStack_10 = 1;
+  local_c = 0;
+  local_2c[0] = 5;
+  local_20 = param_1;
+  uStack_1c = param_2;
+  FUN_22007008();
+  FUN_22004f14(local_2c);
+  return local_14;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220058e4 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005928 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005958 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005990 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220059c4 type=UNCONDITIONAL_CALL caller=<none> (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005a0c type=UNCONDITIONAL_CALL caller=FUN_220059f4@220059f4 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220059f4 [[220059f4, 22005a13]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined8 FUN_220059f4(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined4 uStack_c;
+
+  local_18 = 0x18;
+  uStack_14 = param_2;
+  local_10 = param_1;
+  uStack_c = param_4;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return CONCAT44(uStack_14,local_18);
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005b10 type=UNCONDITIONAL_CALL caller=FUN_22005ae8@22005ae8 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005ae8 [[22005ae8, 22005b1f]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005ae8(undefined4 param_1)
+
+{
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+
+  local_c = 0;
+  local_14 = 0;
+  local_18 = 1;
+  local_10 = param_1;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_14;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=220051f0 type=UNCONDITIONAL_CALL caller=FUN_220051dc@220051dc (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220051dc [[220051dc, 220051ff]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_220051dc(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined4 uStack_c;
+
+  local_18 = 0x17;
+  uStack_14 = param_2;
+  local_10 = param_3;
+  uStack_c = param_4;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_10;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005514 type=UNCONDITIONAL_CALL caller=FUN_220054fc@220054fc (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_220054fc [[220054fc, 2200551b]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined8 FUN_220054fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined4 uStack_c;
+
+  local_18 = 0x15;
+  uStack_14 = param_2;
+  local_10 = param_1;
+  uStack_c = param_4;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return CONCAT44(uStack_14,local_18);
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005860 type=UNCONDITIONAL_CALL caller=FUN_22005824@22005824 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005824 [[22005824, 22005877]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4
+FUN_22005824(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 *param_4)
+
+{
+  undefined1 auStack_50 [32];
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_24;
+  undefined4 uStack_20;
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined1 *local_c;
+
+  local_c = auStack_50;
+  local_18 = 0;
+  uStack_14 = 1;
+  local_2c = 0;
+  local_30 = 5;
+  local_24 = param_1;
+  uStack_20 = param_2;
+  local_10 = param_3;
+  FUN_22007008();
+  FUN_22004f14(&local_30);
+  *param_4 = local_2c;
+  return local_18;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005ad8 type=UNCONDITIONAL_CALL caller=FUN_22005ac0@22005ac0 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005ac0 [[22005ac0, 22005ae7]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005ac0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined4 local_c;
+
+  local_18 = 0x30;
+  uStack_14 = param_2;
+  local_10 = param_1;
+  local_c = param_4;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_c;
+}
+
+ (GhidraScript)
+INFO  DumpTargetFunctions.java> XREF from=22005b38 type=UNCONDITIONAL_CALL caller=FUN_22005b20@22005b20 (GhidraScript)
+INFO  DumpTargetFunctions.java> ----- CALLER FUN_22005b20 [[22005b20, 22005b47]] ----- (GhidraScript)
+INFO  DumpTargetFunctions.java>
+undefined4 FUN_22005b20(undefined4 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 local_18;
+  undefined4 uStack_14;
+  undefined4 local_10;
+  undefined4 local_c;
+
+  local_18 = 0x22;
+  uStack_14 = param_2;
+  local_10 = param_3;
+  local_c = param_1;
+  FUN_22007008();
+  FUN_22004f14(&local_18);
+  return local_10;
+}
+
+ (GhidraScript)

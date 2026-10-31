@@ -167,13 +167,18 @@ eintrifft, ist der Knoten statisch erreichbar: Mit Waiter wird dieser geweckt;
 ohne Waiter fügt der Queue-Post-Veneer ihn über `FUN_08353328` in die
 verkettete Ereignisliste ein, aus der Queue-Get ihn später entnimmt.
 
-Eine verbleibende Scheduling-Unsicherheit betrifft den IRQ-Semaphor. Der
-Waitpfad dekrementiert dessen Zähler und blockiert bei einem vorherigen Wert
-unter 1 über SVC-Dienst 1. Der ATA-Konstruktor erzeugt den Semaphor aber über
-einen externen Prefixaufruf; dessen Anfangszähler ist aus dem statischen
-Runtime-/Body-Abbild nicht bestimmbar. Daher bleibt offen, wann der ATA-Worker
-den initialen Queue-Post tatsächlich ausführt; sobald er ihn ausführt, bleibt
-der Event-0-Pfad vor `MainAppTask` erreichbar.
+Eine verbleibende Scheduling-Unsicherheit betrifft die IRQ-Ressource. Der
+Waitpfad dekrementiert das erste Wort des übergebenen Objekts und blockiert bei
+einem vorherigen Wert unter 1 über SVC-Dienst 1. `FUN_081a5104` bezieht den
+Ressourcenwert über Prefix-Wrapper `0x220053f0`; der Prefix-eigene Dispatcher
+`FUN_22000b70`, Fall `0x0d`, entnimmt dafür sieben Byte aus Queue 1. Fall
+`0x2e` konfiguriert die Queuebeschreibung, doch die Queue-Setup-API
+`0x22005248` hat in den geprüften Prefix-, Body- und Runtime-Referenzdatenbanken
+keine eingehende Referenz. Der Queue-1-Eintrag ist im statischen Prefix-Abbild
+null, was den späteren Bootzustand nicht festlegt. Deshalb bleibt offen, wann
+der IRQ-Task blockiert und der ATA-Worker den initialen Queue-Post tatsächlich
+ausführt; sobald er ihn ausführt, bleibt der Event-0-Pfad vor `MainAppTask`
+erreichbar.
 
 Der Slot-0-Registrierer nimmt nicht bloß ein beliebiges ATA-Objekt entgegen.
 `FUN_08000a10` ruft `FUN_0800196c` auf, das LBA 0 über den Block-Read-Slot des
@@ -230,6 +235,15 @@ Neue dauerhafte Belege liegen unter
   `OSOS_runtime_sem_count_create_helper_followup_20261031.application.log`
   und `OSOS_runtime_ata_semaphore_ctor_callsite_listing_20261031.application.log`
   — externer Semaphor-Create-Aufruf; Anfangszähler bleibt ungeklärt.
+- `OSOS_prefix_svc_dispatch_queue1_semantics_20261031.application.log`,
+  `OSOS_prefix_svc_queue_table_pointer_words_20261031.application.log`,
+  `OSOS_prefix_svc_queue_table_entry_words_20261031.application.log` und
+  `OSOS_prefix_memory_blocks_20261031.application.log` — Prefix-Handler für
+  `0x0d`/`0x2e`, Queue-Tabelle und statische Tabellenbytes.
+- `OSOS_prefix_svc_queue_init_api_callers_20261031.application.log`,
+  `OSOS_runtime_svc_queue_init_api_callers_20261031.application.log` und
+  `OSOS_body_svc_queue_init_api_xrefs_20261031.application.log` — Referenzsuche
+  nach dem Queue-Setup-Aufruf `0x22005248` in den vorhandenen Projekten.
 - `OSOS_runtime_ata_worker_queue4_startup_followup_20261030.txt` und die
   `ghidra_ata_*_20261030.application.log`-Dateien — neuer Nachweis, dass der
   Worker-Einstieg keinen sichtbaren Wait-Gate enthält und der initiale

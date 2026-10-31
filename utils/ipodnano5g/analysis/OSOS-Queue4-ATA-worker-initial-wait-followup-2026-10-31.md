@@ -109,17 +109,36 @@ eintreffen:
   Typ-0-Knoten entnehmen. Das Startsignal geht somit nicht verloren, wenn der
   Worker vor dem Queue-Get postet.
 
-Der IRQ-Wait ist nun bis zur Semaphorlogik eingegrenzt: `FUN_080030d8`
-dekrementiert den Semaphorzähler über `FUN_0800319c` und ruft bei einem
-vorherigen Wert unter 1 den SVC-Wartepfad `FUN_08005ae8` auf. `FUN_08192c5c`
-bezieht den Semaphore-Ressourcenzeiger über `FUN_081a5104` und
-`FUN_080219fc`. Der Prefixcode bei `0x220053f0` baut dafür einen SVC-Request
-`0x0d` mit Queue-Index 1 und einem Ausgabepuffer; der Body-Dispatcher behandelt
-SVC `0x0d` als Queue-Entnahme. Der konkrete Queue-1-Poolinhalt ist im statischen
-Abbild nicht erfasst. Der Anfangszähler des zurückgegebenen Semaphoreobjekts
-bleibt deshalb unbekannt. Damit ist der Zeitpunkt, zu dem der IRQ-Task
-blockiert und der ATA-Worker tatsächlich läuft, nicht statisch bestimmt. Die
-Queue-4-Zustellung selbst ist gegen die Reihenfolge „Post vor Wait“ abgesichert.
+Der IRQ-Wait ist bis zur Ressourcenbeschaffung eingegrenzt. `FUN_080030d8`
+dekrementiert das erste Wort des übergebenen Objekts über `FUN_0800319c` und
+ruft bei einem vorherigen Wert unter 1 den SVC-Wartepfad `FUN_08005ae8` auf.
+`FUN_08192c5c` speichert das Ergebnis von `FUN_081a5104` im Semaphorewrapper
+und setzt dessen zweites Wort auf null. `FUN_081a5104` reserviert eine
+4-Byte-Zelle, ruft `FUN_080219fc` auf, speichert dessen Rückgabewert in dieser
+Zelle und verwirft die Allokation, wenn der Wert null ist.
+
+Die neue Prefix-Abfrage bestätigt den tatsächlich aufgerufenen Handler:
+`FUN_080219fc` erreicht über Prefix-Wrapper `0x220053f0` den Prefix-SVC-
+Dispatcher `FUN_22000b70`, Fall `0x0d`. Der Request setzt Elementbreite 7,
+Queueindex 1 und den Ausgabezeiger. Der Handler entnimmt ein Element aus der
+Queuebeschreibung bei `0x2200975c + 1 * 0x2c`; der erste 32-Bit-Wert des
+kopierten Elements wird von `FUN_081a5104` als Ressource übernommen. Damit ist
+die Queue-1-Abhängigkeit direkt im aufgerufenen Prefix belegt und nicht nur
+aus dem ähnlichen Body-Dispatcher abgeleitet.
+
+Der Prefix-Fall `0x2e` richtet Queuebeschreibungen anhand von Index,
+Datenpuffer, Elementbreite, Kapazität und Anfangsfüllstand ein. Die Bytes der
+Queuebeschreibung bei `0x2200975c` und des Queue-1-Eintrags sind im geladenen
+Prefix-Projekt null. Das belegt nur den statischen Abbildzustand: Der
+Ghidra-Speicherblock ist initialisiert, aber ein früher Bootschritt kann die
+Queue vor dem Runtime-Aufruf konfigurieren. Für den Wrapper `0x22005248`, der
+Fall `0x2e` aufruft, zeigen die vorhandenen Prefix-, Body- und Runtime-
+Referenzdatenbanken keine eingehenden Referenzen. Der Erzeuger oder Befüller
+von Queue 1 liegt damit weiterhin außerhalb der hier belegten Aufrufkette
+(oder wird dynamisch referenziert). Sein Anfangsfüllstand und der genaue
+Zeitpunkt, zu dem der IRQ-Task blockiert und der ATA-Worker läuft, bleiben
+offen. Die Queue-4-Zustellung selbst ist gegen die Reihenfolge „Post vor
+Wait“ abgesichert.
 
 ## Grenzen und Bedeutung für den Rockbox-Kandidaten
 
@@ -128,9 +147,10 @@ Queue-4-Zustellung selbst ist gegen die Reihenfolge „Post vor Wait“ abgesich
   Slot-0-MBR-/Providerpfad vor `MainAppTask` (`0x34`) statisch erreichbar,
   sobald der ATA-Worker den initialen Post ausführt. Der Post bleibt auch
   erhalten, falls `DeviceDiscovery` zu diesem Zeitpunkt noch nicht wartet.
-- Der ATA-Eventqueue-Initializer setzt die Queue zunächst leer. Ein IRQ-Task
-  wartet auf einen externen Semaphor. Dessen Anfangszähler und damit der
-  genaue Zeitpunkt des ersten ATA-Worker-Posts bleiben offen.
+- Der ATA-Eventqueue-Initializer setzt seine private Queue zunächst leer. Der
+  IRQ-Task bezieht eine Ressource über Queue 1; deren Bootzeitbefüllung ist in
+  den vorhandenen Abbilden nicht gefunden. Der genaue Zeitpunkt des ersten
+  ATA-Worker-Posts bleibt daher offen.
 - Auch eine erfolgreiche MBR-/FAT-Registrierung, der automatische
   `accessories.reg`-Open, ein kontrollierter Rücksprung und der Rockbox-Handoff
   bleiben unbeobachtet. Der bekannte Kandidat ist damit weiterhin kein
@@ -185,6 +205,20 @@ Alle Dateien liegen reboot-überlebend im Repository unter
   `OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log` —
   Prefixrequest `0x0d`, Queue-Index 1 und gemeinsamer SVC-Pfad; die
   Queue-1-Anfangsbelegung bleibt unbekannt.
+- `OSOS_prefix_svc_dispatch_queue1_semantics_20261031.application.log` —
+  Prefix-eigener SVC-Handler, Fall `0x0d` (Queueentnahme) und Fall `0x2e`
+  (Queuebeschreibung konfigurieren).
+- `OSOS_prefix_svc_queue_table_pointer_words_20261031.application.log`,
+  `OSOS_prefix_svc_queue_table_entry_words_20261031.application.log` und
+  `OSOS_prefix_memory_blocks_20261031.application.log` — Tabellenbasis
+  `0x2200975c`, Nullbytes im statischen Tabellenbereich und dessen Einordnung
+  im geladenen Prefix-Abbild.
+- `OSOS_prefix_svc_queue_init_api_callers_20261031.application.log`,
+  `OSOS_runtime_svc_queue_init_api_callers_20261031.application.log` und
+  `OSOS_body_svc_queue_init_api_xrefs_20261031.application.log` — die
+  Queue-Setup-API `0x22005248` ohne statische eingehende Referenz in den
+  geprüften Prefix-, Runtime- und Body-Projekten; der Runtime-Import für
+  `0x220053f0` bleibt sichtbar.
 
 SHA-256 der neuen Runtime- und Scheduler-Exports:
 
@@ -203,11 +237,13 @@ ffef6417e18c04cfed519dc31a9c47cacabc85a39d4b78c9fc6899702ad798a3  OSOS_runtime_a
 
 ## Nächster Schritt
 
-Als nächstes sind der erfolgreiche Slot-0-MBR-/FAT-Read und der automatische
-`accessories.reg`-Open weiterzuprüfen. Die Queue-4-Race ist statisch
-geschlossen: ein früher Post wird gespeichert, und ein bereits wartender
-`DeviceDiscovery`-Task mit Priorität `9` kann den ATA-Worker mit `0x33`
-präemptieren. Ungeprüft bleiben der externe Semaphor-Anfangszähler, ein
+Als nächstes ist der Aufrufer von SVC `0x2e` für Queue 1 in früheren
+Bootstufen zu suchen; die vorliegenden Prefix-, Body- und Runtime-Projekte
+zeigen ihn nicht. Danach sind der erfolgreiche Slot-0-MBR-/FAT-Read und der
+automatische `accessories.reg`-Open weiterzuprüfen. Die Queue-4-Race ist
+statisch geschlossen: ein früher Post wird gespeichert, und ein bereits
+wartender `DeviceDiscovery`-Task mit Priorität `9` kann den ATA-Worker mit
+`0x33` präemptieren. Ungeprüft bleiben der Queue-1-Anfangsfüllstand, ein
 erfolgreicher Hardware-Read, die konkrete FAT-Dateiöffnung und der spätere
 Parser-Handoff.
 
