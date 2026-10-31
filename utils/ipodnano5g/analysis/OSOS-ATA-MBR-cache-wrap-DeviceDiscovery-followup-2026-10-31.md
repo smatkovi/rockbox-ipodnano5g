@@ -265,15 +265,67 @@ konnte diese Objektzuordnung nicht herstellen. Die Queue ist damit nicht nur
 initialisiert, sondern hat auf dem wartenden Resolverpfad einen belegten
 Produzenten und einen Registrierungs-/Weckpfad.
 
+### Zusatzrunde: OSOS-SVC-Callbacks und Kommando `0x22`
+
+Im OSOS-Dispatcher `FUN_08000b70` ruft Kommando `0x30` den Request-Wert bei
+`request[2]` als Funktion mit `request[1]` auf und speichert den Rückgabewert
+bei `request[3]`. Der Body-Wrapper `FUN_08005ac0` bildet genau dieses
+Kommando. Im Runtime-Abbild hat der Wrapper drei direkte Aufrufstellen; deren
+Ziele sind die festen Funktionen `FUN_08053a58` (Getter), `FUN_08053a14`
+(Setter) und `FUN_0812e990` (Leerlisten-Prädikat). Der Setter prüft Besitzer
+1 bis 80 sowie Slot 0 oder 1 und schreibt Callback und Kontext in eine
+Tabelle ab `0x086c63d8`. Diese Adresse liegt 0x2030 Bytes hinter dem Ende des
+aufgenommenen Runtime-Abbilds `0x086c43a8`; Tabelleninhalt und Initialisierung
+sind hier nicht sichtbar. Die Instruktionsprüfung bestätigt außerdem, dass
+`FUN_0835e444` den vierten Setter-Parameter vor dem Tail-Call auf null setzt.
+Die weiteren erkannten Setter-Aufrufstellen übergeben statische
+Funktionsadressen oder null. Ein vom Datenträger gesetztes Ziel für Kommando
+`0x30` ist damit nicht belegt.
+
+Kommando `0x2e` initialisiert einen Ringdeskriptor über
+`DAT_08001654 + request[2] * 0x2c`. Die Felder an den Offsets 0 bis 8 werden
+vor der Kapazitätsprüfung beschrieben; für `request[2]` ist im sichtbaren
+Handler keine Indexgrenze vorhanden. Der Body-Wrapper `FUN_08005248` erzeugt
+Kommando `0x2e`. Für seine Body-Adresse und die entsprechende Runtime-Import-
+Adresse `0x22005248` ergaben die Ghidra-Referenzabfragen keine Aufrufer. Das
+bleibt ein ungeprüfter Initialisierungspfad ohne nachgewiesene Erreichbarkeit
+aus dem Runtime-Abbild.
+
+Ein weiterer Runtime-Aufruf des Dispatchers ist Kommando `0x22`. Der Handler
+läuft über eine nullterminierte ID-Liste und indiziert `0x2200980c + 4 * ID`,
+ohne an dieser Stelle eine Tabellengrenze zu prüfen. Die beiden gefundenen
+Runtime-Aufrufer übergeben statische Listen: `FUN_08010afc` verwendet
+`[0x47, 0]` bei `0x08444a90`; `FUN_08010be8` kopiert
+`[9, 10, 11, 0x11, 0]` von `0x08430d10`. Die frühere BootTask-Rekonstruktion
+ordnet diese Einstiege `RadioTask` beziehungsweise `AlarmTask` zu
+(`OSOS-FAT-LFN-rehost-impact-followup-2026-10-28.md`). Die ebenfalls
+gefundenen Zeigerwörter bei `0x08014034` und `0x080140d4` liegen in einem
+Metadatenblock, dessen benachbarte Namen laut jener Analyse keine verlässlichen
+Entry-/Namenspaare bilden. Die konkreten Listenwerte sind belegt; die Größe
+der Tabelle bei `0x2200980c` bleibt offen. Für diese beiden Pfade ist keine
+datenträgerkontrollierte ID belegt.
+
+Die weiteren sichtbar unbeschränkten Listenoperationen `0x2b` und `0x2c`
+haben unter den 21 erkannten direkten Request-Wrappern keinen eigenen
+Wrapper. Indirekte Request-Aufrufer und außerhalb des Runtime-Abbilds
+liegende Initialisierung sind damit nicht ausgeschlossen.
+
 ## Nächste Schritte
 
 - Die Laufzeitinitialisierung und Kapazität des Kennungspools an
-  `0x2200975c` sowie die Größe der SVC-2-Tabelle ab `0x2200980c` klären; beide
-  dynamischen Bereiche liegen außerhalb des verfügbaren Runtime-Snapshots.
+  `0x2200975c` sowie die Größe der SVC-2-Tabelle ab `0x2200980c` klären.
+  Insbesondere die für Kommando `0x22` verwendete Tabellengrenze mit den
+  statischen IDs bis `0x47` verifizieren.
 - Die SVC-Befehle 1 und 2 samt Kennungslebenszyklus weiter auf Wertebereich
   und Fehlerzustände prüfen. Der sichtbare SVC-2-Handler prüft den Index vor
   dem Tabellenzugriff nicht, der ermittelte Runtime-Pfad bezieht ihn aber aus
   dem internen Kennungspool.
+- Prüfen, wann `RadioTask` und `AlarmTask` im normalen Resetpfad tatsächlich
+  laufen; die vorhandene Rekonstruktion ordnet die BootTask-Records zu, belegt
+  aber keine Ausführungsreihenfolge vor dem Medienparser.
+- Untersuchen, ob Kommando `0x2e` außerhalb des Runtime-Xref-Satzes aufgerufen
+  wird und ob ein indirekter Request-Pfad die Operationen `0x2b`/`0x2c`
+  erreicht.
 - Den Erzeuger der VTable-Instanz bei `0x085056d0` finden. Die VTable hat im
   Runtime-Abbild keine erkannten eingehenden Code-Referenzen.
 - Belegen, ob der MBR-Partitionsadapter in einen Tabellenobjekt-Wrapper

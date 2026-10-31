@@ -139,3 +139,34 @@ Abfragen sind in der Tabelle genannt.
 
 Jede Ghidra-Abfrage wurde mit `-readOnly -noanalysis` ausgeführt. Das
 SHA-256-Manifest für diese Belege liegt unter `SHA256SUMS`.
+
+## Ergänzung: OSOS-SVC-Aufrufer und Kommando `0x22`
+
+| Beleg | Inhalt |
+| --- | --- |
+| `OSOS_body_signal_token_svc_helpers_20261031.application.log` | Vollständige Dispatcher-Decompilierung, einschließlich Kommando `0x22`, des unaufgerufenen `0x2e`-Initialisierers und des indirekten Calls in `0x30` |
+| `OSOS_body_SVC_dispatch_all_wrapper_callers_20261031.application.log` | 21 direkte Body-Wrapper und die von ihnen gebildeten Request-Operationen |
+| `OSOS_runtime_SVC_all_wrapper_refs_20261031.application.log` | Runtime-Xrefs auf die 21 Importadressen; zeigt fehlende Referenzen für `0x22005248` |
+| `OSOS_runtime_SVC_wrapper_thunk_callers_20261031.application.log` | Direkte Runtime-Aufrufstellen der importierten Wrapper-Veneers |
+| `OSOS_runtime_SVC_callback_service_callers_20261031.application.log` | Die drei direkten Aufrufer von Kommando `0x30` und ihre festen Zieladressen |
+| `OSOS_runtime_SVC_callback_registry_callers_20261031.application.log` | Registrierung und Freigabe der Callback-Kontextpaare |
+| `OSOS_runtime_SVC_callback_registry_callsites_asm_20261031.application.log` | Callsite-Instruktionen, einschließlich des auf null gesetzten vierten Arguments in `FUN_0835e444` |
+| `OSOS_runtime_SVC_callback_targets_transient_20261031.application.log` | Pseudocode der Getter-, Setter- und Listenprädikat-Ziele |
+| `OSOS_runtime_callback_table_globals_20261031.application.log` | Pointerwerte für Callback-Tabellen und deren außerhalb des Runtime-Dumps liegender Speicherbereich |
+| `OSOS_runtime_SVC_queue_init_refs_even_odd_20261031.application.log` und `OSOS_body_queue_init_refs_even_odd_20261031.application.log` | Keine erkannten direkten Referenzen auf die Queue-Initializer-Adresse im Runtime beziehungsweise Body |
+| `OSOS_runtime_SVC_command22_callers_20261031.application.log` | Pseudocode der beiden Runtime-Aufrufer von Kommando `0x22` |
+| `OSOS_runtime_command22_data_window_20261031.application.log` | Werte der Konstantenpointer für die Kommando-`0x22`-Aufrufer |
+| `OSOS_runtime_command22_event_list_radio_task_20261031.application.log` und `OSOS_runtime_command22_event_list_alarm_task_20261031.application.log` | Rohwerte der Listen `[0x47, 0]` und `[9, 10, 11, 0x11, 0]`, die `RadioTask` beziehungsweise `AlarmTask` an Kommando `0x22` übergeben |
+| `OSOS_runtime_command22_event_list_xrefs_20261031.application.log` | Ghidra-Referenzen auf die beiden Listenbasen; bestätigt die Reads durch `FUN_08010afc` und `FUN_08010be8` |
+| `OSOS_runtime_command22_registry_table_20261031.application.log` | Runtime-Wörter bei den gefundenen Thumb-Zeigern; benachbarte Strings sind keine verlässlichen Entry-/Namenspaare |
+| `OSOS_runtime_command22_raw_pointer_scan_20261031.log` | Thumb-Funktionszeiger-Treffer für beide Kommando-`0x22`-Aufrufer |
+| `OSOS_runtime_command22_registry_root_scan_aligned_20261031.log` | Ausgerichteter Wortscan nach direkten Zeigern auf den vermuteten Tabellenanfang; keine Treffer |
+| `OSOS_runtime_command22_roots_20261031.application.log` | Direkte Xrefs auf die Konstanten und Aufruferfunktionen; keine erkannten Code-Xrefs zu den Taskfunktionen |
+
+Der Rohscan findet die Zeiger auf `FUN_08010afc` und `FUN_08010be8` bei
+`0x08014034` und `0x080140d4`. Die vorhandene BootTask-Rekonstruktion ordnet
+die Funktionen `RadioTask` beziehungsweise `AlarmTask` zu und warnt, dass
+Namen im Metadatenblock bei `0x08014000` nicht direkt nebenstehende
+Entry-/Namenspaare bilden (`OSOS-FAT-LFN-rehost-impact-followup-2026-10-28.md`).
+Die Events sind anhand der konkreten Listenwerte bestimmt; die Kapazität der
+indizierten Tabelle bleibt offen.

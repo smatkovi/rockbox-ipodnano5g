@@ -1,0 +1,111 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (627 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1264 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpReferencesTo.java '0x220051dc' '0x22005200' '0x22005248' '0x220052f8' '0x22005324' '0x220053c0' '0x22005488' '0x220054fc' '0x22005574' '0x22005670' '0x2200573c' '0x220057fc' '0x22005824' '0x22005878' '0x220059f4' '0x22005a14' '0x22005ac0' '0x22005ae8' '0x22005b20' '0x22005b48' '0x22005b84'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/scripts/DumpReferencesTo.java (HeadlessAnalyzer)  
+INFO  DumpReferencesTo.java> ===== TARGET 220051dc ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0821843c -> 220051dc function=thunk_EXT_FUN_220051dc@0821843c instruction=ldr pc,[0x8218440] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0820d53c -> 220051dc function=arm_820d53c@0820d53c instruction=ldr pc,[0x820d540] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005200 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005248 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 220052f8 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005324 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 220053c0 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08218524 -> 220053c0 function=thunk_EXT_FUN_220053c0@08218524 instruction=ldr pc,[0x8218528] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08200ef0 -> 220053c0 function=thunk_EXT_FUN_220053c0@08200ef0 instruction=ldr pc,[0x8200ef4] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005488 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0820d534 -> 22005488 function=thunk_EXT_FUN_22005488@0820d534 instruction=ldr pc,[0x820d538] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 220054fc ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 082184b4 -> 220054fc function=thunk_EXT_FUN_220054fc@082184b4 instruction=ldr pc,[0x82184b8] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0820d54c -> 220054fc function=arm_820d54c@0820d54c instruction=ldr pc,[0x820d550] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005574 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005670 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08218464 -> 22005670 function=thunk_EXT_FUN_22005670@08218464 instruction=ldr pc,[0x8218468] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 2200573c ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08201248 -> 2200573c function=thunk_EXT_FUN_2200573c@08201248 instruction=ldr pc,[0x820124c] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08218534 -> 2200573c function=thunk_EXT_FUN_2200573c@08218534 instruction=ldr pc,[0x8218538] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 220057fc ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08201240 -> 220057fc function=thunk_EXT_FUN_220057fc@08201240 instruction=ldr pc,[0x8201244] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0821846c -> 220057fc function=thunk_EXT_FUN_220057fc@0821846c instruction=ldr pc,[0x8218470] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005824 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=0 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005878 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08204a34 -> 22005878 function=thunk_EXT_FUN_22005878@08204a34 instruction=ldr pc,[0x8204a38] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 220059f4 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08206650 -> 220059f4 function=thunk_EXT_FUN_220059f4@08206650 instruction=ldr pc,[0x8206654] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005a14 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08201298 -> 22005a14 function=thunk_EXT_FUN_22005a14@08201298 instruction=ldr pc,[0x820129c] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 0821854c -> 22005a14 function=thunk_EXT_FUN_22005a14@0821854c instruction=ldr pc,[0x8218550] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005ac0 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08212de4 -> 22005ac0 function=thunk_EXT_FUN_22005ac0@08212de4 instruction=ldr pc,[0x8212de8] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005ae8 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08200388 -> 22005ae8 function=thunk_EXT_FUN_22005ae8@08200388 instruction=ldr pc,[0x820038c] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 082184bc -> 22005ae8 function=thunk_EXT_FUN_22005ae8@082184bc instruction=ldr pc,[0x82184c0] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005b20 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08201228 -> 22005b20 function=thunk_EXT_FUN_22005b20@08201228 instruction=ldr pc,[0x820122c] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005b48 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08218474 -> 22005b48 function=thunk_EXT_FUN_22005b48@08218474 instruction=ldr pc,[0x8218478] (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08218754 -> 22005b48 function=thunk_EXT_FUN_22005b48@08218754 instruction=ldr pc,[0x8218758] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=2 (GhidraScript)  
+INFO  DumpReferencesTo.java> ===== TARGET 22005b84 ===== (GhidraScript)  
+INFO  DumpReferencesTo.java> COMPUTED_JUMP 08212ddc -> 22005b84 function=thunk_EXT_FUN_22005b84@08212ddc instruction=ldr pc,[0x8212de0] (GhidraScript)  
+INFO  DumpReferencesTo.java> COUNT=1 (GhidraScript)  
