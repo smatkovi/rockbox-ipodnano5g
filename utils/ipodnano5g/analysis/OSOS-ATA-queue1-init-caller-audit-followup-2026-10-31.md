@@ -39,7 +39,9 @@ und elf Body-Aufrufstellen, die Ghidra keiner Funktion zugeordnet hatte,
 wurden anhand ihrer Instruktionsfenster kontrolliert; keine richtet Queue 1
 ein. Die Body-Requests in diesen elf Fenstern verwenden die Codes `0x27`,
 `0x0d`, `0x0d`, `0x0c`, `0x26`, `0x28`, `0x04`, `0x04`, `0x02`, `0x12` und
-`0x13`. Die beiden Wrapper sind in ihren jeweiligen Images orphaned. Ein
+`0x13`. Ghidras explizite Aufrufersuche findet auch für `FUN_22005248` im
+Prefix keine Referenzen. Zusammen mit der Body-Abfrage sind beide
+Setupwrapper in ihren jeweiligen Images ohne statische Aufrufer. Ein
 dynamisch erzeugter Request oder ein früherer, außerhalb dieser Images
 liegender Setupschritt bleibt möglich.
 
@@ -73,6 +75,9 @@ Beobachtung nicht.
   zu Body- und Prefix-Wrappern, Null-Xref-Abfragen, Dispatcher-Aufrufer,
   Instruktionsfenster, Skalarscans, das reproduzierbare Rohbildsuchskript,
   dessen Ergebnis und Prüfsummen.
+- `evidence/ata-queue1-init-lookup-2026-10-31/prefix_queue1_setup_wrapper_callers_20261031.application.log`
+  zeigt die explizite Ghidra-Aufrufersuche für `FUN_22005248`; sie liefert
+  keine eingehenden Referenzen.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_svc_dispatch_queue1_semantics_20261031.application.log`
   zeigt SVC-Fall `0x2e`, die Queuebeschreibung und die Kapazitätsprüfung.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log`

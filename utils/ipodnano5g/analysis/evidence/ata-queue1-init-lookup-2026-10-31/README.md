@@ -16,6 +16,9 @@ Queue-Setupimport `0x22005248`. Keine Gerätedaten werden verändert.
   `OSOS_body_queue1_setup_wrapper_callers_20261031.application.log` — der
   Body enthält `FUN_08005248` mit demselben Dienstcode `0x2e`; Ghidra findet
   keine statischen Aufrufer.
+- `prefix_queue1_setup_wrapper_callers_20261031.application.log` — die
+  explizite Aufrufersuche für `FUN_22005248` im Prefix liefert ebenfalls
+  keine statischen Referenzen.
 - `OSOS_body_svc_dispatch_callers_08007008_20261031.application.log` — 29
   direkte Aufrufstellen des Body-SVC-Dispatchers `FUN_08007008`; nur
   `FUN_08005248` baut statisch den Queue-Setup-Request.
