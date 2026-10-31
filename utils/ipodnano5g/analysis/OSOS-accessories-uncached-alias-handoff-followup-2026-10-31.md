@@ -152,10 +152,12 @@ ist die Parser-/ROP-Erreichbarkeit dieses Kandidaten im Rehost gezeigt.
 
 Der Datei-Read bleibt ein Harness-Callback. Das ELF bildet den Aliasbereich
 als separaten Host-Speicher ab und erzwingt nicht, dass `0x8bf00000` auf dem
-iPod dieselbe physische SDRAM-Zelle wie `0x0bf00000` bezeichnet. Der Rehost
-misst daher weder die Geräte-TLB/MMU noch Cache-/Write-Buffer-Verhalten.
-Der getrennte ARM1176-System-Rehost prüft den analogen Kontrollfluss mit einer
-synthetischen L1-Tabelle. Reproduktion und Logs:
+iPod dieselbe physische SDRAM-Zelle wie `0x0bf00000` bezeichnet. Dieser Parser-
+Rehost misst daher weder die Geräte-TLB/MMU noch Cache-/Write-Buffer-Verhalten.
+Ein getrennter ARM1176-System-Rehost prüft den analogen Kontrollfluss zuerst
+mit einer synthetischen L1-Tabelle; ein weiterer Lauf ruft den echten OSOS-
+Descriptor-Writer mit den statisch gewonnenen Parametern auf. Reproduktion und
+Logs:
 `analysis/evidence/accessories-alias-parser-rehost-2026-10-31/README.md`.
 
 `0x8bf00000 + 0x10f80 = 0x8bf10f80` liegt vollständig in der OSOS-Alias-
@@ -165,7 +167,7 @@ nachfolgenden vollständigen Read überschrieben.
 
 ## ARM1176-System-QEMU-Rehost
 
-Ein separates System-Mode-Rehost baut die oben genannten Body-Deskriptoren
+Der erste System-Mode-Rehost baut die oben genannten Body-Deskriptoren
 synthetisch in einer L1-Tabelle auf, setzt `TRE=0`, `C=0`, `I=0`, `XP=1` und
 `M=1` und bildet Cleanup → byteweisen Alias-Read → DSB → `bss_init` → Loader-
 Branch nach. QEMU hält bei `PC=0x0bf000e0` an, nachdem der echte Loader über
@@ -175,11 +177,23 @@ Bereichs sind bytegleich zum ursprünglichen `bootloader-safe.bin`:
 SHA-256 `ba355bf5771a686a07829d3df45772c2d4bc9c33ca9cf0346d17408a5f20b4b2`.
 Der Anfang der durch `bss_init` genullten BSS ist ebenfalls null.
 
-Das ist ein positiver Kontrollflussnachweis für eine **synthetische** Tabelle,
-keine OSOS-Runtime-Messung.
-Der Lauf schließt weder unbekannte Gerätebelegung noch aktive TLB-Einträge ein;
-QEMU-TCG bildet die realen ARM1176-I-/D-Caches und den Write-Buffer nicht ab.
-Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
+Ein zusätzlicher System-Mode-Lauf führt den echten, im DRAM-Suffix enthaltenen
+OSOS-Descriptor-Writer an `0x080e3e84` aus. Mit der statisch belegten
+Tabellenbasis `0x086dc000` schreibt er unter anderem `0x0bf04c02` für VA
+`0x8bf00000` an `0x086de2fc`. Die übrigen gelesenen Werte stimmen ebenfalls
+mit den OSOS-Setup-Parametern überein: DRAM `0x08007c0e`, Aliasanfang
+`0x08004c02`, Low-Vector-Alias `0x2200c802`, IRAM `0x22004c02`. Unter dieser
+vom Harness gelieferten Tabelle erreicht derselbe Loader erneut
+`PC=0x0bf000e0`; kanonischer und Alias-Dump stimmen bytegenau mit dem
+`bootloader-safe.bin` überein. Dies bestätigt die Writer-Implementierung und
+die Adressübersetzung in diesem QEMU-Rehost. Der Harness ruft den Writer mit
+statisch bestimmten Argumenten auf; er führt nicht den vollständigen OSOS-
+Startup aus.
+
+Beide System-Rehosts sind Kontrollflussnachweise in QEMU, keine OSOS-Runtime-
+oder Geräte-Messungen. Sie schließen weder die tatsächliche DRAM-Belegung noch
+aktive Geräte-TLB-Einträge ein; QEMU-TCG bildet die realen ARM1176-I-/D-Caches
+und den Write-Buffer nicht ab. Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
 `analysis/evidence/accessories-alias-arm1176-qemu-2026-10-31/README.md`.
 
 ## Grenzen
@@ -194,9 +208,10 @@ Reproduktionsdateien und GDB-/QEMU-Logs liegen unter
   Alias-Deskriptoren bis zum Accessories-Callback unverändert bleiben, ist
   nicht verifiziert.
 - Wenn `TRE=0` gilt und der Alias-Descriptor bis zum Callback aktiv bleibt,
-  soll der neue DSB-Schritt den ausstehenden Write-Buffer leeren. Der
-  System-QEMU-Rehost führt DSB mit `C=I=0` aus und prüft den Kontrollfluss, kann
-  aber weder den realen Write-Buffer-Effekt noch Cachekohärenz des ARM1176 messen.
+  soll der neue DSB-Schritt den ausstehenden Write-Buffer leeren. Beide
+  System-QEMU-Rehosts führen DSB mit `C=I=0` aus und prüfen den Kontrollfluss,
+  können aber weder den realen Write-Buffer-Effekt noch Cachekohärenz des
+  ARM1176 messen.
   Rockbox' frühe Self-Copy und Cachepflege beweisen den Geräteweg nicht. Wenn der
   Alias bei `TRE=1` cachebar remapped wird, reicht DSB allein nicht als
   I-Cache-/D-Cache-Synchronisierung.
