@@ -1,0 +1,31 @@
+file_size=0xffffffe1 cursor=0x00000000 request=0xffffffe1 clipped=0
+alignment=0x20 allocation_request=0x00000000 generic_fallback_payload=0x00000008 first_provider_chunk=0x00010000
+  base_mod_32=0 aligned_skip=0 usable=8 bytes_beyond_allocation=65528
+  base_mod_32=4 aligned_skip=28 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=8 aligned_skip=24 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=12 aligned_skip=20 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=16 aligned_skip=16 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=20 aligned_skip=12 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=24 aligned_skip=8 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=28 aligned_skip=4 usable=4 bytes_beyond_allocation=65532
+file_size=0xffffffe0 cursor=0x00000000 request=0xffffffe0 clipped=0
+alignment=0x20 allocation_request=0xffffffff generic_fallback_payload=0x00000008 first_provider_chunk=0x00010000
+  base_mod_32=0 aligned_skip=0 usable=8 bytes_beyond_allocation=65528
+  base_mod_32=4 aligned_skip=28 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=8 aligned_skip=24 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=12 aligned_skip=20 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=16 aligned_skip=16 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=20 aligned_skip=12 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=24 aligned_skip=8 usable=0 bytes_beyond_allocation=65536
+  base_mod_32=28 aligned_skip=4 usable=4 bytes_beyond_allocation=65532
+file_size=0xffffffff cursor=0x00000000 request=0xffffffff clipped=0
+alignment=0x20 allocation_request=0x0000001e generic_fallback_payload=0x00000020 first_provider_chunk=0x00010000
+  base_mod_32=0 aligned_skip=0 usable=32 bytes_beyond_allocation=65504
+  base_mod_32=4 aligned_skip=28 usable=4 bytes_beyond_allocation=65532
+  base_mod_32=8 aligned_skip=24 usable=8 bytes_beyond_allocation=65528
+  base_mod_32=12 aligned_skip=20 usable=12 bytes_beyond_allocation=65524
+  base_mod_32=16 aligned_skip=16 usable=16 bytes_beyond_allocation=65520
+  base_mod_32=20 aligned_skip=12 usable=20 bytes_beyond_allocation=65516
+  base_mod_32=24 aligned_skip=8 usable=24 bytes_beyond_allocation=65512
+  base_mod_32=28 aligned_skip=4 usable=28 bytes_beyond_allocation=65508
+pool_allocator_branch=not modeled

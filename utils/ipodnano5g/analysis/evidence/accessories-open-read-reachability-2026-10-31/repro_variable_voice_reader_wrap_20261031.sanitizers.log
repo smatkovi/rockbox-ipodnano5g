@@ -1,0 +1,5 @@
+Host-model sanitizer check
+Build flags: -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -Werror
+Execution: exit status 0; no AddressSanitizer or UndefinedBehaviorSanitizer diagnostics.
+The program's stdout is recorded in repro_variable_voice_reader_wrap_20261031.log.
+This checks the bounds and arithmetic of the host harness only; it is not a firmware or iPod test.

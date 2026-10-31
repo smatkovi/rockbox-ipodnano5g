@@ -1,0 +1,36 @@
+=> Hit any key to stop autoboot:  0 
+n5g u-boot console ready
+=> 
+vrsion
+U-Boot 2023.01-rc4-q3k-g40e242ba-dirty (Oct 22 2026 - 14:22:52 +0200)
+
+arm-none-eabi-gcc (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 14.2.1 20241119
+GNU ld (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119
+=> binfo
+DRAM bank   = 0x00000000
+-> start    = 0x08000000
+-> size     = 0x04000000
+flashsize   = 0x00000000
+flashoffset = 0x00000000
+relocaddr   = 0x0bfa7000
+reloc off   = 0xe9fa7000
+Build       = 32-bit
+current eth = unknown
+ethaddr     = (not set)
+IP addr     = <NULL>
+fdt_blob    = 0x0af87460
+new_fdt     = 0x0af87460
+fdt_size    = 0x00000a60
+lmb_dump_all:
+ memory.cnt  = 0x1
+ memory[0]	[0x8000000-0xbffffff], 0x04000000 bytes flags: 0
+ reserved.cnt  = 0x1
+ reserved[0]	[0xaf82a88-0xbffffff], 0x0107d578 bytes flags: 0
+devicetree  = separate
+arch_number = 0x00000000
+TLB addr    = 0x0bff0000
+irq_sp      = 0x0af87450
+sp start    = 0x0af87440
+Early malloc usage: f8 / 2000
+=> pitn botmdbootcmd=echo n5g u-boot console ready
+=> 
