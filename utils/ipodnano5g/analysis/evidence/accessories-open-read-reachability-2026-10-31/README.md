@@ -25,6 +25,12 @@ SHA-256 steht in `INPUT_SHA256.txt`.
   Prüf-Provider bestätigt den ungekürzten Erstrequest `0xffffffff` bei Offset
   null. Datei-Status und Provider sind Stubs; der FAT- und Allokatorpfad läuft
   in diesem Test nicht.
+- `OSOS_voice_reader_live_ram_20261031.S`, `.ld`, `.commands.txt`, `.device.log`
+  und `live_ram_*.bin`: derselbe Originalwrapper lief am 31.10.2026 auf dem
+  Nano-5G-ARM unter flüchtigem U-Boot. Alle neun geladenen Segmente bestanden
+  den CRC32-Abgleich. Das Ergebniswort war `0x50415353` (`PASS`), und der Code
+  kehrte zur U-Boot-Konsole zurück. Datei-Status und Provider blieben Stubs;
+  der Test belegt keinen echten FAT-/Heap-Overwrite. Nur RAM wurde verändert.
 - `OSOS_file_copy_*.application.log`, `OSOS_fat_write_provider_boundaries_20261031.application.log`
   und `OSOS_directory_remove_helpers_20261031.application.log`: ergänzende,
   read-only-Abzüge zu den bereits untersuchten Dateioperationen.
@@ -32,6 +38,6 @@ SHA-256 steht in `INPUT_SHA256.txt`.
   kein NAND-/NOR-Schreiben oder -Löschen.
 - `SHA256SUMS`: Prüfsummen dieser Ablage.
 
-Die Abzüge ändern weder das Ghidra-Projekt noch den iPod. Interpretation,
-erreichte Pfade und Grenzen stehen in
+Die Ghidra-Abzüge ändern das Ghidra-Projekt nicht. Der Gerätetest änderte nur
+flüchtigen RAM. Interpretation, erreichte Pfade und Grenzen stehen in
 `../../OSOS-variable-voice-reader-wrap-followup-2026-10-31.md`.

@@ -1,0 +1,104 @@
+Live hardware session: Nano 5G DFU -> volatile U-Boot -> YMODEM RAM test.
+No NAND/NOR write or erase commands issued.
+
+['## Total Size      = 0x000003cc = 972 Bytes', '## Start Addr      = 0x08010000', '=>']
+972 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x000001da = 474 Bytes', '## Start Addr      = 0x081FD5E8', '=>']
+474 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000004 = 4 Bytes', '## Start Addr      = 0x08270700', '=>']
+4 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000002 = 2 Bytes', '## Start Addr      = 0x0827310A', '=>']
+2 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000004 = 4 Bytes', '## Start Addr      = 0x08278CC2', '=>']
+4 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000002 = 2 Bytes', '## Start Addr      = 0x08279D68', '=>']
+2 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000008 = 8 Bytes', '## Start Addr      = 0x0827DCE0', '=>']
+8 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x00000054 = 84 Bytes', '## Start Addr      = 0x08280000', '=>']
+84 bytes in 4.5 s (0 KB/s)
+['## Total Size      = 0x000100c4 = 65732 Bytes', '## Start Addr      = 0x08E58000', '=>']
+65732 bytes in 5.0 s (13 KB/s)
+crc32 0x08010000 0x3cc
+CRC32 for 08010000 ... 080103cb ==> 08caa8e5
+=> crc32 0x081fd5e8 0x1da
+CRC32 for 081fd5e8 ... 081fd7c1 ==> 84d2bd6e
+=> crc32 0x08270700 4
+CRC32 for 08270700 ... 08270703 ==> de8e3439
+=> crc32 0x0827310a 2
+CRC32 for 0827310a ... 0827310b ==> 865ebf3a
+=> crc32 0x08278cc2 4
+CRC32 for 08278cc2 ... 08278cc5 ==> 6632535c
+=> crc32 0x08279d68 2
+CRC32 for 08279d68 ... 08279d69 ==> 865ebf3a
+=> crc32 0x0827dce0 8
+CRC32 for 0827dce0 ... 0827dce7 ==> a4c4a1c9
+=> crc32 0x08280000 0x54
+CRC32 for 08280000 ... 08280053 ==> 405f5099
+=> crc32 0x08e58000 0x100c4
+CRC32 for 08e58000 ... 08e680c3 ==> 57aa9f3d
+=>
+mw.l 0x08e55000 0 0x800
+=> go 0x08010000
+## Starting application at 0x08010000 ...
+## Application terminated, rc = 0x0
+=>
+md.l 0x08e68098 1
+08e68098: 50415353                             SSAP
+=> md.l 0x08e58080 4
+08e58080: fffffd50 000002c0 feed0001 00001d00  P...............
+=> md.l 0x08e58034 2
+08e58034: 00001fc0 00000000                    ........
+=> version
+U-Boot 2023.01-rc4-q3k-g40e242ba-dirty (Oct 22 2026 - 14:22:52 +0200)
+
+arm-none-eabi-gcc (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 14.2.1 20241119
+GNU ld (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119
+=>
+bdinfo
+boot_params = 0x00000000
+DRAM bank   = 0x00000000
+-> start    = 0x08000000
+-> size     = 0x04000000
+flashstart  = 0x00000000
+flashsize   = 0x00000000
+flashoffset = 0x00000000
+baudrate    = 115200 bps
+relocaddr   = 0x0bfa7000
+reloc off   = 0xe9fa7000
+Build       = 32-bit
+current eth = unknown
+ethaddr     = (not set)
+IP addr     = <NULL>
+fdt_blob    = 0x0af87460
+new_fdt     = 0x0af87460
+fdt_size    = 0x00000a60
+lmb_dump_all:
+ memory.cnt  = 0x1
+ memory[0]	[0x8000000-0xbffffff], 0x04000000 bytes flags: 0
+ reserved.cnt  = 0x1
+ reserved[0]	[0xaf82a88-0xbffffff], 0x0107d578 bytes flags: 0
+devicetree  = separate
+arch_number = 0x00000000
+TLB addr    = 0x0bff0000
+irq_sp      = 0x0af87450
+sp start    = 0x0af87440
+Early malloc usage: f8 / 2000
+=> version
+U-Boot 2023.01-rc4-q3k-g40e242ba-dirty (Oct 22 2026 - 14:22:52 +0200)
+
+arm-none-eabi-gcc (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 14.2.1 20241119
+GNU ld (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119
+=>
+Bus 001 Device 026: ID 05ac:2137 Apple, Inc. U-Boot firmware dbg
+
+Lokaler CRC32-Abgleich mit Python zlib.crc32 (alle stimmen mit U-Boot crc32 überein):
+live_ram_provider_read.bin: 405f5099 (84 Byte)
+live_ram_runtime_function.bin: 84d2bd6e (474 Byte)
+live_ram_start.bin: 08caa8e5 (972 Byte)
+live_ram_state.bin: 57aa9f3d (65732 Byte)
+live_ram_stub_file_error_check.bin: de8e3439 (4 Byte)
+live_ram_stub_get_provider.bin: a4c4a1c9 (8 Byte)
+live_ram_stub_is_open.bin: 6632535c (4 Byte)
+live_ram_stub_lock.bin: 865ebf3a (2 Byte)
+live_ram_stub_unlock.bin: 865ebf3a (2 Byte)

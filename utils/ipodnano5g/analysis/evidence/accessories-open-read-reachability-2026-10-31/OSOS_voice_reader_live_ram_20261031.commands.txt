@@ -1,0 +1,29 @@
+RAM-only live test for FUN_081fd5e8 (original runtime bytes plus synthetic provider stubs)
+
+Build from rb-n5g repository root:
+  arm-none-eabi-as -march=armv6k -o /tmp/OSOS_voice_reader_live_ram_20261031.o utils/ipodnano5g/analysis/evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_live_ram_20261031.S
+  arm-none-eabi-ld -T utils/ipodnano5g/analysis/evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_live_ram_20261031.ld -o /tmp/OSOS_voice_reader_live_ram_20261031.elf /tmp/OSOS_voice_reader_live_ram_20261031.o
+
+Device setup:
+  sudo -n env HOME=/home/sebastian XDG_DATA_HOME=/home/sebastian/.local/share /home/sebastian/ipod-re/ref/wInd3x-upstream/wInd3x -v cfw run /home/sebastian/ipod-re/ref/build-uboot-n5gwip/u-boot.bin
+
+YMODEM load destinations (all in DRAM 0x08000000..0x0bffffff):
+  live_ram_start.bin                  0x08010000
+  live_ram_runtime_function.bin       0x081fd5e8
+  live_ram_stub_file_error_check.bin  0x08270700
+  live_ram_stub_lock.bin              0x0827310a
+  live_ram_stub_is_open.bin           0x08278cc2
+  live_ram_stub_unlock.bin            0x08279d68
+  live_ram_stub_get_provider.bin      0x0827dce0
+  live_ram_provider_read.bin          0x08280000
+  live_ram_state.bin                  0x08e58000
+
+For each segment:
+  sudo -n python3 -I utils/ipodnano5g/ymodem.py -d /dev/ttyACM1 <segment.bin> <address>
+Then run from U-Boot:
+  mw.l 0x08e55000 0 0x800
+  go 0x08010000
+  md.l 0x08e68098 1
+Expected test_result: 0x50415353 (PASS); 0x4641494c means an assertion failed.
+
+The U-Boot path is a volatile DFU/RAM boot. No NAND/NOR/flash command is used.

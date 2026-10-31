@@ -2,9 +2,10 @@
 
 Stand: 31.10.2026. Die Binäranalyse beruht auf read-only-Ghidra-Abfragen am
 persistenten Runtime-Projekt `N5G_OSOS_runtime_analysis` und dem Input
-`osos_runtime_dram_20261025.bin`. Der reproduzierbare Test ist ein kleines
-Host-Modell in C; es führt keinen OSOS-Code aus und greift nicht auf den iPod
-zu.
+`osos_runtime_dram_20261025.bin`. Die Belegkette umfasst ein C-Hostmodell,
+einen ARM1176-QEMU-Rehost und einen flüchtigen ARM-Test auf dem iPod. Nur der
+letzte führt die Originalbytes des Streamwrappers auf dem Gerät aus; Datei-
+und Providerzustand bleiben dabei Stubs.
 
 ## Ergebnis
 
@@ -62,9 +63,37 @@ Datei-Status, Locking und Provider und führt weder den FAT-Pfad noch den
 Voice-Allocator aus. Er bestätigt somit die Übergabe des großen Requests durch
 den Original-Streamwrapper, nicht den vollständigen Gerätepfad.
 
-Quelltext und vollständige Ausgabe sind
+Quelltext und vollständige Ausgabe des Host-Modells sind
 `evidence/accessories-open-read-reachability-2026-10-31/repro_variable_voice_reader_wrap_20261031.c`
 und `evidence/accessories-open-read-reachability-2026-10-31/repro_variable_voice_reader_wrap_20261031.log`.
+
+## ARM-Test auf dem Gerät
+
+Am 31.10.2026 wurde der Originalwrapper `FUN_081fd5e8` zusätzlich direkt auf
+dem Nano-5G-ARM-Prozessor ausgeführt. `wInd3x cfw run` startete den
+Shell-fähigen U-Boot flüchtig aus DFU. `bdinfo` meldete DRAM
+`0x08000000..0x0bffffff`, U-Boot-Relokation bei `0x0bfa7000` und
+`flashsize=0`. Die neun Harness-Segmente wurden mit YMODEM in freie DRAM-
+Bereiche geladen. Für jedes Segment stimmte U-Boots CRC32 mit der lokal
+berechneten CRC32 überein.
+
+Der ARM1176-Test durchlief Requests `0xffffffff`, `0x284`, einen bis zum
+Dateiende gekürzten Request, einen kurzen Prefetch-Read, den 32-Bit-Wrap-Fall
+und einen kurzen Provider-Read. `go 0x08010000` kehrte mit Rückgabecode null
+zur U-Boot-Konsole zurück. `md.l 0x08e68098 1` ergab `0x50415353` (`PASS`).
+Die zuletzt gesetzten Messwerte waren Request `0xfffffd50`, Offset `0x2c0`,
+Handle `0xfeed0001`, Provider-Outcount `0x1d00` und Streamcursor `0x1fc0`.
+Der Testcode prüft beim ersten Request explizit, dass der Provider den vollen
+Wert `0xffffffff` bei Offset null und denselben Outcount erhält.
+
+Das bestätigt die Ausführung des Originalwrappers auf der realen CPU und seine
+32-Bit-Request-/Cursor-Semantik. Der Providerstub schreibt keine 64 KiB in
+den übergebenen Puffer; FAT, echter Datei-Provider und Voice-Allokator liefen
+nicht. Der Test bestätigt daher weder eine reale Überschreibung noch deren
+Kontrollierbarkeit oder Codeausführung. Die vollständige Konsolenausgabe und
+der Wiederholungsablauf stehen in
+`evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_live_ram_20261031.device.log`
+und `.commands.txt`.
 
 ## Erreichbarkeit und Auswirkung
 
@@ -90,27 +119,32 @@ Offen bleiben insbesondere:
 Bewertung: **starker, bedingter Heap-Overwrite-Kandidat; keine bestätigte
 RCE, kein nachgewiesener Rockbox-Handoff und kein Beleg für untethered boot.**
 Der Host-Modelltest verifiziert die Arithmetik und die bedingte
-Speicherüberschreitung; der QEMU-Rehost bestätigt die Request-Übergabe im
-Original-Streamwrapper. Provider-, FAT- und Kaltstart-Erreichbarkeit bleiben
-offen. Eine beschädigte Datei wurde nicht auf den iPod geschrieben.
+Speicherüberschreitung. QEMU und der Live-Test bestätigen, dass der
+Original-Streamwrapper den großen Request unverändert an seinen Provider
+weitergibt. Provider-, FAT- und Kaltstart-Erreichbarkeit bleiben offen. Eine
+beschädigte Datei wurde nicht auf den iPod geschrieben.
 
 ## Gerätestatus während dieser Prüfung
 
-Die USB-Abfrage `lsusb -d 05ac:` ergab `05ac:2137 Apple, Inc. U-Boot firmware dbg`.
-Der Shell-fähige U-Boot wurde zuvor nur in RAM geladen. Die persistierte
-Konsolenausgabe liegt in
+Zu Testbeginn wurde `05ac:1231` (DFU) erkannt; anschließend startete
+`wInd3x cfw run` U-Boot im RAM. Der aktuelle Gerätezustand nach dem Test ist
+`05ac:2137` (U-Boot-Konsole). `bdinfo` meldet `flashsize=0`; verwendet wurden
+nur `loady`, RAM-Füllung, `go`, `md.l`, `crc32`, `version` und `bdinfo`.
+Es gab keinen NAND-/NOR-Schreib- oder Löschzugriff und keinen Flash-Versuch.
+Die Konsolenausgaben liegen in
+`evidence/accessories-open-read-reachability-2026-10-31/OSOS_voice_reader_live_ram_20261031.device.log`
+und im früheren U-Boot-Basislog
 `evidence/accessories-open-read-reachability-2026-10-31/OSOS_n5g_uboot_ram_console_20261031.log`.
-Es erfolgte kein NAND-/NOR-Schreib- oder Löschzugriff und kein Flash-Versuch.
 
 ## Sinnvolle nächste Prüfung
 
-Als nächster Test sollte die Dateigröße unabhängig vom iPod anhand eines
-kleinen FAT-Abbilds durch den OSOS-Stat-/Open-Pfad laufen. Danach sollte die
-Provider- und Allokatorvariante in einer isolierten Emulation oder mit einem
-kurzen, kontrollierten Fake-Provider geprüft werden. Erst wenn diese Tests
-den Überlauf und den Voice-Aufrufpfad bestätigen, wäre ein Gerätetest mit
-gesichertem Dateisystem vertretbar. Für die derzeitige RCE- und Bootbewertung
-ist ein Live-Test mit beschädigter iPod-Datei nicht belegt.
+Als Nächstes sollten ein kleines FAT-Abbild durch den OSOS-Stat-/Open-Pfad
+und die tatsächliche Allocator-Variante `FUN_0819680c` mit dem Voice-Caller
+abgeglichen werden. Danach ist zu klären, ob der reale Provider bei einem
+großen Request wirklich bis zu `0x10000` Byte in den kleineren Voice-Puffer
+schreibt. Der RAM-Test hat diese Voraussetzungen absichtlich gestubbt. Eine
+reale Datei wurde nicht verändert; RCE, stabiler Heap-Overwrite und
+Rockbox-Handoff bleiben unbewiesen.
 
 ## Rohbelege
 
