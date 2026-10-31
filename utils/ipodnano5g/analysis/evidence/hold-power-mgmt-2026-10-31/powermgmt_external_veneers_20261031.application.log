@@ -1,0 +1,64 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (719 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1328 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_prefix_20261031/N5G_OSOS_prefix_20261031 (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_prefix_20261031/N5G_OSOS_prefix_20261031 (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_bootprefix_22000000.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpMemoryRange.java '0x22003a50' '0x22003a90'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts/DumpMemoryRange.java (HeadlessAnalyzer)  
+INFO  DumpMemoryRange.java> MEMORY 22003a50..22003a90 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a50 bytes=04f01fe5 data=undefined value=0x4 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a54 bytes=dbd31a08 data=undefined value=-0x25 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a58 bytes=04f01fe5 data=<none> (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a5c bytes=55281b08 data=undefined4 value=0x81b2855 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a60 bytes=04f01fe5 data=<none> (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a64 bytes=7d281b08 data=undefined4 value=0x81b287d (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a68 bytes=04f01fe5 data=<none> (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a6c bytes=71291b08 data=undefined4 value=0x81b2971 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a70 bytes=04f01fe5 data=undefined value=0x4 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a74 bytes=1d9a1b08 data=undefined value=0x1d (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a78 bytes=04f01fe5 data=<none> (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a7c bytes=00462208 data=undefined4 value=0x8224600 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a80 bytes=04f01fe5 data=undefined value=0x4 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a84 bytes=c5de2408 data=undefined value=-0x3b (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a88 bytes=04f01fe5 data=undefined value=0x4 (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a8c bytes=813d2608 data=undefined value=-0x7f (GhidraScript)  
+INFO  DumpMemoryRange.java> 22003a90 bytes=04f01fe5 data=undefined value=0x4 (GhidraScript)  

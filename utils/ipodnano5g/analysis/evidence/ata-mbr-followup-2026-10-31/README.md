@@ -140,6 +140,22 @@ Abfragen sind in der Tabelle genannt.
 Jede Ghidra-Abfrage wurde mit `-readOnly -noanalysis` ausgeführt. Das
 SHA-256-Manifest für diese Belege liegt unter `SHA256SUMS`.
 
+## Ergänzung: OSOS-Bootprefix SVC-Tabellen
+
+Die Prefix-Abgleiche liegen bereits im read-only Evidence-Set
+`evidence/rtos-task-order-2026-10-29/`:
+
+| Beleg | Inhalt |
+| --- | --- |
+| `OSOS_prefix_svc_queue_table_entry_words_20261031.application.log` | Statische Wörter der SVC-Tabelle am Prefix-Einstieg |
+| `OSOS_prefix_svc_queue_table_pointer_words_20261031.application.log` | Pointerzellen für die SVC-Tabelle und Ringdeskriptoren |
+| `OSOS_prefix_queue_pool_data_words_20261031.application.log` | Rohwerte des Queue-/Kennungspools |
+| `OSOS_prefix_queue_pool_global_xrefs_20261031.application.log` | Referenzen auf die Prefix-Poolpointer |
+| `OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log` | Getter-/Dispatchersemantik für den Prefix-Service |
+
+Die dort dokumentierten Nullbytes beschreiben nur den statischen Prefix-
+Ausschnitt und ergeben keine Laufzeitkapazität der Eventtabelle.
+
 ## Ergänzung: OSOS-SVC-Aufrufer und Kommando `0x22`
 
 | Beleg | Inhalt |
@@ -170,3 +186,22 @@ Namen im Metadatenblock bei `0x08014000` nicht direkt nebenstehende
 Entry-/Namenspaare bilden (`OSOS-FAT-LFN-rehost-impact-followup-2026-10-28.md`).
 Die Events sind anhand der konkreten Listenwerte bestimmt; die Kapazität der
 indizierten Tabelle bleibt offen.
+
+## Ergänzung: Medienmanager-MBR-Pfad, 31.10.2026
+
+| Beleg | Inhalt |
+| --- | --- |
+| `OSOS_runtime_artwork_manager_startup_callers_20261031.application.log` | Direkte Runtime-Aufrufer von `FUN_081ac420`, einschließlich des `FUN_080253f4`-Callsite-Kontexts und des zweiten, feldabhängigen Aufrufers `FUN_080eb730` |
+| `OSOS_runtime_artwork_parser_bounds_20261031.application.log` | MBR-Signatur-/Partitionseintrag-Parser `FUN_080e4efc` und Aufrufer `FUN_080b123c` |
+| `OSOS_runtime_artwork_mbr_chain_20261031.application.log` | Fokussierte Decompilierung von `FUN_081ac420`, `FUN_080b123c`, dem MBR-Parser `FUN_080e4efc`, dem Folgeparser `FUN_080e3f74`, der Divisionsroutine und dem Cache-Leser `FUN_0833a7fa` |
+| `OSOS_runtime_artwork_raw_provider_methods_20261031.application.log` | Konstruktor/VTable des Rohproviders und Cache-Read `FUN_0833a7fa` |
+| `OSOS_runtime_artwork_root_callsite_20261031.application.log` | Direkter Callsite `0x08022b18` ohne erkannte umschließende Funktion sowie Decompilierung von `FUN_080eb730` |
+| `OSOS_runtime_artwork_startup_pointer_scan_20261031.application.log` | Wortscan über initialisierte Runtime-Blöcke: keine direkten Datenzeiger auf `0x08022b08`, `0x08022b09`, `0x08022b18` oder `0x080253f4`; dynamische und externe Aufrufer bleiben möglich |
+| `OSOS_runtime_artwork_task_reachability_20261031.application.log` | Task-/Event-Aufrufer um `FUN_080eb730`; der Aufruf bleibt an einen Status-/Eventpfad gebunden |
+
+Der Wrapper `FUN_080cbae0` reicht die MBR-Länge nicht an den Folgeparser
+weiter. Bei einem MBR-Start `0xffffffff` ergibt der erste Lesezugriff nach der
+LBA-Wrap-Arithmetik im Cache einen Quellzeiger vor dem Cachepuffer. Der Parser
+muss anschließend noch eine Magic-Prüfung bestehen; dieser Pfad belegt daher
+einen bedingten Out-of-bounds-Read, keine Codeausführung. Die normale
+Kaltstarterreichbarkeit von `FUN_081ac420` ist nicht geschlossen.

@@ -30,10 +30,15 @@ falsch: Der Partitionsmanager leert eine interne Queue und übergibt das Feld
 `+4` jedes Knotens an den OSOS-Präfixdienst `0x22005934`. Dieser legt einen
 SVC-Aufruf mit Befehl 2 an; der Präfixhandler liest damit einen Eintrag aus
 der Tabelle ab `0x2200980c`. Ein Funktionszeiger-Callback wird an dieser Stelle
-nicht aufgerufen. Herkunft und Wertebereich des Queue-Felds `+4` sowie die
-Queue-Produzenten sind noch nicht geklärt. Der Cache-Wrap bleibt daher ein
-bedingter Speicherlesefehler, kein bestätigter automatischer Exploit. Ein
-RAM-Write, kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
+nicht aufgerufen. Die Herkunft des Queue-Felds `+4` ist inzwischen
+eingegrenzt, nicht aber sein vollständiger Wertebereich: `FUN_08268cda` wartet über
+`FUN_081ad3a8`, das eine Kennung aus Ringindex 2 liest und als zweites
+Knotenfeld einreiht. Das Feld ist damit eine interne Synchronisationskennung;
+ein medienkontrollierter Wert ist nicht belegt. Der Präfixhandler prüft den
+Tabellenindex nicht, doch Tabellenkapazität und Laufzeitinitialisierung liegen
+außerhalb des statischen Ausschnitts. Der Cache-Wrap bleibt ein bedingter
+Speicherlesefehler, kein bestätigter automatischer Exploit. Ein RAM-Write,
+kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
 
 ## Verifizierte Kette
 
@@ -310,19 +315,78 @@ haben unter den 21 erkannten direkten Request-Wrappern keinen eigenen
 Wrapper. Indirekte Request-Aufrufer und außerhalb des Runtime-Abbilds
 liegende Initialisierung sind damit nicht ausgeschlossen.
 
+### Zusatzrunde: Abgleich mit dem statischen Bootprefix
+
+Eine read-only-Abfrage des Bootprefix-Abbilds bestätigt den unbeschränkten
+Tabellenzugriff im Präfixcode. `FUN_22005600(index)` ist ein Getter für
+`*(0x2200980c + 4 * index)`; der Dispatcher und sein Queue-Drain-Helper haben
+38 beziehungsweise 17 erkannte Referenzen auf die Tabellen- und
+Queue-Deskriptor-Basen. Die Zeigerzellen `0x22001640` und `0x22001654` zeigen
+auf `0x2200980c` und `0x2200975c`; ihr Abstand beträgt `0xb0`, entsprechend
+vier Deskriptor-Schrittweiten zu je `0x2c` Byte. Das belegt keine explizite
+Deskriptorgrenze. Die statischen Bytes von `0x22009740` bis
+`0x22009b3f` sind null. Das belegt nur den Inhalt dieses Abbilds, nicht die
+Laufzeitkapazität der Eventtabelle oder ihre spätere Befüllung. Der feste
+RadioTask-Wert `0x47` verlangt für eine fehlerfreie Ausführung mindestens
+72 Tabelleneinträge, falls dieser normale Pfad läuft; das ist keine
+unabhängige Messung der Allokationsgröße. Der Rohdump, Pointer-Scan und Ghidra-Auszüge sind im
+Evidence-README aufgeführt.
+
+## Zusatzrunde: MBR-Leseweg des Medienmanagers
+
+Der Medienmanager `FUN_081ac420` ruft `FUN_080b123c` auf. Falls dessen
+Lookup `FUN_081a8930(0)` keinen vorhandenen Eintrag findet, startet
+`FUN_080b123c` `FUN_080cbae0(4, DAT_080b1264, 0, 2)`. Der Wrapper wartet auf
+den Managerzustand, holt den Rohprovider `FUN_0819ae24(0)` und lässt
+`FUN_080e4efc` zuerst Sektor 0 lesen. Bei gültiger MBR-Signatur sucht dieser
+Parser den ersten Eintrag, dessen Typbyte `0` oder `'?'` ist, und kopiert
+dessen Start und Länge heraus. Für diese beiden Felder zeigt der Ausschnitt
+keine Prüfung auf Null, Gerätegrenze oder Addition von Start und Länge.
+
+Der Wrapper reicht anschließend nur den gefundenen Start an
+`FUN_080e3f74` weiter; die ausgelesene MBR-Länge wird dort nicht verwendet.
+`FUN_080e3f74` liest genau einen Sektor ab diesem Start und prüft danach ein
+inneres Tabellenformat. Die Schleife über höchstens 16 Einträge ist begrenzt,
+aber der berechnete Folge-LBA `Start + Quotient + 1` hat keine sichtbare
+Überlauf- oder MBR-Partitionsgrenzenprüfung.
+
+Der Rohprovider verwendet denselben Cachepfad `FUN_0833a7fa`. Bei einer
+Provider-Sektorgröße von 4096 Byte ist die Cachefüllung acht Sektoren groß.
+Nach dem anfänglichen Lesezugriff ab LBA 0 führt ein MBR-Start `0xffffffff`
+mit Count 1 rechnerisch zu `0xffffffff + 8 = 7` und
+`0xffffffff + 1 = 0`. Die beiden unsigned Cachevergleiche lassen damit den
+Cache-Hit-Zweig zu; dessen Quelladresse liegt bei `cache_base - 0x1000`.
+Der Ein-Sektor-Read kann somit Bytes vor dem Cacheobjekt in den lokalen
+Sektorpuffer kopieren. Damit ist ein bedingter Heap-Out-of-bounds-Read in
+diesem zweiten MBR-Einstieg statisch konkretisiert. Ob die OOB-Bytes die
+anschließende innere Magic-Prüfung bestehen, ist unbekannt; weder ein
+RAM-Write noch Codeausführung folgt aus dem Fund.
+
+Die Aufrufkette ist nicht bis zum normalen Kaltstart geschlossen:
+`FUN_081ac420` hat im Runtime-Abbild direkte Aufrufer `FUN_080253f4` und
+`FUN_080eb730`. Der erste wird an `0x08022b18` direkt aufgerufen, aber dieser
+Callsite liegt in keiner erkannten Funktion; ein Scan des initialisierten
+Runtime-Speichers fand keine Wortzeiger auf `0x08022b08`, `0x08022b09`,
+`0x08022b18` oder `0x080253f4`. Das schließt dynamische oder außerhalb des
+Abbilds liegende Aufrufer nicht aus. Der Medienpfad ist daher ein neuer
+statischer Eingang in den bereits bekannten Cache-Wrap-Kandidaten, aber kein
+nachgewiesener automatischer Exploit- oder Untethered-Boot-Pfad.
+
 ## Nächste Schritte
 
-- Die Laufzeitinitialisierung und Kapazität des Kennungspools an
-  `0x2200975c` sowie die Größe der SVC-2-Tabelle ab `0x2200980c` klären.
-  Insbesondere die für Kommando `0x22` verwendete Tabellengrenze mit den
-  statischen IDs bis `0x47` verifizieren.
+- Die Initialisierung und Kapazität des Kennungspools an `0x2200975c` sowie
+  die Größe der SVC-2-Tabelle ab `0x2200980c` bleiben offen, weil die
+  Laufzeitbelegung außerhalb der statischen Ausschnitte liegt. Für den
+  Resolverpfad ist die Kennungsquelle eingegrenzt; ein Medienwert ist nicht
+  belegt.
 - Die SVC-Befehle 1 und 2 samt Kennungslebenszyklus weiter auf Wertebereich
   und Fehlerzustände prüfen. Der sichtbare SVC-2-Handler prüft den Index vor
   dem Tabellenzugriff nicht, der ermittelte Runtime-Pfad bezieht ihn aber aus
   dem internen Kennungspool.
-- Prüfen, wann `RadioTask` und `AlarmTask` im normalen Resetpfad tatsächlich
-  laufen; die vorhandene Rekonstruktion ordnet die BootTask-Records zu, belegt
-  aber keine Ausführungsreihenfolge vor dem Medienparser.
+- `RadioTask` und `AlarmTask` stehen in den 20 BootTask-Records. Die statische
+  Rekonstruktion belegt ihre Task-Erzeugung vor dem später angelegten
+  `MainAppTask`, aber nicht, wann der externe Scheduler sie tatsächlich
+  ausführt.
 - Untersuchen, ob Kommando `0x2e` außerhalb des Runtime-Xref-Satzes aufgerufen
   wird und ob ein indirekter Request-Pfad die Operationen `0x2b`/`0x2c`
   erreicht.

@@ -188,6 +188,32 @@ Objektbesitzer noch einen Aufrufzeitpunkt. Berechnete oder externe Verweise
 sind damit nicht ausgeschlossen. Dieser Pfad liefert daher keinen Nachweis
 für einen frühen Hold-Check oder eine Ausführung vor dem Parser.
 
+## Nachtrag: PowerMgmt-Task im OSOS-Bootprefix (31.10.2026)
+
+Der im BootTask-Record gespeicherte Einstieg `0x22004fc1` liegt nicht nur
+außerhalb des Runtime-DRAM-Abbilds: Im separat geladenen Prefix-Abbild ist der
+Thumb-Task ab `0x22004fc0` vorhanden. Sein Loop verarbeitet Status-/Eventwerte,
+aktualisiert einen internen Zustandsdatensatz und verzweigt bei ausgewählten
+Übergängen zu weiteren Services. Die erzwungene Thumb-Dekompilierung und die
+Rohbytes sind unter `evidence/hold-power-mgmt-2026-10-31/` abgelegt.
+
+Ein sichtbarer Übergang ruft über den Prefix-Veneer bei `0x22003a58` den
+Runtime-Einstieg `FUN_081b2854` auf. Diese Funktion gibt anhand von Statusfeldern
+eines globalen Objekts einen booleschen Wert zurück; bei einem Sonderwert ruft
+sie außerdem `FUN_081a87fc` zur Initialisierung auf. Diese Kette ist bis
+`FUN_081abab0` verfolgt: Der Initialisierer fragt PMU-Register `0x0a` und
+`0x33` ab. Er ruft den bekannten PMU-Hold-Reader `FUN_082062c0` nicht direkt
+auf und liest im sichtbaren Pfad nicht dessen Register `0x05`. Der separate
+Hold-Reader liest Register `0x05` und gibt Bit 0 über einen Ausgabezeiger
+zurück. Weitere externe Dienstpfade bleiben ungeklärt.
+
+Die zusätzliche Prefix-Analyse zeigt somit **keinen** Hold-Gate in diesem
+sichtbaren Übergangspfad. Der aufgelöste Initialisierer verwendet andere
+PMU-Register als der Hold-Reader. Sie schließt weitere externe Dienste oder
+indirekte Aufrufe nicht aus. Dass der `PowerMgmt`-Task vor `MainAppTask`
+angefordert wird, belegt weder seine erste Ausführung vor dem MainApp-Parser
+noch einen abgeschlossenen Hold-Read zu diesem Zeitpunkt.
+
 ## Was die Befunde für den Hold-Guard bedeuten
 
 `HoldSwitchTask` erhält laut Constructor den numerischen Prioritätswert 3;
@@ -209,11 +235,13 @@ abgesichert.
 
 ## Offene Schritte
 
-1. Den externen `PowerMgmt`-Taskeinstieg `0x22004fc0` beziehungsweise dessen
-   Schnittstelle und die Registrierung der Wakeup-Button-Funktion bei
-   `0x08000b4e` klären. Danach prüfen, ob dieser Button-/Hold-Pfad vor
-   `MainAppTask` und dem `accessories.reg`-Parser laufen kann. Der bekannte
-   Remote-Parser ist dafür kein Beleg.
+1. Weitere Prefix-Service-Veneers des `PowerMgmt`-Tasks auf indirekte
+   PMU-/Hold-Zugriffe prüfen. Die Initialisierung `FUN_081a87fc` ist bis zu
+   PMU-Registern `0x0a` und `0x33` aufgelöst und belegt keinen Hold-Read. Die
+   Registrierung der Wakeup-Button-Funktion bei `0x08000b4e` bleibt ebenfalls
+   offen. Danach klären, ob ein solcher Pfad vor `MainAppTask` und dem
+   `accessories.reg`-Parser laufen kann. Der bekannte Remote-Parser ist dafür
+   kein Beleg.
 2. Die Schedulerwirkung der Task-Create-/Release-Dienste außerhalb des
    Runtime-Abbilds klären. Die statische Reihenfolge der Anforderungsaufrufe
    belegt noch keine Reihenfolge der Task-Ausführung.
@@ -224,7 +252,6 @@ abgesichert.
 4. Erst bei einem belegten frühen Hold-Pfad einen Guard für den
    Parser-Loader entwerfen; der aktuelle ROP-Kandidat hat keinen solchen Guard.
 
-Rohbelege liegen unter
-`utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/`; die neuen
-HoldSwitch-Exporte sind dort im `README.md` aufgelistet und in `SHA256SUMS`
-enthalten.
+Rohbelege der bisherigen HoldSwitch-Analyse liegen unter
+`utils/ipodnano5g/analysis/evidence/accessories-rop-2026-10-29/`; der Prefix-
+Nachtrag liegt unter `utils/ipodnano5g/analysis/evidence/hold-power-mgmt-2026-10-31/`.
