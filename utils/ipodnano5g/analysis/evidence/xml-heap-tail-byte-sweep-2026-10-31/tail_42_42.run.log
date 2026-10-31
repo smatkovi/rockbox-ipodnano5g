@@ -1,0 +1,8 @@
+tail=BB bytes=0x42,0x42
+name_tail4=0x42424141 expected_header=0x4242
+category=SIGSEGV exit=-11
+--- stdout ---
+startup_misc stack_payload stack_top task_descriptor heap_end: 0BB8741C 0BB67414 0BB87414 0BB673C8 0BBA5EE0 
+loader root -> long child callback: buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB66F70 0BB63574 0BB635C4 00000044 00000001 00004242 00004242 0BB66FC0 00000000 00000000 00000000 
+--- stderr ---
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped

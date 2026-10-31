@@ -1,0 +1,10 @@
+tail=0B bytes=0x30,0x42
+name_tail4=0x42304141 expected_header=0x4230
+category=PASS exit=0
+--- stdout ---
+startup_misc stack_payload stack_top task_descriptor heap_end: 0BB8741C 0BB67414 0BB87414 0BB673C8 0BBA5EE0 
+loader root -> long child callback: buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB66F70 0BB63574 0BB635C4 00000044 00000001 00004230 00004232 0BB66FC0 00000000 00000000 00000000 
+buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB63574 0BB6351C 0BB6356C 00000058 00000003 00004230 00004233 0BB635C4 00004230 00004230 00004230 
+followup_ptr header heap_end ptr_delta free_head mgr_b4 mgr_c0 bin6 bin14 bin31 reallocs: 0BB636FC 0000005A 0BBA5EE0 FFFBD81C 0BB63608 00039F44 00000004 00000000 00000001 00000000 00000000 
+PASS: parser and callback used one seeded manager and original generic alloc/free
+--- stderr ---

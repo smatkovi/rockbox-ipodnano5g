@@ -1,0 +1,9 @@
+tail=.- bytes=0x2e,0x2d
+name_tail4=0x2d2e4141 expected_header=0x2d2e
+category=OTHER exit=1
+--- stdout ---
+startup_misc stack_payload stack_top task_descriptor heap_end: 0BB8741C 0BB67414 0BB87414 0BB673C8 0BBA5EE0 
+loader root -> long child callback: buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB66F70 0BB63574 0BB635C4 00000044 00000001 00002D2E 00002D2E 0BB66FC0 00000000 00000000 00000000 
+buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB63574 0BB6351C 0BB6356C 00000058 00000003 00000000 00000003 0BB635C4 00002D2C 00002D2C 00002D2C 
+--- stderr ---
+FAIL: callback did not alter adjacent size word

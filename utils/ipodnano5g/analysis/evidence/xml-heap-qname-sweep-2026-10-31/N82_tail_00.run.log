@@ -1,0 +1,7 @@
+startup_misc stack_payload stack_top task_descriptor heap_end: 0BB8741C 0BB67414 0BB87414 0BB673C8 0BBA5EE0 
+loader root -> long child callback: buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB63A54 0BB639FC 0BB63A4C 00000058 00000003 00000058 0000005B 0BB63AA4 00000044 00003030 00003032 
+buf1 buf2 low_target low_before owner low_during low_after high_target high_before high_during high_after: 0BB63A54 0BB639FC 0BB63A4C 00000058 00000003 00003030 00003033 0BB63AA4 00003030 00003030 00003030 
+followup_ptr header heap_end ptr_delta free_head mgr_b4 mgr_c0 bin6 bin14 bin31 reallocs: 0BB63BDC 0000005A 0BBA5EE0 FFFBDCFC 0BB63AE8 0003C344 00000003 00000000 00000000 00000000 00000000 
+PASS: parser and callback used one seeded manager and original generic alloc/free
+
+qemu_exit=0

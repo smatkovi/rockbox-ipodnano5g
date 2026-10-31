@@ -1,0 +1,4 @@
+startup_misc stack_payload stack_top task_descriptor heap_end: 0BB8741C 0BB67414 0BB87414 0BB673C8 0BBA5EE0 
+loader root -> long child callback: qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+
+qemu_exit=139

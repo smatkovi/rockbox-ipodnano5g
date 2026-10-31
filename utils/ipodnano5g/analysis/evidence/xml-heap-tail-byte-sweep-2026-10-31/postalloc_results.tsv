@@ -1,0 +1,9 @@
+tail	bytes	category	exit	log
+0-	30_2d	PASS	0	postalloc_30_2d.run.log
+00	30_30	PASS	0	postalloc_30_30.run.log
+09	30_39	PASS	0	postalloc_30_39.run.log
+0A	30_41	PASS	0	postalloc_30_41.run.log
+0B	30_42	PASS	0	postalloc_30_42.run.log
+0_	30_5f	PASS	0	postalloc_30_5f.run.log
+0a	30_61	PASS	0	postalloc_30_61.run.log
+0z	30_7a	PASS	0	postalloc_30_7a.run.log

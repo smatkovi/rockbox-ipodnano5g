@@ -1,0 +1,4 @@
+cases=81 alphabet='09ABaz_-.' workers=8
+OTHER=9
+PASS=8
+SIGSEGV=64
