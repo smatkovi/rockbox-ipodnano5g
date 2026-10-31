@@ -1,0 +1,78 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1176 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (2052 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_BDS_Providers_Thumb (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_BDS_Providers_Thumb (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /01__0.pe32 (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpWords.java '0x428' '32'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 00000428  00000265  function=FUN_00000264@00000264 data=null (GhidraScript)  
+INFO  DumpWords.java> 0000042c  00000395  function=- data=?? B5h (GhidraScript)  
+INFO  DumpWords.java> 00000430  00000221  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000434  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 00000438  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 0000043c  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 00000440  09576e92  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000444  11d26d3f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000448  a000398e  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000044c  3b7269c9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000450  09576e93  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000454  11d26d3f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000458  a000398e  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000045c  3b7269c9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000460  964e5b22  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000464  11d26459  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000468  a000398e  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000046c  3b7269c9  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000470  508868d2  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000474  44af0a1d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000478  7450f78f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000047c  8d694106  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000480  1d602e87  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000484  4ed3c708  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000488  b0db4d96  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000048c  1d2b46b1  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000490  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 00000494  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 00000498  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 0000049c  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 000004a0  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 000004a4  00000040  function=- data=null (GhidraScript)  

@@ -1,0 +1,33 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0801b32c <.data+0x1b32c>:
+ 801b32c:	b510      	push	{r4, lr}
+ 801b32e:	2400      	movs	r4, #0
+ 801b330:	2018      	movs	r0, #24
+ 801b332:	f000 fd15 	bl	0x801bd60
+ 801b336:	4a09      	ldr	r2, [pc, #36]	@ (0x801b35c)
+ 801b338:	6801      	ldr	r1, [r0, #0]
+ 801b33a:	4291      	cmp	r1, r2
+ 801b33c:	d001      	beq.n	0x801b342
+ 801b33e:	2052      	movs	r0, #82	@ 0x52
+ 801b340:	bd10      	pop	{r4, pc}
+ 801b342:	6841      	ldr	r1, [r0, #4]
+ 801b344:	22ff      	movs	r2, #255	@ 0xff
+ 801b346:	4806      	ldr	r0, [pc, #24]	@ (0x801b360)
+ 801b348:	3239      	adds	r2, #57	@ 0x39
+ 801b34a:	e003      	b.n	0x801b354
+ 801b34c:	780b      	ldrb	r3, [r1, #0]
+ 801b34e:	1c49      	adds	r1, r1, #1
+ 801b350:	7003      	strb	r3, [r0, #0]
+ 801b352:	1c40      	adds	r0, r0, #1
+ 801b354:	1e52      	subs	r2, r2, #1
+ 801b356:	d2f9      	bcs.n	0x801b34c
+ 801b358:	4620      	mov	r0, r4
+ 801b35a:	bd10      	pop	{r4, pc}
+ 801b35c:	7349      	strb	r1, [r1, #13]
+ 801b35e:	5379      	strh	r1, [r7, r5]
+ 801b360:	7404      	strb	r4, [r0, #16]

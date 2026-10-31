@@ -1,0 +1,266 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (680 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1380 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_BDS_Providers_Thumb (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_BDS_Providers_Thumb (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /42__0.pe32 (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpThumbListing.java '0x5e9'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpThumbListing.java (HeadlessAnalyzer)  
+INFO  DumpThumbListing.java> ===== 000005e8 thumb_dump_5e8 ===== (GhidraScript)  
+INFO  DumpThumbListing.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 thumb_dump_5e8(undefined4 param_1,int param_2,int param_3)
+
+{
+  int *piVar1;
+  int iVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  uint uVar5;
+  char acStack_28 [4];
+  undefined4 uStack_24;
+  int iStack_20;
+  int iStack_1c;
+  undefined4 uStack_18;
+  
+  iStack_20 = 1;
+  uVar4 = 0;
+  uStack_18 = (**(code **)(*_DAT_0000071c + 0xac))(_DAT_00000720,0,&iStack_1c);
+  (**(code **)(iStack_1c + 0xc))(iStack_1c,acStack_28);
+  (**(code **)(iStack_1c + 8))();
+  piVar1 = _DAT_00000728;
+  uVar5 = (uint)(param_3 << 0x10 | param_2 << 8) >> 1 | _DAT_00000724;
+  uStack_24 = (**(code **)_DAT_00000728[1])();
+  (**(code **)(*piVar1 + 4))(*piVar1,_DAT_0000072c,0xf);
+  (**(code **)(*piVar1 + 4))(*piVar1,0xb0000,0);
+  (**(code **)(*piVar1 + 4))(*piVar1,_DAT_00000730,0xf);
+  (**(code **)(*piVar1 + 4))(*piVar1,_DAT_00000730 + 1,0);
+  (**(code **)(*piVar1 + 4))(*piVar1,_DAT_0000072c,0xe);
+  do {
+    while ((iVar2 = iStack_20, (**(code **)*piVar1)((undefined4 *)*piVar1,0xb0000,&iStack_20),
+           iVar2 == 0 || (iStack_20 != 0))) {
+      iVar2 = (**(code **)(piVar1[1] + 4))(piVar1[1],uStack_24,_DAT_00000734);
+      if (iVar2 != 0) {
+LAB_000006c4:
+        uStack_18 = _DAT_00000738;
+LAB_000006da:
+        if (acStack_28[0] != '\0') {
+          (**(code **)(iStack_1c + 4))();
+        }
+        (**(code **)(*piVar1 + 4))(*piVar1,_DAT_0000072c,2);
+        (**(code **)(*piVar1 + 4))(*piVar1,0xb0000,2);
+        (**(code **)(*piVar1 + 4))(*piVar1,_DAT_00000730,2);
+        (**(code **)(*piVar1 + 4))(*piVar1,_DAT_00000730 + 1,2);
+        return uStack_18;
+      }
+    }
+    uVar3 = 0xf;
+    if ((1 << (uVar4 & 0xff) & uVar5) == 0) {
+      uVar3 = 0xe;
+    }
+    (**(code **)(*piVar1 + 4))(*piVar1,_DAT_00000730,uVar3);
+    while ((iVar2 = iStack_20, (**(code **)*piVar1)((undefined4 *)*piVar1,0xb0000,&iStack_20),
+           iVar2 != 0 || (iStack_20 != 1))) {
+      iVar2 = (**(code **)(piVar1[1] + 4))(piVar1[1],uStack_24,_DAT_00000734);
+      if (iVar2 != 0) goto LAB_000006c4;
+    }
+    uVar4 = uVar4 + 1;
+  } while (uVar4 < 0x20);
+  (**(code **)(*piVar1 + 4))(*piVar1,_DAT_0000072c,0xf);
+  goto LAB_000006da;
+}
+
+ (GhidraScript)  
+INFO  DumpThumbListing.java> 000005e8  push {r4,r5,r6,r7,lr} (GhidraScript)  
+INFO  DumpThumbListing.java> 000005ea  sub sp,#0x14 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005ec  mov r0,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005ee  str r0,[sp,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 000005f0  ldr r0,[0x0000071c] (GhidraScript)  
+INFO  DumpThumbListing.java> 000005f2  mov r4,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005f4  mov r5,r1 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005f6  mov r6,r2 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005f8  ldr r0,[r0,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000005fa  add r2,sp,#0xc (GhidraScript)  
+INFO  DumpThumbListing.java> 000005fc  mov r1,r4 (GhidraScript)  
+INFO  DumpThumbListing.java> 000005fe  add r0,#0x80 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000600  ldr r3,[r0,#0x2c] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000602  ldr r0,[0x00000720] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000604  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000606  str r0,[sp,#0x10] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000608  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000060a  mov r1,sp (GhidraScript)  
+INFO  DumpThumbListing.java> 0000060c  ldr r2,[r0,#0xc] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000060e  blx r2 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000610  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000612  ldr r1,[r0,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000614  blx r1 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000616  lsl r0,r6,#0x10 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000618  lsl r1,r5,#0x8 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000061a  orr r0,r1 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000061c  ldr r6,[0x00000728] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000061e  lsr r7,r0,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000620  ldr r0,[0x00000724] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000622  orr r7,r0 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000624  ldr r0,[r6,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000626  ldr r1,[r0,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000628  blx r1 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000062a  str r0,[sp,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000062c  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000062e  ldr r1,[0x0000072c] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000630  mov r2,#0xf (GhidraScript)  
+INFO  DumpThumbListing.java> 00000632  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000634  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000636  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000638  mov r1,#0xb (GhidraScript)  
+INFO  DumpThumbListing.java> 0000063a  mov r2,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000063c  lsl r1,r1,#0x10 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000063e  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000640  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000642  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000644  ldr r1,[0x00000730] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000646  mov r2,#0xf (GhidraScript)  
+INFO  DumpThumbListing.java> 00000648  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000064a  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000064c  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000064e  ldr r1,[0x00000730] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000650  mov r2,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000652  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000654  add r1,r1,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000656  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000658  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000065a  ldr r1,[0x0000072c] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000065c  mov r2,#0xe (GhidraScript)  
+INFO  DumpThumbListing.java> 0000065e  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000660  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000662  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000664  mov r1,#0xb (GhidraScript)  
+INFO  DumpThumbListing.java> 00000666  ldr r5,[sp,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000668  lsl r1,r1,#0x10 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000066a  ldr r3,[r0,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000066c  add r2,sp,#0x8 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000066e  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000670  cmp r5,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000672  beq 0x0000067a (GhidraScript)  
+INFO  DumpThumbListing.java> 00000674  ldr r0,[sp,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000676  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000678  beq 0x0000068a (GhidraScript)  
+INFO  DumpThumbListing.java> 0000067a  ldr r0,[r6,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000067c  ldr r2,[0x00000734] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000067e  ldr r1,[sp,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000680  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000682  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000684  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000686  beq 0x00000662 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000688  b 0x000006c4 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000068a  mov r0,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000068c  lsl r0,r4 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000068e  mov r2,#0xf (GhidraScript)  
+INFO  DumpThumbListing.java> 00000690  tst r0,r7 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000692  bne 0x00000696 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000694  mov r2,#0xe (GhidraScript)  
+INFO  DumpThumbListing.java> 00000696  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000698  ldr r1,[0x00000730] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000069a  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000069c  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000069e  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006a0  mov r1,#0xb (GhidraScript)  
+INFO  DumpThumbListing.java> 000006a2  ldr r5,[sp,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006a4  lsl r1,r1,#0x10 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006a6  ldr r3,[r0,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006a8  add r2,sp,#0x8 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006aa  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ac  cmp r5,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ae  bne 0x000006b6 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006b0  ldr r0,[sp,#0x8] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006b2  cmp r0,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006b4  beq 0x000006ca (GhidraScript)  
+INFO  DumpThumbListing.java> 000006b6  ldr r0,[r6,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006b8  ldr r2,[0x00000734] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ba  ldr r1,[sp,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006bc  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006be  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006c0  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006c2  beq 0x0000069e (GhidraScript)  
+INFO  DumpThumbListing.java> 000006c4  ldr r0,[0x00000738] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006c6  str r0,[sp,#0x10] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006c8  b 0x000006da (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ca  add r4,r4,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006cc  cmp r4,#0x20 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ce  bcc 0x00000662 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006d0  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006d2  ldr r1,[0x0000072c] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006d4  mov r2,#0xf (GhidraScript)  
+INFO  DumpThumbListing.java> 000006d6  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006d8  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006da  mov r3,sp (GhidraScript)  
+INFO  DumpThumbListing.java> 000006dc  ldrb r0,[r3,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006de  cmp r0,#0x0 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006e0  beq 0x000006e8 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006e2  ldr r0,[sp,#0xc] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006e4  ldr r1,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006e6  blx r1 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006e8  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ea  ldr r1,[0x0000072c] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ec  mov r2,#0x2 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006ee  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006f0  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006f2  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006f4  mov r1,#0xb (GhidraScript)  
+INFO  DumpThumbListing.java> 000006f6  mov r2,#0x2 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006f8  lsl r1,r1,#0x10 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006fa  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 000006fc  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 000006fe  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000700  ldr r1,[0x00000730] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000702  mov r2,#0x2 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000704  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000706  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000708  ldr r0,[r6,#0x0] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000070a  ldr r1,[0x00000730] (GhidraScript)  
+INFO  DumpThumbListing.java> 0000070c  mov r2,#0x2 (GhidraScript)  
+INFO  DumpThumbListing.java> 0000070e  ldr r3,[r0,#0x4] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000710  add r1,r1,#0x1 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000712  blx r3 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000714  ldr r0,[sp,#0x10] (GhidraScript)  
+INFO  DumpThumbListing.java> 00000716  add sp,#0x14 (GhidraScript)  
+INFO  DumpThumbListing.java> 00000718  pop {r4,r5,r6,r7,pc} (GhidraScript)  
+INFO  REPORT: Discarding changes to the following read-only file: /42__0.pe32 (HeadlessAnalyzer)  

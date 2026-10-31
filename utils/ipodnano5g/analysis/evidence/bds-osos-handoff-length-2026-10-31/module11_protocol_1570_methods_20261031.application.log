@@ -1,0 +1,117 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (658 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1500 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_BDS_Provider11_20261031 (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_BDS_Provider11_20261031 (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /11__0.pe32 (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: PrintProgramMetadata.java  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-cache-alias-2026-10-31/scripts/PrintProgramMetadata.java (HeadlessAnalyzer)  
+INFO  PrintProgramMetadata.java> PROGRAM=11__0.pe32 (GhidraScript)  
+INFO  PrintProgramMetadata.java> LANGUAGE=ARM:LE:32:v6 (GhidraScript)  
+INFO  PrintProgramMetadata.java> COMPILER=default (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=Headers 00000000-0000021f initialized=true (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=.text 00000220-00000293 initialized=true (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=.data 00000294-000002bf initialized=true (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=.reloc 000002c0-000002df initialized=true (GhidraScript)  
+INFO  PrintProgramMetadata.java> BLOCK=.debug 000002e0-0000037f initialized=true (GhidraScript)  
+INFO  REPORT: Execute script: CreateAndDecompileFunctions.java '0x220' '0x270'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts/CreateAndDecompileFunctions.java (HeadlessAnalyzer)  
+INFO  CreateAndDecompileFunctions.java> ===== 00000220 FUN_00000220 [[00000220, 0000022b]] ===== (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 FUN_00000220(undefined4 param_1,uint param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = 0;
+  if (param_2 >> 0x10 != 0x1c) {
+    uVar1 = _DAT_0000022c;
+  }
+  return uVar1;
+}
+
+ (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> ===== 00000270 FUN_00000270 [[00000270, 0000027f]] ===== (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 FUN_00000270(undefined4 param_1,uint param_2,int param_3)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = _DAT_00000290;
+  if ((param_2 >> 0x10 == 0x1c) && (param_3 == 0x1c000)) {
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+ (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x274' '14'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 00000274  00000294  function=- data=?? 7Dh    } (GhidraScript)  
+INFO  DumpWords.java> 00000278  000002a8  function=- data=?? 49h    I (GhidraScript)  
+INFO  DumpWords.java> 0000027c  0c094804  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000280  d103291c  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000284  428a0309  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000288  2000d100  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000028c  00004770  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000290  80000003  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000294  0000027d  function=FUN_00000270@00000270 data=null (GhidraScript)  
+INFO  DumpWords.java> 00000298  00000221  function=FUN_00000220@00000220 data=null (GhidraScript)  
+INFO  DumpWords.java> 0000029c  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 000002a0  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 000002a4  00000000  function=- data=IMAGE_DOS_HEADER  (GhidraScript)  
+INFO  DumpWords.java> 000002a8  568f2d49  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x220' '0x221'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 00000220 FROM 000000ac TYPE DATA FUNCTION <none> INSTRUCTION <none> (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 00000220 FROM 00000184 TYPE DATA FUNCTION <none> INSTRUCTION <none> (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 00000220-00000221 INCOMING=2 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x270' '0x271'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 00000270 FROM 0000025a TYPE READ FUNCTION FUN_00000250@00000250 INSTRUCTION ldr r0,[0x00000270] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 00000270-00000271 INCOMING=1 (GhidraScript)  

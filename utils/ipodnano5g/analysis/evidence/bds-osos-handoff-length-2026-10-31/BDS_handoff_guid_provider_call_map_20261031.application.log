@@ -1,0 +1,325 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (656 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1502 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Bds_Thumb (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/nano5g/ghidra-projects/N5G_Bds_Thumb (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /05__0.pe32 (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: CreateAndDecompileFunctions.java '0x258' '0xbc4'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/rtos-task-order-2026-10-29/scripts/CreateAndDecompileFunctions.java (HeadlessAnalyzer)  
+INFO  CreateAndDecompileFunctions.java> ===== 00000258 bds_protocol_method_0258 [[00000258, 000003fd] [00000400, 000004c7]] ===== (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void bds_protocol_method_0258(undefined4 param_1,undefined4 param_2,uint param_3,uint param_4)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 uVar5;
+  undefined1 *puVar6;
+  code *pcVar7;
+  undefined4 *puVar8;
+  undefined8 uVar9;
+  undefined4 local_7c;
+  undefined4 uStack_78;
+  undefined4 uStack_74;
+  undefined4 uStack_70;
+  char local_6c [4];
+  undefined4 local_68;
+  undefined1 auStack_64 [4];
+  int local_60;
+  char local_5c [4];
+  undefined4 *local_58;
+  undefined4 *local_54;
+  undefined4 *local_50;
+  undefined4 *local_4c;
+  char local_48 [4];
+  undefined4 *local_44;
+  undefined1 auStack_40 [8];
+  short local_38;
+  
+  local_58 = (undefined4 *)0x0;
+  uVar9 = FUN_00000238();
+  FUN_00000f0c((undefined4 *)uVar9,(int)((ulonglong)uVar9 >> 0x20),param_3,param_4);
+  piVar1 = DAT_000004c8;
+  uVar9 = (**(code **)(*DAT_000004c8 + 0x1c))(4);
+  FUN_00000680((int)uVar9,(int)((ulonglong)uVar9 >> 0x20),param_3,param_4);
+  FUN_000006e4();
+  FUN_00000d34();
+  (**(code **)(*piVar1 + 0xac))(DAT_000004cc,0,&local_44);
+  (**(code **)(*piVar1 + 0xac))(DAT_000004d0,0,&local_58);
+  (**(code **)(*piVar1 + 0xac))(DAT_000004d4,0,&local_4c);
+  iVar3 = (*(code *)*local_44)(local_44,local_48);
+  if ((-1 < iVar3) && (local_48[0] == '\a')) {
+    iVar3 = (*(code *)local_44[1])(local_44,local_6c);
+    if ((-1 < iVar3) &&
+       ((local_6c[0] != '\0' &&
+        (iVar3 = (**(code **)(*piVar1 + 0xac))(DAT_000004d8,0,&local_60), -1 < iVar3)))) {
+      (**(code **)(local_60 + 4))(local_60,0x10);
+    }
+    FUN_00000abc();
+  }
+  if ((local_58 != (undefined4 *)0x0) &&
+     (iVar3 = (*(code *)*local_58)(local_58,local_5c), -1 < iVar3)) {
+    if (local_5c[0] == '\x05') {
+      FUN_00000abc();
+    }
+    else if (local_5c[0] == '\x11') {
+      iVar3 = (**(code **)(*piVar1 + 0xac))(DAT_000004dc,0,auStack_64);
+      if ((-1 < iVar3) && (iVar3 = (*(code *)*local_4c)(local_4c,0x4e0), iVar3 != 0)) {
+        FUN_00000bc4(iVar3,4);
+        (**(code **)(iVar3 + 0xc))(iVar3);
+      }
+    }
+    else {
+      if (local_5c[0] == '\t') {
+        uVar5 = 0x554;
+        puVar8 = DAT_00000560;
+      }
+      else {
+        if (local_5c[0] != '\x10') goto LAB_0000033c;
+        (**(code **)(*piVar1 + 0x88))(DAT_00000564);
+        iVar3 = (*(code *)*local_58)(local_58,local_5c);
+        if ((iVar3 != 0) || (local_5c[0] != '\x10')) goto LAB_0000033c;
+        uVar5 = 0x568;
+        puVar8 = DAT_00000560 + 4;
+      }
+      local_7c = *puVar8;
+      uStack_78 = puVar8[1];
+      uStack_74 = puVar8[2];
+      uStack_70 = puVar8[3];
+      thumb_9e8(uVar5,&local_7c);
+    }
+  }
+LAB_0000033c:
+  iVar3 = (*(code *)*local_4c)(local_4c,0x4ec);
+  if (iVar3 != 0) {
+    local_68 = 0x30;
+    iVar4 = (**(code **)(iVar3 + 0x24))(iVar3,DAT_000004f8,&local_68,auStack_40);
+    if ((-1 < iVar4) && (local_38 == 0)) {
+      FUN_000012c0();
+      local_38 = 1;
+      (**(code **)(iVar3 + 0x28))(iVar3,DAT_000004f8,0x30);
+      FUN_00000bc4(iVar3,0);
+    }
+    (**(code **)(iVar3 + 0xc))(iVar3);
+  }
+  piVar2 = _DAT_00000508;
+  iVar3 = FUN_00000888(_DAT_00000508,(int *)"vbuswait",8);
+  if (iVar3 == 0) {
+    FUN_000013b0();
+    (**(code **)(*piVar1 + 0xbc))(piVar2,0x50c,8);
+  }
+  iVar3 = FUN_00000888(piVar2,(int *)"diskmode",8);
+  if (iVar3 == 0) {
+    (**(code **)(*piVar1 + 0xbc))(piVar2,0x50c,8);
+  }
+  else {
+    iVar3 = (*(code *)*local_4c)(local_4c,0x524);
+    if ((((iVar3 == 0) && (iVar3 = (*(code *)*local_4c)(local_4c,0x530), iVar3 != 0)) &&
+        (iVar3 = FUN_000010f8(iVar3), iVar3 == 0)) &&
+       ((iVar3 = (*(code *)*local_4c)(local_4c,0x53c), iVar3 != 0 ||
+        (iVar3 = (*(code *)*local_4c)(local_4c,0x548), iVar3 != 0)))) {
+      FUN_00000bc4(iVar3,0);
+      (**(code **)(iVar3 + 0xc))(iVar3);
+    }
+  }
+  puVar6 = auStack_64;
+  pcVar7 = *(code **)(*piVar1 + 0xac);
+  uVar9 = (*pcVar7)(DAT_000004dc,0);
+  if ((int)uVar9 < 0) {
+    FUN_00000764(2,(int)((ulonglong)uVar9 >> 0x20),(int)puVar6,(undefined4 *)pcVar7);
+    (**(code **)(*piVar1 + 0x88))(DAT_00000574);
+  }
+  else {
+    iVar3 = FUN_000011bc();
+    if (iVar3 != 0) {
+      iVar3 = (*(code *)*local_4c)(local_4c,0x4e0);
+      if (iVar3 != 0) {
+        FUN_00000bc4(iVar3,0x10);
+        (**(code **)(iVar3 + 0xc))(iVar3);
+      }
+      FUN_00000fbc();
+    }
+  }
+  (**(code **)(*piVar1 + 0xac))(DAT_00000578,0,&local_50);
+  (**(code **)(*piVar1 + 0xac))(DAT_0000057c,0,&local_54);
+  (*(code *)*local_50)(local_50,1);
+  (*(code *)*local_54)(local_54,0);
+  return;
+}
+
+ (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> ===== 00000bc4 FUN_00000bc4 [[00000bc4, 00000d09]] ===== (GhidraScript)  
+INFO  CreateAndDecompileFunctions.java> 
+/* WARNING: Type propagation algorithm not settling */
+
+int FUN_00000bc4(int param_1,undefined4 param_2)
+
+{
+  int *piVar1;
+  undefined4 uVar2;
+  code *pcVar3;
+  int iVar4;
+  undefined4 local_1c4;
+  undefined4 uStack_1c0;
+  undefined4 uStack_1bc;
+  undefined4 local_1b8;
+  undefined4 local_1b4;
+  undefined1 auStack_1b0 [132];
+  undefined4 local_12c;
+  undefined4 local_78;
+  undefined4 *local_74;
+  uint local_70 [2];
+  code *local_68;
+  undefined4 local_64;
+  undefined4 *local_5c;
+  int local_58;
+  undefined1 auStack_54 [4];
+  undefined1 auStack_50 [24];
+  uint local_38;
+  code *local_34;
+  undefined4 local_28;
+  int iStack_1c;
+  undefined4 local_18;
+  
+  piVar1 = DAT_00000d0c;
+  local_78 = 0;
+  iStack_1c = param_1;
+  local_18 = param_2;
+  (**(code **)(*DAT_00000d0c + 0xac))(DAT_00000d10,0,&local_58);
+  (**(code **)(*piVar1 + 0xac))(DAT_00000d14,0,&local_5c);
+  (**(code **)(local_58 + 4))(local_58,1,auStack_1b0);
+  local_70[1] = 0x30;
+  (**(code **)(param_1 + 0x24))(param_1,DAT_00000d18,local_70 + 1,auStack_50);
+  iVar4 = (*(code *)*local_5c)(local_5c,local_12c,local_28);
+  if (-1 < iVar4) {
+    (**(code **)(*piVar1 + 0xac))(DAT_00000d1c,0,auStack_54);
+    (**(code **)(param_1 + 0x20))(param_1,*(code **)(param_1 + 0x20),0,0);
+    (**(code **)(*piVar1 + 0xac))(DAT_00000d20,0,&local_74);
+    local_64 = 0;
+    local_68 = local_34;
+    local_70[0] = local_38;
+    iVar4 = (**(code **)(*piVar1 + 0x20))
+                      (2,1,(local_38 >> 0xc) + (uint)((local_38 & 0xfff) != 0),&local_68);
+    if (-1 < iVar4) {
+      iVar4 = (**(code **)(param_1 + 0x14))(param_1,local_70,(uint)local_68 | 0x80000000);
+      pcVar3 = local_68;
+      if (-1 < iVar4) {
+        (**(code **)(*piVar1 + 0xc0))(&local_1c4,0x14,0);
+        uVar2 = DAT_00000d28;
+        local_1c4 = DAT_00000d24;
+        uStack_1c0 = DAT_00000d28;
+        uStack_1bc = 0;
+        local_1b8 = 0;
+        local_1b4 = 0;
+        (**(code **)(*piVar1 + 0xbc))(DAT_00000d2c,&local_1c4,0x14);
+        (**(code **)(*piVar1 + 0xbc))(uVar2,auStack_1b0,0x138);
+        *(undefined4 *)(DAT_00000d2c + -8) = local_18;
+        iVar4 = (**(code **)(*piVar1 + 0x34))(DAT_00000d30,8,0,0,&local_78);
+        if (-1 < iVar4) {
+          (**(code **)(*piVar1 + 0x40))(local_78);
+          (**(code **)(*piVar1 + 0x44))(local_78);
+        }
+        (*(code *)*local_74)();
+        FUN_00000220();
+        (*pcVar3)();
+      }
+      (**(code **)(*piVar1 + 0x24))
+                (local_68,local_64,(local_70[0] >> 0xc) + (uint)((local_70[0] & 0xfff) != 0));
+    }
+    (*(code *)local_74[1])();
+  }
+  return iVar4;
+}
+
+ (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0xd0c' '12'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 00000d0c  00001604  function=- data=undefined4 00000000h (GhidraScript)  
+INFO  DumpWords.java> 00000d10  00001580  function=- data=?? BDh (GhidraScript)  
+INFO  DumpWords.java> 00000d14  00001570  function=- data=?? 49h    I (GhidraScript)  
+INFO  DumpWords.java> 00000d18  000015b0  function=- data=?? 92h (GhidraScript)  
+INFO  DumpWords.java> 00000d1c  00001520  function=- data=?? 87h (GhidraScript)  
+INFO  DumpWords.java> 00000d20  000014c0  function=- data=?? FAh (GhidraScript)  
+INFO  DumpWords.java> 00000d24  53797349  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000d28  22028cc0  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000d2c  2206ff18  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000d30  00000601  function=FUN_000005b4@000005b4 data=null (GhidraScript)  
+INFO  DumpWords.java> 00000d34  b5704832  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00000d38  ac08b090  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x14f0' '4'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 000014f0  508868d2  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000014f4  44af0a1d  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000014f8  7450f78f  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000014fc  8d694106  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x1570' '4'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 00001570  568f2d49  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00001574  4f8db4b4  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 00001578  643f72a4  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 0000157c  55a91e99  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x15a0' '4'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 000015a0  cabe8131  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000015a4  41baa192  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000015a8  f8d93490  function=- data=null (GhidraScript)  
+INFO  DumpWords.java> 000015ac  3d329ae4  function=- data=null (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x14f0' '0x14ff'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000014f0 FROM 000009fc TYPE PARAM FUNCTION thumb_9e8@000009e8 INSTRUCTION ldr r0,[0x00000aac] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000014f0 FROM 00000f1a TYPE PARAM FUNCTION FUN_00000f0c@00000f0c INSTRUCTION ldr r0,[0x00000f84] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000014f0 FROM 00000ad4 TYPE PARAM FUNCTION FUN_00000abc@00000abc INSTRUCTION ldr r0,[0x00000b8c] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000014f0 FROM 00000d4c TYPE PARAM FUNCTION FUN_00000d34@00000d34 INSTRUCTION ldr r0,[0x00000e08] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000014f0 FROM 000002a4 TYPE PARAM FUNCTION bds_protocol_method_0258@00000258 INSTRUCTION ldr r0,[0x000004d4] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 000014f0-000014ff INCOMING=5 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x1570' '0x157f'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 00001570 FROM 00000be8 TYPE PARAM FUNCTION FUN_00000bc4@00000bc4 INSTRUCTION ldr r0,[0x00000d14] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 00001570-0000157f INCOMING=1 (GhidraScript)  
+INFO  REPORT: Execute script: FindIncomingReferencesInRange.java '0x15a0' '0x15af'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/accessories-alias-startup-reach-2026-10-31/scripts/FindIncomingReferencesInRange.java (HeadlessAnalyzer)  
+INFO  FindIncomingReferencesInRange.java> TARGET 000015a0 FROM 00000296 TYPE PARAM FUNCTION bds_protocol_method_0258@00000258 INSTRUCTION ldr r0,[0x000004d0] (GhidraScript)  
+INFO  FindIncomingReferencesInRange.java> RANGE 000015a0-000015af INCOMING=1 (GhidraScript)  
