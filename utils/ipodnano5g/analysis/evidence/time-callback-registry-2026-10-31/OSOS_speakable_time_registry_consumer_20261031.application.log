@@ -1,0 +1,108 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (666 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1293 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x081b093c' '0x08155706' '0x08023f64'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 081b093c FUN_081b093c ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_081b093c(int *param_1)
+
+{
+  for (; *param_1 != 0; param_1 = param_1 + 3) {
+    FUN_08154814(*param_1,param_1[1],param_1[2]);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08155706 FUN_08155706 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+undefined4 FUN_08155706(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 uVar1;
+  
+  FUN_081aaa84();
+  uVar1 = FUN_0818eb44(0x40);
+  uVar1 = FUN_0815d73c(uVar1,param_1);
+  FUN_08197514(param_2);
+  return uVar1;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08023f64 FUN_08023f64 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_08023f64(void)
+
+{
+  undefined4 uVar1;
+  
+  FUN_08028cb8();
+  FUN_081aaa84();
+  FUN_0802fa54();
+  FUN_08029c30();
+  uVar1 = FUN_081aa8bc();
+  FUN_081aa8d0(uVar1,0x1d);
+  return;
+}
+
+ (GhidraScript)  
+INFO  REPORT: Execute script: DumpCallersMany.java '0x081b093c' '0x08155706' '0x08023f64'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpCallersMany.java (HeadlessAnalyzer)  
+INFO  DumpCallersMany.java> ===== TARGET 081b093c ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 0802fa58 caller=FUN_0802fa54@0802fa54 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 081aaa96 caller=FUN_081aaa84@081aaa84 (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08028cbc caller=FUN_08028cb8@08028cb8 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=3 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 08155706 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 08151d38 caller=FUN_08151d20@08151d20 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  DumpCallersMany.java> ===== TARGET 08023f64 ===== (GhidraScript)  
+INFO  DumpCallersMany.java> CALL 080202f6 caller=FUN_080202d8@080202d8 (GhidraScript)  
+INFO  DumpCallersMany.java> COUNT=1 (GhidraScript)  
+INFO  REPORT: Execute script: DumpWords.java '0x081aaac0' '3'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DumpWords.java (HeadlessAnalyzer)  
+INFO  DumpWords.java> 081aaac0  08431560  function=- data=?? 6Eh    n (GhidraScript)  
+INFO  DumpWords.java> 081aaac4  085512b8  function=- data=?? 00h (GhidraScript)  
+INFO  DumpWords.java> 081aaac8  08538d40  function=- data=?? 00h (GhidraScript)  
