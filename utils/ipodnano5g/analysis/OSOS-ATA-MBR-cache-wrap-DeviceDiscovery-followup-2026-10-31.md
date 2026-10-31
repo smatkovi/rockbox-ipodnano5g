@@ -24,12 +24,16 @@ Mit dem früher read-only gemessenen 4096-Byte-Sektorformat ergibt sich für
 `cache_base - 0x1000`. Das ist ein möglicher Out-of-bounds-Read.
 
 Die entscheidende Zuordnung des Laufwerks-I/O-Slots zu genau diesem
-Partitionsadapter ist im vorliegenden RAM-Abbild nicht geschlossen. Die
-Registrierung benachrichtigt Listener über einen externen Callback; der
-Listener, der den Provider in den Laufwerks-Dispatch einträgt, liegt außerhalb
-des geladenen Abbilds. Damit ist der Cache-Wrap weiterhin ein bedingter
-Speicherlesefehler, kein bestätigter automatischer Exploit. Ein RAM-Write,
-kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
+Partitionsadapter ist im vorliegenden RAM-Abbild nicht geschlossen. Eine
+frühere Deutung der anschließenden Benachrichtigung als externem Callback war
+falsch: Der Partitionsmanager leert eine interne Queue und übergibt das Feld
+`+4` jedes Knotens an den OSOS-Präfixdienst `0x22005934`. Dieser legt einen
+SVC-Aufruf mit Befehl 2 an; der Präfixhandler liest damit einen Eintrag aus
+der Tabelle ab `0x2200980c`. Ein Funktionszeiger-Callback wird an dieser Stelle
+nicht aufgerufen. Herkunft und Wertebereich des Queue-Felds `+4` sowie die
+Queue-Produzenten sind noch nicht geklärt. Der Cache-Wrap bleibt daher ein
+bedingter Speicherlesefehler, kein bestätigter automatischer Exploit. Ein
+RAM-Write, kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
 
 ## Verifizierte Kette
 
@@ -51,9 +55,12 @@ kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
    Funktion ist keine Prüfung `relative_LBA + Count <= Partitionslänge`
    sichtbar.
 4. Nach dem Eintrag in den Manager-Slot ruft `FUN_0818e998` `FUN_0819039e`
-   auf. Diese setzt den Änderungszustand und verteilt ein Ereignis über
-   `FUN_0819f508` und `EXT_FUN_22005934`. In `FUN_0819039e` selbst gibt es
-   keinen direkten Aufruf des FAT-Mounters.
+   auf. Diese setzt den Änderungszustand und leert die interne Queue bei
+   `Manager + 0x34` über `FUN_0819f508`. Für jeden Knoten reicht diese Funktion
+   dessen Feld `+4` unverändert an `FUN_081933f8` und den OSOS-Präfixdienst
+   `0x22005934` weiter. Der Präfixdienst ruft SVC-Befehl 2 auf; dessen Handler
+   indiziert die Tabelle ab `0x2200980c` mit diesem Wert. Ein direkter Aufruf
+   des FAT-Mounters ist in `FUN_0819039e` nicht vorhanden.
 5. Der VFS-Open-Einstieg `FUN_081382c2` ruft `FUN_081fdd06` auf.
    `FUN_081fdd06` stößt für den gewählten Index `FUN_0814e76c` an;
    `FUN_0816039c` kann danach `FUN_08158f90` und `FUN_0814ef74` ausführen.
@@ -61,7 +68,8 @@ kontrollierter Rücksprung oder Codeausführung ist nicht belegt.
    `FUN_082192c4(index, 0, buffer, 1, 0)` an. Die automatische
    `accessories.reg`-Pfaduntersuchung belegt statisch einen MainApp-Open ohne
    Laufwerkspräfix und damit den Standardindex 0; der erfolgreiche Open und
-   die Listenerzustellung auf realer Hardware bleiben unbestätigt.
+   eine daraus folgende Queuezustellung auf realer Hardware bleiben
+   unbestätigt.
 6. `FUN_082192c4` gelangt über `FUN_08160a3a` zu `FUN_0816a928`. Diese
    Funktion liest einen Objektzeiger aus der Tabelle an `DAT_0816a96c` und
    führt den Read indirekt aus. Die Tabelle liegt laut Ghidra bei
@@ -123,15 +131,17 @@ sind im Runtime-Abbild nicht belegt.
 
 Die MBR-Discovery bleibt von diesem Mountpfad getrennt: `FUN_0818e998`
 registriert den Partitionsadapter im Managerobjekt und löst über
-`FUN_0819039e`/`FUN_0819f508` eine Listenerzustellung aus. Im geladenen Code
-gibt es keine direkte Kante von dieser Zustellung zu `FUN_0812a9ca` oder
+`FUN_0819039e`/`FUN_0819f508` die Verarbeitung einer internen Queue aus.
+Queue-Knoten reichen ihr Feld `+4` an den SVC-Befehl 2 des OSOS-Präfixes
+weiter; das ist kein Aufruf eines Listener-Funktionszeigers. Im geladenen Code
+gibt es keine direkte Kante von dieser Verarbeitung zu `FUN_0812a9ca` oder
 `FUN_081352fc`. Außerdem verwendet der MBR-Partitionsadapter `+0x10` für
 seinen Partitionsstart, während die Tabellenobjekte `+0x10` als Laufwerks-
 buchstaben verwenden; für dieselbe I/O-Tabelle wäre daher ein zusätzlicher
 Wrapper oder eine andere Instanz erforderlich. Die gemeinsame Tabelle
 belegt damit für Objekte, die `FUN_0812a9ca` über `FUN_081352fc` registriert,
 denselben Tabellenlink zum I/O-Dispatcher. Offen bleibt, ob der MBR-Adapterpfad
-diese Methode erreicht und welches Objekt der Event-Listener dafür erzeugt.
+diese Methode erreicht und woher eine Instanz mit der Mount-VTable stammt.
 
 Diese Nachprüfung korrigiert zwei alte Funktionslabels: Die Registrierung ist
 `FUN_081352fc` (Runtime-Adresse; zugehörige Body-Adresse `0x08163578`), und
@@ -191,21 +201,45 @@ Index 4 auf; dieser Pfad registriert mit Untertyp 0 in Partitionsslot 4 und
 verwendet den Basiskonstruktor. Auch er schließt die fehlende Kante zur
 Vierer-Laufwerkstabelle nicht.
 
-Die Listenerverteilung macht die offene Kante konkret: `FUN_0819f508` leert
-eine Queue über `EXT_FUN_220030bc` und übergibt das Feld `+4` jedes Eintrags
-an `FUN_081933f8`. Diese Routine lässt `r0` unverändert und springt über den
-Trampolin bei `0x08201220`; dessen Speicherwort `0x08201224` zeigt auf den
-externen Dienst `0x22005934`. Das geladene Runtime-Abbild enthält weder die
-Queue-Inhalte noch die externe Listenerregistrierung. Deshalb ist weiterhin
-unbekannt, welcher Listener auf die Partitionsänderung reagiert und ob er ein
-Objekt mit der Mount-VTable `0x085056d0` erzeugt.
+### Zusatzrunde: Änderungssignalqueue und OSOS-SVC-Argument
+
+Die Zuordnung des Präfixes klärt die zuvor offene Trampolinstelle. Der
+Runtime-Trampolin bei `0x08201220` lädt `0x22005934`; im korrekt geladenen
+OSOS-Body entspricht diese Präfixadresse `0x08005934`. `FUN_08005934` baut
+einen SVC-Datensatz mit Befehl 2 und kopiert sein Argument unverändert hinein.
+Der im selben Bodyprojekt ausgelesene Zeiger `DAT_08001640` hat den Wert
+`0x2200980c`. Der Handler `FUN_08000b70` liest bei Befehl 2 aus
+`0x2200980c + 4 * Argument`. Vor diesem Tabellenzugriff ist im sichtbaren
+Handler kein Indexvergleich vorhanden. Der gelesene Tabellenwert wird auf
+`0` und `-1` geprüft; er wird nicht als Funktion aufgerufen. Das belegt einen
+prüfenswerten Kernel-Tabellenzugriff, aber weder die Tabellengrenze noch einen
+vom Datenträger kontrollierbaren Index oder eine ausnutzbare Folge.
+
+Auch die Queueform ist jetzt belegt: `FUN_08020448` richtet beim
+Partitionsmanager die Queue bei `Manager + 0x34` ein. `FUN_0819e35c` setzt
+deren Sperrzeiger auf `Manager + 0x2c` und setzt Kopf und Ende bei `+0x38` und
+`+0x3c` zunächst auf null. `FUN_0819039e` sperrt diesen Bereich, setzt das
+Änderungsbyte bei `+0x28`, ruft `FUN_0819f508(Manager + 0x34)` auf und gibt
+anschließend die Sperre frei. `FUN_0819f508` entnimmt Knoten aus der Liste ab
+`+0x38` und reicht jeweils das Knotenfeld `+4` an den SVC-Wrapper weiter.
+
+Die Konstruktion erklärt damit Queueformat und Datenfluss, aber noch nicht,
+wer Knoten in genau diese Partitionsmanagerqueue einträgt. Der Konstruktor
+startet sie leer; die bisher ermittelten Aufrufer von `FUN_0819039e` sind die
+MBR-Registrierung `FUN_0818e998` und der Fehlerpfad `FUN_080029de`. Es ist
+keine belegte Kante von einer durch Medieninhalte erzeugten Queue-Nachricht
+zum Argument des SVC-Befehls 2 vorhanden. Ebenso bleibt offen, welche
+Laufzeitgröße die Tabelle ab `0x2200980c` hat. Eine kontrollierbare
+Out-of-bounds-Auswirkung ist deshalb nicht nachgewiesen.
 
 ## Nächste Schritte
 
-- Den Verbraucher des von `FUN_0819f508` zugestellten Ereignisses und den
-  Erzeuger der VTable-Instanz bei `0x085056d0` finden. Die Listenerzustellung
-  liegt teilweise hinter externen OS-Diensten; die VTable hat im Abbild keine
-  erkannten eingehenden Referenzen.
+- Den Produzenten der Queue bei `Manager + 0x34` finden und die Herkunft sowie
+  den Wertebereich von Knotenfeld `+4` bis zum SVC-Befehl 2 nachweisen.
+- Die Größe und Laufzeitinitialisierung der Präfixtabelle ab `0x2200980c`
+  klären; der sichtbare Handler prüft den Index vor dem Zugriff nicht.
+- Den Erzeuger der VTable-Instanz bei `0x085056d0` finden. Die VTable hat im
+  Runtime-Abbild keine erkannten eingehenden Code-Referenzen.
 - Belegen, ob der MBR-Partitionsadapter in einen Tabellenobjekt-Wrapper
   überführt wird, der anschließend `FUN_081352fc` aufruft. Die beiden
   `+0x10`-Felder haben unterschiedliche Bedeutung.

@@ -10,7 +10,7 @@ Das Runtime-Abbild hat SHA-256
 | Beleg | Inhalt |
 | --- | --- |
 | `OSOS_runtime_partition_registration_dispatch_20261031.application.log` | MBR-Parsing, `FUN_0818e998`-Registrierung und Aufruf von `FUN_0819039e` |
-| `OSOS_runtime_partition_callback_notify_20261031.application.log` | Listener-Verteilung über `FUN_0819f508` und externen Callback |
+| `OSOS_runtime_partition_callback_notify_20261031.application.log` | Manageränderung und Queue-Drain über `FUN_0819f508`; der damalige Callback-Name war eine vorläufige, später korrigierte Deutung |
 | `OSOS_runtime_partition_manager_singleton_20261031.application.log` | Manager-Singleton, Slotbelegung, dynamischer Read-Dispatch |
 | `OSOS_runtime_VFS_mount_first_sector_20261031.application.log` | VFS-Open, Mount-Einstieg und Laufwerkszugriff |
 | `OSOS_runtime_volume_mount_state_machine_20261031.application.log` | Mountzustand und Übergang zum FAT/BPB-Parser |
@@ -46,11 +46,18 @@ für `FUN_0812a9ca`:
 | `OSOS_runtime_mount_registration_xrefs_20261031.application.log` | Kein direkter Codeaufrufer für `FUN_0812a9ca`; die Funktion wird als VTable-Wort referenziert |
 | `OSOS_runtime_mount_vtable_incoming_refs_20261031.application.log` | Keine im Runtime-Abbild erkannten eingehenden Referenzen auf die VTable-Region |
 | `OSOS_runtime_mount_class_vtable_xrefs_20261031.application.log` | Kein roher Wortverweis auf die VTable-Basis oder die benachbarten Slots |
-| `OSOS_runtime_dispatch_callbacks_20261031.application.log` | Decompilierungen von Managerregistrierung, Ereignisverteilung, Listenerqueue und I/O-Dispatcher |
-| `OSOS_runtime_dispatch_xrefs_20261031.application.log` | Direkte Xrefs für Registrierungsereignis, Listenerverteilung und Dispatch-Tabelle |
-| `OSOS_runtime_listener_callback_abi_20261031.application.log` | Listenerfeld `+4` fließt unverändert über `FUN_081933f8` in den OS-Trampolin |
-| `OSOS_runtime_listener_oscall_thunk_20261031.application.log` | `0x08201220` springt über `0x08201224` zum externen Dienst `0x22005934` |
-| `OSOS_runtime_listener_callback_callers_20261031.application.log` | Xrefs und Argumentquellen der weiteren Aufrufer des Listener-Trampolins |
+| `OSOS_runtime_dispatch_callbacks_20261031.application.log` | Decompilierungen von Managerregistrierung, Queue-Verarbeitung und I/O-Dispatcher |
+| `OSOS_runtime_dispatch_xrefs_20261031.application.log` | Direkte Xrefs für Manageränderung, Queue-Drain und Dispatch-Tabelle |
+| `OSOS_runtime_listener_callback_abi_20261031.application.log` | Queue-Knotenfeld `+4` fließt unverändert durch `FUN_081933f8`; die Präfixzuordnung wird durch die Body-Abfrage unten ergänzt |
+| `OSOS_runtime_listener_oscall_thunk_20261031.application.log` | Runtime-Veneer `0x08201220` lädt die Präfixadresse `0x22005934`; kein Beleg für externen Callback-Code |
+| `OSOS_runtime_listener_callback_callers_20261031.application.log` | Xrefs und Argumentquellen weiterer Aufrufer des Präfix-SVC-Wrappers |
+| `OSOS_runtime_listener_queue_wrapper_callers_20261031.application.log` | Direkte Aufrufer der Präfix-Listenfunktionen für Queue-Anfügen und -Entnahme |
+| `OSOS_runtime_all_runtime_list_add_callers_20261031.application.log` | Decompilierung aller 12 direkten Anfüge-Aufrufstellen; keine davon ist bislang der konkreten MBR-Managerqueue zugeordnet |
+| `OSOS_runtime_partition_manager_constructor_20261031.application.log` | Aufbau des 7-Slot-Partitionsmanagers und Initialisierer `FUN_08020448` |
+| `OSOS_runtime_partition_manager_queue_semantics_20261031.application.log` | Queueinitialisierung, Sperr-/Kopf-/Endfelder, Entnahme und Weitergabe von Knotenfeld `+4` |
+| `OSOS_body_oscall_22005934_dispatch_20261031.application.log` | Korrekt zugeordneter OSOS-Body: `0x08005934` baut SVC-Befehl 2; der Handler indiziert `0x2200980c` und ruft keinen Funktionszeiger auf |
+| `OSOS_body_prefix_table_pointer_20261031.application.log` | Direkter Ghidra-Speicherwert von `DAT_08001640`: `0x2200980c` |
+| `OSOS_body_list_helpers_20261031.disasm.txt` | Rohdisassemblierung des korrekt adressierten Body-Listenhelfers `0x080030bc` |
 | `OSOS_runtime_partition_wrapper_entrypoints_20261031.application.log` | Wrapper `FUN_082154b8`, Registrierung `FUN_0818e998` und deren Aufrufer |
 | `OSOS_runtime_partition_wrapper_upstream_callers_20261031.application.log` | Aufrufer und Argumentaufbau der Wrapperpfade über `FUN_080b4e00` und `FUN_080ce8b0` |
 | `OSOS_runtime_partition_subclass_cache_adapter_20261031.application.log` | Cache-Untertypkonstruktor, VTable-Zuweisung und Startup-Aufrufer |
@@ -59,6 +66,14 @@ für `FUN_0812a9ca`:
 | `OSOS_runtime_partition_manager_slot_guard_20261031.application.log` | unsigned Slotgrenze `< 7` und Leerplatzbedingung in `FUN_0826384c` |
 | `OSOS_runtime_partition_slot_release_20261031.application.log` | `FUN_0821545a` ruft den Slotabbau auf; `FUN_080e7e70` nullt den Managerslot und zerstört das Objekt |
 | `OSOS_runtime_partition_startup_reachability_20261031.application.log` | Direkte Runtime-Xrefs der Cache-Registrierungsaufrufer |
+
+Die zunächst als Listener-Callback bezeichnete Kante ist korrigiert: Das
+Queue-Knotenfeld `+4` wird als Indexargument an SVC-Befehl 2 weitergereicht.
+Der SVC-Handler liest damit aus `0x2200980c`; er ruft den Wert nicht als
+Callback auf. Konstruktor und Aufruferabfrage belegen die Queueform und ihren
+leeren Anfangszustand. Ein Produzent, der Einträge in genau diese
+Partitionsmanagerqueue schreibt, ist in den direkten Listen-Aufrufstellen
+noch nicht identifiziert.
 
 Diese Abfragen zeigen, dass `FUN_081352fc` und `FUN_0816a928` dieselbe
 Vierer-Tabelle benutzen. Sie schließen nicht die Kante vom MBR-Partitionsadapter
@@ -70,15 +85,19 @@ Der wortweise Abgleich an `DAT_0816a96c` stimmt: `3c 50 83 08` ist
 little-endian `0x0883503c`. `0x0833503c` ist eine andere Snapshot-Adresse und
 war zuvor irrtümlich mit dem Tabellenzeiger verwechselt worden.
 
-Die Dateien `OSOS_body_*` in diesem Verzeichnis sind verworfene
-Explorationsabfragen und absichtlich nicht im SHA-256-Manifest. Eine
-Body-Ghidra-Projektfassung war mit falschem Start geladen; eine zweite hatte
-den für die Thumb-Funktionen nötigen `TMode`-Kontext nicht übernommen. Keine
-Schlussfolgerung im Bericht stützt sich auf diese Body-Xrefs. Ebenso
-ausgeschlossen sind unvollständige Singleton-/Tabellen-Suchen und die
-allgemeinen Slot-`0x28`-Scans: Sie belegen keinen konkreten Aufrufpfad. Die
-gültigen Runtime-Abfragen wurden mit dem bestehenden Projekt und
-`-readOnly -noanalysis` ausgeführt.
+Die Dateien `OSOS_body_extended_*`, `OSOS_body_full_*`,
+`OSOS_body_listener_list_producer_xrefs_*`,
+`OSOS_body_listener_queue_service_wrappers_*` und
+`OSOS_body_queue_list_helper_refs_*` sind verworfene Explorationsabfragen und
+absichtlich nicht im SHA-256-Manifest. Frühere Body-Projektläufe verwendeten
+teils eine falsche Startadresse oder fehlenden Thumb-Kontext. Die oben
+aufgeführten `OSOS_body_oscall_*`- und `OSOS_body_list_helpers_*`-Belege sind
+davon getrennt: Ersterer stammt aus dem korrekt geladenen
+`N5G_OSOS_RTOS`-Projekt, Letzterer aus einer Rohdisassemblierung des
+Body-Abbilds. Ebenso ausgeschlossen sind unvollständige Singleton-/Tabellen-
+Suchen und die allgemeinen Slot-`0x28`-Scans: Sie belegen keinen konkreten
+Aufrufpfad. Die gültigen Runtime-Abfragen wurden mit dem bestehenden Projekt
+und `-readOnly -noanalysis` ausgeführt.
 
 `OSOS_runtime_vtable_slot28_calls_20261031.application.log` und
 `OSOS_runtime_slot28_candidate_callers_20261031.application.log` sind nicht
