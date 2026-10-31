@@ -1,0 +1,125 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)
+INFO  Searching for classes... (ClassSearcher)
+INFO  Class search complete (712 ms) (ClassSearcher)
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)
+INFO  Initializing Random Number Generator... (SecureRandomFactory)
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)
+INFO  Headless startup complete (1328 ms) (AnalyzeHeadless)
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)
+INFO  REPORT: Execute script: DumpCallersAndData.java '0x08020a7c' '0x08023e90'  (HeadlessAnalyzer)
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/DumpCallersAndData.java (HeadlessAnalyzer)
+INFO  DumpCallersAndData.java> ===== REFERENCES TO 08020a7c ===== (GhidraScript)
+INFO  DumpCallersAndData.java> REF 0801e3aa type=UNCONDITIONAL_CALL caller=0801e3a4 FUN_0801e3a4 (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3a4: push {r1,r2,r3,lr} (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3a6: movs r1,#0x18 (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3a8: ldr r0,[0x0801e3d4] (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3aa: bl 0x08020a7c (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3ae: bl 0x08020a78 (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3b2: ldr r0,[0x0801e3d8] (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3b4: movs r2,#0xff (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3b6: mov r3,sp (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3b8: adds r2,#0xf5 (GhidraScript)
+INFO  DumpCallersAndData.java>   0801e3ba: ldr r0,[r0,#0x0] (GhidraScript)
+INFO  DumpCallersAndData.java>
+void FUN_0801e3a4(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  FUN_08020a7c(DAT_0801e3d4,0x18,param_3,param_4,param_2,param_3,param_4);
+  FUN_08020a78();
+  thumb_8193984(s_MainAppTask_0801e3e0,DAT_0801e3dc,0,0x10,*DAT_0801e3d8 << 4,1,500);
+  FUN_08020a88();
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpCallersAndData.java> ===== REFERENCES TO 08023e90 ===== (GhidraScript)
+INFO  DumpCallersAndData.java> REF 08020316 type=UNCONDITIONAL_CALL caller=080202d8 FUN_080202d8 (GhidraScript)
+INFO  DumpCallersAndData.java>   0802030a: bl 0x081a7514 (GhidraScript)
+INFO  DumpCallersAndData.java>   0802030e: bl 0x08023ca4 (GhidraScript)
+INFO  DumpCallersAndData.java>   08020312: bl 0x08023ec4 (GhidraScript)
+INFO  DumpCallersAndData.java>   08020316: bl 0x08023e90 (GhidraScript)
+INFO  DumpCallersAndData.java>   0802031a: movs r0,#0xa4 (GhidraScript)
+INFO  DumpCallersAndData.java>   0802031c: bl 0x0818eb44 (GhidraScript)
+INFO  DumpCallersAndData.java>   08020320: movs r2,#0x1 (GhidraScript)
+INFO  DumpCallersAndData.java>   08020322: movs r1,#0x0 (GhidraScript)
+INFO  DumpCallersAndData.java>   08020324: bl 0x08023670 (GhidraScript)
+INFO  DumpCallersAndData.java>
+void FUN_080202d8(void)
+
+{
+  undefined4 uVar1;
+  int *piVar2;
+  int iVar3;
+
+  FUN_081a5288();
+  FUN_08021c20();
+  FUN_08023850();
+  FUN_081a74ac();
+  FUN_08251340();
+  FUN_08021d08();
+  FUN_081a74c4();
+  FUN_08023f64();
+  *DAT_08020388 = 1;
+  FUN_08023fa0();
+  uVar1 = FUN_08023cb4();
+  FUN_081a7514(uVar1,DAT_0802038c);
+  FUN_08023ca4();
+  FUN_08023ec4();
+  FUN_08023e90();
+  uVar1 = FUN_0818eb44(0xa4);
+  piVar2 = (int *)FUN_08023670(uVar1,0,1);
+  (**(code **)(*piVar2 + 0x16c))();
+  *DAT_08020390 = 500;
+  uVar1 = FUN_08022fee();
+  FUN_08022fec(uVar1,DAT_08020394,7);
+  FUN_08022140();
+  FUN_08197514(DAT_08020388 + 4);
+  iVar3 = FUN_081a77c8();
+  if (iVar3 != 0) {
+    uVar1 = FUN_081a77e0();
+    uVar1 = FUN_081a7824(uVar1,0xc);
+    uVar1 = FUN_08195e70(uVar1,DAT_08020398,0,0);
+    FUN_0819a100(uVar1,*DAT_0802039c,1,0,0);
+  }
+  FUN_08025154();
+  FUN_081a78b4();
+  return;
+}
+
+ (GhidraScript)

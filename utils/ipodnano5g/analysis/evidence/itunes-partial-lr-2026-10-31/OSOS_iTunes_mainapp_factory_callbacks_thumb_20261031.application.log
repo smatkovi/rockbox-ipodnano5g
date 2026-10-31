@@ -1,0 +1,569 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)
+INFO  Searching for classes... (ClassSearcher)
+INFO  Class search complete (640 ms) (ClassSearcher)
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)
+INFO  Initializing Random Number Generator... (SecureRandomFactory)
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)
+INFO  Headless startup complete (1256 ms) (AnalyzeHeadless)
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)
+INFO  REPORT: Execute script: DumpThumbTransientFunctions.java '0x0801e75c' '0x0801e2fe' '0x0801e748' '0x0801e7ac' '0x0801e2e0' '0x0801e90c' '0x0801e59a' '0x0801e350' '0x0801e576' '0x0801e8f6' '0x0801e8e4' '0x0801e588' '0x0801e310' '0x0801e244' '0x0801e925' '0x0801e8d2' '0x0801e230' '0x0801e2a2' '0x0801e33c' '0x0801e37c' '0x0801e858' '0x0801e32a' '0x0801e21c' '0x0801e3ec'  (HeadlessAnalyzer)
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/DumpThumbTransientFunctions.java (HeadlessAnalyzer)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e75c created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e75c(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x178);
+  func_0x08020a14(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e75c movs r0,#0xff (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e75e adds r0,#0x79 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e760 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e762 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e766 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e768 bl 0x08020a14 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e76c pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e2fe created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e2fe(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x4c);
+  func_0x080200e0(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2fe movs r0,#0x4c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e300 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e302 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e306 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e308 bl 0x080200e0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e30c pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e748 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e748(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x3c8);
+  func_0x08020750(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e748 movs r0,#0x79 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e74a push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e74c lsls r0,r0,#0x3 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e74e bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e752 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e754 bl 0x08020750 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e758 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e7ac created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void transient_thumb_0801e7ac(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0xd8);
+  uVar1 = func_0x08020950(uVar1,0);
+  *(undefined4 *)(_DAT_0801e7c0 + 4) = uVar1;
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7ac movs r0,#0xd8 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7ae push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7b0 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7b4 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7b6 bl 0x08020950 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7ba ldr r1,[0x0801e7c0] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7bc str r0,[r1,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e7be pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e2e0 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void transient_thumb_0801e2e0(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x2ac);
+  uVar1 = FUN_08020014(uVar1,0);
+  *(undefined4 *)(_DAT_0801e2f8 + 4) = uVar1;
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2e0 movs r0,#0xab (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2e2 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2e4 lsls r0,r0,#0x2 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2e6 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2ea movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2ec bl 0x08020014 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2f0 ldr r1,[0x0801e2f8] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2f2 str r0,[r1,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2f4 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e90c created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e90c(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(DAT_0801e91c);
+  FUN_08021294(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e90c ldr r0,[0x0801e91c] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e90e push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e910 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e914 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e916 bl 0x08021294 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e91a pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e59a created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e59a(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x44);
+  func_0x08020628(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e59a movs r0,#0x44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e59c push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e59e bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e5a2 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e5a4 bl 0x08020628 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e5a8 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e350 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 transient_thumb_0801e350(void)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+
+  FUN_0818eb44(0x34);
+  uVar1 = func_0x080202a0();
+  uVar2 = FUN_081a5df8();
+  FUN_081a5e14(uVar2,_DAT_0801e370,0);
+  return uVar1;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e350 movs r0,#0x34 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e352 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e354 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e358 bl 0x080202a0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e35c mov r4,r0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e35e bl 0x081a5df8 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e362 ldr r1,[0x0801e370] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e364 movs r2,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e366 bl 0x081a5e14 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e36a mov r0,r4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e36c pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e576 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e576(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x5c);
+  func_0x080204c4(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e576 movs r0,#0x5c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e578 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e57a bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e57e movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e580 bl 0x080204c4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e584 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e8f6 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e8f6(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x104);
+  FUN_08020fa8(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8f6 movs r0,#0xff (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8f8 adds r0,#0x5 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8fa push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8fc bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e900 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e902 bl 0x08020fa8 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e906 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e8e4 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e8e4(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x74);
+  func_0x08020f50(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8e4 movs r0,#0x74 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8e6 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8e8 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8ec movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8ee bl 0x08020f50 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8f2 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e588 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e588(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0xb4);
+  func_0x08020514(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e588 movs r0,#0xb4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e58a push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e58c bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e590 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e592 bl 0x08020514 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e596 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e310 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void transient_thumb_0801e310(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x4c);
+  uVar1 = func_0x080201e0(uVar1,0);
+  *(undefined4 *)(_DAT_0801e324 + 4) = uVar1;
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e310 movs r0,#0x4c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e312 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e314 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e318 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e31a bl 0x080201e0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e31e ldr r1,[0x0801e324] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e320 str r0,[r1,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e322 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e244 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e244(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x38);
+  func_0x0801fdbc(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e244 movs r0,#0x38 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e246 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e248 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e24c movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e24e bl 0x0801fdbc (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e252 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e924 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void transient_thumb_0801e924(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+
+  iVar1 = _DAT_0801e940;
+  if (*(int *)(_DAT_0801e940 + 4) == 0) {
+    uVar2 = FUN_0818eb44(0x34);
+    uVar2 = func_0x08021400(uVar2,0);
+    *(undefined4 *)(iVar1 + 4) = uVar2;
+  }
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e924 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e926 ldr r4,[0x0801e940] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e928 ldr r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e92a cmp r0,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e92c bne 0x0801e93c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e92e movs r0,#0x34 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e930 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e934 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e936 bl 0x08021400 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e93a str r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e93c pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e8d2 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e8d2(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0xcc);
+  func_0x08020da4(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8d2 movs r0,#0xcc (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8d4 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8d6 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8da movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8dc bl 0x08020da4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e8e0 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e230 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e230(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(600);
+  func_0x0801fca4(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e230 movs r0,#0x4b (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e232 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e234 lsls r0,r0,#0x3 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e236 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e23a movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e23c bl 0x0801fca4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e240 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e2a2 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e2a2(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x68);
+  func_0x0801fde4(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2a2 movs r0,#0x68 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2a4 push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2a6 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2aa movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2ac bl 0x0801fde4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e2b0 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e33c created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 transient_thumb_0801e33c(void)
+
+{
+  FUN_081a5dd8();
+  return *(undefined4 *)(_DAT_0801e348 + 4);
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e33c push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e33e bl 0x081a5dd8 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e342 ldr r0,[0x0801e348] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e344 ldr r0,[r0,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e346 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e37c created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 transient_thumb_0801e37c(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+
+  uVar2 = FUN_0818eb44(0x9c0);
+  iVar3 = func_0x080202cc(uVar2,0);
+  iVar1 = _DAT_0801e39c;
+  *(int *)(_DAT_0801e39c + 4) = iVar3;
+  if (iVar3 != 0) {
+    FUN_0805a630();
+  }
+  return *(undefined4 *)(iVar1 + 4);
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e37c movs r0,#0x27 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e37e push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e380 lsls r0,r0,#0x6 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e382 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e386 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e388 bl 0x080202cc (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e38c ldr r4,[0x0801e39c] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e38e cmp r0,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e390 str r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e392 beq 0x0801e398 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e394 bl 0x0805a630 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e398 ldr r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e39a pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e858 created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e858(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(100);
+  func_0x08020a8c(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e858 movs r0,#0x64 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e85a push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e85c bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e860 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e862 bl 0x08020a8c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e866 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e32a created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e32a(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x70);
+  func_0x0802024c(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e32a movs r0,#0x70 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e32c push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e32e bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e332 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e334 bl 0x0802024c (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e338 pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e21c created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e21c(void)
+
+{
+  undefined4 uVar1;
+
+  uVar1 = FUN_0818eb44(0x410);
+  FUN_0801fbe4(uVar1,0);
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e21c movs r0,#0x41 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e21e push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e220 lsls r0,r0,#0x4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e222 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e226 movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e228 bl 0x0801fbe4 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e22c pop {r4,pc} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> ===== THUMB FUNCTION 0801e3ec created=true ===== (GhidraScript)
+INFO  DumpThumbTransientFunctions.java>
+void transient_thumb_0801e3ec(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+
+  iVar1 = DAT_0801e408;
+  if (*(int *)(DAT_0801e408 + 4) == 0) {
+    uVar2 = FUN_0818eb44(0x34);
+    uVar2 = FUN_080203a0(uVar2,0);
+    *(undefined4 *)(iVar1 + 4) = uVar2;
+  }
+  return;
+}
+
+ (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3ec push {r4,lr} (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3ee ldr r4,[0x0801e408] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3f0 ldr r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3f2 cmp r0,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3f4 bne 0x0801e404 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3f6 movs r0,#0x34 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3f8 bl 0x0818eb44 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3fc movs r1,#0x0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e3fe bl 0x080203a0 (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e402 str r0,[r4,#0x4] (GhidraScript)
+INFO  DumpThumbTransientFunctions.java> 0801e404 pop {r4,pc} (GhidraScript)

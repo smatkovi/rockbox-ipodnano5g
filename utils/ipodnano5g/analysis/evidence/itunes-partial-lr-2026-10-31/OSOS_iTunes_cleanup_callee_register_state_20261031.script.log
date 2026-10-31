@@ -1,0 +1,102 @@
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> ===== 0827ee00 FUN_0827ee00 =====
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> body=[[0827ee00, 0827ee37]] signature=undefined FUN_0827ee00(void)
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee00: push {r4,lr}
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee02: ldr r1,[0x0827ee38]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee04: mov r4,r0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee06: bl 0x082758de
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee0a: cmp r0,#0x0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee0c: bge 0x0827ee12
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee0e: movs r0,#0x0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee10: pop {r4,pc}
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee12: mov r0,r4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee14: bl 0x0827f514
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee18: ldr r1,[0x0827ee3c]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee1a: ldr r3,[0x0827ee40]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee1c: ldrb r2,[r4,#0x1]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee1e: adds r0,r0,r1
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee20: ldrb r1,[r4,#0x2]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee22: muls r0,r3
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee24: movs r3,#0xe1
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee26: lsls r3,r3,#0x4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee28: muls r1,r3
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee2a: movs r3,#0x3c
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee2c: muls r2,r3
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee2e: adds r1,r1,r2
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee30: ldrb r2,[r4,#0x0]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee32: adds r0,r2,r0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee34: adds r0,r1,r0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 0827ee36: pop {r4,pc}
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0813d67a bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082701f2 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080b1b02 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081d85fe bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081d8608 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0825cff2 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081b0a38 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081b0a64 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0823b722 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082451b6 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824520e bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 08245230 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 08250a08 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082628f2 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080a2b2c bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081c4a44 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0826f972 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824e098 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824e0c8 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824e0da bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080944b8 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0827bb6c bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824b5b8 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0824b5c2 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0825572e bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080f5f42 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080f5f4e bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081f8672 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081578ec bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 08244332 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0823f9ec bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081df378 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081df398 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080638a6 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080638c4 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081a74bc bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 080b8212 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081b7d54 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0817231a bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081b7d6e bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 08241c38 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 08241c46 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0813e288 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082518c4 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082aa4ea bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082aa4f4 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082aa508 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082aa512 bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081b8f6c bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 081e2dce bl 0x0827ee00
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> ===== 08248f2a FUN_08248f2a =====
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> body=[[08248f2a, 08248f53]] signature=undefined FUN_08248f2a(void)
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f2a: push {r1,r2,r3,r4,r5,r6,r7,lr}
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f2c: mov r5,r1
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f2e: mov r1,r0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f30: ldr r7,[sp,#0x20]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f32: mov r6,r2
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f34: mov r4,r3
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f36: add r0,sp,#0x4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f38: bl 0x0819e9a4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f3c: mov r3,r4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f3e: mov r2,r6
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f40: mov r1,r5
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f42: str r7,[sp,#0x0]
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f44: bl 0x08248c56
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f48: mov r4,r0
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f4a: add r0,sp,#0x4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f4c: bl 0x0827f28c
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f50: mov r0,r4
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> 08248f52: pop {r1,r2,r3,r4,r5,r6,r7,pc}
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 082701e2 bl 0x08248f2a
+2026-10-31 14:50:04 INFO  DumpFunctionListing.java> XREF 0813d568 bl 0x08248f2a
+2026-10-31 14:50:05 INFO  DecompileFunctions.java> ===== 0827ee00 FUN_0827ee00 =====
+2026-10-31 14:50:05 INFO  DecompileFunctions.java> ===== 08248f2a FUN_08248f2a =====

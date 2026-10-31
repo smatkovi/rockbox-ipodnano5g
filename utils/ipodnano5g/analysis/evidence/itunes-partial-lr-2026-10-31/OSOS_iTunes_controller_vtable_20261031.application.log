@@ -1,0 +1,98 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)
+INFO  Searching for classes... (ClassSearcher)
+INFO  Class search complete (606 ms) (ClassSearcher)
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)
+INFO  Initializing Random Number Generator... (SecureRandomFactory)
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)
+INFO  Headless startup complete (1201 ms) (AnalyzeHeadless)
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)
+INFO  REPORT: Execute script: DumpMemoryWords.java '0x084f7558' '52'  (HeadlessAnalyzer)
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/DumpMemoryWords.java (HeadlessAnalyzer)
+INFO  DumpMemoryWords.java> WORD 084f7558 value=0804c1b5 target=0804c1b4 function=FUN_0804c1b4 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f755c value=08038eb9 target=08038eb8 function=FUN_08038eb8 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7560 value=08038d23 target=08038d22 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7564 value=08038d2d target=08038d2c function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7568 value=08042fab target=08042faa function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f756c value=0803776d target=0803776c function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7570 value=08163171 target=08163170 function=FUN_08163170 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7574 value=08163271 target=08163270 function=FUN_08163270 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7578 value=080377d7 target=080377d6 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f757c value=081a954f target=081a954e function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7580 value=0816a463 target=0816a462 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7584 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7588 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f758c value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7590 value=0826beed target=0826beec function=FUN_0826beec (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7594 value=08038d39 target=08038d38 function=FUN_08038d38 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7598 value=0827f8b1 target=0827f8b0 function=FUN_0827f8b0 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f759c value=08162f67 target=08162f66 function=FUN_08162f66 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75a0 value=08162f87 target=08162f86 function=FUN_08162f86 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75a4 value=0816c879 target=0816c878 function=FUN_0816c878 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75a8 value=0816c895 target=0816c894 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75ac value=0816c877 target=0816c876 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75b0 value=0816c897 target=0816c896 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75b4 value=0816c875 target=0816c874 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75b8 value=081a9225 target=081a9224 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75bc value=08136c97 target=08136c96 function=FUN_08136c96 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75c0 value=081a9227 target=081a9226 function=FUN_081a9226 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75c4 value=081af96d target=081af96c function=FUN_081af96c (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75c8 value=081a9221 target=081a9220 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75cc value=080377dd target=080377dc function=FUN_080377dc (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75d0 value=080388f1 target=080388f0 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75d4 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75d8 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75dc value=081a36ef target=081a36ee function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75e0 value=081a36e1 target=081a36e0 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75e4 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75e8 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75ec value=080389f9 target=080389f8 function=FUN_080389f8 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75f0 value=080cf3ad target=080cf3ac function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75f4 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75f8 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f75fc value=080ee9cd target=080ee9cc function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7600 value=081fe635 target=081fe634 function=FUN_081fe634 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7604 value=080dc099 target=080dc098 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7608 value=080bd505 target=080bd504 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f760c value=08037747 target=08037746 function=FUN_08037746 (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7610 value=080377cd target=080377cc function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7614 value=00000000 target=00000000 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7618 value=0805f861 target=0805f860 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f761c value=08038949 target=08038948 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7620 value=08050415 target=08050414 function=<none> (GhidraScript)
+INFO  DumpMemoryWords.java> WORD 084f7624 value=081b0bfd target=081b0bfc function=FUN_081b0bfc (GhidraScript)

@@ -1,0 +1,75 @@
+2026-10-31 17:44:59 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml
+2026-10-31 17:44:59 INFO  (LoggingInitialization) Using log file: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/OSOS_iTunes_runtime_mapping_20261031.ghidra.log
+2026-10-31 17:44:59 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter
+2026-10-31 17:44:59 INFO  (Preferences) Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences
+2026-10-31 17:44:59 INFO  (Preferences) Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences
+2026-10-31 17:44:59 INFO  (ClassSearcher) Searching for classes...
+2026-10-31 17:44:59 INFO  (ClassSearcher) Class search complete (651 ms)
+2026-10-31 17:45:00 INFO  (DefaultSSLContextInitializer) Initializing SSL Context
+2026-10-31 17:45:00 INFO  (SecureRandomFactory) Initializing Random Number Generator...
+2026-10-31 17:45:00 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking
+2026-10-31 17:45:00 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set
+2026-10-31 17:45:00 INFO  (AnalyzeHeadless) Headless startup complete (1262 ms)
+2026-10-31 17:45:00 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)
+2026-10-31 17:45:00 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /home/sebastian/ipod-re/local-analysis/ghidra-scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts
+2026-10-31 17:45:00 INFO  (HeadlessAnalyzer) HEADLESS: execution starts
+2026-10-31 17:45:00 INFO  (HeadlessAnalyzer) Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime
+2026-10-31 17:45:00 INFO  (HeadlessProject) Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime
+2026-10-31 17:45:01 INFO  (HeadlessAnalyzer) REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin
+2026-10-31 17:45:01 INFO  (HeadlessAnalyzer) REPORT: Execute script: PrintProgramMetadata.java
+2026-10-31 17:45:01 INFO  (HeadlessAnalyzer) SCRIPT: /home/sebastian/ipod-re/local-analysis/ghidra-scripts/PrintProgramMetadata.java
+2026-10-31 17:45:01 INFO  (GhidraScript) PrintProgramMetadata.java> PROGRAM=osos_runtime_dram_20261025.bin
+2026-10-31 17:45:01 INFO  (GhidraScript) PrintProgramMetadata.java> LANGUAGE=ARM:LE:32:v6
+2026-10-31 17:45:01 INFO  (GhidraScript) PrintProgramMetadata.java> COMPILER=default
+2026-10-31 17:45:01 INFO  (GhidraScript) PrintProgramMetadata.java> BLOCK=ram 08000000-086c43a7 initialized=true
+2026-10-31 17:45:01 INFO  (HeadlessAnalyzer) REPORT: Execute script: DumpProgramContext.java
+2026-10-31 17:45:01 INFO  (HeadlessAnalyzer) SCRIPT: /home/sebastian/ipod-re/local-analysis/ghidra-scripts/DumpProgramContext.java
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=contextreg
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=TMode
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=LRset
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=REToverride
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=CALLoverride
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=TEEMode
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=condit
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=itmode
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=cond_full
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=cond_base
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=cond_true
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=cond_shft
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=cond_mask
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=counter
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=regNum
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=sdOv
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=counter2
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=reg2Num
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=regInc
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=ARMcond
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> CONTEXT_REGISTER=ARMcondCk
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> T_MODE_AT=08000000 value=0
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> T_MODE_AT=081352fc value=1
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> T_MODE_AT=0812a9ca value=1
+2026-10-31 17:45:01 INFO  (GhidraScript) DumpProgramContext.java> T_MODE_AT=086c43a7 value=0

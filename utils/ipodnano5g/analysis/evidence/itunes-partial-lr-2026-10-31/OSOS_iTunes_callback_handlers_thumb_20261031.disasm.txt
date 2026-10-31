@@ -1,0 +1,102 @@
+
+/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08058c40 <.data+0x58c40>:
+ 8058c40:	a96d      	add	r1, sp, #436	@ 0x1b4
+ 8058c42:	0000      	movs	r0, r0
+ 8058c44:	b500      	push	{lr}
+ 8058c46:	b087      	sub	sp, #28
+ 8058c48:	4668      	mov	r0, sp
+ 8058c4a:	9909      	ldr	r1, [sp, #36]	@ 0x24
+ 8058c4c:	f220 f83e 	bl	0x8278ccc
+ 8058c50:	4668      	mov	r0, sp
+ 8058c52:	f023 fb95 	bl	0x807c380
+ 8058c56:	4668      	mov	r0, sp
+ 8058c58:	f220 f844 	bl	0x8278ce4
+ 8058c5c:	b007      	add	sp, #28
+ 8058c5e:	2001      	movs	r0, #1
+ 8058c60:	bd00      	pop	{pc}
+ 8058c62:	0000      	movs	r0, r0
+ 8058c64:	b510      	push	{r4, lr}
+ 8058c66:	f13f f899 	bl	0x8197d9c
+ 8058c6a:	4904      	ldr	r1, [pc, #16]	@ (0x8058c7c)
+ 8058c6c:	2200      	movs	r2, #0
+ 8058c6e:	f13f f8a3 	bl	0x8197db8
+ 8058c72:	4803      	ldr	r0, [pc, #12]	@ (0x8058c80)
+ 8058c74:	f1d8 fba4 	bl	0x82313c0
+ 8058c78:	bd10      	pop	{r4, pc}
+ 8058c7a:	0000      	movs	r0, r0
+ 8058c7c:	d4c0      	bmi.n	0x8058c00
+ 8058c7e:	0001      	movs	r1, r0
+ 8058c80:	0017      	movs	r7, r2
+ 8058c82:	a900      	add	r1, sp, #0
+ 8058c84:	b570      	push	{r4, r5, r6, lr}
+ 8058c86:	4604      	mov	r4, r0
+ 8058c88:	460d      	mov	r5, r1
+ 8058c8a:	f13f f887 	bl	0x8197d9c
+ 8058c8e:	490d      	ldr	r1, [pc, #52]	@ (0x8058cc4)
+ 8058c90:	2200      	movs	r2, #0
+ 8058c92:	f13f f891 	bl	0x8197db8
+ 8058c96:	2d00      	cmp	r5, #0
+ 8058c98:	d00e      	beq.n	0x8058cb8
+ 8058c9a:	2001      	movs	r0, #1
+ 8058c9c:	0280      	lsls	r0, r0, #10
+ 8058c9e:	1820      	adds	r0, r4, r0
+ 8058ca0:	6a80      	ldr	r0, [r0, #40]	@ 0x28
+ 8058ca2:	6801      	ldr	r1, [r0, #0]
+ 8058ca4:	31ff      	adds	r1, #255	@ 0xff
+ 8058ca6:	3101      	adds	r1, #1
+ 8058ca8:	6889      	ldr	r1, [r1, #8]
+ 8058caa:	4788      	blx	r1
+ 8058cac:	2800      	cmp	r0, #0
+ 8058cae:	d102      	bne.n	0x8058cb6
+ 8058cb0:	4805      	ldr	r0, [pc, #20]	@ (0x8058cc8)
+ 8058cb2:	f1d8 fb85 	bl	0x82313c0
+ 8058cb6:	bd70      	pop	{r4, r5, r6, pc}
+ 8058cb8:	4620      	mov	r0, r4
+ 8058cba:	f1cf ff01 	bl	0x8228ac0
+ 8058cbe:	4802      	ldr	r0, [pc, #8]	@ (0x8058cc8)
+ 8058cc0:	1cc0      	adds	r0, r0, #3
+ 8058cc2:	e7f6      	b.n	0x8058cb2
+ 8058cc4:	d4c0      	bmi.n	0x8058c48
+ 8058cc6:	0001      	movs	r1, r0
+ 8058cc8:	0002      	movs	r2, r0
+ 8058cca:	a900      	add	r1, sp, #0
+ 8058ccc:	b510      	push	{r4, lr}
+ 8058cce:	f13f f865 	bl	0x8197d9c
+ 8058cd2:	4904      	ldr	r1, [pc, #16]	@ (0x8058ce4)
+ 8058cd4:	2200      	movs	r2, #0
+ 8058cd6:	f13f f86f 	bl	0x8197db8
+ 8058cda:	4803      	ldr	r0, [pc, #12]	@ (0x8058ce8)
+ 8058cdc:	f1d8 fb70 	bl	0x82313c0
+ 8058ce0:	bd10      	pop	{r4, pc}
+ 8058ce2:	0000      	movs	r0, r0
+ 8058ce4:	d4c0      	bmi.n	0x8058c68
+ 8058ce6:	0001      	movs	r1, r0
+ 8058ce8:	0018      	movs	r0, r3
+ 8058cea:	a900      	add	r1, sp, #0
+ 8058cec:	b500      	push	{lr}
+ 8058cee:	b087      	sub	sp, #28
+ 8058cf0:	4668      	mov	r0, sp
+ 8058cf2:	9909      	ldr	r1, [sp, #36]	@ 0x24
+ 8058cf4:	f1f7 fd10 	bl	0x8250718
+ 8058cf8:	4668      	mov	r0, sp
+ 8058cfa:	f1c7 fedf 	bl	0x8220abc
+ 8058cfe:	4668      	mov	r0, sp
+ 8058d00:	f1f7 fd1c 	bl	0x825073c
+ 8058d04:	b007      	add	sp, #28
+ 8058d06:	2001      	movs	r0, #1
+ 8058d08:	bd00      	pop	{pc}
+ 8058d0a:	0000      	movs	r0, r0
+ 8058d0c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8058d0e:	4604      	mov	r4, r0
+ 8058d10:	4834      	ldr	r0, [pc, #208]	@ (0x8058de4)
+ 8058d12:	7800      	ldrb	r0, [r0, #0]
+ 8058d14:	2800      	cmp	r0, #0
+ 8058d16:	d10b      	bne.n	0x8058d30
+ 8058d18:	f218 fa56 	bl	0x82711c8
+ 8058d1c:	3020      	adds	r0, #32
+ 8058d1e:	7f00      	ldrb	r0, [r0, #28]

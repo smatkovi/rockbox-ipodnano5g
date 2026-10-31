@@ -1,0 +1,19 @@
+
+utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/OSOS_iTunes_heap_redirect_prefix_20261031.bin:     file format binary
+
+
+Disassembly of section .data:
+
+08e54e58 <.data>:
+ 8e54e58:	646f5069 	strbtvs	r5, [pc], #-105	@ 0x8e54e60
+ 8e54e5c:	6e6f435f 	mcrvs	3, 3, r4, cr15, cr15, {2}
+ 8e54e60:	6c6f7274 	stclvs	2, cr7, [pc], #-464	@ 0x8e54c98
+ 8e54e64:	7554695c 	ldrbvc	r6, [r4, #-2396]	@ 0xfffff6a4
+ 8e54e68:	5c73656e 	ldclpl	5, cr6, [r3], #-440	@ 0xfffffe48
+ 8e54e6c:	696e6547 	stmdbvs	lr!, {r0, r1, r2, r6, r8, sl, sp, lr}^
+ 8e54e70:	6c507375 	mrrcvs	3, 7, r7, r0, cr5
+ 8e54e74:	696c7961 	stmdbvs	ip!, {r0, r5, r6, r8, fp, ip, sp, lr}^
+ 8e54e78:	42417473 	submi	r7, r1, #1929379840	@ 0x73000000
+ 8e54e7c:	46454443 	strbmi	r4, [r5], -r3, asr #8
+ 8e54e80:	4a494847 	bmi	0xa0a6fa4
+ 8e54e84:	Address 0x8e54e84 is out of bounds.
