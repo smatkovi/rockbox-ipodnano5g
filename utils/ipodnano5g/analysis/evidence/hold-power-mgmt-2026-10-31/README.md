@@ -67,6 +67,9 @@ Ausführungsreihenfolge gegenüber dem Parser bleibt ungeklärt.
   `0x2200607c` aus dem Prefix-Task.
 - `powermgmt_callback_state_update_20261031.application.log`: Statusupdate
   über `FUN_22005bec` und dessen Aufruf von `FUN_220061a4`.
+- `OSOS_HoldSwitch_raw_wrapper_call_scan_20261031.txt`: Rohscan nach
+  eingehenden Thumb-`BL`-Instruktionen der beiden nicht aufgelösten Hold-
+  Wrapper; die vier `FUN_0824dc22`-Treffer dienen als Dekodierkontrolle.
 
 Projekte:
 

@@ -32,6 +32,16 @@ Ghidra-Xref keine direkten Caller; ihre indirekte Verwendung und ihr
 Startzeitpunkt bleiben offen. Der Rohbyte-Scan bestätigt direkte Branches,
 aber allein keine Laufzeit-Erreichbarkeit.
 
+Eine gezielte zweite Rohbytesuche nach eingehenden Thumb-`BL`-Instruktionen
+auf diese beiden Wrapper findet keine Treffer. Dieselbe Suche findet die vier
+bekannten Callsites auf `FUN_0824dc22`, was die Dekodierung der Branches
+gegenprüft. Der ergänzende Absolutzeiger-Scan findet `0x0804fe25` an
+`0x08509bec`; dieser Zeiger führt zum vorangehenden Thumb-Einstieg
+`0x0804fe24`, nicht zum Hold-Wrapper ab `0x0804fe28`. Für den Wrapper ab
+`0x080a2a90` wurde kein entsprechender Absolutzeiger gefunden. Das schließt
+berechnete oder externe Aufrufe weiterhin nicht aus und belegt keine
+Laufzeit-Reihenfolge.
+
 Die tatsächlichen BootTask-Records wurden gegen Constructor und Consumer
 abgeglichen. `FUN_08013d44` richtet `FUN_0819dcbc`-Records ein;
 `FUN_0801e2b4` übergibt den Record-Einstieg an den Kernel und den Namen an

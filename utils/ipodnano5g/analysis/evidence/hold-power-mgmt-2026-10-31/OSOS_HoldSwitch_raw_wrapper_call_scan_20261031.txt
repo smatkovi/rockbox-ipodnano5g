@@ -1,0 +1,12 @@
+IMAGE=/home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin SIZE=7095208 BASE=0x08000000
+SCAN=halfword-aligned raw Thumb-2 BL encodings; matches require reconstructed destination equality
+Targets: PMU helper 0x0824dc22; wrapper entries/call sites 0x0804fe28, 0x080a2a90; preceding Thumb entries 0x0804fe24, 0x080a2a8c
+TARGET=0x0824dc22 MATCH_COUNT=4
+  BL source=0x0804fe28 halfwords=f1fd,fefb
+  BL source=0x080a2a90 halfwords=f1ab,f8c7
+  BL source=0x080b9a2a halfwords=f194,f8fa
+  BL source=0x081e18b0 halfwords=f06c,f9b7
+TARGET=0x0804fe28 MATCH_COUNT=0
+TARGET=0x080a2a90 MATCH_COUNT=0
+TARGET=0x0804fe24 MATCH_COUNT=0
+TARGET=0x080a2a8c MATCH_COUNT=0
