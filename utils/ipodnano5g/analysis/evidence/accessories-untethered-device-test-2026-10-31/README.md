@@ -47,9 +47,11 @@ SHA-256 `b19180df8a20ef7e5496885bf227827623d6c3115adef0e4d47ed2efe2e6f78e`;
 Damit ist ein automatischer Boot aus dem internen Speicher über den
 `accessories.reg`-Kandidaten bis ins Rockbox-Menü beobachtet. Bei diesem Lauf
 war das USB-Kabel noch angeschlossen; es wurde nach dem Neustart kein Code
-vom PC übertragen. Für den strengen Nachweis ohne USB-Verbindung muss das
-Kabel abgezogen und derselbe normale Kaltstart wiederholt werden. Ein SCSI-
-Auswurf oder LUN-Reset ersetzt diesen Neustart nicht.
+vom PC übertragen. Danach zog der Nutzer das Kabel ab und bestätigte nach
+einem normalen Neustart erneut das Rockbox-Menü. Dieser kabelunabhängige Start
+ist als Gerätebeobachtung bestätigt; der Host kann das Display ohne USB nicht
+unabhängig auslesen. Ein SCSI-Auswurf oder LUN-Reset ersetzt diesen Neustart
+nicht.
 
 ## Rückrollen
 
