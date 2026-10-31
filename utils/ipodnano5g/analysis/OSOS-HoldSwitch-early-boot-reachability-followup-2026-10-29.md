@@ -214,6 +214,41 @@ indirekte Aufrufe nicht aus. Dass der `PowerMgmt`-Task vor `MainAppTask`
 angefordert wird, belegt weder seine erste Ausführung vor dem MainApp-Parser
 noch einen abgeschlossenen Hold-Read zu diesem Zeitpunkt.
 
+## Nachtrag: PowerMgmt-Bereitschaft und Callback (31.10.2026)
+
+Der erste Prefix-Veneer im Task (`0x22003a80`) zeigt auf
+`FUN_0824dec4`. Diese Runtime-Funktion wartet, bis der von `DAT_0824ded8`
+referenzierte Wert ungleich null ist; dazwischen ruft sie
+`FUN_08190a9c(2)` auf. Der einzige im Runtime-Projekt erkannte direkte Caller,
+`FUN_08142830`, verwendet den Rückgabewert als Handle. Der dekompilierte
+Rückgabetyp ist daher nicht verlässlich rekonstruiert. Für `DAT_0824ded8` ist
+im Runtime-Projekt nur der Lesezugriff aus `FUN_0824dec4` referenziert; ein
+Setzer in diesem Abbild wurde nicht gefunden. Ein externer oder indirekter
+Setzer bleibt möglich.
+
+Nach diesem Warten ruft der Prefix-Task über `0x220039c8` den Thumb-Einstieg
+`0x08009094` mit dem Callback-Zeiger `0x2200607d` auf. Der sichtbare Code
+führt eine synchronisierte Listen-/Array-Operation über Felder bei `+0x10`,
+`+0x14` und `+0x18` aus und erreicht anschließend einen indirekten Aufruf.
+Die genaue Semantik der außerhalb des Ausschnitts liegenden Hilfsfunktionen
+und damit die Frage, ob genau dieser Aufruf bereits während der Registrierung
+den übergebenen Callback ausführt, bleibt offen.
+
+Der Callback `0x2200607c` liest ein globales Statusbyte und ruft bei null
+`FUN_22005bec(1, param != 0)` auf. Diese Routine begrenzt den Index auf die
+23 Einträge des Statusarrays, aktualisiert einen Eintrag und ruft bei einer
+Änderung `FUN_220061a4` auf. Dessen sichtbarer Pfad fragt über den Prefix-
+Veneer `0x22003a58` die Runtime-Funktion `FUN_081b2854` ab. Der zugehörige
+Initialisierungspfad liest PMU-Register `0x0a` und `0x33`; ein Zugriff auf
+das Hold-Register `0x05` oder ein direkter Aufruf von `FUN_082062c0` ist in
+dieser Kette nicht sichtbar.
+
+Diese zusätzliche Kette löst einen Teil des zuvor externen
+`PowerMgmt`-Setups auf, weist aber weiterhin keinen frühen Hold-Guard nach.
+Der Zeitpunkt, zu dem das Bereitschaftsobjekt gesetzt wird, die vollständige
+Semantik des Listen-Helpers und die Taskausführung relativ zum
+`accessories.reg`-Parser bleiben offen.
+
 ## Was die Befunde für den Hold-Guard bedeuten
 
 `HoldSwitchTask` erhält laut Constructor den numerischen Prioritätswert 3;
@@ -236,12 +271,14 @@ abgesichert.
 ## Offene Schritte
 
 1. Weitere Prefix-Service-Veneers des `PowerMgmt`-Tasks auf indirekte
-   PMU-/Hold-Zugriffe prüfen. Die Initialisierung `FUN_081a87fc` ist bis zu
-   PMU-Registern `0x0a` und `0x33` aufgelöst und belegt keinen Hold-Read. Die
-   Registrierung der Wakeup-Button-Funktion bei `0x08000b4e` bleibt ebenfalls
-   offen. Danach klären, ob ein solcher Pfad vor `MainAppTask` und dem
-   `accessories.reg`-Parser laufen kann. Der bekannte Remote-Parser ist dafür
-   kein Beleg.
+   PMU-/Hold-Zugriffe prüfen. Der sichtbare Bereitschafts- und Callbackpfad
+   bis `0x2200607c` liest in der aufgelösten Initialisierung Register `0x0a`
+   und `0x33`; er belegt keinen Hold-Read. Offen sind der Setzer von
+   `DAT_0824ded8`, die genaue Semantik des Runtime-Listen-Helpers und der
+   Zeitpunkt des Callbackaufrufs. Auch die Registrierung der
+   Wakeup-Button-Funktion bei `0x08000b4e` bleibt offen. Danach klären, ob
+   irgendein Hold-Pfad vor `MainAppTask` und dem `accessories.reg`-Parser
+   laufen kann. Der bekannte Remote-Parser ist dafür kein Beleg.
 2. Die Schedulerwirkung der Task-Create-/Release-Dienste außerhalb des
    Runtime-Abbilds klären. Die statische Reihenfolge der Anforderungsaufrufe
    belegt noch keine Reihenfolge der Task-Ausführung.

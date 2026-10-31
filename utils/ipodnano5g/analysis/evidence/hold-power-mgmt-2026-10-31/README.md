@@ -24,6 +24,15 @@ Taskausführungsreihenfolge bleiben offen. Insbesondere belegt die Reihenfolge
 der Task-Erzeugung nicht, dass der Hold-Status vor dem `accessories.reg`-Parser
 abgefragt wird.
 
+Ein zweiter read-only-Schritt hat die ersten sichtbaren Aufrufe des Tasks
+weiter aufgelöst: `FUN_0824dec4` wartet auf einen globalen Bereitschaftswert;
+danach führt der Prefix über `FUN_08009094` eine Listen-/Array-Operation mit
+dem Callback `0x2200607c` aus. Der Callback aktualisiert Prefix-Statusdaten
+und kann `FUN_081b2854` erreichen. Die verfolgte Runtime-Initialisierung liest
+PMU-Register `0x0a` und `0x33`, nicht das Hold-Register `0x05`. Für die
+Bereitschaftsvariable wurde im Runtime-Abbild kein Setzer gefunden; die
+Ausführungsreihenfolge gegenüber dem Parser bleibt ungeklärt.
+
 ## Rohbelege
 
 - `powermgmt_entry_20261031.application.log`: normale Funktionssuche für
@@ -42,6 +51,22 @@ abgefragt wird.
   über `FUN_081a87fc` und `FUN_0802529c`.
 - `runtime_status_input_20261031.application.log`: PMU-Registerzugriffe in
   `FUN_081abab0` sowie die Status-Caller.
+- `runtime_power_mgmt_pmu_bridge_20261031.application.log`: Pseudocode von
+  `FUN_0824dec4`, `FUN_0824dc22` und erkannte Caller.
+- `runtime_power_mgmt_readiness_xrefs_20261031.application.log`: Referenzen
+  auf die Bereitschaftszelle `DAT_0824ded8` und den Runtime-Caller.
+- `runtime_power_mgmt_registration_bridge_20261031.application.log`:
+  erzwungene Thumb-Dekodierung und Pseudocode des Runtime-Listen-Helpers bei
+  `0x08009094`.
+- `runtime_power_mgmt_wait_semantics_20261031.application.log`: Wrapper
+  `FUN_08190a9c`/`FUN_080253de` und deren Caller-Kontexte; der vollständige
+  Schedulerdienst liegt außerhalb der Runtime-Abbildung.
+- `powermgmt_scheduler_delay_semantics_20261031.application.log`: Prefix-
+  Fortsetzung des Warte-Helpers über den externen Einstieg `0x2240a228`.
+- `powermgmt_registered_callback_20261031.application.log`: Callback
+  `0x2200607c` aus dem Prefix-Task.
+- `powermgmt_callback_state_update_20261031.application.log`: Statusupdate
+  über `FUN_22005bec` und dessen Aufruf von `FUN_220061a4`.
 
 Projekte:
 
