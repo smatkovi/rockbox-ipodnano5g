@@ -37,9 +37,13 @@ den übergebenen Kontext, restauriert `SPSR` und Register und lädt anschließen
 `pc` via `ldmia ... {r0-r12,lr,pc}^`. `FUN_08000b70` ist der SVC-Dispatcher;
 sein Dienst `0x15` initialisiert einen Task-Kontext und verkettet den Task in
 die Kernelverwaltung. `FUN_08000798` übernimmt freizugebende Tasks in die
-Ready-Liste. Diese wird anhand `TCB+0x24` aufsteigend sortiert. Das belegt die
-Sortierreihenfolge, aber die Rohbilder allein belegen keinen vollständigen
-Kaltstart-Trace der jeweils zuerst restaurierten Task.
+Ready-Liste. Diese wird anhand `TCB+0x24` aufsteigend sortiert. Eine spätere
+Abfrage der Body-Literale zeigt, dass `DAT_08001650` dieselbe Adresse wie das
+Current-TCB-Feld `DAT_08001638+4` (`0x22009248`) enthält. Der Einfügepfad kann
+also bei einem höher priorisierten freigegebenen Task den Current-Zeiger selbst
+ersetzen; der SVC-Abschluss liefert anschließend den Stack des neuen Current-
+TCB an den Kontext-Restore. Das belegt einen unmittelbaren Präemptionspfad für
+den Queue-4-Waiter mit Priorität 9 gegenüber dem ATA-Worker mit `0x33`.
 
 Ein zweiter Body-Veneer trennt die Prioritätsverwaltung klarer vom
 Kontextwechsel: `0x08003990` lädt über sein Literal bei `0x08003994` das
@@ -60,12 +64,12 @@ Queue 4. Ist die Queue leer und ein Wait angefordert, trägt der Dispatcher den
 Empfänger als wartend ein (Status 5/Flag `0x20`). Der Dienst-4-Pfad nimmt beim
 Post einen vorhandenen Waiter aus der Queue-Warteliste und entfernt dessen
 Warteflag; der freigegebene TCB wird anschließend vom Scheduler in die
-prioritätssortierte Ready-Liste übernommen. Der gemeinsame SVC-Abschluss
-verarbeitet diese Freigaben und ruft danach den Kontext-Restore auf. Damit ist
-der statische Queue-4-Übergang von „wartet“ zu „bereit“ nachvollziehbar.
-Offen bleibt, ob und wann dieser konkrete Dispatcher nach dem Post den Kopf
-der Ready-Liste statt des aktuellen ATA-Tasks restauriert; ein dynamischer
-Kaltstart-Trace fehlt weiterhin. Zusätzlich ist `FUN_0800073c` kein
+prioritätssortierte Ready-Liste übernommen. Weil die Listenwurzel das
+Current-TCB-Feld ist, wird ein neu freigegebener TCB mit höherer Priorität vor
+dem bisherigen Current eingefügt. Im normalen SVC-Abschluss liefert
+`FUN_08000798` danach den Stack des neuen Current-TCB an `FUN_08004f44`.
+`DeviceDiscovery` (`9`) kann so beim Post des ATA-Workers (`0x33`) direkt
+präemptieren. Zusätzlich ist `FUN_0800073c` kein
 Taskselektor, sondern fügt zeitbegrenzte Warteobjekte anhand ihrer Frist in
 eine separate Timerliste ein.
 
@@ -81,15 +85,16 @@ Die bekannten TCB-Werte sind:
   Initialisierungspfad ruft den `accessories.reg`-Parser.
 - `BootTask`: wird mit Wert `0x40` gestartet.
 
-Die Ready-Liste sortiert kleineres `TCB+0x24` vor größerem. Unter der
-zusätzlichen Annahme, dass der Kernel bei einem Block/Yield den Kopf dieser
-Liste zuerst restauriert, passt die Folge zum gewünschten Providerzustand:
-DeviceDiscovery wartet auf Queue 4; der ATA-Worker postet den initialen
-Typ-0-Record; DeviceDiscovery wird aufgeweckt und registriert nach erfolgreichem
-MBR/FAT-Pfad Slot 0. `MainAppTask` mit `0x34` würde danach laufen. Das ist eine
-starke statische Plausibilität, keine dynamisch bestätigte Ausführungsfolge.
-Besonders die unmittelbare Dispatch-/Preemptionssemantik der Start-, Wait- und
-Queue-Dienste ist mit dem aktuellen Nachweis nicht vollständig geklärt.
+Die Ready-Liste sortiert kleineres `TCB+0x24` vor größerem. Die Aliasbeziehung
+zwischen `DAT_08001650` und dem Current-TCB-Feld macht die Queue-4-Reihenfolge
+konkreter: Wenn `DeviceDiscovery` auf Queue 4 wartet und der Current-Task
+`ATAWorkLoopTask` (`0x33`) den Typ-0-Record postet, wird der geweckte
+`DeviceDiscovery`-TCB (`9`) vor Current eingefügt. Der SVC-Abschluss kann so
+direkt dessen gespeicherten Stack restaurieren. Damit ist der Event-0- und
+Slot-0-MBR-/Providerpfad statisch vor `MainAppTask` (`0x34`) erreichbar,
+sofern ATA-Aufbau und Queue-Wait wie im Codepfad erfolgen. Der konkrete
+Gerätelauf, ein erfolgreicher MBR-/FAT-Pfad und das spätere `accessories.reg`-
+Open bleiben unbestätigt.
 
 Der Fehlerfall ist relevant: `FUN_0802c3c4` prüft direkt nach dem Open
 `FUN_082721f0` den Rückgabewert. Bei Open-Fehler schließt der Parser den
@@ -105,6 +110,8 @@ Mount ist bislang nicht belegt.
 - Die Ready-Liste vergleicht `TCB+0x24` und ist aufsteigend sortiert.
 - Queue-4-Record, DeviceDiscovery-Event-0 und der Slot-0-Registrierer sind
   statisch verbunden.
+- Der QueuePost-SVC kann den höher priorisierten DeviceDiscovery-TCB zum
+  Current machen und den Slot-0-Pfad vor MainApp dispatchen.
 - MainAppTask-Open und unmittelbarer Fehler-Return sind statisch belegt.
 - Eine tatsächliche Kaltstart-Reihenfolge, erfolgreiches MBR-/FAT-Mount,
   VFS-Open/Read, Parserausführung oder Rockbox-Handoff wurde nicht beobachtet.
@@ -130,6 +137,10 @@ Unter `analysis/evidence/rtos-task-order-2026-10-29/`:
   Ghidra-Abfrage des Runtime-Snapshots.
 - `OSOS_body_scheduler_dispatch_followup_20261030.log` — SVC-Dispatcher,
   Kontext-Restore und Tasklistenoperationen.
+- `OSOS_body_scheduler_global_list_fields_20261031.application.log` und
+  `OSOS_body_queue4_current_tcb_successor_followup_20261031.application.log`
+  — Alias des Current-TCB-Felds, Einfügepfad und Rückgabe des ausgewählten
+  Kontextstacks.
 - `OSOS_body_task_create_scheduler_enqueue_followup_20261030.log` — Task-
   Create-/Ready-List-Code.
 - `OSOS_runtime_task_create_dispatch_entry_20261030.log` — Runtime-Veneer

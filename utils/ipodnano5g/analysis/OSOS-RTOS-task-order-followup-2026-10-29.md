@@ -86,13 +86,22 @@ Read-only-Auszüge und Prüfsummen liegen unter
 Die vorher geprüfte Funktion `FUN_08353328` bleibt ohne belegte Schedulerrolle.
 Daneben gibt es aber eine getrennte, tatsächlich vom Kernel verwendete
 Ready-Task-Verwaltung: `FUN_08000798` zieht freizugebende TCBs in die
-zirkuläre Liste mit Sentinel `DAT_08001650` ein. Der Einfügepfad vergleicht
-`TCB[9]` (Byteoffset `+0x24`) und läuft weiter, solange der vorhandene Wert
-kleiner oder gleich dem neuen ist. Die Liste ist somit aufsteigend sortiert;
-gleiche Werte bleiben in Einfügereihenfolge. SVC-Dienst `0x16` speichert den
-Taskwert an derselben Stelle `DAT_0800163c[id*0x3c + 0x24]`. Der
-Prioritätsvergleich in den Kernel-Handlern bestätigt die Nutzung dieses
-Feldes für Reihenfolgeänderungen.
+prioritätssortierte Liste ein. Der Einfügepfad vergleicht `TCB[9]`
+(Byteoffset `+0x24`) und läuft weiter, solange der vorhandene Wert kleiner
+oder gleich dem neuen ist. Die Liste ist somit aufsteigend sortiert; gleiche
+Werte bleiben in Einfügereihenfolge. SVC-Dienst `0x16` speichert den Taskwert
+an derselben Stelle `DAT_0800163c[id*0x3c + 0x24]`. Der Prioritätsvergleich in
+den Kernel-Handlern bestätigt die Nutzung dieses Feldes für Reihenfolge-
+änderungen.
+
+Präzisierung vom 31.10.2026: `DAT_08001650` ist kein unabhängiger Listen-
+Sentinel. Die Body-Literale zeigen `DAT_08001638 = 0x22009244` und
+`DAT_08001650 = 0x22009248 = DAT_08001638 + 4`; `0x22009248` ist das
+Current-TCB-Zeigerfeld und zugleich der Kopf der Ready-Liste. Wenn ein
+freigegebener TCB eine kleinere Prioritätszahl als der aktuelle TCB hat,
+schreibt `FUN_08000798` ihn in dieses Kopf-/Current-Feld. Im normalen
+SVC-Abschluss wird anschließend der gespeicherte Stack dieses neuen Current-
+TCB zurückgegeben.
 
 Der relevante BootTask-Record liegt bei `0x087600c0 + 0xf0 = 0x087601b0`
 (Index 12, Stride `0x14`). Der Konstruktor lädt dort Prioritätsargument `9`,
@@ -141,8 +150,11 @@ Queue 4; DeviceDiscovery wartet dort und kann nach dem Queue-Post den
 Typ-0-Fall ausführen. Zusammen mit der Taskpriorität (DeviceDiscovery 9 vor
 ATAWorkLoop 0x33) ist der statische Startablauf plausibel: DeviceDiscovery
 richtet den ATA-Worker ein und wartet, danach kann der Worker den Knoten
-einstellen. Scheduler- und Queue-Service-Verhalten bleiben extern und sind
-nicht dynamisch beobachtet.
+einstellen. Beim Queue-4-Post ist `DeviceDiscovery` (`9`) höher priorisiert als
+`ATAWorkLoopTask` (`0x33`); durch den beschriebenen Kopf-/Current-Einfügepfad
+kann der Dispatcher unmittelbar zu `DeviceDiscovery` wechseln. Damit ist der
+Slot-0-Versuch statisch vor `MainAppTask` (`0x34`) erreichbar. Der tatsächliche
+Gerätelauf und ein erfolgreicher MBR-/FAT-/Datei-Open bleiben unbestätigt.
 
 Der Slot-0-Registrierer nimmt nicht bloß ein beliebiges ATA-Objekt entgegen.
 `FUN_08000a10` ruft `FUN_0800196c` auf, das LBA 0 über den Block-Read-Slot des

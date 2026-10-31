@@ -71,12 +71,11 @@ Rockbox-Handoff vor.
    Laufzeitaufnahme identifizieren.
 2. Danach bestimmen, ob dieser Aufruf vor dem ersten privaten ATA-Receive
    möglich ist und welchen Source-Zeiger er übergibt.
-3. Unabhängig davon die Ready-/Current-TCB-Verkettung nach dem Queue-4-Post
-   mit den tatsächlichen Schedulerlistenvariablen schließen. Die vorhandenen
-   statischen Exporte zeigen, dass ein geweckter Task in die Ready-Liste
-   sortiert wird; `FUN_08000b1c` setzt Current beim Blockieren auf den
-   bisherigen `TCB->next`. Eine reale Kaltstartreihenfolge folgt daraus noch
-   nicht.
+3. Unabhängig davon den nun statisch vor `MainAppTask` erreichbaren Slot-0-
+   MBR-/FAT-Pfad gegen die konkreten Dateisystem- und `accessories.reg`-
+   Bedingungen weiterprüfen. Die Queue-4-Präemption löst die Reihenfolgefrage,
+   beweist aber weder einen erfolgreichen Datenträger-Read noch den externen
+   Descriptor-Dispatch oder den späteren Rockbox-Handoff.
 
 ## Rohbelege
 

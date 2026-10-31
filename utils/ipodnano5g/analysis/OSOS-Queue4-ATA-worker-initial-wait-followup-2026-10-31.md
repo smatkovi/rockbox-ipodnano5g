@@ -14,16 +14,24 @@ mit Kapazität 10 erzeugt und von `FUN_0801e078` zunächst ohne eingereihte
 Datensätze initialisiert.
 
 Der Queue-4-Post weckt einen dort wartenden Task und übergibt ihn an die
-Scheduler-Freigabeliste. Der gemeinsame SVC-Abschluss verarbeitet diese Liste
-und fügt Tasks nach Priorität in die Ready-Liste ein. **Das beweist keine
-sofortige Präemption:** `FUN_08000798` gibt im gezeigten Abschluss den
-gespeicherten Stack des globalen Current-TCB zurück; der Current-Zeiger wird
-dabei nicht auf `DeviceDiscovery` gesetzt. Wenn der ATA-Worker anschließend
-auf seiner privaten Queue wartet, setzt `FUN_08000b1c` den Current-Zeiger auf
-den bisherigen Nachfolger des ATA-TCB und hängt den ATA-TCB in die private
-Warteliste ein. Welcher Task dieser Nachfolger im tatsächlichen Bootzustand
-ist, ist noch nicht rekonstruiert. Die frühere Schlussfolgerung, Priorität 9
-beweise einen Lauf von `DeviceDiscovery` vor `MainAppTask`, war daher zu stark.
+Scheduler-Freigabeliste. Eine erneute Zuordnung der Scheduler-Literale zeigt,
+dass `DAT_08001650` und `DAT_08001638 + 4` beide auf `0x22009248` zeigen: Das
+ist das Feld mit dem Current-TCB-Zeiger und zugleich der Anfang der nach
+Priorität sortierten Liste. Fügt `FUN_08000798` einen TCB mit kleinerem
+Prioritätswert als den aktuellen ein, schreibt der Einfügepfad den neuen TCB
+direkt in dieses Current-Feld. Der SVC-Abschluss gibt im normalen Pfad dann den
+gespeicherten Stack des TCB zurück, auf den Current jetzt zeigt; der
+Kontext-Restore kann somit unmittelbar auf den geweckten Task wechseln.
+
+Für den dokumentierten Startfall ist `DeviceDiscovery` mit Priorität `9`
+höher priorisiert als der postende `ATAWorkLoopTask` mit `0x33`. Wenn
+DeviceDiscovery auf Queue 4 wartet, macht der Queue-Post ihn daher zum neuen
+Current-Task. Das legt den Event-0-/Slot-0-Pfad vor `MainAppTask` (`0x34`),
+ohne dass der ATA-Worker erst selbst blockieren muss. Die frühere Aussage,
+der Scheduler stelle sicher den bisherigen Current-TCB wieder her, war falsch:
+Sie hatte übersehen, dass die Listenwurzel genau das Current-Zeigerfeld ist.
+Der tatsächliche Kaltstart und ein erfolgreicher MBR-/FAT-Pfad bleiben
+unbeobachtet.
 
 Der private Receive-Pfad wiederholt die Entnahme, solange kein gültiger
 Datensatz zurückkommt; bei einem leeren Ergebnis ruft er einen Wartehelper am
@@ -54,10 +62,13 @@ bereitstellt.
    vorhandener Queue-4-Waiter aus der Warteliste gelöst, sein Wartebit `0x20`
    gelöscht und der Task in die Scheduler-Freigabeliste gestellt. Der
    gemeinsame Abschluss ruft bei wartenden Freigaben `FUN_08000798` auf.
-   Diese Funktion sortiert die freigegebenen Tasks in die Ready-Liste und gibt
-   anschließend den gespeicherten Stack des bisherigen Current-TCB zurück.
-   Ein direkter Current-Wechsel zu `DeviceDiscovery` ist in diesem Pfad nicht
-   belegt.
+   Die Literalwerte im Body-Projekt zeigen `DAT_08001638 = 0x22009244` und
+   `DAT_08001650 = 0x22009248 = DAT_08001638 + 4`. Damit ist der Listenanfang
+   das Current-TCB-Zeigerfeld. Wird der geweckte TCB vor dem bisherigen
+   Current eingefügt, ändert der Einfügepfad den Current-Zeiger und der
+   normale SVC-Abschluss gibt dessen Stack für den Kontext-Restore zurück.
+   `DeviceDiscovery` (`9`) liegt vor dem ATA-Worker (`0x33`) und kann so beim
+   Queue-4-Post unmittelbar laufen.
 6. `FUN_08000b1c` liest beim Blockieren den `TCB->next`-Zeiger des aktuellen
    Tasks, schreibt diesen als neuen Scheduler-Current und fügt den alten
    Current-Task prioritätssortiert in die angegebene Warteliste ein. Damit
@@ -72,10 +83,10 @@ bereitstellt.
 
 ## Grenzen und Bedeutung für den Rockbox-Kandidaten
 
-- `DeviceDiscovery` wird durch den Queue-4-Post freigegeben und nach Priorität
-  in die Ready-Liste einsortiert. Ob es vor `MainAppTask` läuft, ist wegen des
-  unverändert fortgesetzten Current-TCB und der nicht rekonstruierten
-  TCB-Verkettung offen.
+- Der Queue-4-Post kann `DeviceDiscovery` (`9`) zum Current-Task machen,
+  während `ATAWorkLoopTask` (`0x33`) der aktuelle Task ist. Damit ist der
+  Slot-0-MBR-/Providerpfad statisch vor `MainAppTask` (`0x34`) erreichbar,
+  falls der erwartete Queue-Wait und der erfolgreiche ATA-Aufbau vorliegen.
 - Der ATA-Eventqueue-Initializer setzt die Queue zunächst leer. Ein IRQ-Task
   wartet auf einen externen Semaphor; ob dessen Signalzustand beim Start null
   ist oder vor dem ersten Worker-Receive signalisiert wird, ist offen.
@@ -104,6 +115,12 @@ Alle Dateien liegen reboot-überlebend im Repository unter
 - `OSOS_queue4_scheduler_reachability_20261031.application.log` und
   `OSOS_body_scheduler_dispatch_followup_20261030.log` — QueuePost-
   Wakeupzweig sowie die Listenoperation `FUN_08000b1c`.
+- `OSOS_body_queue4_current_tcb_successor_followup_20261031.application.log`
+  — QueuePost-SVC, Ready-Listen-Einfügepfad und Stack-Rückgabe des neuen
+  Current-TCB.
+- `OSOS_body_scheduler_global_list_fields_20261031.application.log` — die
+  Body-Literale für `DAT_08001638` und `DAT_08001650` und ihr gemeinsames
+  Current-TCB-Feld bei `0x22009248`.
 - `OSOS_body_task_create_scheduler_enqueue_followup_20261030.log` —
   Ready-Listen-Sortierung und Scheduler-Restore.
 - `OSOS_runtime_ata_irq_loop_followup_20261031.application.log` und
@@ -127,10 +144,12 @@ ffef6417e18c04cfed519dc31a9c47cacabc85a39d4b78c9fc6899702ad798a3  OSOS_runtime_a
 
 ## Nächster Schritt
 
-Als nächstes ist die TCB-Verkettung beim BootTask-Handoff zu rekonstruieren:
-welche Tasks sind zu diesem Zeitpunkt in der Ready-Liste, wo steht der
-Current-TCB, und welcher Nachfolger wird nach dem ATA-Worker-Wait ausgewählt?
-Parallel ist der erste Producer der privaten ATA-Eventqueue zu verfolgen,
-einschließlich Semaphor-Erzeugung und möglicher IRQ-Signalisierung. Danach
-lässt sich entscheiden, ob der Slot-0-MBR-/Providerpfad beim Kaltstart vor
-`MainAppTask` tatsächlich erreichbar ist.
+Als nächstes sind die Gerätebedingungen für den Slot-0-MBR-/FAT-Pfad und der
+automatische `accessories.reg`-Open weiterzuprüfen. Die Scheduler-Reihenfolge
+ist statisch so weit geschlossen, dass der geweckte `DeviceDiscovery`-Task
+den ATA-Worker beim Queue-4-Post überholen kann. Ungeprüft bleiben ein
+erfolgreicher Hardware-Read, die konkrete FAT-Dateiöffnung und der spätere
+Parser-Handoff.
+
+Die Schedulerkorrektur und die aktualisierten Folgeberichte sind mit
+`SHA256SUMS_queue4-priority-preemption-20261031.txt` gehasht.
