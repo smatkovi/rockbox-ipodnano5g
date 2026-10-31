@@ -25,14 +25,23 @@ die beiden Importliterale in Body und Runtime; keinen gespeicherten Zeiger
 auf einen der beiden Veneers und keinen direkten Import des generischen
 Prefix-SVC-Dispatchers `0x22007008`.
 
-Zusätzlich wurden alle 32 statischen Aufrufstellen des Prefix-SVC-Dispatchers
-ausgewertet. Genau eine setzt den Dienstcode `0x2e`: der Setupwrapper
-`FUN_22005248` selbst. Die neun Aufrufstellen, die Ghidra keiner Funktion
-zugeordnet hatte, wurden anhand ihrer ARM-/Thumb-Instruktionsfenster einzeln
-geprüft; keine richtet Queue 1 ein. Zusammen mit den fehlenden Body-Xrefs
-gibt es in den geprüften Prefix-/OSOS-Abbildern daher keinen statisch
-belegten Queue-Setup-Aufrufer. Ein dynamisch erzeugter Request oder ein
-früherer, außerhalb dieser Images liegender Setupschritt bleibt möglich.
+Der Body enthält zusätzlich den lokalen Wrapper `FUN_08005248`. Er setzt
+ebenfalls den Dienstcode `0x2e` und ruft den lokalen Generic-Dispatcher
+`FUN_08007008` auf. Ghidra findet keine eingehende Referenz auf
+`FUN_08005248`; der Rohbildscan findet keine gespeicherten ARM-/Thumb-Zeiger
+auf diese Adresse.
+
+Die vollständigen Dispatcher-Aufruferlisten grenzen direkte Requests weiter
+ein: Im Prefix gibt es 32 statische Aufrufstellen von `0x22007008`, im Body
+29 von `FUN_08007008`. In jeder Liste setzt nur der jeweilige Wrapper
+(`FUN_22005248` bzw. `FUN_08005248`) den Dienstcode `0x2e`. Die neun Prefix-
+und elf Body-Aufrufstellen, die Ghidra keiner Funktion zugeordnet hatte,
+wurden anhand ihrer Instruktionsfenster kontrolliert; keine richtet Queue 1
+ein. Die Body-Requests in diesen elf Fenstern verwenden die Codes `0x27`,
+`0x0d`, `0x0d`, `0x0c`, `0x26`, `0x28`, `0x04`, `0x04`, `0x02`, `0x12` und
+`0x13`. Die beiden Wrapper sind in ihren jeweiligen Images orphaned. Ein
+dynamisch erzeugter Request oder ein früherer, außerhalb dieser Images
+liegender Setupschritt bleibt möglich.
 
 Das stützt die engere Aussage: **In den geprüften OSOS-Codeabbildern ist kein
 statischer Aufrufer des Queue-Setupdienstes belegt.** Es beweist nicht, dass
@@ -60,10 +69,10 @@ Beobachtung nicht.
 
 ## Belege
 
-- `evidence/ata-queue1-init-lookup-2026-10-31/` enthält den Ghidra-Auszug
-  des transient dekodierten Body-Veneers, die Null-Xref-Abfragen, alle
-  Dispatcher-Aufrufer und die Fenster der nicht zugeordneten Aufrufstellen,
-  das reproduzierbare Suchskript, dessen Ergebnis und Prüfsummen.
+- `evidence/ata-queue1-init-lookup-2026-10-31/` enthält die Ghidra-Auszüge
+  zu Body- und Prefix-Wrappern, Null-Xref-Abfragen, Dispatcher-Aufrufer,
+  Instruktionsfenster, Skalarscans, das reproduzierbare Rohbildsuchskript,
+  dessen Ergebnis und Prüfsummen.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_svc_dispatch_queue1_semantics_20261031.application.log`
   zeigt SVC-Fall `0x2e`, die Queuebeschreibung und die Kapazitätsprüfung.
 - `evidence/rtos-task-order-2026-10-29/OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log`

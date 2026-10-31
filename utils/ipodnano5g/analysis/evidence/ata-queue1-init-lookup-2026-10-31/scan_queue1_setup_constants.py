@@ -25,6 +25,8 @@ NEEDLES = {
     0x22005249: "prefix queue-setup Thumb pointer",
     0x22007008: "prefix SVC dispatcher literal",
     0x22007009: "prefix SVC dispatcher Thumb pointer",
+    0x08005248: "OSOS-body queue-setup wrapper pointer",
+    0x08005249: "OSOS-body queue-setup Thumb pointer",
     0x0823B7A8: "OSOS-body queue-setup veneer pointer",
     0x0823B7A9: "OSOS-body queue-setup Thumb pointer",
     0x0820D52C: "OSOS-runtime queue-setup veneer pointer",
