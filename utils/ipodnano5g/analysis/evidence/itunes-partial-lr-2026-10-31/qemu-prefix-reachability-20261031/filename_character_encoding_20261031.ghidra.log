@@ -1,0 +1,128 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (610 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1233 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompileFunctions.java '0x08265ee0' '0x0827f2a0' '0x0827af8c' '0x08196bf0'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/speakable-2026-10-28/scripts/DecompileFunctions.java (HeadlessAnalyzer)  
+INFO  DecompileFunctions.java> ===== 08265ee0 FUN_08265ee0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+uint FUN_08265ee0(int *param_1)
+
+{
+  byte bVar1;
+  byte bVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  
+  iVar5 = *param_1;
+  *param_1 = iVar5 + -1;
+  uVar3 = (uint)*(byte *)(iVar5 + -1);
+  if ((int)(uVar3 << 0x18) < 0) {
+    *param_1 = iVar5 + -2;
+    bVar1 = *(byte *)(iVar5 + -2);
+    if (bVar1 >> 5 == 6) {
+      uVar4 = (bVar1 & 0x1f) << 6;
+    }
+    else {
+      *param_1 = iVar5 + -3;
+      bVar2 = *(byte *)(iVar5 + -3);
+      if (bVar2 >> 4 != 0xe) {
+        return 0;
+      }
+      uVar4 = (bVar2 & 0xf) << 0xc | (bVar1 & 0x3f) << 6;
+    }
+    uVar3 = uVar3 & 0x3f | uVar4;
+  }
+  return uVar3;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827f2a0 FUN_0827f2a0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+uint FUN_0827f2a0(undefined4 *param_1)
+
+{
+  byte bVar1;
+  byte *pbVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  
+  pbVar2 = (byte *)*param_1;
+  *param_1 = pbVar2 + 1;
+  bVar1 = *pbVar2;
+  uVar3 = (uint)bVar1;
+  if ((int)(uVar3 << 0x18) < 0) {
+    *param_1 = pbVar2 + 2;
+    uVar5 = (uint)pbVar2[1];
+    if (bVar1 >> 5 == 6) {
+      uVar3 = (uVar3 & 0x1f) << 6;
+      uVar4 = uVar5;
+    }
+    else {
+      *param_1 = pbVar2 + 3;
+      uVar4 = (uint)pbVar2[2];
+      if (bVar1 >> 4 != 0xe) {
+        return 0;
+      }
+      uVar3 = (uVar3 & 0xf) << 0xc | (uVar5 & 0x3f) << 6;
+    }
+    uVar3 = uVar3 | uVar4 & 0x3f;
+  }
+  return uVar3;
+}
+
+ (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 0827af8c <none> ===== (GhidraScript)  
+INFO  DecompileFunctions.java> ===== 08196bf0 FUN_08196bf0 ===== (GhidraScript)  
+INFO  DecompileFunctions.java> 
+void FUN_08196bf0(undefined4 *param_1)
+
+{
+  *param_1 = DAT_08196bfc;
+  param_1[1] = 0;
+  return;
+}
+
+ (GhidraScript)  

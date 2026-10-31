@@ -1,0 +1,77 @@
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1, mixed mode)
+INFO  Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /home/sebastian/.config/ghidra/ghidra_12.1.2_DEV/preferences (Preferences)  
+INFO  Loading previous preferences: /home/sebastian/.ghidra/.ghidra_11.0.3_DEV/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (717 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1325 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /home/sebastian/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessAnalyzer)  
+INFO  Opening project: /home/sebastian/ipod-re/local-analysis/ghidra-projects/N5G_OSOS_runtime_analysis/N5G_OSOS_runtime (HeadlessProject)  
+INFO  REPORT: Processing read-only project file: /osos_runtime_dram_20261025.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DumpCallersAndData.java '0x0804b97c' '0x0804bc28' '0x08037747'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/sebastian/ipod-re/rb-n5g/utils/ipodnano5g/analysis/evidence/itunes-partial-lr-2026-10-31/DumpCallersAndData.java (HeadlessAnalyzer)  
+INFO  DumpCallersAndData.java> ===== REFERENCES TO 0804b97c ===== (GhidraScript)  
+INFO  DumpCallersAndData.java> REF 0803775a type=UNCONDITIONAL_CALL caller=08037746 FUN_08037746 (GhidraScript)  
+INFO  DumpCallersAndData.java>   0803774e: lsls r1,r1,#0x6 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037750: adds r4,r5,r1 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037752: movs r0,#0x1 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037754: strb r0,[r4,#0xc] (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037756: mov r1,r6 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037758: mov r0,r5 (GhidraScript)  
+INFO  DumpCallersAndData.java>   0803775a: bl 0x0804b97c (GhidraScript)  
+INFO  DumpCallersAndData.java>   0803775e: mov r1,r6 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037760: mov r0,r5 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037762: bl 0x0804bc28 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037766: movs r0,#0x0 (GhidraScript)  
+INFO  DumpCallersAndData.java>   08037768: strb r0,[r4,#0xc] (GhidraScript)  
+INFO  DumpCallersAndData.java>   0803776a: pop {r4,r5,r6,pc} (GhidraScript)  
+INFO  DumpCallersAndData.java> 
+void FUN_08037746(int param_1,undefined4 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x8cc) = 1;
+  FUN_0804b97c(param_1,param_2);
+  FUN_0804bc28(param_1,param_2);
+  *(undefined1 *)(param_1 + 0x8cc) = 0;
+  return;
+}
+
+ (GhidraScript)  
+INFO  DumpCallersAndData.java> ===== REFERENCES TO 0804bc28 ===== (GhidraScript)  
+INFO  DumpCallersAndData.java> REF 08037762 type=UNCONDITIONAL_CALL caller=08037746 FUN_08037746 (GhidraScript)  
+INFO  DumpCallersAndData.java> ===== REFERENCES TO 08037747 ===== (GhidraScript)  
+INFO  DumpCallersAndData.java> REF 084f760c type=DATA caller=<none> (GhidraScript)  

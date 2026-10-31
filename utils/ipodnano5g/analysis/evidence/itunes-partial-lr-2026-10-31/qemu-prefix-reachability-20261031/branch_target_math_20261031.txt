@@ -1,0 +1,9 @@
+heap=0x08e54e4c..0x0bba5ee0
+safe_printable_ascii=85 values; branch triples=614125
+ASCII B.MI displacement=0x00848484..0x01f9f9f8
+ASCII target from heap start=0x0969d300..0x0adf4874
+Rockbox loader text=0x09000000..0x09013780; BSS=0x09100000..0x0919fd00
+ASCII direct overlap with loader text/BSS=False
+UTF-8 U+2000 bytes=e2 80 80 immediate=0x8080e2 signed=-0x7f7f1e displacement=-0x1fdfc78
+UTF-8 target FUN_0818ece0=0x0818ece0 requires path buffer=0x0a16e928; within heap=True
+UTF-8 target Rockbox loader entry=0x09000000 requires path buffer=0x0afdfc48; within heap=True

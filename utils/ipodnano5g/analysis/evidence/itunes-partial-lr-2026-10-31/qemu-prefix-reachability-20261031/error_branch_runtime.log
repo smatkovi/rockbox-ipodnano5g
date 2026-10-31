@@ -1,0 +1,8 @@
+qemu-system-arm: Some ROM regions are overlapping
+These ROM regions might have been loaded by direct user request or by default.
+They could be BIOS/firmware images, a guest kernel, initrd or some other file loaded into guest memory.
+Check whether you intended to load all this guest code, and whether it has been built to load to the correct addresses.
+
+The following two regions overlap (in the cpu-memory-0 address space):
+  /home/sebastian/ipod-re/local-analysis/inputs/osos_runtime_dram_20261025.bin (addresses 0x0000000008000000 - 0x00000000086c43a8)
+  error-branch-runtime.elf ELF program header segment 2 (addresses 0x0000000008020000 - 0x000000000802002f)
