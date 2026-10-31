@@ -81,15 +81,56 @@ bereitstellt.
    `EXT_FUN_220030d8`; Anfangszähler und externe Semaphorsemantik sind aus dem
    vorliegenden Body-Dump nicht ableitbar.
 
+## Taskstart und Queue-4-Post-Reihenfolge
+
+Eine weitere Prüfung der SVC-Taskanlage schließt die Reihenfolge-Lücke am
+Beginn des Starts statisch. `BootTask` durchläuft die Taskrecords in zwei
+Schritten; `DeviceDiscovery` mit Priorität `9` wird vor `MainAppTask`
+(`0x34`) gestartet. `FUN_0801de7c` legt einen Task an und ruft danach
+`FUN_0835d160` auf. Der Laufzeit-Veneer führt zum Task-Start-SVC `0x15`.
+Dieser stellt den neuen TCB in die Scheduler-Freigabeliste; der gemeinsame
+SVC-Abschluss lässt `FUN_08000798` ihn nach Priorität einsortieren.
+
+Wenn `DeviceDiscovery` (`9`) den ATA-Elternkonstruktor aufruft, startet dieser
+`ATAWorkLoopTask` mit Priorität `0x33` und `ATAWorkLoopIRQTask` mit Priorität
+`9`. Der Sortierpfad läuft bei gleicher Priorität über den bisherigen TCB
+hinweg. Daher verdrängt der gleich priorisierte IRQ-Task `DeviceDiscovery`
+nicht beim Start; der ATA-Worker mit `0x33` wird dahinter einsortiert. Ein
+Post des ATA-Workers an Queue 4 kann jedoch auch vor dem ersten Queue-Get
+eintreffen:
+
+- Bei einem bereits wartenden Queue-4-Task löst SVC-Dienst 4 dessen Wartebit,
+  stellt ihn frei und der Scheduler kann wegen Priorität `9` sofort zu
+  `DeviceDiscovery` wechseln.
+- Ohne Queue-4-Waiter ruft der Postpfad `FUN_08003900` mit Queuekopf und
+  Ereignisknoten auf. Der Body-Veneer zeigt auf den Laufzeithelper
+  `FUN_08353328`; dieser fügt den Knoten anhand seines Sortierfelds in die
+  verkettete Liste ein. Der spätere Queue-Get-Pfad kann den gespeicherten
+  Typ-0-Knoten entnehmen. Das Startsignal geht somit nicht verloren, wenn der
+  Worker vor dem Queue-Get postet.
+
+Der IRQ-Wait ist nun bis zur Semaphorlogik eingegrenzt: `FUN_080030d8`
+dekrementiert den Semaphorzähler über `FUN_0800319c` und ruft bei einem
+vorherigen Wert unter 1 den SVC-Wartepfad `FUN_08005ae8` auf. `FUN_08192c5c`
+bezieht den Semaphore-Ressourcenzeiger über `FUN_081a5104` und
+`FUN_080219fc`. Der Prefixcode bei `0x220053f0` baut dafür einen SVC-Request
+`0x0d` mit Queue-Index 1 und einem Ausgabepuffer; der Body-Dispatcher behandelt
+SVC `0x0d` als Queue-Entnahme. Der konkrete Queue-1-Poolinhalt ist im statischen
+Abbild nicht erfasst. Der Anfangszähler des zurückgegebenen Semaphoreobjekts
+bleibt deshalb unbekannt. Damit ist der Zeitpunkt, zu dem der IRQ-Task
+blockiert und der ATA-Worker tatsächlich läuft, nicht statisch bestimmt. Die
+Queue-4-Zustellung selbst ist gegen die Reihenfolge „Post vor Wait“ abgesichert.
+
 ## Grenzen und Bedeutung für den Rockbox-Kandidaten
 
 - Der Queue-4-Post kann `DeviceDiscovery` (`9`) zum Current-Task machen,
   während `ATAWorkLoopTask` (`0x33`) der aktuelle Task ist. Damit ist der
-  Slot-0-MBR-/Providerpfad statisch vor `MainAppTask` (`0x34`) erreichbar,
-  falls der erwartete Queue-Wait und der erfolgreiche ATA-Aufbau vorliegen.
+  Slot-0-MBR-/Providerpfad vor `MainAppTask` (`0x34`) statisch erreichbar,
+  sobald der ATA-Worker den initialen Post ausführt. Der Post bleibt auch
+  erhalten, falls `DeviceDiscovery` zu diesem Zeitpunkt noch nicht wartet.
 - Der ATA-Eventqueue-Initializer setzt die Queue zunächst leer. Ein IRQ-Task
-  wartet auf einen externen Semaphor; ob dessen Signalzustand beim Start null
-  ist oder vor dem ersten Worker-Receive signalisiert wird, ist offen.
+  wartet auf einen externen Semaphor. Dessen Anfangszähler und damit der
+  genaue Zeitpunkt des ersten ATA-Worker-Posts bleiben offen.
 - Auch eine erfolgreiche MBR-/FAT-Registrierung, der automatische
   `accessories.reg`-Open, ein kontrollierter Rücksprung und der Rockbox-Handoff
   bleiben unbeobachtet. Der bekannte Kandidat ist damit weiterhin kein
@@ -126,6 +167,24 @@ Alle Dateien liegen reboot-überlebend im Repository unter
 - `OSOS_runtime_ata_irq_loop_followup_20261031.application.log` und
   `OSOS_runtime_ata_irq_wait_semaphore_semantics_20261031.application.log` —
   IRQ-Task-Schleife und Wrapper des externen Semaphor-Waits.
+- `OSOS_runtime_task_start_semantics_followup_20261031.application.log` und
+  `OSOS_body_task_start_semantics_followup_20261031.application.log` — Task-
+  Start-API, SVC-Dienst 0x15 und Schedulerabschluss.
+- `OSOS_runtime_queue4_post_target_08353328_20261031.application.log` sowie
+  `OSOS_body_queue4_post_append_veneer_20261031.application.log` — Einfügen
+  des Queue-Knotens bei Post ohne wartenden Empfänger.
+- `OSOS_body_semaphore_wait_entry_followup_20261031.application.log`,
+  `OSOS_body_semaphore_wait_semantics_followup_20261031.application.log` und
+  `OSOS_runtime_ata_semaphore_ctor_decompile_20261031.application.log` —
+  Semaphor-Dekrement, Wait-SVC und ATA-IRQ-Semaphoraufbau.
+- `OSOS_runtime_ata_semaphore_factory_followup_20261031.application.log`,
+  `OSOS_runtime_sem_count_create_helper_followup_20261031.application.log`
+  und `OSOS_runtime_ata_semaphore_ctor_callsite_listing_20261031.application.log`
+  — Ressourcenhandle und externer Queuezugriff.
+- `OSOS_prefix_queue1_get_resource_entry_listing_20261031.application.log` und
+  `OSOS_prefix_queue1_get_resource_dispatch_20261031.application.log` —
+  Prefixrequest `0x0d`, Queue-Index 1 und gemeinsamer SVC-Pfad; die
+  Queue-1-Anfangsbelegung bleibt unbekannt.
 
 SHA-256 der neuen Runtime- und Scheduler-Exports:
 
@@ -144,10 +203,11 @@ ffef6417e18c04cfed519dc31a9c47cacabc85a39d4b78c9fc6899702ad798a3  OSOS_runtime_a
 
 ## Nächster Schritt
 
-Als nächstes sind die Gerätebedingungen für den Slot-0-MBR-/FAT-Pfad und der
-automatische `accessories.reg`-Open weiterzuprüfen. Die Scheduler-Reihenfolge
-ist statisch so weit geschlossen, dass der geweckte `DeviceDiscovery`-Task
-den ATA-Worker beim Queue-4-Post überholen kann. Ungeprüft bleiben ein
+Als nächstes sind der erfolgreiche Slot-0-MBR-/FAT-Read und der automatische
+`accessories.reg`-Open weiterzuprüfen. Die Queue-4-Race ist statisch
+geschlossen: ein früher Post wird gespeichert, und ein bereits wartender
+`DeviceDiscovery`-Task mit Priorität `9` kann den ATA-Worker mit `0x33`
+präemptieren. Ungeprüft bleiben der externe Semaphor-Anfangszähler, ein
 erfolgreicher Hardware-Read, die konkrete FAT-Dateiöffnung und der spätere
 Parser-Handoff.
 

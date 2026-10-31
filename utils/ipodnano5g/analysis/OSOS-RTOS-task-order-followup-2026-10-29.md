@@ -156,6 +156,25 @@ kann der Dispatcher unmittelbar zu `DeviceDiscovery` wechseln. Damit ist der
 Slot-0-Versuch statisch vor `MainAppTask` (`0x34`) erreichbar. Der tatsächliche
 Gerätelauf und ein erfolgreicher MBR-/FAT-/Datei-Open bleiben unbestätigt.
 
+Die Taskanlage bestätigt den Startpfad genauer. `FUN_0833c118` startet den
+ATA-Worker mit Eingabepriorität `0x18` (Kernelwert `0x33`) und den IRQ-Task mit
+`0xc0` (Kernelwert `9`). Der Laufzeitstart-Veneer führt zu SVC-Dienst `0x15`;
+dessen TCB wird im gemeinsamen Abschluss nach Priorität in die Ready-Liste
+eingefügt. Bei gleichem Wert wird hinter dem bisherigen Current-TCB eingefügt,
+sodass der IRQ-Task den laufenden `DeviceDiscovery`-Task nicht verdrängt.
+Unabhängig davon, ob der initiale ATA-Post vor oder nach dessen Queue-Get
+eintrifft, ist der Knoten statisch erreichbar: Mit Waiter wird dieser geweckt;
+ohne Waiter fügt der Queue-Post-Veneer ihn über `FUN_08353328` in die
+verkettete Ereignisliste ein, aus der Queue-Get ihn später entnimmt.
+
+Eine verbleibende Scheduling-Unsicherheit betrifft den IRQ-Semaphor. Der
+Waitpfad dekrementiert dessen Zähler und blockiert bei einem vorherigen Wert
+unter 1 über SVC-Dienst 1. Der ATA-Konstruktor erzeugt den Semaphor aber über
+einen externen Prefixaufruf; dessen Anfangszähler ist aus dem statischen
+Runtime-/Body-Abbild nicht bestimmbar. Daher bleibt offen, wann der ATA-Worker
+den initialen Queue-Post tatsächlich ausführt; sobald er ihn ausführt, bleibt
+der Event-0-Pfad vor `MainAppTask` erreichbar.
+
 Der Slot-0-Registrierer nimmt nicht bloß ein beliebiges ATA-Objekt entgegen.
 `FUN_08000a10` ruft `FUN_0800196c` auf, das LBA 0 über den Block-Read-Slot des
 ATA-Objekts liest. Bei MBR-Signatur `0xaa55` wertet `FUN_0800124c` die vier
@@ -197,6 +216,20 @@ Neue dauerhafte Belege liegen unter
 - `OSOS_runtime_queue4_event_type_initialization_20261029.txt` — exakter
   DRAM-Nullungsbereich und Byte-Offset des Queue-4-Ereignistyps; korrigiert,
   dass der Worker selbst `+0x11` statt `+0x10` zurücksetzt.
+- `OSOS_runtime_task_start_semantics_followup_20261031.application.log` und
+  `OSOS_body_task_start_semantics_followup_20261031.application.log` — Task-
+  Start-API, SVC-Dienst 0x15 und Einordnung neuer TCBs.
+- `OSOS_runtime_queue4_post_target_08353328_20261031.application.log` sowie
+  `OSOS_body_queue4_post_append_veneer_20261031.application.log` — sortiertes
+  Einfügen eines Posts ohne wartenden Empfänger.
+- `OSOS_body_semaphore_wait_entry_followup_20261031.application.log`,
+  `OSOS_body_semaphore_wait_semantics_followup_20261031.application.log` und
+  `OSOS_runtime_ata_semaphore_ctor_decompile_20261031.application.log` —
+  Semaphor-Dekrement, Wait-SVC und IRQ-Semaphoraufbau.
+- `OSOS_runtime_ata_semaphore_factory_followup_20261031.application.log`,
+  `OSOS_runtime_sem_count_create_helper_followup_20261031.application.log`
+  und `OSOS_runtime_ata_semaphore_ctor_callsite_listing_20261031.application.log`
+  — externer Semaphor-Create-Aufruf; Anfangszähler bleibt ungeklärt.
 - `OSOS_runtime_ata_worker_queue4_startup_followup_20261030.txt` und die
   `ghidra_ata_*_20261030.application.log`-Dateien — neuer Nachweis, dass der
   Worker-Einstieg keinen sichtbaren Wait-Gate enthält und der initiale
