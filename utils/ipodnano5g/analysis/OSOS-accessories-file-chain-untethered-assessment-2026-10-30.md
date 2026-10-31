@@ -162,10 +162,14 @@ Beleg: `evidence/accessories-rop-2026-10-29/OSOS_accessories_loader_heap_thresho
 und `OSOS_accessories_fat_read_deep_decompile_20261029.log`.
 
 Ein Offline-Nachtrag linkt denselben Rockbox-Zwischenloader versuchsweise an
-`0x0bf00000` und verschiebt seine BSS aus dem OSOS-Heap. Der 69.504-Byte-Link
-passt in die Kandidaten-Leselänge; der geänderte ROP-Rehost erreicht dort
-einen Loader-Sentinel. Die obere SDRAM-Region ist nicht als live frei belegt,
-und der Rehost lädt oder startet den echten Loader nicht. Siehe
+`0x0bf00000` und verschiebt seine BSS aus dem berechneten OSOS-Heap. Ein
+erweiterter ARM1176-Rehost kopiert beim modellierten erfolgreichen Datei-Read
+das echte 69.504-Byte-Loaderabbild an dieses Ziel; GDB hält vor dem ersten
+Loader-Befehl an. Der ausgelesene Speicher stimmt byteweise mit dem
+Loaderabbild überein. Der vorherige Sentinel-Nullmarker lag nur vor dem
+Datei-Read an `0x0bf00040`; nach dem Read steht dort wieder das Originalbyte.
+FAT-/VFS-/ATA-I/O, die Live-Belegung der oberen SDRAM-Region und die
+MMU-/Cache-Übergabe bleiben ungetestet. Siehe
 `OSOS-accessories-safe-loader-relocation-followup-2026-10-30.md`.
 
 ## Direktes Laden von `rockbox.ipod` ist kein einfacher Ersatz
